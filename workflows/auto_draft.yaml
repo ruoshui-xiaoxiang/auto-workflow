@@ -1,0 +1,31 @@
+name: auto_draft
+description: 闭环自动出图：云端LLM生成提示词 → 出图 → AI判分 → 低分自动改写重试（最多N轮），最终产物落 final
+args:
+  theme: "古风御姐，雪夜，性感清冷"
+  prompt: ""
+  count: 1
+  threshold: 78
+  max_tries: 3
+  rewrite_mode: text   # text=VL判分+文本LLM改写(省)  vl=VL看图直接改写(信息无损,贵)
+  llm_backend: cloud
+  width: 832
+  height: 1216
+  steps: 12
+  loras: ""
+steps:
+  - task: auto
+    id: auto
+    theme: "{{args.theme}}"
+    prompt: "{{args.prompt}}"
+    count: "{{args.count}}"
+    threshold: "{{args.threshold}}"
+    max_tries: "{{args.max_tries}}"
+    rewrite_mode: "{{args.rewrite_mode}}"
+    backend: "{{args.llm_backend}}"
+    workflow: "comfy/draft_flux_api.json"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    steps: "{{args.steps}}"
+    loras: "{{args.loras}}"
+    prefix: "auto_{{run_id}}"
+    stage: "final"

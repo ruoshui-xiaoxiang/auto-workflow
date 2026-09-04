@@ -1,0 +1,15 @@
+name: selftest
+description: 引擎自检：报告 / manifest / 失败讲人话。不碰显存、不调模型、不出图
+args:
+  word: hello
+steps:
+  - task: shell
+    id: echo
+    label: 打个招呼
+    hint: 跑一条 echo，验证报告能显示步骤和耗时
+    command: "echo {{args.word}}"
+  - task: shell
+    id: boom
+    label: 故意失败
+    hint: 验证失败时页面给的是人话而不是 traceback
+    command: "exit /b 3"

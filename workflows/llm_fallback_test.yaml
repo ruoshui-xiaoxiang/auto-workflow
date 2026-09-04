@@ -1,0 +1,12 @@
+name: llm_fallback_test
+description: 本地兜底链验证：按 fallback_chain（t3→q14→t2）依次尝试，端口未监听自动拉起，输出实际服务的后端
+args:
+  question: "用一句话介绍你自己"
+  backend: auto
+steps:
+  - task: llm
+    id: answer
+    backend: "{{args.backend}}"
+    prompt: "{{args.question}}"
+    max_tokens: 256
+    temperature: 0.7

@@ -1,0 +1,32 @@
+name: image_batch_draft
+description: 一步式出成品：本地 LLM 润色提示词（默认关） → ComfyUI 出图（基图 640x960 + 4x 放大到成品）。不要挑图时用；产物落进 out\<run_id>\final\
+args:
+  theme: "古风少女，雪中寺庙，电影感"
+  prompt: "A graceful ancient-style maiden in flowing hanfu before a snow-covered temple, cinematic light, photorealistic, detailed fabric"
+  count: 2
+  use_llm: false
+  llm_backend: auto
+  # 成品尺寸（UNet 先画基图，模板的放大节点 4x 后即此尺寸；引擎按 scale_by 折回基图）
+  width: 2560
+  height: 3840
+  scale_by: 4
+steps:
+  - task: llm
+    id: polish
+    enabled: "{{args.use_llm}}"
+    static: "{{args.prompt}}"
+    backend: "{{args.llm_backend}}"
+    system: "你是 FLUX 提示词工程师。把主题扩写成一段 60~120 词的英文照片级提示词，只输出提示词本身，不要解释或引号。"
+    prompt: "主题：{{args.theme}}"
+    max_tokens: 300
+    temperature: 0.8
+  - task: comfyui
+    id: generate
+    workflow: "comfy/draft_upscale_api.json"
+    prompt: "{{polish.text}}"
+    count: "{{args.count}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    scale_by: "{{args.scale_by}}"
+    prefix: "auto_{{run_id}}"
+    stage: "final"

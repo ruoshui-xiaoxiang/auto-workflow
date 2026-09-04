@@ -1,0 +1,41 @@
+name: image_draft_batch
+description: 两段式·草稿 —— 原生 1MP / 低步数 / 不放大（实测 24.1 秒一张），批量出可筛草稿；产出 manifest 供精修按编号选
+args:
+  theme: "古风少女，雪中寺庙，电影感"
+  prompt: "A graceful ancient-style maiden in flowing hanfu before a snow-covered temple, cinematic light, photorealistic, detailed fabric"
+  count: 16
+  use_llm_polish: false
+  llm_backend: auto
+  width: 832
+  height: 1216
+  steps: 12
+  # 默认不加 LoRA（webui 高级参数下拉可按需点选）；要指定可写
+  # loras: 'flux\Hanfu_Elegant_Flux.safetensors:0.4'
+  loras: ""
+  # 做对照组时锁 seed（留空 = 每张随机，保持原行为）
+  seed: ""
+steps:
+  - task: llm
+    id: polish
+    label: 润色提示词
+    hint: 把中文主题改写成英文提示词；默认关闭，直接用上面的 prompt
+    enabled: "{{args.use_llm_polish}}"
+    static: "{{args.prompt}}"
+    backend: "{{args.llm_backend}}"
+    system: "你是 FLUX 提示词工程师。把主题扩写成一段 60~120 词的英文照片级提示词，只输出提示词本身，不要解释或引号。"
+    prompt: "主题：{{args.theme}}"
+    max_tokens: 300
+    temperature: 0.8
+  - task: comfyui
+    id: draft
+    label: 批量出草稿
+    hint: 原生 1MP / 12 步 / 不放大，约 24 秒一张，出完打开报告按编号挑
+    workflow: "comfy/draft_flux_api.json"
+    prompt: "{{polish.text}}"
+    count: "{{args.count}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    steps: "{{args.steps}}"
+    loras: "{{args.loras}}"
+    seed: "{{args.seed}}"
+    prefix: "draft_{{run_id}}"

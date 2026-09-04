@@ -1,0 +1,59 @@
+# 工作流框架全局配置
+# 约定：路径全 ASCII；服务幂等启动；显存仲裁沿用 comfyui.bat 的既定规则
+
+models:
+  t1:
+    name: gpt-oss-20b-t1
+    base_url: "http://127.0.0.1:11434"
+    launcher: 'E:\LocalAI\launchers\gpt20.bat'
+    startup_timeout: 300
+  t2:
+    name: gpt-oss-20b-t2
+    base_url: "http://127.0.0.1:11435"
+    launcher: 'powershell -NoProfile -ExecutionPolicy Bypass -File "E:\LocalAI\launchers\start-agent-tier.ps1" -Tier 2 -Port 11435'
+    startup_timeout: 300
+  t3:
+    name: qwen2.5-7b
+    base_url: "http://127.0.0.1:11436"
+    launcher: 'powershell -NoProfile -ExecutionPolicy Bypass -File "E:\LocalAI\launchers\start-agent-tier.ps1" -Tier 3 -Port 11436'
+    startup_timeout: 180
+  q14:
+    name: qwen3-14b
+    base_url: "http://127.0.0.1:1234"
+    launcher: 'powershell -NoProfile -ExecutionPolicy Bypass -File "E:\LocalAI\launchers\start-qwen1234.ps1"'
+    startup_timeout: 300
+  # 云端后端（webui 设置面板填入 API Key；引擎侧 key 从环境变量读，不入库）
+  # remote: true 表示不需本地拉起，base_url 为 OpenAI 兼容端点（token-plan 用 /compatible-mode/v1）
+  cloud:
+    name: qwen3.8-max
+    base_url: "https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode"
+    api_key_env: "AW_CLOUD_API_KEY"
+    remote: true
+    startup_timeout: 30
+  # 百炼按量付费（DashScope），key 从 E:\密钥文件\阿里多模态.txt 读（sk-ws- 开头）
+  dashscope:
+    name: qwen-plus
+    base_url: "https://dashscope.aliyuncs.com/compatible-mode"
+    api_key_env: "AW_DASHSCOPE_API_KEY"
+    remote: true
+    startup_timeout: 30
+
+# LLM 兜底链：按序尝试；云端在前（质量最高、不占显存），本地模型兜底
+fallback_chain: [cloud, dashscope, t3, q14, t2]
+
+comfyui:
+  base_url: "http://127.0.0.1:8188"
+  root: 'E:\LocalAI\ComfyUI_windows_portable'
+  # 暂存目录，不是交付目录。谁拉起的服务就往哪写：本键只对引擎自起的实例生效，
+  # launchers\comfyui.bat 里那个 --output-directory 是写死的，且 ensure_comfyui()
+  # 复用存活服务时不校验它在往哪写。所以产物位置由 tasks.relocate() 在引擎侧
+  # 兜底：图一出炉就搬进 output_root 的批次夹，本目录正常应保持空。
+  output_dir: 'E:\FLUX_Workflow\ComfyUI_output'
+  log: 'E:\LocalAI\logs\comfyui.log'
+  startup_timeout: 240
+  # 出图前清掉这些端口上的 llama-server 释放显存（16G 卡显存互斥，与 comfyui.bat 约定一致）
+  kill_ports_before_start: [11434, 11435, 11436, 1234]
+
+log_dir: 'E:\LocalAI\logs\workflows'   # 只放 .log（排障用），交付物一律进 output_root
+output_root: 'E:\FLUX_Workflow\out'   # 交付根：一个批次一个自包含文件夹
+status_file: 'E:\LocalAI\logs\workflows\status.json'
