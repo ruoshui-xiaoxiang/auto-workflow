@@ -1,0 +1,68 @@
+name: h3_fl2va_dual_play
+description: 通道4「跑着玩」专用 fl2va 两头夹（首帧＋尾帧）：官方 FL2VA 三字段骨架（首行用 How the reference pictures align...，首尾帧专用），跑前自审(G, auto) → 直接出片，**无人工关口、不发飞书**。首帧锁起幅构图，尾帧锁落幅，中间由模型自己走。
+provider: local
+# ---------------------------------------------------------------------------
+# 与 h3_i2va_video 的唯一差别＝模板多接了一个 LoadImage 到 last_frame
+# （comfy/h3_i2v_fl2va_dual_api.json，由 comfy/make_dual_template.py 生成）。
+# 参考图**必须正好 2 张**：第 1 张＝first_frame，第 2 张＝last_frame。G4 会核槽位数。
+#
+# 实测口径（09-28 / 09-30，别当耳旁风）：
+#   · 两头夹钉得住**两端**，钉不住**中间路径**——飞行方向、第 N 圈这种序数区分给不出，
+#     换 seed 中间过程会明显不同 ⇒ 正式镜要"多出几条挑一条"。
+#   · 首帧保真 MAE ≈6.7–15.7（模型会用 VAE 重画第 0 帧），尾帧保真 ≈4.4（更紧）。
+#   · 尾帧是**居中裁切**（follower），所以尾帧图本身就该接近出片比例，否则被裁。
+#   · 身份仍然只靠首帧像素，这条通道不解决换脸；要锁身份走 h3_ref2va_play。
+# ---------------------------------------------------------------------------
+args:
+  theme: "play · 两头夹"
+  prompt_file: ""
+  width: 864
+  height: 1536
+  length: 124              # 帧数@24fps；124≈5.17s，362≈15.08s（H3 区间 124–362）
+  duration: 5.1667
+  steps: 8
+  seed: 42
+  lora: minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors
+  # turbo LoRA 满强度有已知 identity drift（首帧是参考图、动起来换人）→ 降到 0.7 换中性
+  lora_strength: 0.7
+  head_chunks: 4
+  ref_images: []           # 必须正好 2 张：首帧、尾帧
+  # G13 要求的运行级显式槽
+  use_llm_polish: false
+  llm_backend: dashscope
+  enable_audio: true
+  resolution_tier: draft
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（两头夹）
+    hint: G1–G7 纯算术/字符串判定（含 G4 槽位数核对）；不过就停，不占 GPU
+    auto_gates: [G1, G2, G3, G4, G5, G6, G7, G8, G11, G13]
+    prompt_kind: h3_fl2va
+    prompt_file: "{{args.prompt_file}}"
+    refs: "{{args.ref_images}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    lora: "{{args.lora}}"
+    workflow_json: "comfy/h3_i2v_fl2va_dual_api.json"
+
+  - task: video
+    id: gen
+    label: H3 出片（首帧＋尾帧两头夹 · 无人审直出）
+    workflow: "comfy/h3_i2v_fl2va_dual_api.json"
+    prompt_kind: h3_fl2va
+    prompt_file: "{{args.prompt_file}}"
+    ref_images: "{{args.ref_images}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    steps: "{{args.steps}}"
+    seed: "{{args.seed}}"
+    lora: "{{args.lora}}"
+    lora_strength: "{{args.lora_strength}}"
+    head_chunks: "{{args.head_chunks}}"
+    prefix: "h3dual_{{run_id}}"
+    stage: "video"
+    timeout: 10800
