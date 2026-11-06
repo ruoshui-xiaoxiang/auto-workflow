@@ -34,7 +34,7 @@ SOURCES = [
         "dest": "spec",
         "src": Path(r"E:\本地工作流规范手册"),
         "dirs": None,
-        "skip": {"__pycache__", ".git"},
+        "skip": {"__pycache__", ".git", "08_Qoder记忆_现行约定"},
     },
     {
         "dest": "wzy_rules",
