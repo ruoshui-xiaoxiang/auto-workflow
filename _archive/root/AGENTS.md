@@ -195,6 +195,47 @@ E:\公共记忆\                      # 跨 agent 交接入口（index.json 是�
 
 ---
 
+**要「第二个模型的意见」时：`gemini-api` CLI（2026-11-07 实测接入；不是出片通道）**
+
+```bash
+export HTTP_PROXY=http://127.0.0.1:10809 HTTPS_PROXY=http://127.0.0.1:10809
+gemini-api generate "你的问题" -m gemini-flash-lite-latest        # 文本，实测 6.6s
+gemini-api analyze -i <文件> "问题" -m gemini-3-flash-preview      # 读 PDF/图/音视频
+```
+
+- 🔴 **必须 export 那两个代理变量**（Go 二进制只认环境变量），否则直连超时。
+- 🔴 **必须显式 `-m`**：默认 `gemini-3.8-flash` 与 `gemini-flash-latest` 实测 **503**；免费档稳定可用的是
+  `gemini-flash-lite-latest`／`3.1-flash-lite`／`3.5-flash-lite`／`3-flash-preview`；`2.5-*` 那批已 **404**。
+- 🔴 **出图别用它**：免费档 **0 requests per day**（nano-banana-2.1 与 2.5-flash-image 都 429）⇒ 出图仍走即梦／Z-Image 线。
+- 它不开端口、不碰 8189、不经 run.py，**与禁令 1／2 无冲突**；也不构成新通道（是否立为正式通道由用户定）。
+  key 存 Windows 凭据管理器（`gemini-api whoami` 可查），明文指针 `E:\密钥文件\gmini.txt`
+  （`AQ.` 那条可用，plain `AIza` 那条已废）。**免费层内容会被 Google 用于训练**，未发布稿／敏感内容别贴。
+- 实测数字与踩坑全表见 `E:\公共记忆\projects\workflow-tooling-and-gates.md` 的 2026-11-07 条。
+
+**日常首选：`gem` 封装（2026-11-07 新增，在上述 CLI 之上）**
+
+```bash
+gem "问题"                        # 默认 gemini-3.5-flash-lite；自动带代理
+gem -m 3-flash "问题"             # 换 gemini-3-flash-preview（简写 lite/3.1-lite/3-flash/pro）
+gem -i a.pdf "看这个"             # 读文件，默认 gemini-3-flash-preview
+gem --json "问题"                 # 原始 JSON（要 id/usage 时）
+gem doctor [--quick]              # 体检：端口 / key / 模型数 / 各模型实测可用性
+gem models | gem whoami           # 原样透传给 gemini-api
+```
+
+- **怀疑网络或模型不可用就先跑 `gem doctor`**（`--quick` 只查端口/key/模型数，不花 token）。
+  正常时输出示例：`10809 LISTEN / keyring AQ**** / 61 个模型 / 3.5-flash-lite OK 6.2s / 3.8-flash 超时`。
+
+- 位置 `%LOCALAPPDATA%\Programs\gemini-api\gem.cmd`（同目录 `gem.py`），所在目录已在用户 PATH 里
+  （**新开的终端**才认；当前会话用全路径）。
+- 它替你做三件事：探 10809／10808 自动加代理、按子命令给免费档实测可用的模型、
+  **模型不可用（503 或超时）时降级重试一次**（最多两次尝试）并在 stderr 打一行提示；默认单次 45s 超时。
+- 🔴 **429／403 不重试、不换模型**（免费档硬边界；按禁令 7 不做自动回落）。
+  `gem image ...` 会直接拒绝并提示走即梦／Z-Image —— 省一次必然 429 的往返。
+- 要可复现就 `-m` 写**带版本**的名字（如 `gemini-3.5-flash-lite`），别依赖 `-latest` 浮动别名。
+
+---
+
 ## 7. 这份文件的历史（为什么要重写）
 
 上一版 `AGENTS.md`（7079 字节，最后修改 2026-10-12）有两个致命问题，2026-10-19 治理批查实：
@@ -219,5 +260,5 @@ E:\公共记忆\                      # 跨 agent 交接入口（index.json 是�
 
 ---
 
-*最后更新：2026-10-19（治理批 Phase 3）。改动请同时改 `官方路径.json`，然后跑
+*最后更新：2026-11-07（新增 gemini-api CLI 用法指针；未动第 2／3 节快照，故无需改 官方路径.json）。改动请同时改 `官方路径.json`，然后跑
 `py D:\AIWorkflow\tools\check_official_path.py` 确认 `[P7]` 不红。*

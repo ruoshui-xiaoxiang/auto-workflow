@@ -1,38 +1,38 @@
 {
-  "updated_at": "2026-11-07 00:45:01",
-  "state": "IDLE_OK",
-  "state_cn": "空闲但正常",
-  "severity": "ok",
-  "reason": "2.7 分钟前有新产出（阈值 20 分钟）",
+  "updated_at": "2026-11-07 01:15:02",
+  "state": "SLOW",
+  "state_cn": "渲染中但慢",
+  "severity": "info",
+  "reason": "队列里还有 1 个任务，32.7 分钟 没出新片，但 GPU=100% 仍在动 → 视为慢，不告警",
   "alert_now": false,
   "recovered": true,
   "last_output_file": "D:\\AIWorkflow\\ComfyUI_H3\\output\\AB_B1.mp4",
   "last_output_time": "2026-11-07 00:42:17",
-  "last_output_age_min": 2.7,
-  "last_activity_time": "2026-11-07 00:42:18",
-  "last_activity_age_min": 2.7,
-  "last_log_time": "2026-11-07 00:42:18",
-  "output_total_files": 2037,
+  "last_output_age_min": 32.7,
+  "last_activity_time": "2026-11-07 01:14:05",
+  "last_activity_age_min": 1.0,
+  "last_log_time": "2026-11-07 01:14:05",
+  "output_total_files": 2038,
   "threshold_min": 20.0,
   "comfy": {
     "url": "http://127.0.0.1:8189",
     "api_ok": true,
-    "latency_ms": 32,
+    "latency_ms": 34,
     "version": "0.42.1",
-    "queue_running": 0,
+    "queue_running": 1,
     "queue_pending": 0,
-    "queue_busy": false,
+    "queue_busy": true,
     "process_alive": true,
     "pid": 27292,
     "api_error": null
   },
   "gpu": {
-    "util_pct": 6,
+    "util_pct": 100,
     "samples": [
-      3,
-      8,
-      9,
-      6
+      2,
+      12,
+      6,
+      100
     ],
     "idle_long": false
   },
@@ -42,15 +42,15 @@
     "since": null,
     "since_ts": null,
     "alerted": false,
-    "recovered_at": "2026-11-07 00:45:01"
+    "recovered_at": "2026-11-07 01:15:02"
   },
   "counters": {
-    "total_checks": 49,
-    "alerts": 4
+    "total_checks": 55,
+    "alerts": 5
   },
   "notify": {
     "sent": false,
     "method": "skip",
-    "at": "2026-11-07 00:45:01"
+    "at": "2026-11-07 01:15:02"
   }
 }
