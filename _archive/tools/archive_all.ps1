@@ -1,4 +1,4 @@
-# 存档并推送：同步镜像 -> 暂存 -> 提交 -> 推送到公开仓 ruoshui-xiaoxiang/auto-workflow
+﻿# 存档并推送：同步镜像 -> 暂存 -> 提交 -> 推送到公开仓 ruoshui-xiaoxiang/auto-workflow
 # 用法：powershell -NoProfile -ExecutionPolicy Bypass -File D:\AIWorkflow\tools\archive_all.ps1
 param(
     [string]$Message = ""
@@ -36,10 +36,15 @@ git -c http.proxy= -c https.proxy= commit -m $Message
 if ($LASTEXITCODE -ne 0) { throw "commit 失败（若被 pre-commit 拦截，请按提示处理）" }
 
 Write-Host "[4/4] 推送"
-$proxyArgs = @("-c", "http.proxy=", "-c", "https.proxy=")
-$ghOk = $false
-try { git -c http.proxy= -c https.proxy= ls-remote --heads origin main | Out-Null; $ghOk = $true } catch { $ghOk = $false }
-git @proxyArgs -c credential.helper="!gh auth git-credential" push origin main
-if ($LASTEXITCODE -ne 0) { throw "push 失败：检查网络/代理与 gh 登录状态" }
+$ProxyArgs = @("-c", "http.proxy=", "-c", "https.proxy=")
+$Token = $env:GITHUB_TOKEN
+if (-not $Token) { $Token = (& gh auth token 2>$null) }
+if (-not $Token) { throw "缺 token：请 gh auth login 或设置 GITHUB_TOKEN" }
+$Basic = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("x-access-token:$Token"))
+$env:GIT_TERMINAL_PROMPT = "0"
+$env:GIT_HTTP_LOW_SPEED_LIMIT = "2000"
+$env:GIT_HTTP_LOW_SPEED_TIME = "30"
+git @ProxyArgs -c credential.helper= -c http.extraHeader="Authorization: Basic $Basic" push origin main
+if ($LASTEXITCODE -ne 0) { throw "push 失败：检查网络/代理与 GITHUB_TOKEN" }
 
 Write-Host "完成：$(git -c http.proxy= -c https.proxy= log -1 --format='%h %s')"

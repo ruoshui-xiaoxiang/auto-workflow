@@ -1,4 +1,4 @@
-# 存档仓健康检查：工作区是否干净 / 本地 HEAD 是否与远端一致 / 提交身份是否正常 / 最近是否推过
+﻿# 存档仓健康检查：工作区是否干净 / 本地 HEAD 是否与远端一致 / 提交身份是否正常 / 最近是否推过
 # 用法：powershell -NoProfile -ExecutionPolicy Bypass -File D:\AIWorkflow\tools\archive_check.ps1
 $ErrorActionPreference = "Continue"
 $Repo = "D:\AIWorkflow\engine"

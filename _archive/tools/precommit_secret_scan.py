@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """pre-commit 钩子：扫描暂存区内容。
 
 阻断：凭证类（私钥/token/sk-/AK/Slack/JWT/URL 带凭据/DB 连接串/赋值型 secret/Bearer）、
