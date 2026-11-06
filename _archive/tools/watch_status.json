@@ -1,38 +1,38 @@
 {
-  "updated_at": "2026-11-06 22:15:06",
-  "state": "RUNNING",
-  "state_cn": "正在渲染",
+  "updated_at": "2026-11-06 22:45:01",
+  "state": "IDLE_OK",
+  "state_cn": "空闲但正常",
   "severity": "ok",
-  "reason": "0.5 分钟前有新产出（阈值 20 分钟）",
+  "reason": "18.3 分钟前有新产出（阈值 20 分钟）",
   "alert_now": false,
   "recovered": false,
-  "last_output_file": "D:\\AIWorkflow\\ComfyUI_H3\\output\\AB_T3.mp4",
-  "last_output_time": "2026-11-06 22:14:38",
-  "last_output_age_min": 0.5,
-  "last_activity_time": "2026-11-06 22:14:49",
-  "last_activity_age_min": 0.3,
-  "last_log_time": "2026-11-06 22:14:49",
-  "output_total_files": 2012,
+  "last_output_file": "D:\\AIWorkflow\\ComfyUI_H3\\output\\20261106_AB\\COMPARE_N-O-P-S-T.mp4",
+  "last_output_time": "2026-11-06 22:26:42",
+  "last_output_age_min": 18.3,
+  "last_activity_time": "2026-11-06 22:26:42",
+  "last_activity_age_min": 18.3,
+  "last_log_time": "2026-11-06 22:26:21",
+  "output_total_files": 2021,
   "threshold_min": 20.0,
   "comfy": {
     "url": "http://127.0.0.1:8189",
     "api_ok": true,
-    "latency_ms": 23,
+    "latency_ms": 20,
     "version": "0.42.1",
-    "queue_running": 1,
+    "queue_running": 0,
     "queue_pending": 0,
-    "queue_busy": true,
+    "queue_busy": false,
     "process_alive": true,
     "pid": 27292,
     "api_error": null
   },
   "gpu": {
-    "util_pct": 100,
+    "util_pct": 5,
     "samples": [
-      4,
-      34,
-      100,
-      100
+      9,
+      8,
+      8,
+      5
     ],
     "idle_long": false
   },
@@ -45,12 +45,12 @@
     "recovered_at": "2026-11-06 21:10:56"
   },
   "counters": {
-    "total_checks": 19,
+    "total_checks": 25,
     "alerts": 1
   },
   "notify": {
     "sent": false,
     "method": "skip",
-    "at": "2026-11-06 22:15:06"
+    "at": "2026-11-06 22:45:01"
   }
 }
