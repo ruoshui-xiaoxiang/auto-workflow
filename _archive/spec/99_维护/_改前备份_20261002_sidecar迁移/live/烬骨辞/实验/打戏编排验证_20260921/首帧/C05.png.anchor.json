@@ -1,0 +1,9 @@
+{
+  "character": "沈清辞",
+  "shot": "C05",
+  "anchors": [
+    "char_shenqingci.png",
+    "C05_ref.png"
+  ],
+  "anchor_kind": "face"
+}

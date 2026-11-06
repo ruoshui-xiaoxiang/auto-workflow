@@ -1,0 +1,2217 @@
+{
+  "id": "R11-cont-768x448",
+  "revision": 0,
+  "last_node_id": 200,
+  "last_link_id": 55,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "UNETLoader",
+      "pos": [
+        80,
+        80
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            25
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "CLIPLoader",
+      "pos": [
+        80,
+        380
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            2,
+            7
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+        "minimax",
+        "default"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [
+        80,
+        680
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            3,
+            8,
+            16,
+            24
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "minimax_h3_video_vae_fp16.safetensors"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "VAELoader",
+      "pos": [
+        80,
+        980
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            4,
+            9,
+            17
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "minimax_h3_audio_vae_fp32.safetensors"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "RandomNoise",
+      "pos": [
+        80,
+        1280
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "NOISE",
+          "type": "NOISE",
+          "links": [
+            34
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RandomNoise"
+      },
+      "widgets_values": [
+        "__SEED__",
+        "fixed"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "UNETLoader",
+      "pos": [
+        80,
+        1580
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            26
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 13,
+      "type": "RandomNoise",
+      "pos": [
+        80,
+        1880
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "NOISE",
+          "type": "NOISE",
+          "links": [
+            45
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RandomNoise"
+      },
+      "widgets_values": [
+        "__SEED__",
+        "fixed"
+      ]
+    },
+    {
+      "id": 23,
+      "type": "MiniMaxH3ContinuationSourceEXPT8",
+      "pos": [
+        80,
+        2180
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "accepted_source",
+          "type": "T8_CONTINUATION_ACCEPTED_SOURCE",
+          "links": [
+            23,
+            55
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "report_json",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 1
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [],
+          "slot_index": 2
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [],
+          "slot_index": 3
+        },
+        {
+          "name": "low_width",
+          "type": "INT",
+          "links": [],
+          "slot_index": 4
+        },
+        {
+          "name": "low_height",
+          "type": "INT",
+          "links": [],
+          "slot_index": 5
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3ContinuationSourceEXPT8"
+      },
+      "widgets_values": [
+        "__CHAIN__",
+        1,
+        "__CANDIDATE__",
+        "__REV__",
+        "fdb12aed619aa187ba462d143226195f7398599964765be02f334ee2bd7d6616",
+        22,
+        "__W__",
+        "__H__",
+        "__LOW_W__",
+        "__LOW_H__"
+      ]
+    },
+    {
+      "id": 105,
+      "type": "LoadImage",
+      "pos": [
+        80,
+        2480
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 105,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5,
+            10
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [],
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "wfref_1_T1.png"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "MiniMaxH3ContinuationConditioningEXPT8",
+      "pos": [
+        840,
+        80
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "contexts",
+          "type": "T8_CONTINUATION_STAGE_CONTEXTS",
+          "link": 1
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 2
+        },
+        {
+          "name": "video_vae",
+          "type": "VAE",
+          "link": 3
+        },
+        {
+          "name": "audio_vae",
+          "type": "VAE",
+          "link": 4
+        },
+        {
+          "name": "first_frame",
+          "type": "IMAGE",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prepared_phase",
+          "type": "T8_CONTINUATION_PREPARED_PHASE",
+          "links": [
+            30
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            35
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            36
+          ],
+          "slot_index": 2
+        },
+        {
+          "name": "source_av",
+          "type": "LATENT",
+          "links": [],
+          "slot_index": 3
+        },
+        {
+          "name": "mux_audio",
+          "type": "AUDIO",
+          "links": [],
+          "slot_index": 4
+        },
+        {
+          "name": "conditioned_prompt",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 5
+        },
+        {
+          "name": "media_map_json",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 6
+        },
+        {
+          "name": "report_json",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 7
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3ContinuationConditioningEXPT8"
+      },
+      "widgets_values": [
+        "low",
+        "video_and_audio",
+        "__PROMPT__",
+        "__LEN__",
+        "auto",
+        "native",
+        0.35,
+        true,
+        0,
+        true,
+        "match",
+        "official_2_to_15s",
+        "persistent_identity_reference",
+        "single_reference",
+        1
+      ]
+    },
+    {
+      "id": 12,
+      "type": "MiniMaxH3ContinuationConditioningEXPT8",
+      "pos": [
+        840,
+        380
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "contexts",
+          "type": "T8_CONTINUATION_STAGE_CONTEXTS",
+          "link": 6
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 7
+        },
+        {
+          "name": "video_vae",
+          "type": "VAE",
+          "link": 8
+        },
+        {
+          "name": "audio_vae",
+          "type": "VAE",
+          "link": 9
+        },
+        {
+          "name": "first_frame",
+          "type": "IMAGE",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prepared_phase",
+          "type": "T8_CONTINUATION_PREPARED_PHASE",
+          "links": [
+            29,
+            46
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            50
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            51
+          ],
+          "slot_index": 2
+        },
+        {
+          "name": "source_av",
+          "type": "LATENT",
+          "links": [],
+          "slot_index": 3
+        },
+        {
+          "name": "mux_audio",
+          "type": "AUDIO",
+          "links": [],
+          "slot_index": 4
+        },
+        {
+          "name": "conditioned_prompt",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 5
+        },
+        {
+          "name": "media_map_json",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 6
+        },
+        {
+          "name": "report_json",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 7
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3ContinuationConditioningEXPT8"
+      },
+      "widgets_values": [
+        "high",
+        "video_and_audio",
+        "__PROMPT__",
+        "__LEN__",
+        "auto",
+        "native",
+        0.35,
+        true,
+        0,
+        true,
+        "match",
+        "official_2_to_15s",
+        "persistent_identity_reference",
+        "single_reference",
+        1
+      ]
+    },
+    {
+      "id": 15,
+      "type": "MiniMaxH3DualClockSamplerT8",
+      "pos": [
+        840,
+        680
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 11
+        },
+        {
+          "name": "av_latent",
+          "type": "LATENT",
+          "link": 12
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "links": [
+            31
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "links": [
+            32
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "links": [
+            28
+          ],
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3DualClockSamplerT8"
+      },
+      "widgets_values": [
+        "__STEPS__",
+        12.0,
+        3.0,
+        "euler",
+        "native_flow"
+      ]
+    },
+    {
+      "id": 16,
+      "type": "MiniMaxH3DualClockSamplerT8",
+      "pos": [
+        840,
+        980
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 13
+        },
+        {
+          "name": "av_latent",
+          "type": "LATENT",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "links": [
+            38,
+            42,
+            48
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "links": [
+            39,
+            43,
+            49
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "links": [],
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3DualClockSamplerT8"
+      },
+      "widgets_values": [
+        "__STEPS__",
+        12.0,
+        3.0,
+        "euler",
+        "native_flow"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "MiniMaxH3AVDecodeT8",
+      "pos": [
+        4260,
+        80
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "av_latent",
+          "type": "LATENT",
+          "link": 15
+        },
+        {
+          "name": "video_vae",
+          "type": "VAE",
+          "link": 16
+        },
+        {
+          "name": "audio_vae",
+          "type": "VAE",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "name": "frames",
+          "type": "IMAGE",
+          "links": [
+            19
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "generated_audio",
+          "type": "AUDIO",
+          "links": [
+            20
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "video_latent",
+          "type": "LATENT",
+          "links": [],
+          "slot_index": 2
+        },
+        {
+          "name": "audio_latent",
+          "type": "LATENT",
+          "links": [],
+          "slot_index": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3AVDecodeT8"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 22,
+      "type": "PreviewAny",
+      "pos": [
+        4260,
+        380
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "STRING",
+          "link": 18
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 8,
+      "type": "CreateVideo",
+      "pos": [
+        4640,
+        80
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 19
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            21
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CreateVideo"
+      },
+      "widgets_values": [
+        24.0,
+        "auto",
+        "sRGB",
+        "none"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "SaveVideo",
+      "pos": [
+        5020,
+        80
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 21
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveVideo"
+      },
+      "widgets_values": [
+        "__PREFIX__",
+        "mp4",
+        "h264"
+      ]
+    },
+    {
+      "id": 11,
+      "type": "MiniMaxH3LearnedLatentUpscaleT8Advanced",
+      "pos": [
+        2740,
+        80
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "av_latent",
+          "type": "LATENT",
+          "link": 22
+        }
+      ],
+      "outputs": [
+        {
+          "name": "av_latent",
+          "type": "LATENT",
+          "links": [
+            44
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [],
+          "slot_index": 1
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [],
+          "slot_index": 2
+        },
+        {
+          "name": "report_json",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3LearnedLatentUpscaleT8Advanced"
+      },
+      "widgets_values": [
+        "minimax_h3_latent_upscaler_3d_fp16.safetensors",
+        "target_dimensions",
+        2.0,
+        0.46,
+        [
+          "19",
+          1
+        ],
+        [
+          "19",
+          2
+        ],
+        "preserve_source",
+        1.05,
+        "fp16",
+        "offload_after"
+      ]
+    },
+    {
+      "id": 14,
+      "type": "EmptyMiniMaxH3LatentAV",
+      "pos": [
+        460,
+        80
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            12,
+            14
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyMiniMaxH3LatentAV"
+      },
+      "widgets_values": [
+        [
+          "23",
+          2
+        ],
+        [
+          "23",
+          3
+        ],
+        "__LEN__"
+      ]
+    },
+    {
+      "id": 24,
+      "type": "MiniMaxH3ContinuationContextsEXPT8",
+      "pos": [
+        460,
+        380
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "accepted_source",
+          "type": "T8_CONTINUATION_ACCEPTED_SOURCE",
+          "link": 23
+        },
+        {
+          "name": "video_vae",
+          "type": "VAE",
+          "link": 24
+        }
+      ],
+      "outputs": [
+        {
+          "name": "contexts",
+          "type": "T8_CONTINUATION_STAGE_CONTEXTS",
+          "links": [
+            1,
+            6,
+            27
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "report_json",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3ContinuationContextsEXPT8"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 101,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        460,
+        680
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 101,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 25
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            11
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "__LORA__",
+        "__LORA_STRENGTH__"
+      ]
+    },
+    {
+      "id": 103,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        460,
+        980
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 103,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 26
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            13
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "__LORA__",
+        "__LORA_STRENGTH__"
+      ]
+    },
+    {
+      "id": 17,
+      "type": "MiniMaxH3ContinuationPlanEXPT8",
+      "pos": [
+        1220,
+        80
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "contexts",
+          "type": "T8_CONTINUATION_STAGE_CONTEXTS",
+          "link": 27
+        },
+        {
+          "name": "full_sigmas",
+          "type": "SIGMAS",
+          "link": 28
+        }
+      ],
+      "outputs": [
+        {
+          "name": "plan",
+          "type": "T8_PROGRESSIVE_STAGE_PLAN",
+          "links": [
+            33
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "low_sigmas",
+          "type": "SIGMAS",
+          "links": [],
+          "slot_index": 1
+        },
+        {
+          "name": "high_sigmas",
+          "type": "SIGMAS",
+          "links": [],
+          "slot_index": 2
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "links": [],
+          "slot_index": 3
+        },
+        {
+          "name": "report_json",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 4
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3ContinuationPlanEXPT8"
+      },
+      "widgets_values": [
+        "__LEN__",
+        4,
+        0.5
+      ]
+    },
+    {
+      "id": 200,
+      "type": "VRAM_Debug",
+      "pos": [
+        1220,
+        380
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 200,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "any_input",
+          "type": "T8_CONTINUATION_PREPARED_PHASE",
+          "link": 29
+        }
+      ],
+      "outputs": [
+        {
+          "name": "any_output",
+          "type": "*",
+          "links": [
+            40
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "image_pass",
+          "type": "IMAGE",
+          "links": [],
+          "slot_index": 1
+        },
+        {
+          "name": "model_pass",
+          "type": "MODEL",
+          "links": [],
+          "slot_index": 2
+        },
+        {
+          "name": "freemem_before",
+          "type": "INT",
+          "links": [],
+          "slot_index": 3
+        },
+        {
+          "name": "freemem_after",
+          "type": "INT",
+          "links": [],
+          "slot_index": 4
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VRAM_Debug"
+      },
+      "widgets_values": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": 18,
+      "type": "MiniMaxH3ContinuationLowStageEXPT8",
+      "pos": [
+        1600,
+        80
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "prepared_phase",
+          "type": "T8_CONTINUATION_PREPARED_PHASE",
+          "link": 30
+        },
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 31
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 32
+        },
+        {
+          "name": "plan",
+          "type": "T8_PROGRESSIVE_STAGE_PLAN",
+          "link": 33
+        },
+        {
+          "name": "noise",
+          "type": "NOISE",
+          "link": 34
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 35
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 36
+        }
+      ],
+      "outputs": [
+        {
+          "name": "low_boundary",
+          "type": "T8_PROGRESSIVE_LOW_BOUNDARY",
+          "links": [
+            52
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "report_json",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3ContinuationLowStageEXPT8"
+      },
+      "widgets_values": [
+        512
+      ]
+    },
+    {
+      "id": 19,
+      "type": "MiniMaxH3ProgressiveLiftInputEXPT8",
+      "pos": [
+        2360,
+        80
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "low_boundary",
+          "type": "T8_PROGRESSIVE_LOW_BOUNDARY",
+          "link": 37
+        },
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 38
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 39
+        }
+      ],
+      "outputs": [
+        {
+          "name": "lift_input",
+          "type": "LATENT",
+          "links": [
+            22
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "target_width",
+          "type": "INT",
+          "links": [],
+          "slot_index": 1
+        },
+        {
+          "name": "target_height",
+          "type": "INT",
+          "links": [],
+          "slot_index": 2
+        },
+        {
+          "name": "plan",
+          "type": "T8_PROGRESSIVE_STAGE_PLAN",
+          "links": [],
+          "slot_index": 3
+        },
+        {
+          "name": "report_json",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 4
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3ProgressiveLiftInputEXPT8"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 20,
+      "type": "MiniMaxH3ContinuationHighHandoffEXPT8",
+      "pos": [
+        3120,
+        80
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "prepared_phase",
+          "type": "*",
+          "link": 40
+        },
+        {
+          "name": "low_boundary",
+          "type": "T8_PROGRESSIVE_LOW_BOUNDARY",
+          "link": 41
+        },
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 42
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 43
+        },
+        {
+          "name": "lifted_av",
+          "type": "LATENT",
+          "link": 44
+        },
+        {
+          "name": "video_noise",
+          "type": "NOISE",
+          "link": 45
+        }
+      ],
+      "outputs": [
+        {
+          "name": "high_restart",
+          "type": "T8_PROGRESSIVE_HIGH_RESTART",
+          "links": [
+            47
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "plan",
+          "type": "T8_PROGRESSIVE_STAGE_PLAN",
+          "links": [],
+          "slot_index": 1
+        },
+        {
+          "name": "report_json",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3ContinuationHighHandoffEXPT8"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 21,
+      "type": "MiniMaxH3ContinuationHighStageEXPT8",
+      "pos": [
+        3500,
+        80
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "prepared_phase",
+          "type": "T8_CONTINUATION_PREPARED_PHASE",
+          "link": 46
+        },
+        {
+          "name": "high_restart",
+          "type": "T8_PROGRESSIVE_HIGH_RESTART",
+          "link": 47
+        },
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 48
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 49
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 50
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 51
+        }
+      ],
+      "outputs": [
+        {
+          "name": "av_latent",
+          "type": "LATENT",
+          "links": [],
+          "slot_index": 0
+        },
+        {
+          "name": "report_json",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 1
+        },
+        {
+          "name": "high_result",
+          "type": "T8_PROGRESSIVE_HIGH_RESULT",
+          "links": [
+            53,
+            54
+          ],
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3ContinuationHighStageEXPT8"
+      },
+      "widgets_values": [
+        "__SEED__",
+        "fixed",
+        512
+      ]
+    },
+    {
+      "id": 25,
+      "type": "MiniMaxH3ProgressiveLowSaveEXPT8",
+      "pos": [
+        1980,
+        80
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "low_boundary",
+          "type": "T8_PROGRESSIVE_LOW_BOUNDARY",
+          "link": 52
+        }
+      ],
+      "outputs": [
+        {
+          "name": "low_boundary",
+          "type": "T8_PROGRESSIVE_LOW_BOUNDARY",
+          "links": [
+            37,
+            41
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "artifact_path",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 1
+        },
+        {
+          "name": "artifact_sha256",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 2
+        },
+        {
+          "name": "report_json",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3ProgressiveLowSaveEXPT8"
+      },
+      "widgets_values": [
+        "Continuation/LOW"
+      ]
+    },
+    {
+      "id": 26,
+      "type": "MiniMaxH3ProgressiveHighSaveEXPT8",
+      "pos": [
+        3880,
+        80
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "high_result",
+          "type": "T8_PROGRESSIVE_HIGH_RESULT",
+          "link": 53
+        }
+      ],
+      "outputs": [
+        {
+          "name": "av_latent",
+          "type": "LATENT",
+          "links": [],
+          "slot_index": 0
+        },
+        {
+          "name": "artifact_path",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 1
+        },
+        {
+          "name": "artifact_sha256",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 2
+        },
+        {
+          "name": "report_json",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3ProgressiveHighSaveEXPT8"
+      },
+      "widgets_values": [
+        "Continuation/HIGH"
+      ]
+    },
+    {
+      "id": 27,
+      "type": "MiniMaxH3ContinuationDeliveryEXPT8",
+      "pos": [
+        3880,
+        380
+      ],
+      "size": [
+        315,
+        200
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "high_result",
+          "type": "T8_PROGRESSIVE_HIGH_RESULT",
+          "link": 54
+        },
+        {
+          "name": "accepted_source",
+          "type": "T8_CONTINUATION_ACCEPTED_SOURCE",
+          "link": 55
+        }
+      ],
+      "outputs": [
+        {
+          "name": "av_latent",
+          "type": "LATENT",
+          "links": [
+            15
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "mux_audio",
+          "type": "AUDIO",
+          "links": [],
+          "slot_index": 1
+        },
+        {
+          "name": "conditioned_prompt",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 2
+        },
+        {
+          "name": "media_map_json",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 3
+        },
+        {
+          "name": "report_json",
+          "type": "STRING",
+          "links": [
+            18
+          ],
+          "slot_index": 4
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3ContinuationDeliveryEXPT8"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 201,
+      "type": "MarkdownNote",
+      "pos": [
+        80,
+        2820
+      ],
+      "size": [
+        560,
+        320
+      ],
+      "flags": {},
+      "order": 201,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "读我",
+      "properties": {},
+      "widgets_values": [
+        "R11 段间接力·续段 v2（EP1v2 s7→s8 跑通配置, 2026-10-15 二版）。\n跑前必读 R11_段间接续生成.md。本画布＝镜2(续段)臂；父段入链用同目录画布1。\n提速后的启动条件：① 服务器【不带】--use-sage-attention, 带 --reserve-vram 6.0 --use-ck-attention；② 文本编码走 GPU（device=default, 已设），两个条件节点之后、采样之前用 VRAM_Debug（unload_all_models=true）卸掉 TE——不卸会顶穿 LOW 守卫；\n③ 画布 64 对齐(768×448/low 384×224, 已设)；④ 采样器 native euler(已设)；⑤ first_frame_reuse=persistent_identity_reference(已设)。\n实测（2026-10-15）：全配置单镜 222~248s（CPU TE 版本 498s，最初 654.7s）。\n换镜对要改：Source(链名/父candidate_id/sha=父片sampling_summary)·两处 prompt·三处 seed·Plan/EmptyLatent 的 length(22+新段帧)·SaveVideo 前缀·KF 图。\n产物含 21 帧上下文前缀, 测量用 tools\\post\\seam_check.py 剥离；接力产物不自动入链, 续下一段前先把本段 CandidateSave→Accept。"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      24,
+      0,
+      5,
+      0,
+      "T8_CONTINUATION_STAGE_CONTEXTS"
+    ],
+    [
+      2,
+      2,
+      0,
+      5,
+      1,
+      "CLIP"
+    ],
+    [
+      3,
+      3,
+      0,
+      5,
+      2,
+      "VAE"
+    ],
+    [
+      4,
+      4,
+      0,
+      5,
+      3,
+      "VAE"
+    ],
+    [
+      5,
+      105,
+      0,
+      5,
+      4,
+      "IMAGE"
+    ],
+    [
+      6,
+      24,
+      0,
+      12,
+      0,
+      "T8_CONTINUATION_STAGE_CONTEXTS"
+    ],
+    [
+      7,
+      2,
+      0,
+      12,
+      1,
+      "CLIP"
+    ],
+    [
+      8,
+      3,
+      0,
+      12,
+      2,
+      "VAE"
+    ],
+    [
+      9,
+      4,
+      0,
+      12,
+      3,
+      "VAE"
+    ],
+    [
+      10,
+      105,
+      0,
+      12,
+      4,
+      "IMAGE"
+    ],
+    [
+      11,
+      101,
+      0,
+      15,
+      0,
+      "MODEL"
+    ],
+    [
+      12,
+      14,
+      0,
+      15,
+      1,
+      "LATENT"
+    ],
+    [
+      13,
+      103,
+      0,
+      16,
+      0,
+      "MODEL"
+    ],
+    [
+      14,
+      14,
+      0,
+      16,
+      1,
+      "LATENT"
+    ],
+    [
+      15,
+      27,
+      0,
+      7,
+      0,
+      "LATENT"
+    ],
+    [
+      16,
+      3,
+      0,
+      7,
+      1,
+      "VAE"
+    ],
+    [
+      17,
+      4,
+      0,
+      7,
+      2,
+      "VAE"
+    ],
+    [
+      18,
+      27,
+      4,
+      22,
+      0,
+      "STRING"
+    ],
+    [
+      19,
+      7,
+      0,
+      8,
+      0,
+      "IMAGE"
+    ],
+    [
+      20,
+      7,
+      1,
+      8,
+      1,
+      "AUDIO"
+    ],
+    [
+      21,
+      8,
+      0,
+      9,
+      0,
+      "VIDEO"
+    ],
+    [
+      22,
+      19,
+      0,
+      11,
+      0,
+      "LATENT"
+    ],
+    [
+      23,
+      23,
+      0,
+      24,
+      0,
+      "T8_CONTINUATION_ACCEPTED_SOURCE"
+    ],
+    [
+      24,
+      3,
+      0,
+      24,
+      1,
+      "VAE"
+    ],
+    [
+      25,
+      1,
+      0,
+      101,
+      0,
+      "MODEL"
+    ],
+    [
+      26,
+      10,
+      0,
+      103,
+      0,
+      "MODEL"
+    ],
+    [
+      27,
+      24,
+      0,
+      17,
+      0,
+      "T8_CONTINUATION_STAGE_CONTEXTS"
+    ],
+    [
+      28,
+      15,
+      2,
+      17,
+      1,
+      "SIGMAS"
+    ],
+    [
+      29,
+      12,
+      0,
+      200,
+      0,
+      "T8_CONTINUATION_PREPARED_PHASE"
+    ],
+    [
+      30,
+      5,
+      0,
+      18,
+      0,
+      "T8_CONTINUATION_PREPARED_PHASE"
+    ],
+    [
+      31,
+      15,
+      0,
+      18,
+      1,
+      "MODEL"
+    ],
+    [
+      32,
+      15,
+      1,
+      18,
+      2,
+      "SAMPLER"
+    ],
+    [
+      33,
+      17,
+      0,
+      18,
+      3,
+      "T8_PROGRESSIVE_STAGE_PLAN"
+    ],
+    [
+      34,
+      6,
+      0,
+      18,
+      4,
+      "NOISE"
+    ],
+    [
+      35,
+      5,
+      1,
+      18,
+      5,
+      "CONDITIONING"
+    ],
+    [
+      36,
+      5,
+      2,
+      18,
+      6,
+      "CONDITIONING"
+    ],
+    [
+      37,
+      25,
+      0,
+      19,
+      0,
+      "T8_PROGRESSIVE_LOW_BOUNDARY"
+    ],
+    [
+      38,
+      16,
+      0,
+      19,
+      1,
+      "MODEL"
+    ],
+    [
+      39,
+      16,
+      1,
+      19,
+      2,
+      "SAMPLER"
+    ],
+    [
+      40,
+      200,
+      0,
+      20,
+      0,
+      "*"
+    ],
+    [
+      41,
+      25,
+      0,
+      20,
+      1,
+      "T8_PROGRESSIVE_LOW_BOUNDARY"
+    ],
+    [
+      42,
+      16,
+      0,
+      20,
+      2,
+      "MODEL"
+    ],
+    [
+      43,
+      16,
+      1,
+      20,
+      3,
+      "SAMPLER"
+    ],
+    [
+      44,
+      11,
+      0,
+      20,
+      4,
+      "LATENT"
+    ],
+    [
+      45,
+      13,
+      0,
+      20,
+      5,
+      "NOISE"
+    ],
+    [
+      46,
+      12,
+      0,
+      21,
+      0,
+      "T8_CONTINUATION_PREPARED_PHASE"
+    ],
+    [
+      47,
+      20,
+      0,
+      21,
+      1,
+      "T8_PROGRESSIVE_HIGH_RESTART"
+    ],
+    [
+      48,
+      16,
+      0,
+      21,
+      2,
+      "MODEL"
+    ],
+    [
+      49,
+      16,
+      1,
+      21,
+      3,
+      "SAMPLER"
+    ],
+    [
+      50,
+      12,
+      1,
+      21,
+      4,
+      "CONDITIONING"
+    ],
+    [
+      51,
+      12,
+      2,
+      21,
+      5,
+      "CONDITIONING"
+    ],
+    [
+      52,
+      18,
+      0,
+      25,
+      0,
+      "T8_PROGRESSIVE_LOW_BOUNDARY"
+    ],
+    [
+      53,
+      21,
+      2,
+      26,
+      0,
+      "T8_PROGRESSIVE_HIGH_RESULT"
+    ],
+    [
+      54,
+      21,
+      2,
+      27,
+      0,
+      "T8_PROGRESSIVE_HIGH_RESULT"
+    ],
+    [
+      55,
+      23,
+      0,
+      27,
+      1,
+      "T8_CONTINUATION_ACCEPTED_SOURCE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}

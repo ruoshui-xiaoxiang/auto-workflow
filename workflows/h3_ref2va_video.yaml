@@ -1,0 +1,145 @@
+﻿name: h3_ref2va_video
+description: 本地 H3 出视频（ref2va 旧 4 图兼容链＋可选参考视频）—— 与 ref2v 4-step LoRA 严格配对的 4 步 + T8 双时钟 + 原生音频。**Ref2VA 新入口是 `h3_ref2va9_daily`（9图/3视频/3音频，总≤12）；本链只保留旧 4 图兼容，不迁移历史批次**；产物 mp4 落 批次夹/video/。关口化后：跑前自审（G）→ 提示词人工关口（H3）→ 出片 → 看片人工关口（H4）
+provider: local
+# ---------------------------------------------------------------------------
+# 用法（正式出片一律走引擎，不要再用 ComfyUI_H3\run_h3.py 裸跑 —— 那条路没有
+# args 日志、不进批次归档，参数只活在对话里）：
+#
+#   py run.py h3_ref2va_video --project 武昭君仪 ^
+#      --set theme="三阶 P1B 试探" ^
+#      --set prompt_file="D:\AIWorkflow\ComfyUI_H3\prompts_H3官方骨架\wuzhaojunyi_三阶P1B.txt" ^
+#      --set "ref_images=E:\创作\无音项目\图\定妆\wuyin_anchor_role.png,E:\创作\无音项目\图\定妆\xiaoQ_anchor_role.png,...4张" ^
+#      --set width=864 --set height=1536
+#
+# 提示词单一真源＝ ComfyUI_H3\prompts_H3官方骨架\<镜号>.txt（09-28 起）；本文件不再存提示词正文。
+# ⚠ 老目录 ComfyUI_H3\prompts\ 里的 56 份 .txt 全是**中文十块**（09-13～09-26 期间写的），
+#   那是云端 SD 的格式，喂本地 H3 会被当台词念出来。preflight 已开（config.yaml），
+#   G7 会把这些稿判"混用"直接拦下 —— 别照旧路径挑 prompt_file，也别为此关闸。
+#   格式契约见手册 20_通用规范层\R2_提示词结构与接口契约.md。
+# 参考图必须正好 4 张（模板就 4 个 __REFn__ 槽：多挂被静默丢、少挂留字面量直接失败），
+# 顺序＝提示词里 <Picture 1..4> 的编号；每张图旁放一份 <图名>.anchor.json
+# （{"character": "...", "role": "face|costume|scene|style"}），G3 才核得出槽位身份。
+# ---------------------------------------------------------------------------
+args:
+  theme: "无音 · 未命名镜"
+  prompt_file: ""          # 正式出片走这个
+  prompt: ""               # 保留字段兼容旧命令；W2 起链上只认 prompt_file（snapshot/下游都读文件）——对照实验请先落成 .txt
+  width: 736
+  height: 416
+  length: 124              # 帧数@24fps；G6 放行区间 107–345（B1 裁定 10-23：官方 4–15s 为准）；107–123 属训练区间外、放行但标风险；旧 362 已停止用于新批次
+  duration: 5.2            # 期望秒数，仅用于 G6 一致性核对
+  steps: 4                 # 与下方 4-step LoRA 严格配对，禁止只改一边
+  lora: "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors"
+  lora_strength: 1.0
+  head_chunks: 4
+  ref_images:
+    - 'E:\创作\无音项目\图\定妆\wuyin_anchor_role.png'
+    - 'E:\创作\无音项目\图\定妆\xiaoQ_anchor_role.png'
+    - 'E:\hailluoai\MiniMax Design\current Data\Projects\无音_virtual_production\renders\shot06_prop\prop_umbrella_a.png'
+    - 'E:\创作\无音项目\图\画风参考\用户选定_鞠婧祎古装.jpg'
+  ref_videos: []           # 0–1 段；挂上即走 ref2va 的参考视频通道（实测多烧约 8 分钟/条）
+  seed: ""
+  # W2 强制编译：Ref2VA 也必须先出独立英文稿（原稿保留、编译稿落批次目录、下游只读编译稿）。
+  # 默认 true；关掉它只能跑"正文本来就没有中文"的稿（snapshot 会生成 identity 编译稿），
+  # 含中文正文时 compile_check 会在提交前直接红——这是强制，不是可选项。
+  use_llm_polish: true
+  llm_backend: dashscope
+steps:
+  # ── W2 强制编译（2026-10-23）────────────────────────────────────────────
+  # 修掉旧 polish/prompt 冲突：旧链 H3 审的是原稿，polish 在 H3 **之后**按 theme 重写，
+  # gen 又用 `prompt: {{polish.text}}` 压过 prompt_file ⇒ 人批过的稿子和真正提交的不是同一份。
+  # 现在：snapshot 字节快照 → translate 读 prompt_file、写批次目录编译稿 → compile_check
+  # 复核（原稿哈希/六段/台词/语言/长度）→ pre → H3 审编译稿 → gen 读编译稿。
+  - task: shell
+    id: snapshot
+    label: 原稿字节快照（编译前）
+    command: py -3.12 -B "{{wf_root}}/../tools/prompt_compile.py" snapshot --source "{{args.prompt_file}}" --out-dir "{{batch_dir}}/prompt_compile" --run-id "{{run_id}}"
+    timeout: 120
+  - task: llm
+    id: translate
+    label: 中文自动改写（H3 官方六段英文）
+    hint: 正文含中文时按官方六段改写成英文，写入批次目录的独立编译稿（不回写原稿）；已是英文则原样放行，snapshot 已生成 identity 编译稿
+    enabled: "{{args.use_llm_polish}}"
+    read_from: "{{args.prompt_file}}"
+    write_to: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    skip_if_no_cjk: true
+    backend: "{{args.llm_backend}}"
+    system: |-
+      你是 MiniMax H3 Ref2VA 提示词合规改写器。输入是一份 H3 官方全参考六段提示词（subject_definitions / summary / retention_analysis / detailed_description / overall_soundscape / non_diegetic_music），其中重写段落混有中文。把它改写成全英文版本并输出。硬性规则：
+      1) 六个字段名各出现恰一次、顺序不变：subject_definitions: → summary: → retention_analysis: → detailed_description: → overall_soundscape: → non_diegetic_music:；字段之间空一行。
+      2) 只翻译重写段落；<d>…</d> 内台词逐字保留原语言，英文双引号内的画内可见文字保留原文；<Picture N>/<Video N>/<Audio N>/<Subject N> 标签与编号原样保留。
+      3) summary 的方括号任务类型前缀、retention_analysis 的档位标记（fully_preserved / partially_preserved / attribute_transfer / weak_reference / fully_copy / partially_copy / reference）逐字保留。
+      4) detailed_description 里的 [Shot N] 与切点时间码逐字保留；不得增删分镜。
+      5) 不得缩写、合并、删减信息；不得截断；输出必须完整到最后一个字段。
+      6) 除台词与画内文字外不得残留任何中文字符。
+      7) 只输出改写后的完整提示词本身：不要 markdown 代码块，不要解释，不要任何前后缀。
+    max_tokens: 1500
+    temperature: 0.3
+  - task: shell
+    id: compile_check
+    label: 编译稿提交前校验（原稿哈希＋六段/台词/语言/长度）
+    command: py -3.12 -B "{{wf_root}}/../tools/prompt_compile.py" verify --source "{{args.prompt_file}}" --state-dir "{{batch_dir}}/prompt_compile" --run-id "{{run_id}}" --compiled "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    timeout: 120
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（机制关口）
+    hint: G1–G7 纯算术/字符串判定；不过就停，不打扰人
+    auto_gates: [G1, G2, G3, G4, G5, G6, G7, G11, G13]
+    prompt_kind: h3_ref2va   # 10-02 批1：原先空着，通道归属完全靠 channel_of() 末行的无条件兜底；显式声明后通道不变（已自证）
+    prompt_file: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    refs: "{{args.ref_images}}"
+    ref_videos: "{{args.ref_videos}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    lora: "{{args.lora}}"
+    workflow_json: "comfy/h3_i2v_ref2va_api.json"
+
+  - task: gate
+    id: H3
+    mode: human
+    label: 提示词定稿（人工关口）
+    hint: 我对镜头戏的理解会偏，偏了就是整批返工 —— 必须你先审。W2 起审的是**编译稿**（要提交的那份英文），不是原稿
+    prompt_file: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    refs: "{{args.ref_images}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    lora: "{{args.lora}}"
+    show_prompt: true
+    numbering:
+      - "过 = 按这份提示词提交生成"
+      - "改<哪块> = 我改完重新上报"
+      - "否 <理由> = 这条不拍"
+
+  - task: video
+    id: gen
+    label: H3 出片
+    hint: ref2va 多图（＋可选参考视频）+ 8 步 + ref2v LoRA + T8 双时钟 + 原生音频；素材自动拷进 ComfyUI input
+    workflow: "comfy/h3_i2v_ref2va_api.json"
+    prompt_file: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    ref_images: "{{args.ref_images}}"
+    ref_videos: "{{args.ref_videos}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    steps: "{{args.steps}}"
+    lora: "{{args.lora}}"
+    lora_strength: "{{args.lora_strength}}"
+    head_chunks: "{{args.head_chunks}}"
+    seed: "{{args.seed}}"
+    prefix: "h3ref_{{run_id}}"
+    stage: "video"
+    timeout: 3600
+
+  - task: gate
+    id: H4
+    mode: human
+    label: 看片挑号（人工关口）
+    hint: 候选成片推给你；要重跑哪几条在这儿直接报编号就行（10-19 收口：原话指的 `H5` 关口盘上不存在，别再指挥你去进一个不存在的闸——R5-08）
+    videos: "{{gen.files}}"
+    numbering:
+      - "报编号 = 选定进下一步"
+      - "重做 <编号> = 报哪几条就重跑哪几条（本流没有 H5 这道闸，别找它）"
+

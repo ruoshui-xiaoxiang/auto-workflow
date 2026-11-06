@@ -1,0 +1,11 @@
+subject_definitions: <Subject 1> a woman in a dark robe; <Subject 2> a stone gate in a wet courtyard.
+
+summary: [reference generation] <Subject 1> walks through the wet courtyard and stops before <Subject 2>; her motion follows <Video 1>, <Video 2> and <Video 3>; her look is anchored by <Picture 1> through <Picture 6>.
+
+retention_analysis: <Subject 1> fully_preserved from <Picture 1>; <Subject 2> fully_preserved from <Picture 2>; <Picture 3> through <Picture 6> attribute_transfer to lighting, stone texture and mist density.
+
+detailed_description: [Shot 1] Live-action, 576x1024 vertical. A stone gate stands at the end of a wet courtyard; thin mist drifts across the flagstones. A woman in a dark robe walks into frame from the left, stops before the gate, and lifts her head. The camera Push In slowly toward the gate, then holds. No on-screen text, no logos, no watermarks.
+
+overall_soundscape: Wind through a narrow passage, distant water drops on stone, the soft rustle of wet fabric.
+
+non_diegetic_music: N/A

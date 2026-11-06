@@ -1,0 +1,22 @@
+{
+  "batch": "AB_B_4523",
+  "run_id": "wzhj_abB_4523",
+  "theme": "AB 十块vs官方 B seed4523",
+  "workflow": "comfy/h3_i2v_fl2va_dual_lora.json",
+  "prompt_file": "D:/AIWorkflow/ComfyUI_H3/prompts_官方三段式/wuzhaojunyi_三阶P1B_官方骨架无元信息.txt",
+  "seed": 4523,
+  "prefix": "wzhj_abB4523",
+  "width": 736,
+  "height": 416,
+  "length": 124,
+  "duration": 5.17,
+  "steps": 8,
+  "lora": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+  "lora_strength": 1.0,
+  "lora2": "Bunny_weapon_combatV1.safetensors",
+  "lora2_strength": 0.5,
+  "timeout": 5400,
+  "ref_images": [
+    "C:\\Users\\若水\\Desktop\\武昭君仪\\_H3实测\\三阶打斗\\P1B_first.png"
+  ]
+}

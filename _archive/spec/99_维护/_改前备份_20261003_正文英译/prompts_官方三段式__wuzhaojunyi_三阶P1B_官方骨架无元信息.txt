@@ -1,0 +1,8 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description:
+[Shot 1] 高精度CG半写实，古风武侠与赛博朋克并置，电影级体积光与浅景深，湿润黏腻的空气——下层区霓虹巷道，黑色湿铺装与锈管，遮天高楼间漏下的全息冷光与暖橙霓虹映在湿地上；巷道里的霓虹招牌只发纯色光晕。武君仪（画面左侧的深蓝长袍女子，高盘发髻与精美发饰、两缕长发垂在肩前，背负一杆白麻布裹严的长枪）站定不动、闪避幅度极小，只以一手轻带借对方冲劲，不出招、不还手；粗臂男（画面右侧的粗壮混混）蛮力十足、冲劲很大；两人全程保持首帧的左右站位关系不变。0.0–1.1 秒：粗臂男被她无视得发毛，恼羞成怒，低沉着嗓子吼：<d>[中文] 老子跟你说话呢！</d>——吼的同时左脚上前一步、拧腰转肩，右拳从右耳侧抡圆了、斜向下砸向武君仪的脸面。1.1–2.3 秒：就在右拳快要砸中的瞬间，武君仪屈膝沉腰、上身以腰为轴向自己右后方转过小半侧——拳锋擦着她的鼻尖与左颊过去，拳头绝对没有碰到她的脸和皮肤；她的左手掌根只在他右前臂外侧轻轻一触、顺着他的冲劲往外一送就松开（手指始终张开、不抓不握、不是硬挡），只这一触，他的拳路被送偏了。2.3–3.5 秒：粗臂男右拳砸空，这一拳的劲收不回来，被那一送带得右肩朝外偏出去；他左脚赶紧往侧前方迈出一步撑住身体，侧着身子站定，肩膀还往外偏着。3.5–5.17 秒：他扭头瞪向武君仪，鼻翼翕动、胸口起伏；武君仪脚下仍没动，只微微侧头，冷淡地回看他一眼。最后两人保持这个姿态（他侧身、她正面），画面短暂稳定。Camera performs a small-amplitude slow truck that follows the lateral force of the punch and the deflection, always keeping both figures fully framed. Every movement flows continuously into the next without pause, freeze, hesitation or abrupt jump. Throughout: 武君仪全程深蓝长袍、宽袖薄纱、裙摆花枝刺绣、高盘发髻与发饰，长枪始终背在背上、白麻布裹严、不露本体，本镜不取枪；粗臂男体型粗壮、面容不变。说话人：粗臂男（S5）低沉沙哑、话少；他只说上面那一句台词，武君仪全程不出声、不张嘴。
+overall_soundscape:
+那句台词之外，全场安静。环境音只有：粗臂男挥拳的破风声、她掌心擦过他前臂的一声轻响、衣料摩擦声、他侧身踉跄撑住脚步的摩擦声、霓虹电流的低频嗡鸣。音量轻、连续、干净。
+non_diegetic_music:
+N/A

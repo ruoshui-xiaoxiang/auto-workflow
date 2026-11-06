@@ -1,0 +1,105 @@
+{
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "z_image_turbo_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "2": {
+    "class_type": "ModelSamplingAuraFlow",
+    "inputs": {
+      "shift": 3.0,
+      "model": ["1", 0]
+    }
+  },
+  "3": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen_3_4b_fp8_mixed.safetensors",
+      "type": "lumina2",
+      "device": "default"
+    }
+  },
+  "4": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "__PROMPT__",
+      "clip": ["3", 0]
+    }
+  },
+  "5": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "",
+      "clip": ["3", 0]
+    }
+  },
+  "6": {
+    "class_type": "ConditioningZeroOut",
+    "inputs": {
+      "conditioning": ["5", 0]
+    }
+  },
+  "7": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "__CTRL_IMAGE__"
+    }
+  },
+  "8": {
+    "class_type": "ImagePadForOutpaint",
+    "inputs": {
+      "image": ["7", 0],
+      "left": "__PAD_L__",
+      "top": "__PAD_T__",
+      "right": "__PAD_R__",
+      "bottom": "__PAD_B__",
+      "feathering": "__FEATHER__"
+    }
+  },
+  "9": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    }
+  },
+  "10": {
+    "class_type": "VAEEncodeForInpaint",
+    "inputs": {
+      "pixels": ["8", 0],
+      "vae": ["9", 0],
+      "mask": ["8", 1],
+      "grow_mask_by": "__GROW__"
+    }
+  },
+  "11": {
+    "class_type": "KSampler",
+    "inputs": {
+      "seed": "__SEED__",
+      "steps": "__STEPS__",
+      "cfg": 1.0,
+      "sampler_name": "res_multistep",
+      "scheduler": "simple",
+      "denoise": "__DENOISE__",
+      "model": ["2", 0],
+      "positive": ["4", 0],
+      "negative": ["6", 0],
+      "latent_image": ["10", 0]
+    }
+  },
+  "12": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": ["11", 0],
+      "vae": ["9", 0]
+    }
+  },
+  "13": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "__PREFIX__",
+      "images": ["12", 0]
+    }
+  }
+}

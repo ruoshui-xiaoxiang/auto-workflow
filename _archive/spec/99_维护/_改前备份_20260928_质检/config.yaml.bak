@@ -1,0 +1,81 @@
+# 工作流框架全局配置
+# 约定：路径全 ASCII；服务幂等启动
+
+models:
+  # 云端后端（webui 设置面板填入 API Key；引擎侧 key 从环境变量读，不入库）
+  # remote: true 表示不需本地拉起，base_url 为 OpenAI 兼容端点（token-plan 用 /compatible-mode/v1）
+  cloud:
+    name: qwen3.8-max
+    base_url: "https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode"
+    api_key_env: "AW_CLOUD_API_KEY"
+    remote: true
+    startup_timeout: 30
+  # 百炼按量付费（DashScope），key 从 E:\密钥文件\阿里多模态.txt 读（sk-ws- 开头）
+  dashscope:
+    name: qwen-plus
+    base_url: "https://dashscope.aliyuncs.com/compatible-mode"
+    api_key_env: "AW_DASHSCOPE_API_KEY"
+    remote: true
+    startup_timeout: 30
+
+# LLM 兜底链：默认只走 cloud，不自动降级到按量付费的 dashscope。
+# 需要兜底时在工作流/--set 里显式写 llm_backend: cloud,dashscope
+fallback_chain: [cloud]
+
+comfyui:
+  # 2026-09-14 统一实例：引擎指向 **H3 那个实例（8189，ComfyUI 0.30.2）**，
+  # 它因为模型目录共享而能同时跑 FLUX / SDXL / H3（阶段0已验证）。
+  # E: 那个 8188（0.29.2）保留不动，只是引擎不再指向它。
+  base_url: "http://127.0.0.1:8189"
+  root: 'D:\AIWorkflow\ComfyUI_H3'
+  # 与 H3 实例的启动脚本 run_H3_ComfyUI.bat 用同一个输出目录，避免"两个事实源"漂移。
+  output_dir: 'D:\AIWorkflow\ComfyUI_H3\output'
+  input_dir: 'D:\AIWorkflow\ComfyUI_H3\ComfyUI\input'
+  # 引擎自起时用的命令（对齐 run_H3_ComfyUI.bat：带 sage、指定端口与输出目录）
+  launch_cmd: 'cmd /c ".\python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build --use-sage-attention --reserve-vram 2.0 --port 8189 --output-directory D:\AIWorkflow\ComfyUI_H3\output"'
+  log: 'D:\AIWorkflow\logs\comfyui_h3.log'
+  startup_timeout: 300
+
+# 一键成片只使用项目内已核验的本地二进制；不依赖 PATH，避免版本漂移。
+media_tools:
+  ffmpeg: 'D:\AIWorkflow\tools\ffmpeg.exe'
+  ffprobe: 'D:\AIWorkflow\LivePortrait-main\bin\ffprobe.exe'
+
+log_dir: 'D:\AIWorkflow\logs\workflows'   # 只放 .log（排障用），交付物一律进 output_root
+
+# ---- 交付根由 project 派生（2026-09-20 关口化 G11）------------------------------
+# 换项目只改 project（或命令行 --project 覆盖），不再手改下面那行绝对路径。
+# 动因：output_root 一直写死 无音\批次，9-18 仙戮四条产物就串进了无音批次夹，事后没人发现。
+pool_root: 'E:\图像影音资源池'
+project: '无音'                # 当前项目 → 引擎拼 pool_root\<project>\<batch_subdir>
+batch_subdir: '批次'
+# 项目代号别名：主题/批次名里出现别的项目代号即判串项目（G11 用）
+project_aliases:
+  无音: [wuyin, 无音, 沈无音]
+  仙戮: [xianlu, 仙戮, 双生]
+  圣女: [shengnv, 圣女]
+# 兜底：显式给 output_root 时以它为准，但引擎会校验它含不含当前 project
+output_root: 'E:\图像影音资源池\无音\批次'
+# 这些角色出现在提示词里却没挂任何参考图 → G7b 直接拦（铁律：指定角色必须带参考图出脸，
+# 纯文字出脸必漂；实验/对照类工作流若要故意裸跑，把本项临时清空并在主题里写"对照"）
+characters_needing_anchor: [沈无音, 无音, 小Q, 薇拉, 白玖璃]
+# 跑前自审闸（tools\check_preflight.py）：G1–G7 + G11 在提交生成前跑
+# warn 只进日志与报告，error 直接拦；preflight: off 可临时关掉
+preflight: off
+preflight_strict: off
+# selftest* 工作流的落点：绝不能往交付根写，否则自测会造出假批次
+selftest_output_root: 'D:\AIWorkflow\tmp\selftest_批次'
+status_file: 'D:\AIWorkflow\logs\workflows\status.json'
+
+# ---- 人工关口往哪儿"喊一声"（2026-09-20 定：纯本地，不走飞书）----
+# 关口停住时：pending 台账 + HTML 报告标 awaiting_human + Windows 气泡 +
+# 待批清单落 logs\workflows\待批关口.txt。
+# 批准两条路：在 Qoder 里跟我说一句（手机端实测图与视频都能看，素材呈审就在会话里做），
+# 或双击桌面「关口一键批准.bat」。
+# 飞书：入向通道未证实（应用只有 im:message.p2p_msg:readonly，群历史读被拒 230027），
+# 关口链路的推送已整段删除；只有 character_sheet 的"出图发群"还在用 @task("feishu")。
+
+# 飞书发图（feishu task 用）：user 身份 token_missing，只能 bot 身份两步传图
+feishu:
+  chat_id: 'oc_4f43e84db8b16403e036eb54d57bf49f'   # 用户本人接收群
+  lark_cli: 'C:\Users\若水\.local\share\qoder\lark-cli\node_modules\@larksuite\cli\bin\lark-cli.exe'

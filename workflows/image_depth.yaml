@@ -1,0 +1,52 @@
+name: image_depth
+description: 深度锁几何 —— 喂一张**真深度图**当骨架，按提示词重画。10-04 结掉 09-28 那笔悬案：Z-Image Fun ControlNet 的 depth 模式**是活的**（合成干净深度图实测边界富集比 2.42x，同提示词不挂控制的基线 1.01x）；09-28 那次失败是 FLUX union 的 depth 模式号没生效，不是深度图的锅。⚠️ 但**单目估计器出的深度图在这条路上零效应**（DepthAnythingV2-L 实测 1.02x ≈ 不挂；原因量化过：它的输出锐边占比 0.00 %，一条物体断缝都没有，而控制图是走 VAE 编码进去的，没有断缝就等于没有信号）⇒ 本流**不再内嵌深度预处理器**，src_image 就是那张深度图本身。
+provider: local
+args:
+  # 深度图本体（不是场景照片！）。约定近=亮、远=暗，且**物体边界必须有锐利断缝**。
+  # 来源三条：① UE 的 CustomDepth pass；② Blender 的 Z pass；
+  # ③ 手工构造块状深度图——本机实测这条就能锁住位置（C2 实验，富集比 2.42x），
+  #    也就是说"先搓个粗深度块定机位与站位，再让它出图"这条路是通的，不必先装 3D 软件。
+  src_image: ""
+  # 提示词描述"这个空间里有什么、什么材质"，别描述深度图本身长什么样。
+  prompt: ""
+  # 例："废弃沙漠公路，一名穿红色风衣的女子背对镜头走向远处，逆光沙尘，两侧倒塌的水泥电线杆，暖黄暮色，电影感写实"
+  width: 912
+  height: 512
+  steps: 8
+  # 强度。10-04 实测：1.0 正常锁定；**2.0 过驱**——模型会把深度图的灰阶直接抄成表面颜色
+  #   （白块变发光白板、远景区变纯黑，边界富集比冲到 19.75x 但那是抄灰阶不是锁空间）。别加。
+  strength: 1.0
+  # 历史留档（09-28，FLUX.1 通道）：当时记的是"DepthAnythingV2-L 对风格化 CG 帧出糊团，
+  #   喂进去出碎斑；换手搓高对比深度块后仍是图案不是场景 ⇒ union 的 depth 模式有没有真生效未证实"。
+  #   10-04 同一类输入换到 Z-Image Fun ControlNet 上能锁住位置 ⇒ 该悬案判给"模式号没生效"。
+  #   旧 FLUX 版模板 comfy/flux_controlnet_depth_api.json 随 FLUX.1 底模退役一起停用。
+  seed: ""
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（机制关口）
+    hint: 图片口径：分辨率/字面化词/落点；锁脸铁律由 i2i 锚点那条链把守，本流可裸文字
+    auto_gates: [G5, G7, G11, G13]
+    prompt_kind: image
+    characters: none
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    prompt: "{{args.prompt}}"
+    refs: "{{args.src_image}}"
+
+  - task: control
+    id: gen
+    label: 深度锁几何出图
+    hint: src_image＝深度图本体（本流不内嵌预处理器）；要锁剪影/构图请用 previz_control
+    workflow: "comfy/z_image_cn_api.json"
+    prompt: "{{args.prompt}}"
+    src_image: "{{args.src_image}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    steps: "{{args.steps}}"
+    strength: "{{args.strength}}"
+    seed: "{{args.seed}}"
+    prefix: "depth_{{run_id}}"
+    stage: "depth"
+    timeout: 900

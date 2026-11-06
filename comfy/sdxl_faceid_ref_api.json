@@ -1,0 +1,85 @@
+{
+  "1": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": { "ckpt_name": "sd_xl_base_1.0.safetensors" }
+  },
+  "2": {
+    "class_type": "IPAdapterModelLoader",
+    "inputs": { "ipadapter_file": "ip-adapter-faceid-plusv2_sdxl.bin" }
+  },
+  "3": {
+    "class_type": "CLIPVisionLoader",
+    "inputs": { "clip_name": "CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors" }
+  },
+  "4": {
+    "class_type": "LoraLoader",
+    "inputs": {
+      "model": ["1", 0], "clip": ["1", 1],
+      "lora_name": "ip-adapter-faceid-plusv2_sdxl_lora.safetensors",
+      "strength_model": 0.6, "strength_clip": 0.0
+    }
+  },
+  "5": {
+    "class_type": "IPAdapterInsightFaceLoader",
+    "inputs": { "provider": "CPU", "model_name": "antelopev2" }
+  },
+  "6": {
+    "class_type": "LoadImage",
+    "inputs": { "image": "__REF__" }
+  },
+  "7": {
+    "class_type": "IPAdapterFaceID",
+    "inputs": {
+      "model": ["4", 0],
+      "ipadapter": ["2", 0],
+      "image": ["6", 0],
+      "clip_vision": ["3", 0],
+      "insightface": ["5", 0],
+      "weight": 1.0,
+      "weight_faceidv2": 3.0,
+      "weight_type": "linear",
+      "combine_embeds": "concat",
+      "start_at": 0.0,
+      "end_at": 1.0,
+      "embeds_scaling": "V only"
+    }
+  },
+  "8": {
+    "class_type": "CLIPTextEncode",
+    "inputs": { "text": "__PROMPT__", "clip": ["4", 1] }
+  },
+  "9": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "blurry, noisy, lowres, jpeg artifacts, deformed face, distorted, malformed, bad anatomy, extra fingers, watermark, text",
+      "clip": ["4", 1]
+    }
+  },
+  "10": {
+    "class_type": "EmptyLatentImage",
+    "inputs": { "width": "__W__", "height": "__H__", "batch_size": 1 }
+  },
+  "11": {
+    "class_type": "KSampler",
+    "inputs": {
+      "seed": "__SEED__",
+      "steps": "__STEPS__",
+      "cfg": 6.0,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "denoise": 1.0,
+      "model": ["7", 0],
+      "positive": ["8", 0],
+      "negative": ["9", 0],
+      "latent_image": ["10", 0]
+    }
+  },
+  "12": {
+    "class_type": "VAEDecode",
+    "inputs": { "samples": ["11", 0], "vae": ["1", 2] }
+  },
+  "13": {
+    "class_type": "SaveImage",
+    "inputs": { "filename_prefix": "__PREFIX__", "images": ["12", 0] }
+  }
+}

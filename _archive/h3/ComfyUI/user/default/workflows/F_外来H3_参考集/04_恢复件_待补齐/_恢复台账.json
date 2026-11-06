@@ -1,0 +1,1029 @@
+{
+ "criterion": "按两条硬限制恢复：①硬件软件皆无解 ②节点全网拿不到且无替代；两者之外不算硬限制",
+ "count": 35,
+ "items": [
+  {
+   "file": "F106_MiniMaxH3_最优官流.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\F106_MiniMaxH3_最优官流.json",
+   "restore_from": "D:\\AIWorkflow\\backups\\_治理_20261030_H3外来画布无本地路径\\F106_MiniMaxH3_最优官流.json",
+   "sha256": "ad33baafe5c24e559dc20fa5ac2ba6ff165b066853a346135b611c081a9352d9",
+   "origin": "归档void",
+   "still_needs": "缺 SLA 4step LoRA；本机有 4 个 turbo_4step 同族件可替代（改 widget 指向）"
+  },
+  {
+   "file": "F107_MiniMaxH3_最优官流.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\F107_MiniMaxH3_最优官流.json",
+   "restore_from": "D:\\AIWorkflow\\backups\\_治理_20261030_H3外来画布无本地路径\\F107_MiniMaxH3_最优官流.json",
+   "sha256": "7c39096d071d762e79e95cb64ebb49c937b0dc48945b1d4358d236e8023f26e7",
+   "origin": "归档void",
+   "still_needs": "缺 hybrid b25-49-int8 —— 本轮已下载 19.53 GB，本机已具备"
+  },
+  {
+   "file": "F108_MiniMax时间线插件内置有限分段工作流.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\F108_MiniMax时间线插件内置有限分段工作流.json",
+   "restore_from": "D:\\AIWorkflow\\backups\\_治理_20261030_H3外来画布无本地路径\\F108_MiniMax时间线插件内置有限分段工作流.json",
+   "sha256": "fadd72be47a4108c46985da3a5bda9cc5f40a5d3655665d680f4a1d9a4e8f3b1",
+   "origin": "归档void",
+   "still_needs": "缺 lightx2v rank31；本机有 lightx2v_turbo_4step_v0.1_comfy 同族可替代"
+  },
+  {
+   "file": "MiniMax H3 Ref2VA - 双采轻量稳定版工作流.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\MiniMax H3 Ref2VA - 双采轻量稳定版工作流.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.16-让角色开口唱歌！MiniMax H3 × ComfyUI 双采样，声画同步燃爆全场\\MiniMax H3 ComfyUI 角色唱歌双采样使用手册\\MiniMax H3 Ref2VA - 双采轻量稳定版工作流.json",
+   "sha256": "d9063629f7a9ea051ef53c6f0f7e1adf750797ebdde501ce83209b7eb9724513",
+   "origin": "已删-01_就绪_重启后可加载",
+   "still_needs": "节点/权重待补齐：LoraLoaderBypassModelOnly:minimax_h3_turbo_4步加速_comfyui.safetensors, UNETLoader:minimax_h3_ref2va_int8_convrot.safetensors"
+  },
+  {
+   "file": "MiniMax H3多图参考工作流.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\MiniMax H3多图参考工作流.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\ComfyUIAI漫剧案例工作流方案\\MiniMax H3多图参考工作流.json",
+   "sha256": "d63ada1dd63dfe25e9863d8756de38a6965a3de365f6fda9442241d7e0f92fc0",
+   "origin": "已删-01_就绪_重启后可加载",
+   "still_needs": "节点/权重待补齐：LoraLoaderBypassModelOnly:minimax_h3_turbo_4步加速_comfyui.safetensors, UNETLoader:minimax_h3_fl2va_int8_convrot.safetensors"
+  },
+  {
+   "file": "剑斗多参模式workflowREF2VA.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\剑斗多参模式workflowREF2VA.json",
+   "restore_from": "D:\\AIWorkflow\\tmp\\h3_combat_v2\\剑斗多参模式workflowREF2VA.json",
+   "sha256": "05263960fd2776aaa1712f4c75e6563eca26b11410ad4c78bdca38fc6b9c73d3",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen3vl_32b_minimax_h3_int8_convrot.safetensors, LoraLoaderModelOnly:Bunny_weapon_combatV1.safetensors"
+  },
+  {
+   "file": "剑斗首尾帧模式workflowFL2VA.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\剑斗首尾帧模式workflowFL2VA.json",
+   "restore_from": "D:\\AIWorkflow\\tmp\\h3_combat_v2\\剑斗首尾帧模式workflowFL2VA.json",
+   "sha256": "ce4363358562e7a993f04986d5ea9916d6761eccc68653870dc6251adfa81021",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen3vl_32b_minimax_h3_int8_convrot.safetensors, LoraLoaderModelOnly:Bunny_weapon_combatV1.safetensors"
+  },
+  {
+   "file": "007-Krea2+Z-Image-Turbo-高质量生图.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\007-Krea2+Z-Image-Turbo-高质量生图.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\007-Krea2+Z-Image-Turbo-高质量生图.json",
+   "sha256": "010ac65d8e1ba9da02b48b29ad62eff45107c54add4b03bf8f3845ef56eed275",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen3VLInstruct4bHeretic_v10(1).safetensors, CLIPLoader:qwen_3_4b_fp4_mixed.safetensors"
+  },
+  {
+   "file": "009-Klein-文生图.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\009-Klein-文生图.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\009-Klein-文生图.json",
+   "sha256": "170f5d9ef460851fc6e39d61af3495e0c8ad396a3d01e811a2179db1761b64a2",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen_3_4b_fp4_mixed.safetensors, CLIPLoader:qwen_3_8b_fp8mixed.safetensors"
+  },
+  {
+   "file": "010-Klein-图片编辑.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\010-Klein-图片编辑.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\010-Klein-图片编辑.json",
+   "sha256": "c5dcd586e0289bb859bd8fe682eb46ea76d6efc0ccb7e1bb4fcc76ca85c761c3",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen_3_8b_fp8mixed.safetensors, UNETLoader:flux-2-klein-9b-fp8.safetensors"
+  },
+  {
+   "file": "011-Klein-双图编辑.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\011-Klein-双图编辑.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\011-Klein-双图编辑.json",
+   "sha256": "0c6224ae6e0a0915c450363d5735b183f9377aa3124c59356e4c285e6c591a0e",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen_3_8b_fp8mixed.safetensors, UNETLoader:flux-2-klein-9b.safetensors"
+  },
+  {
+   "file": "012-Klein-三图编辑.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\012-Klein-三图编辑.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\012-Klein-三图编辑.json",
+   "sha256": "4d726c166d74d12da875182f92cf9b2e9d24da3e1d901439ee924077b5ce7c35",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen_3_8b_fp8mixed.safetensors, UNETLoader:flux-2-klein-9b.safetensors"
+  },
+  {
+   "file": "013-Klein-局部重绘.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\013-Klein-局部重绘.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\013-Klein-局部重绘.json",
+   "sha256": "56dc0b1720895477b2c894424060dcbda9b4e23aa65ab229f27463a0ecc3c782",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen_3_8b_fp8mixed.safetensors, UNETLoader:flux-2-klein-9b.safetensors"
+  },
+  {
+   "file": "MiniMax H3 - fl2va - ref2va.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\MiniMax H3 - fl2va - ref2va.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.18-告别硬续！MiniMaxH3丝滑连贯长视频生成工作流\\资料\\节点包\\ComfyUI-H3-Motion-Context\\example_workflows\\MiniMax H3 - fl2va - ref2va.json",
+   "sha256": "36712d093ed0fc750ea9db38de62a5f5405562ba4f2c22c74ee31d1e6a364d83",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:Qwen3vl-32b-minimax-h3_int8_convrot.safetensors, UNETLoader:MiniMax_H3_fl2va_pruned_int8_convrot.safetensors"
+  },
+  {
+   "file": "MiniMax H3多图参考.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\MiniMax H3多图参考.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.20-本地部署 AI 视频模型手搓一个属于自己的 AI 女友\\工作流\\MiniMax H3多图参考.json",
+   "sha256": "f3ff768f7d89dfaf14204ec59cbf0d90ef69d9652b415cf1625fde6e548f94e6",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：LoraLoaderBypassModelOnly:minimax_h3_turbo_4步加速_comfyui.safetensors, UNETLoader:minimax_h3_fl2va_int8_convrot.safetensors"
+  },
+  {
+   "file": "MiniMaxH3-MontionContext.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\MiniMaxH3-MontionContext.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.18-告别硬续！MiniMaxH3丝滑连贯长视频生成工作流\\资料\\MiniMaxH3-MontionContext.json",
+   "sha256": "693362548d28f0ed9c5c3cf3fd89a7a7ba9abbdb99e93aa8b84867553d46f5de",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen3vl_32b_minimax_h3_int8_convrot.safetensors, LoraLoaderBypassModelOnly:minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors"
+  },
+  {
+   "file": "MiniMaxH3-双采超清.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\MiniMaxH3-双采超清.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.13-MiniMaxH3双采工作流\\工作流\\MiniMaxH3-双采超清.json",
+   "sha256": "914f138029f1bf296646f4f91d80826f7c0e86a7d965d1a84b2a298eb65b2aca",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen3vl_32b_minimax_h3_int8_convrot.safetensors, LoraLoaderBypassModelOnly:minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors"
+  },
+  {
+   "file": "MiniMaxH3_影视创作工作流集合.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\MiniMaxH3_影视创作工作流集合.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.23-MinimaxH3-影视创作工作流集合\\资料\\工作流\\MiniMaxH3_影视创作工作流集合.json",
+   "sha256": "be5071e8a462f154eb1aa86b24b917fc15a5ae3734133fd8dab42ef9b43dd083",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen3vl_32b_minimax_h3_int8_convrot.safetensors, LoraLoaderModelOnly:minimax_h3_fl2v_turbo_4step_v0.1_768p_sla_comfyui_bf16.safetensors"
+  },
+  {
+   "file": "MiniMax_H3基础时间线规划工作流.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\MiniMax_H3基础时间线规划工作流.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.04-MinimaxH3长视频动作迁移人物替换\\工作流+插件\\插件\\ComfyUI-MiniMaxH3-TimelineDirector\\example_workflows\\MiniMax_H3基础时间线规划工作流.json",
+   "sha256": "7494e8d87c084d435aef229fd16770ea107e20bff6c86306bb534613cacc2a9e",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors, LoraLoaderModelOnly:minimax_h3_fl2v_lightx2v_turbo_4step_v1.0_768p_resized_avg_rank_31_bf16.safetensors"
+  },
+  {
+   "file": "MiniMax_H3时间线规划拆分节点工作流.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\MiniMax_H3时间线规划拆分节点工作流.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.04-MinimaxH3长视频动作迁移人物替换\\工作流+插件\\插件\\ComfyUI-MiniMaxH3-TimelineDirector\\example_workflows\\MiniMax_H3时间线规划拆分节点工作流.json",
+   "sha256": "d368b720200306c8452871d0f9229b3f7fd5e2a0e5f402f3ef602d1263065e39",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors, LoraLoaderModelOnly:minimax_h3_fl2v_lightx2v_turbo_4step_v1.0_768p_resized_avg_rank_31_bf16.safetensors"
+  },
+  {
+   "file": "MiniMax_H3时间规划+Prompt提示词生成.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\MiniMax_H3时间规划+Prompt提示词生成.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.04-MinimaxH3长视频动作迁移人物替换\\工作流+插件\\插件\\ComfyUI-MiniMaxH3-TimelineDirector\\example_workflows\\MiniMax_H3时间规划+Prompt提示词生成.json",
+   "sha256": "6812a972c895e6f84f10a880382eac64ee9300da192b1b728a62ce7bbb21e933",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors, LoraLoaderModelOnly:minimax_h3_fl2v_lightx2v_turbo_4step_v1.0_768p_resized_avg_rank_31_bf16.safetensors"
+  },
+  {
+   "file": "Qwen3.8+MiniMaxH3.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\Qwen3.8+MiniMaxH3.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.02-Qwen3.8“越狱”无审核！配合 MiniMax H3，一键放飞自我！\\资料\\工作流\\Qwen3.8+MiniMaxH3.json",
+   "sha256": "77622c755c8419f6b8e9ab0f80cd6899881e4291c03be1569568e7a80f3f6339",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen3vl_32b_minimax_h3_int8_convrot.safetensors, LoraLoaderModelOnly:MysticXXX_MMH3-V1.safetensors"
+  },
+  {
+   "file": "minimax_h3_r2v_时间线导演台.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\minimax_h3_r2v_时间线导演台.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.04-MinimaxH3长视频动作迁移人物替换\\工作流+插件\\插件\\ComfyUI-MiniMaxH3-TimelineDirector\\example_workflows\\minimax_h3_r2v_时间线导演台.json",
+   "sha256": "9addb4b6c586d627e2ee1a16d37c3a0be4aab15f6c83ddac4dbbf3ffdc50e6bd",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors, LoraLoaderModelOnly:minimax_h3_fl2v_lightx2v_turbo_4step_v1.0_768p_resized_avg_rank_31_bf16.safetensors"
+  },
+  {
+   "file": "海螺H3视频编辑-人物替换V1+.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\海螺H3视频编辑-人物替换V1+.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.23-MinimaxH3-影视创作工作流集合\\海螺H3视频编辑-人物替换V1+.json",
+   "sha256": "9ec04eb89ec977517880c12671e75972024f1510679fae216995dffea1f03742",
+   "origin": "已删-02_待补依赖",
+   "still_needs": "节点/权重待补齐：CLIPLoader:qwen3vl_32b_minimax_h3_int8_convrot.safetensors"
+  },
+  {
+   "file": "006-Krea2-单采+高清放大.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\006-Krea2-单采+高清放大.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\006-Krea2-单采+高清放大.json",
+   "sha256": "af057865e2d4371bf8dd0d9c19898ce7dec494d18fb3ddaecab7ed151f0f5fb3",
+   "origin": "已删-",
+   "still_needs": "节点/权重待补齐："
+  },
+  {
+   "file": "001-MiniMaxH3-文生视频.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\001-MiniMaxH3-文生视频.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\001-MiniMaxH3-文生视频.json",
+   "sha256": "5df45b0ff8fd0a97141d1734bdd20f7dd89682cd15ddbf9e5f6e4007d0f780ad",
+   "origin": "已删-03暂缓",
+   "still_needs": "节点来源当时未做全网检索，需补检索：CR Prompt Text, ShowText|pysssss, TESpeedMiniMaxH3, llama_cpp_instruct_adv, llama_cpp_model_loader, llama_cpp_parameters"
+  },
+  {
+   "file": "002-MiniMaxH3-首尾帧生视频.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\002-MiniMaxH3-首尾帧生视频.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\002-MiniMaxH3-首尾帧生视频.json",
+   "sha256": "f93ca7657472bb1a954c45c88b973d850c11b3b67a326110f81c3a8485c98464",
+   "origin": "已删-03暂缓",
+   "still_needs": "节点来源当时未做全网检索，需补检索：CR Prompt Text, ShowText|pysssss, TESpeedMiniMaxH3, easy showAnything, llama_cpp_instruct_adv, llama_cpp_model_loader, llama_cpp_parameters"
+  },
+  {
+   "file": "003-MiniMaxH3-参考生视频.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\003-MiniMaxH3-参考生视频.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\003-MiniMaxH3-参考生视频.json",
+   "sha256": "5fb4ce89ecd75d48a98133520d1ff547f9d138309db936d725841a5c03f19c6d",
+   "origin": "已删-03暂缓",
+   "still_needs": "节点来源当时未做全网检索，需补检索：CR Prompt Text, ShowText|pysssss, TESpeedMiniMaxH3, Text (Any), easy cleanGpuUsed, llama_cpp_instruct_adv, llama_cpp_model_loader, llama_cpp_parameters"
+  },
+  {
+   "file": "H3_Seamless_Chain_v2.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\H3_Seamless_Chain_v2.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.18-告别硬续！MiniMaxH3丝滑连贯长视频生成工作流\\资料\\节点包\\ComfyUI-H3-Multishot\\workflows\\H3_Seamless_Chain_v2.json",
+   "sha256": "bedd89bb1890bbc3143b1c0f717dfbd46b5aa91d88f1c9fbd45da65d9219a463",
+   "origin": "已删-03暂缓",
+   "still_needs": "节点来源当时未做全网检索，需补检索：H3AnySwitch, H3AutoRefs, H3ClipLoaderAny, H3LoraStack, H3ModelLoaderAny, H3MultishotMemorySampler, H3OptionalImage, H3ReferenceVideo, H3StudioControls, H3StudioSwitches, JoyEcho_LLMEnhance, MiniMaxH3BlockCacheT8, MiniMaxH3ChunkFeedForward, MiniMaxH3MemoryEfficientSolAttentionPatch, RiftPromptSource, ShowText|pysssss"
+  },
+  {
+   "file": "MiniMax+H3+导演台全能工作流.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\MiniMax+H3+导演台全能工作流.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\MinimaxH3导演台工作流\\MiniMax+H3+导演台全能工作流.json",
+   "sha256": "fa40539a002264b292e6bcb990bc8d2f3788f90f4cadcaf6c67f2a726aa925be",
+   "origin": "已删-03暂缓",
+   "still_needs": "节点来源当时未做全网检索，需补检索：MiniMaxH3Director, MiniMaxH3DirectorRefine"
+  },
+  {
+   "file": "MiniMaxH3-多参生视频.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\MiniMaxH3-多参生视频.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.05-MinMaxH3-最新双采，解决油腻，美学参考全都要\\工作流\\MiniMaxH3-多参生视频.json",
+   "sha256": "530e97a957436e2841d1bfaaad7eb268b7400453579f80cd4177d257171b0af2",
+   "origin": "已删-03暂缓",
+   "still_needs": "节点来源当时未做全网检索，需补检索：CR Prompt Text, JWFloat, MinimaxH3LatentUpscaler3D"
+  },
+  {
+   "file": "minimax_h3_双节点加速工作流.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\minimax_h3_双节点加速工作流.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.04-Seedance2.5的严父！Minimax_h3来了！双加速节点工作流\\工作流\\minimax_h3_双节点加速工作流.json",
+   "sha256": "154ebad2d7ddeb6f6958cefc8c0d820078ae390210bc68fc8cb48912340dc2d1",
+   "origin": "已删-03暂缓",
+   "still_needs": "节点来源当时未做全网检索，需补检索：TESpeedMiniMaxH3"
+  },
+  {
+   "file": "006-Krea2-单采+高清放大_from_工作流.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\006-Krea2-单采+高清放大_from_工作流.json",
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.11-云上天宫复刻教学\\工作流\\006-Krea2-单采+高清放大.json",
+   "sha256": "b673e4ab7295025cb17002de1e63df23c51fe230f8ae6b46ba02030201ef897d",
+   "origin": "已删-同名补入",
+   "still_needs": "与另一份 006-Krea2 同名但内容不同"
+  },
+  {
+   "file": "F109_MinimaxH3长视频动作迁移人物替换+长视频数字人工作流.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\F109_MinimaxH3长视频动作迁移人物替换+长视频数字人工作流.json",
+   "restore_from": "D:\\AIWorkflow\\backups\\_治理_20261030_H3外来画布无本地路径\\F109_MinimaxH3长视频动作迁移人物替换+长视频数字人工作流.json",
+   "sha256": "a808228cba97c43830899aa481143e40ff65fcdbbf7567ac72705bd7476620f3",
+   "origin": "归档void",
+   "still_needs": "UNETLoader 点名 fused_refdelta_r1024_turbo8_mystic07_int8_convrot，本机无同名件；已接受用 minimax_h3_ref2va_pruned_int8_convrot + MysticXXX_MMH3-V1 LoRA 顶替，改图后为派生件，原件字节保持不动"
+  },
+  {
+   "file": "F110_MinimaxH3长视频动作迁移人物替换+长视频数字人工作流.json",
+   "restored_to": "D:\\AIWorkflow\\ComfyUI_H3\\ComfyUI\\user\\default\\workflows\\F_外来H3_参考集\\04_恢复件_待补齐\\F110_MinimaxH3长视频动作迁移人物替换+长视频数字人工作流.json",
+   "restore_from": "D:\\AIWorkflow\\backups\\_治理_20261030_H3外来画布无本地路径\\F110_MinimaxH3长视频动作迁移人物替换+长视频数字人工作流.json",
+   "sha256": "d6064b8307658173d9323dd227bd5b677edaad9869d9516749f061a3ea3813d9",
+   "origin": "归档void",
+   "still_needs": "UNETLoader 点名 fused_refdelta_r1024_turbo8_mystic07_int8_convrot，本机无同名件；已接受用 minimax_h3_ref2va_pruned_int8_convrot + MysticXXX_MMH3-V1 LoRA 顶替，改图后为派生件，原件字节保持不动"
+  }
+ ],
+ "_说明": "本目录唯一的台账。以当前文件名为键，含来源路径、源件 sha256、当前 sha256、所在桶、仍缺什么、适配版的 widget 改动数。",
+ "_criterion": "现行判据只有两条硬限制：①硬件跑不动且软件无解 ②缺失节点全网拿不到且无替代。权重未下载／需装包／需喂素材／纯后期件无生成链／本地缓存查不到，均不算硬限制。",
+ "_updated": "2026-10-30 15:54",
+ "_counts": {
+  "01_就绪_重启后可加载": 3,
+  "01b_本机档适配版": 6,
+  "02_待补依赖": 7,
+  "04_恢复件_待补齐": 35
+ },
+ "canvases": [
+  {
+   "file": "F101_008-Z-Image-Turbo-文生图.json",
+   "bucket": "01_就绪_重启后可加载",
+   "bytes": 8155,
+   "sha256": "c98028b281bc8eafe5f6893a864e93db051ae2e68bffa8bdded166064e5cde70",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\008-Z-Image-Turbo-文生图.json",
+   "source_sha256": "c98028b281bc8eafe5f6893a864e93db051ae2e68bffa8bdded166064e5cde70"
+  },
+  {
+   "file": "F103_MiniMax H3全能参考工作流.json",
+   "bucket": "01_就绪_重启后可加载",
+   "bytes": 227575,
+   "sha256": "e01ed2595074a6c9987e473f58bf8ed8b1013af42858c0bba59402ecd51d24bd",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.04-Seedance2.5的严父！Minimax_h3来了！双加速节点工作流\\MiniMax H3全能参考工作流.json",
+   "source_sha256": "e01ed2595074a6c9987e473f58bf8ed8b1013af42858c0bba59402ecd51d24bd"
+  },
+  {
+   "file": "F105_MiniMaxH3-双时钟采样加速Lora.json",
+   "bucket": "01_就绪_重启后可加载",
+   "bytes": 42575,
+   "sha256": "134676bc73aa110f97572feebb815bc143be878480e8f515d8c66cdb74eb9034",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.08-更高的质量更短的时间！MiniMaxH3双时钟采样器4步lora超级加速\\工作流\\MiniMaxH3-双时钟采样加速Lora.json",
+   "source_sha256": "134676bc73aa110f97572feebb815bc143be878480e8f515d8c66cdb74eb9034"
+  },
+  {
+   "file": "F102_MiniMax H3 Ref2VA - 双采轻量稳定版工作流_本机档.json",
+   "bucket": "01b_本机档适配版",
+   "bytes": 33846,
+   "sha256": "8ba836c15777dca848d95614141347329020f77d3b2a92c60266053f18566ad3",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.16-让角色开口唱歌！MiniMax H3 × ComfyUI 双采样，声画同步燃爆全场\\MiniMax H3 ComfyUI 角色唱歌双采样使用手册\\MiniMax H3 Ref2VA - 双采轻量稳定版工作流.json",
+   "source_sha256": "d9063629f7a9ea051ef53c6f0f7e1adf750797ebdde501ce83209b7eb9724513",
+   "adapted": {
+    "widget_changes": 4,
+    "mode_changes": 0,
+    "detail": [
+     {
+      "node": 4,
+      "widget": 0,
+      "type": "VAELoader",
+      "from": "minimax\\minimax_h3_video_vae_fp16.safetensors",
+      "to": "minimax_h3_video_vae_fp16.safetensors"
+     },
+     {
+      "node": 5,
+      "widget": 0,
+      "type": "VAELoader",
+      "from": "minimax\\minimax_h3_audio_vae_fp32.safetensors",
+      "to": "minimax_h3_audio_vae_fp32.safetensors"
+     },
+     {
+      "node": 2,
+      "widget": 0,
+      "type": "LoraLoaderBypassModelOnly",
+      "from": "minimax_h3_turbo_4步加速_comfyui.safetensors",
+      "to": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors"
+     },
+     {
+      "node": 1,
+      "widget": 0,
+      "type": "UNETLoader",
+      "from": "minimax_h3_ref2va_int8_convrot.safetensors",
+      "to": "minimax_h3_ref2va_pruned_int8_convrot.safetensors"
+     }
+    ]
+   }
+  },
+  {
+   "file": "F103_MiniMax H3全能参考工作流_本机档.json",
+   "bucket": "01b_本机档适配版",
+   "bytes": 236159,
+   "sha256": "8d46b9ffbeba19ff85bcea468261f8ba396105746e061088e251ee3fa1102eee",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.04-Seedance2.5的严父！Minimax_h3来了！双加速节点工作流\\MiniMax H3全能参考工作流.json",
+   "source_sha256": "e01ed2595074a6c9987e473f58bf8ed8b1013af42858c0bba59402ecd51d24bd",
+   "adapted": {
+    "widget_changes": 1,
+    "mode_changes": 0,
+    "detail": [
+     {
+      "node": 202,
+      "widget": 0,
+      "type": "CLIPLoader",
+      "from": "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+      "to": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors"
+     }
+    ]
+   }
+  },
+  {
+   "file": "F104_MiniMax H3多图参考工作流_本机档.json",
+   "bucket": "01b_本机档适配版",
+   "bytes": 44028,
+   "sha256": "ba8a8b779c9bd78438362c178e66d5d646c370bb22bfcee32567d3c18c22af49",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\ComfyUIAI漫剧案例工作流方案\\MiniMax H3多图参考工作流.json",
+   "source_sha256": "d63ada1dd63dfe25e9863d8756de38a6965a3de365f6fda9442241d7e0f92fc0",
+   "adapted": {
+    "widget_changes": 4,
+    "mode_changes": 0,
+    "detail": [
+     {
+      "node": 4,
+      "widget": 0,
+      "type": "VAELoader",
+      "from": "minimax\\minimax_h3_video_vae_fp16.safetensors",
+      "to": "minimax_h3_video_vae_fp16.safetensors"
+     },
+     {
+      "node": 5,
+      "widget": 0,
+      "type": "VAELoader",
+      "from": "minimax\\minimax_h3_audio_vae_fp32.safetensors",
+      "to": "minimax_h3_audio_vae_fp32.safetensors"
+     },
+     {
+      "node": 2,
+      "widget": 0,
+      "type": "LoraLoaderBypassModelOnly",
+      "from": "minimax_h3_turbo_4步加速_comfyui.safetensors",
+      "to": "minimax_h3_fl2v_turbo_4step_v0.1_comfyui_alpha8-T8-convert.safetensors"
+     },
+     {
+      "node": 1,
+      "widget": 0,
+      "type": "UNETLoader",
+      "from": "minimax_h3\\minimax_h3_fl2va_int8_convrot.safetensors",
+      "to": "minimax_h3_fl2va_pruned_int8_convrot.safetensors"
+     }
+    ]
+   }
+  },
+  {
+   "file": "F105_MiniMaxH3-双时钟采样加速Lora_本机档.json",
+   "bucket": "01b_本机档适配版",
+   "bytes": 46013,
+   "sha256": "42b58917b7a9825b30fcdb647aca940e495334700db09450c3b919f56398ea08",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.08-更高的质量更短的时间！MiniMaxH3双时钟采样器4步lora超级加速\\工作流\\MiniMaxH3-双时钟采样加速Lora.json",
+   "source_sha256": "134676bc73aa110f97572feebb815bc143be878480e8f515d8c66cdb74eb9034",
+   "adapted": {
+    "widget_changes": 5,
+    "mode_changes": 0,
+    "detail": [
+     {
+      "node": 5,
+      "widget": 0,
+      "type": "VAELoader",
+      "from": "minimax\\minimax_h3_audio_vae_fp32.safetensors",
+      "to": "minimax_h3_audio_vae_fp32.safetensors"
+     },
+     {
+      "node": 4,
+      "widget": 0,
+      "type": "VAELoader",
+      "from": "minimax\\minimax_h3_video_vae_fp16.safetensors",
+      "to": "minimax_h3_video_vae_fp16.safetensors"
+     },
+     {
+      "node": 2,
+      "widget": 0,
+      "type": "LoraLoaderBypassModelOnly",
+      "from": "MiniMaxH3\\minimax_h3_turbo_4步加速_comfyui.safetensors",
+      "to": "minimax_h3_fl2v_turbo_4step_v0.1_comfyui_alpha8-T8-convert.safetensors"
+     },
+     {
+      "node": 3,
+      "widget": 0,
+      "type": "CLIPLoader",
+      "from": "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+      "to": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors"
+     },
+     {
+      "node": 1,
+      "widget": 0,
+      "type": "UNETLoader",
+      "from": "minimax_h3\\minimax_h3_fl2va_int8_convrot.safetensors",
+      "to": "minimax_h3_fl2va_pruned_int8_convrot.safetensors"
+     }
+    ]
+   }
+  },
+  {
+   "file": "F111_剑斗多参模式workflowREF2VA_本机档.json",
+   "bucket": "01b_本机档适配版",
+   "bytes": 170975,
+   "sha256": "c9051cb21c389820929cab45f1d128508b907fdd1043386175b650c847363f99",
+   "source": "https://hf-mirror.com/JOKER141/MiniMax-H3-Combat-Base-V2/resolve/main/%E5%89%91%E6%96%97%E5%A4%9A%E5%8F%82%E6%A8%A1%E5%BC%8FworkflowREF2VA.json",
+   "source_sha256": null,
+   "adapted": {
+    "widget_changes": 0,
+    "mode_changes": 0,
+    "detail": []
+   },
+   "source_kind": "HF公开仓 JOKER141/MiniMax-H3-Combat-Base-V2"
+  },
+  {
+   "file": "F112_剑斗首尾帧模式workflowFL2VA_本机档.json",
+   "bucket": "01b_本机档适配版",
+   "bytes": 54387,
+   "sha256": "a3a6005703222db23cbb717efa3d66860416c2397ce92593c6ea70fab4dc7987",
+   "source": "https://hf-mirror.com/JOKER141/MiniMax-H3-Combat-Base-V2/resolve/main/%E5%89%91%E6%96%97%E9%A6%96%E5%B0%BE%E5%B8%A7%E6%A8%A1%E5%BC%8FworkflowFL2VA.json",
+   "source_sha256": null,
+   "adapted": {
+    "widget_changes": 0,
+    "mode_changes": 0,
+    "detail": []
+   },
+   "source_kind": "HF公开仓 JOKER141/MiniMax-H3-Combat-Base-V2"
+  },
+  {
+   "file": "F201_004-RIFE-视频插帧.json",
+   "bucket": "02_待补依赖",
+   "bytes": 10763,
+   "sha256": "2461e94439a7bdc7cfea86beadac86b4158e04bf747175be6ea405500e5572d3",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\004-RIFE-视频插帧.json",
+   "source_sha256": "2461e94439a7bdc7cfea86beadac86b4158e04bf747175be6ea405500e5572d3",
+   "still_needs": [
+    "MathExpression|pysssss",
+    "RIFE VFI",
+    "easy showAnything"
+   ]
+  },
+  {
+   "file": "F202_005-SeedVR2-视频高清放大.json",
+   "bucket": "02_待补依赖",
+   "bytes": 16422,
+   "sha256": "dd8356be8f73b67970f3469327adb32bb19a6ba05aae79ada40b0287dfe970ad",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\005-SeedVR2-视频高清放大.json",
+   "source_sha256": "dd8356be8f73b67970f3469327adb32bb19a6ba05aae79ada40b0287dfe970ad",
+   "still_needs": [
+    "SeedVR2LoadDiTModel",
+    "SeedVR2LoadVAEModel",
+    "SeedVR2VideoUpscaler"
+   ]
+  },
+  {
+   "file": "F211_H3_HardMode_Chained.json",
+   "bucket": "02_待补依赖",
+   "bytes": 38159,
+   "sha256": "a14a35c3b738b3ae0ecec654c5690825c31051e7a822cb477cfd07b50d7328c2",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.18-告别硬续！MiniMaxH3丝滑连贯长视频生成工作流\\资料\\节点包\\ComfyUI-H3-Multishot\\workflows\\legacy\\H3_HardMode_Chained.json",
+   "source_sha256": "a14a35c3b738b3ae0ecec654c5690825c31051e7a822cb477cfd07b50d7328c2",
+   "still_needs": [
+    "H3ClipLoaderAny",
+    "H3ConcatAV",
+    "H3ConditionStrength",
+    "H3EpisodeSplit",
+    "H3FreeTextEncoder",
+    "H3LastFrame"
+   ]
+  },
+  {
+   "file": "F212_H3_Keyframes.json",
+   "bucket": "02_待补依赖",
+   "bytes": 25180,
+   "sha256": "79d31f65897255197769a219611c5cf4c4a0686ff6a7146b329a5b1e43357ffb",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.18-告别硬续！MiniMaxH3丝滑连贯长视频生成工作流\\资料\\节点包\\ComfyUI-H3-Multishot\\workflows\\H3_Keyframes.json",
+   "source_sha256": "79d31f65897255197769a219611c5cf4c4a0686ff6a7146b329a5b1e43357ffb",
+   "still_needs": [
+    "H3ClipLoaderAny",
+    "H3ConditionStrength",
+    "H3Keyframes",
+    "H3LoraStack",
+    "H3ModelLoaderAny"
+   ]
+  },
+  {
+   "file": "F213_H3_Multishot_AIO.json",
+   "bucket": "02_待补依赖",
+   "bytes": 12877,
+   "sha256": "ac05d7ad916e945496191c07feaf453b9043c478ad958ce9f04deb8c8db1a32b",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.18-告别硬续！MiniMaxH3丝滑连贯长视频生成工作流\\资料\\节点包\\ComfyUI-H3-Multishot\\workflows\\legacy\\H3_Multishot_AIO.json",
+   "source_sha256": "ac05d7ad916e945496191c07feaf453b9043c478ad958ce9f04deb8c8db1a32b",
+   "still_needs": [
+    "H3ClipLoaderAny",
+    "H3LoraStack",
+    "H3ModelLoaderAny",
+    "H3MultishotSampler",
+    "H3OptionalImage"
+   ]
+  },
+  {
+   "file": "F214_H3_Multishot_MEMORY.json",
+   "bucket": "02_待补依赖",
+   "bytes": 13771,
+   "sha256": "91986653e56366d2273f0e23eebbd46eb7737c772916d9324640eed79edebad0",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.18-告别硬续！MiniMaxH3丝滑连贯长视频生成工作流\\资料\\节点包\\ComfyUI-H3-Multishot\\workflows\\legacy\\H3_Multishot_MEMORY.json",
+   "source_sha256": "91986653e56366d2273f0e23eebbd46eb7737c772916d9324640eed79edebad0",
+   "still_needs": [
+    "H3ClipLoaderAny",
+    "H3LoraStack",
+    "H3ModelLoaderAny",
+    "H3MultishotMemorySampler",
+    "H3OptionalImage"
+   ]
+  },
+  {
+   "file": "F215_H3_Seamless_Chain_CORE.json",
+   "bucket": "02_待补依赖",
+   "bytes": 26019,
+   "sha256": "080d6aab9218541f4cd4b4dd23aac4ef9737e5786c59008cf08c3d508bbd47ed",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.18-告别硬续！MiniMaxH3丝滑连贯长视频生成工作流\\资料\\节点包\\ComfyUI-H3-Multishot\\workflows\\H3_Seamless_Chain_CORE.json",
+   "source_sha256": "080d6aab9218541f4cd4b4dd23aac4ef9737e5786c59008cf08c3d508bbd47ed",
+   "still_needs": [
+    "H3ClipLoaderAny",
+    "H3LoraStack",
+    "H3ModelLoaderAny",
+    "H3MultishotSampler",
+    "H3StudioControls"
+   ]
+  },
+  {
+   "file": "001-MiniMaxH3-文生视频.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 51440,
+   "sha256": "5df45b0ff8fd0a97141d1734bdd20f7dd89682cd15ddbf9e5f6e4007d0f780ad",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\001-MiniMaxH3-文生视频.json",
+   "source_sha256": "5df45b0ff8fd0a97141d1734bdd20f7dd89682cd15ddbf9e5f6e4007d0f780ad",
+   "still_needs": [
+    "CR Prompt Text",
+    "ShowText|pysssss",
+    "TESpeedMiniMaxH3",
+    "llama_cpp_instruct_adv",
+    "llama_cpp_model_loader",
+    "llama_cpp_parameters"
+   ]
+  },
+  {
+   "file": "002-MiniMaxH3-首尾帧生视频.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 53327,
+   "sha256": "f93ca7657472bb1a954c45c88b973d850c11b3b67a326110f81c3a8485c98464",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\002-MiniMaxH3-首尾帧生视频.json",
+   "source_sha256": "f93ca7657472bb1a954c45c88b973d850c11b3b67a326110f81c3a8485c98464",
+   "still_needs": [
+    "CR Prompt Text",
+    "ShowText|pysssss",
+    "TESpeedMiniMaxH3",
+    "easy showAnything",
+    "llama_cpp_instruct_adv",
+    "llama_cpp_model_loader"
+   ]
+  },
+  {
+   "file": "003-MiniMaxH3-参考生视频.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 88287,
+   "sha256": "5fb4ce89ecd75d48a98133520d1ff547f9d138309db936d725841a5c03f19c6d",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\003-MiniMaxH3-参考生视频.json",
+   "source_sha256": "5fb4ce89ecd75d48a98133520d1ff547f9d138309db936d725841a5c03f19c6d",
+   "still_needs": [
+    "CR Prompt Text",
+    "ShowText|pysssss",
+    "TESpeedMiniMaxH3",
+    "Text (Any)",
+    "easy cleanGpuUsed",
+    "llama_cpp_instruct_adv"
+   ]
+  },
+  {
+   "file": "006-Krea2-单采+高清放大.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 55108,
+   "sha256": "af057865e2d4371bf8dd0d9c19898ce7dec494d18fb3ddaecab7ed151f0f5fb3",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\006-Krea2-单采+高清放大.json",
+   "source_sha256": "af057865e2d4371bf8dd0d9c19898ce7dec494d18fb3ddaecab7ed151f0f5fb3",
+   "still_needs": [
+    "CR Prompt Text",
+    "GetImageSize+",
+    "MultiTextConcatenate",
+    "easy cleanGpuUsed",
+    "easy promptList",
+    "easy simpleMathDual"
+   ]
+  },
+  {
+   "file": "006-Krea2-单采+高清放大_from_工作流.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 71415,
+   "sha256": "b673e4ab7295025cb17002de1e63df23c51fe230f8ae6b46ba02030201ef897d",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\006-Krea2-单采+高清放大.json",
+   "source_sha256": "af057865e2d4371bf8dd0d9c19898ce7dec494d18fb3ddaecab7ed151f0f5fb3"
+  },
+  {
+   "file": "007-Krea2+Z-Image-Turbo-高质量生图.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 83437,
+   "sha256": "010ac65d8e1ba9da02b48b29ad62eff45107c54add4b03bf8f3845ef56eed275",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\007-Krea2+Z-Image-Turbo-高质量生图.json",
+   "source_sha256": "010ac65d8e1ba9da02b48b29ad62eff45107c54add4b03bf8f3845ef56eed275",
+   "still_needs": [
+    "CR Prompt Text",
+    "ClipLoaderGGUF",
+    "ConditioningKrea2Rebalance",
+    "LayerColor: ColorAdapter",
+    "SeedVR2LoadDiTModel",
+    "SeedVR2LoadVAEModel"
+   ]
+  },
+  {
+   "file": "009-Klein-文生图.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 23260,
+   "sha256": "170f5d9ef460851fc6e39d61af3495e0c8ad396a3d01e811a2179db1761b64a2",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\009-Klein-文生图.json",
+   "source_sha256": "170f5d9ef460851fc6e39d61af3495e0c8ad396a3d01e811a2179db1761b64a2",
+   "still_needs": [
+    "CR SDXL Aspect Ratio",
+    "PlaySound|pysssss"
+   ]
+  },
+  {
+   "file": "010-Klein-图片编辑.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 26407,
+   "sha256": "c5dcd586e0289bb859bd8fe682eb46ea76d6efc0ccb7e1bb4fcc76ca85c761c3",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\010-Klein-图片编辑.json",
+   "source_sha256": "c5dcd586e0289bb859bd8fe682eb46ea76d6efc0ccb7e1bb4fcc76ca85c761c3",
+   "still_needs": [
+    "LayerUtility: ImageScaleByAspectRatio V2",
+    "PlaySound|pysssss"
+   ]
+  },
+  {
+   "file": "011-Klein-双图编辑.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 30321,
+   "sha256": "0c6224ae6e0a0915c450363d5735b183f9377aa3124c59356e4c285e6c591a0e",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\011-Klein-双图编辑.json",
+   "source_sha256": "0c6224ae6e0a0915c450363d5735b183f9377aa3124c59356e4c285e6c591a0e",
+   "still_needs": [
+    "LayerUtility: ImageScaleByAspectRatio V2",
+    "PlaySound|pysssss"
+   ]
+  },
+  {
+   "file": "012-Klein-三图编辑.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 36393,
+   "sha256": "4d726c166d74d12da875182f92cf9b2e9d24da3e1d901439ee924077b5ce7c35",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\012-Klein-三图编辑.json",
+   "source_sha256": "4d726c166d74d12da875182f92cf9b2e9d24da3e1d901439ee924077b5ce7c35",
+   "still_needs": [
+    "LayerUtility: ImageScaleByAspectRatio V2",
+    "PlaySound|pysssss"
+   ]
+  },
+  {
+   "file": "013-Klein-局部重绘.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 34920,
+   "sha256": "56dc0b1720895477b2c894424060dcbda9b4e23aa65ab229f27463a0ecc3c782",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\013-Klein-局部重绘.json",
+   "source_sha256": "56dc0b1720895477b2c894424060dcbda9b4e23aa65ab229f27463a0ecc3c782",
+   "still_needs": [
+    "LanPaint_MaskBlend",
+    "LayerUtility: ImageScaleByAspectRatio V2",
+    "PlaySound|pysssss"
+   ]
+  },
+  {
+   "file": "F106_MiniMaxH3_最优官流.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 72021,
+   "sha256": "ad33baafe5c24e559dc20fa5ac2ba6ff165b066853a346135b611c081a9352d9",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.28-HellGrind式提示词xMiniMaxH3\\资料\\MiniMaxH3_最优官流.json",
+   "source_sha256": "ad33baafe5c24e559dc20fa5ac2ba6ff165b066853a346135b611c081a9352d9"
+  },
+  {
+   "file": "F107_MiniMaxH3_最优官流.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 103893,
+   "sha256": "7c39096d071d762e79e95cb64ebb49c937b0dc48945b1d4358d236e8023f26e7",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.28-HellGrind式提示词xMiniMaxH3\\资料\\MiniMaxH3_最优官流.json",
+   "source_sha256": "ad33baafe5c24e559dc20fa5ac2ba6ff165b066853a346135b611c081a9352d9"
+  },
+  {
+   "file": "F108_MiniMax时间线插件内置有限分段工作流.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 50878,
+   "sha256": "fadd72be47a4108c46985da3a5bda9cc5f40a5d3655665d680f4a1d9a4e8f3b1",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.04-MinimaxH3长视频动作迁移人物替换\\工作流+插件\\插件\\ComfyUI-MiniMaxH3-TimelineDirector\\example_workflows\\MiniMax时间线插件内置有限分段工作流.json",
+   "source_sha256": "fadd72be47a4108c46985da3a5bda9cc5f40a5d3655665d680f4a1d9a4e8f3b1"
+  },
+  {
+   "file": "F109_MinimaxH3长视频动作迁移人物替换+长视频数字人工作流.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 50438,
+   "sha256": "a808228cba97c43830899aa481143e40ff65fcdbbf7567ac72705bd7476620f3",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.04-MinimaxH3长视频动作迁移人物替换\\工作流+插件\\工作流\\MinimaxH3长视频动作迁移人物替换+长视频数字人工作流 .json",
+   "source_sha256": "a808228cba97c43830899aa481143e40ff65fcdbbf7567ac72705bd7476620f3"
+  },
+  {
+   "file": "F110_MinimaxH3长视频动作迁移人物替换+长视频数字人工作流.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 31602,
+   "sha256": "d6064b8307658173d9323dd227bd5b677edaad9869d9516749f061a3ea3813d9",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.04-MinimaxH3长视频动作迁移人物替换\\工作流+插件\\插件\\ComfyUI-MiniMaxH3-TimelineDirector\\example_workflows\\MinimaxH3长视频动作迁移人物替换+长视频数字人工作流.json",
+   "source_sha256": "d6064b8307658173d9323dd227bd5b677edaad9869d9516749f061a3ea3813d9"
+  },
+  {
+   "file": "H3_Seamless_Chain_v2.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 130193,
+   "sha256": "bedd89bb1890bbc3143b1c0f717dfbd46b5aa91d88f1c9fbd45da65d9219a463",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.18-告别硬续！MiniMaxH3丝滑连贯长视频生成工作流\\资料\\节点包\\ComfyUI-H3-Multishot\\workflows\\H3_Seamless_Chain_v2.json",
+   "source_sha256": "bedd89bb1890bbc3143b1c0f717dfbd46b5aa91d88f1c9fbd45da65d9219a463",
+   "still_needs": [
+    "H3AnySwitch",
+    "H3AutoRefs",
+    "H3ClipLoaderAny",
+    "H3LoraStack",
+    "H3ModelLoaderAny",
+    "H3MultishotMemorySampler"
+   ]
+  },
+  {
+   "file": "MiniMax H3 - fl2va - ref2va.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 124426,
+   "sha256": "36712d093ed0fc750ea9db38de62a5f5405562ba4f2c22c74ee31d1e6a364d83",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.18-告别硬续！MiniMaxH3丝滑连贯长视频生成工作流\\资料\\节点包\\ComfyUI-H3-Motion-Context\\example_workflows\\MiniMax H3 - fl2va - ref2va.json",
+   "source_sha256": "36712d093ed0fc750ea9db38de62a5f5405562ba4f2c22c74ee31d1e6a364d83",
+   "still_needs": [
+    "SpectrumApplyMiniMaxH3",
+    "Text Multiline"
+   ]
+  },
+  {
+   "file": "MiniMax H3 Ref2VA - 双采轻量稳定版工作流.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 55826,
+   "sha256": "d9063629f7a9ea051ef53c6f0f7e1adf750797ebdde501ce83209b7eb9724513",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.16-让角色开口唱歌！MiniMax H3 × ComfyUI 双采样，声画同步燃爆全场\\MiniMax H3 ComfyUI 角色唱歌双采样使用手册\\MiniMax H3 Ref2VA - 双采轻量稳定版工作流.json",
+   "source_sha256": "d9063629f7a9ea051ef53c6f0f7e1adf750797ebdde501ce83209b7eb9724513"
+  },
+  {
+   "file": "MiniMax H3多图参考.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 186874,
+   "sha256": "f3ff768f7d89dfaf14204ec59cbf0d90ef69d9652b415cf1625fde6e548f94e6",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.20-本地部署 AI 视频模型手搓一个属于自己的 AI 女友\\工作流\\MiniMax H3多图参考.json",
+   "source_sha256": "f3ff768f7d89dfaf14204ec59cbf0d90ef69d9652b415cf1625fde6e548f94e6",
+   "still_needs": [
+    "JjkText"
+   ]
+  },
+  {
+   "file": "MiniMax H3多图参考工作流.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 67814,
+   "sha256": "d63ada1dd63dfe25e9863d8756de38a6965a3de365f6fda9442241d7e0f92fc0",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\ComfyUIAI漫剧案例工作流方案\\MiniMax H3多图参考工作流.json",
+   "source_sha256": "d63ada1dd63dfe25e9863d8756de38a6965a3de365f6fda9442241d7e0f92fc0"
+  },
+  {
+   "file": "MiniMax+H3+导演台全能工作流.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 48070,
+   "sha256": "fa40539a002264b292e6bcb990bc8d2f3788f90f4cadcaf6c67f2a726aa925be",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\MinimaxH3导演台工作流\\MiniMax+H3+导演台全能工作流.json",
+   "source_sha256": "fa40539a002264b292e6bcb990bc8d2f3788f90f4cadcaf6c67f2a726aa925be",
+   "still_needs": [
+    "MiniMaxH3Director",
+    "MiniMaxH3DirectorRefine"
+   ]
+  },
+  {
+   "file": "minimax_h3_r2v_时间线导演台.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 63108,
+   "sha256": "9addb4b6c586d627e2ee1a16d37c3a0be4aab15f6c83ddac4dbbf3ffdc50e6bd",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.04-MinimaxH3长视频动作迁移人物替换\\工作流+插件\\插件\\ComfyUI-MiniMaxH3-TimelineDirector\\example_workflows\\minimax_h3_r2v_时间线导演台.json",
+   "source_sha256": "9addb4b6c586d627e2ee1a16d37c3a0be4aab15f6c83ddac4dbbf3ffdc50e6bd",
+   "still_needs": [
+    "easy showAnything"
+   ]
+  },
+  {
+   "file": "minimax_h3_双节点加速工作流.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 58591,
+   "sha256": "154ebad2d7ddeb6f6958cefc8c0d820078ae390210bc68fc8cb48912340dc2d1",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.04-Seedance2.5的严父！Minimax_h3来了！双加速节点工作流\\工作流\\minimax_h3_双节点加速工作流.json",
+   "source_sha256": "154ebad2d7ddeb6f6958cefc8c0d820078ae390210bc68fc8cb48912340dc2d1",
+   "still_needs": [
+    "TESpeedMiniMaxH3"
+   ]
+  },
+  {
+   "file": "MiniMax_H3基础时间线规划工作流.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 32952,
+   "sha256": "7494e8d87c084d435aef229fd16770ea107e20bff6c86306bb534613cacc2a9e",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.04-MinimaxH3长视频动作迁移人物替换\\工作流+插件\\插件\\ComfyUI-MiniMaxH3-TimelineDirector\\example_workflows\\MiniMax_H3基础时间线规划工作流.json",
+   "source_sha256": "7494e8d87c084d435aef229fd16770ea107e20bff6c86306bb534613cacc2a9e",
+   "still_needs": [
+    "easy showAnything"
+   ]
+  },
+  {
+   "file": "MiniMax_H3时间线规划拆分节点工作流.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 54731,
+   "sha256": "d368b720200306c8452871d0f9229b3f7fd5e2a0e5f402f3ef602d1263065e39",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.04-MinimaxH3长视频动作迁移人物替换\\工作流+插件\\插件\\ComfyUI-MiniMaxH3-TimelineDirector\\example_workflows\\MiniMax_H3时间线规划拆分节点工作流.json",
+   "source_sha256": "d368b720200306c8452871d0f9229b3f7fd5e2a0e5f402f3ef602d1263065e39",
+   "still_needs": [
+    "easy showAnything"
+   ]
+  },
+  {
+   "file": "MiniMax_H3时间规划+Prompt提示词生成.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 57288,
+   "sha256": "6812a972c895e6f84f10a880382eac64ee9300da192b1b728a62ce7bbb21e933",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.04-MinimaxH3长视频动作迁移人物替换\\工作流+插件\\插件\\ComfyUI-MiniMaxH3-TimelineDirector\\example_workflows\\MiniMax_H3时间规划+Prompt提示词生成.json",
+   "source_sha256": "6812a972c895e6f84f10a880382eac64ee9300da192b1b728a62ce7bbb21e933",
+   "still_needs": [
+    "easy showAnything"
+   ]
+  },
+  {
+   "file": "MiniMaxH3-MontionContext.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 72451,
+   "sha256": "693362548d28f0ed9c5c3cf3fd89a7a7ba9abbdb99e93aa8b84867553d46f5de",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.18-告别硬续！MiniMaxH3丝滑连贯长视频生成工作流\\资料\\MiniMaxH3-MontionContext.json",
+   "source_sha256": "693362548d28f0ed9c5c3cf3fd89a7a7ba9abbdb99e93aa8b84867553d46f5de",
+   "still_needs": [
+    "CR Prompt Text",
+    "H3ConditionStrength",
+    "H3FreeTextEncoder",
+    "SpectrumApplyMiniMaxH3"
+   ]
+  },
+  {
+   "file": "MiniMaxH3-双采超清.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 146496,
+   "sha256": "914f138029f1bf296646f4f91d80826f7c0e86a7d965d1a84b2a298eb65b2aca",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.13-MiniMaxH3双采工作流\\工作流\\MiniMaxH3-双采超清.json",
+   "source_sha256": "914f138029f1bf296646f4f91d80826f7c0e86a7d965d1a84b2a298eb65b2aca",
+   "still_needs": [
+    "CR Prompt Text",
+    "easy cleanGpuUsed",
+    "easy clearCacheAll"
+   ]
+  },
+  {
+   "file": "MiniMaxH3-多参生视频.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 112899,
+   "sha256": "530e97a957436e2841d1bfaaad7eb268b7400453579f80cd4177d257171b0af2",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.05-MinMaxH3-最新双采，解决油腻，美学参考全都要\\工作流\\MiniMaxH3-多参生视频.json",
+   "source_sha256": "530e97a957436e2841d1bfaaad7eb268b7400453579f80cd4177d257171b0af2",
+   "still_needs": [
+    "CR Prompt Text",
+    "JWFloat",
+    "MinimaxH3LatentUpscaler3D"
+   ]
+  },
+  {
+   "file": "MiniMaxH3_影视创作工作流集合.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 214993,
+   "sha256": "be5071e8a462f154eb1aa86b24b917fc15a5ae3734133fd8dab42ef9b43dd083",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.23-MinimaxH3-影视创作工作流集合\\资料\\工作流\\MiniMaxH3_影视创作工作流集合.json",
+   "source_sha256": "be5071e8a462f154eb1aa86b24b917fc15a5ae3734133fd8dab42ef9b43dd083",
+   "still_needs": [
+    "CR Prompt Text",
+    "Krea2EditGroundedEncode",
+    "Krea2EditModelPatch",
+    "easy cleanGpuUsed",
+    "easy clearCacheAll"
+   ]
+  },
+  {
+   "file": "Qwen3.8+MiniMaxH3.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 122142,
+   "sha256": "77622c755c8419f6b8e9ab0f80cd6899881e4291c03be1569568e7a80f3f6339",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.02-Qwen3.8“越狱”无审核！配合 MiniMax H3，一键放飞自我！\\资料\\工作流\\Qwen3.8+MiniMaxH3.json",
+   "source_sha256": "77622c755c8419f6b8e9ab0f80cd6899881e4291c03be1569568e7a80f3f6339",
+   "still_needs": [
+    "CR Prompt Text",
+    "QwenLT_ImageInfer",
+    "QwenLT_ModelLoader",
+    "ShowText|pysssss"
+   ]
+  },
+  {
+   "file": "剑斗多参模式workflowREF2VA.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 191033,
+   "sha256": "05263960fd2776aaa1712f4c75e6563eca26b11410ad4c78bdca38fc6b9c73d3",
+   "source": "D:\\AIWorkflow\\tmp\\h3_combat_v2\\剑斗多参模式workflowREF2VA.json",
+   "source_sha256": "05263960fd2776aaa1712f4c75e6563eca26b11410ad4c78bdca38fc6b9c73d3",
+   "still_needs": [
+    "FACE.safetensors",
+    "easy cleanGpuUsed",
+    "minimax_h3_fl2v_lightx2v_turbo_4step_v0.1_comfy.safetensors",
+    "minimax_h3_hybrid_fl2va_ref2va_b25-49.safetensors",
+    "qwen3vl_32b_minimax_h3_int8_convrot.safetensors"
+   ]
+  },
+  {
+   "file": "剑斗首尾帧模式workflowFL2VA.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 71645,
+   "sha256": "ce4363358562e7a993f04986d5ea9916d6761eccc68653870dc6251adfa81021",
+   "source": "D:\\AIWorkflow\\tmp\\h3_combat_v2\\剑斗首尾帧模式workflowFL2VA.json",
+   "source_sha256": "ce4363358562e7a993f04986d5ea9916d6761eccc68653870dc6251adfa81021",
+   "still_needs": [
+    "Motion_Repair.safetensors",
+    "easy cleanGpuUsed",
+    "minimax_h3_fl2v_lightx2v_turbo_4step_v0.1_comfy.safetensors",
+    "minimax_h3_fl2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors",
+    "minimax_h3_hybrid_fl2va_ref2va_b25-49.safetensors",
+    "qwen3vl_32b_minimax_h3_int8_convrot.safetensors"
+   ]
+  },
+  {
+   "file": "海螺H3视频编辑-人物替换V1+.json",
+   "bucket": "04_恢复件_待补齐",
+   "bytes": 90461,
+   "sha256": "9ec04eb89ec977517880c12671e75972024f1510679fae216995dffea1f03742",
+   "source": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.23-MinimaxH3-影视创作工作流集合\\海螺H3视频编辑-人物替换V1+.json",
+   "source_sha256": "9ec04eb89ec977517880c12671e75972024f1510679fae216995dffea1f03742",
+   "still_needs": [
+    "PlaySound|pysssss",
+    "easy anythingIndexSwitch",
+    "easy int"
+   ]
+  }
+ ]
+}

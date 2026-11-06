@@ -1,0 +1,19 @@
+subject_definitions:
+<Subject 1> is the commander referenced from <Picture 1>: a tall woman in a black floor-length robe with subtly woven gold patterns, a narrow crimson lining along the front and hem, gold shoulder pieces, black leather gloves, and black boots; her straight black hair is drawn into a high ponytail with a gold ornament; pale skin and a sharp profile.
+<Subject 2> is the adjutant referenced from <Picture 2>: a man of about twenty-six in a black military coat with dense gold embroidery across the chest and shoulders, a crimson inner lining, a long black cape, black leather gloves, and short dark hair.
+<Picture 3> is the environment and composition anchor for [Shot 1].
+
+summary: [reference generation] The adjutant objects to the order; the two face each other beside the window.
+
+retention_analysis:
+<Subject 1> (appears in [Shot 1]): fully_preserved — the commander identity, clothing and colour carry over from <Picture 1>.
+<Subject 2> (appears in [Shot 1]): fully_preserved — the adjutant identity, clothing and colour carry over from <Picture 2>.
+<Picture 3> (appears in [Shot 1], composition anchor): weak_reference — only the window position and the spacing of the figures are reused; no faces or surface detail come from it.
+
+detailed_description:
+Live-action, cinematic, a cold grey-blue palette, shallow depth of field, fine film grain.
+[Shot 1] Wide shot, fixed framing, both figures in full view. One continuous floor-to-ceiling pane runs across the back wall with no mullions or cross bars; a narrow hand rail sits at hip height; the deck plates are polished dark metal that mirror the window; a structural column with a gold eagle crest stands at the far end of the wall. Cold white overhead light falls from above and slightly behind the lens; a blue rim runs along the window edge from the planet outside; the floor throws a soft reflection of both. A planet hangs beyond the right side of the window; its fragmentation state is defined per shot in state_timeline. Several capital ships hold position at mid distance, none closing. roughly half the planet has broken away, glowing orange fissures across the broken face, the dust veil thickening. The commander (from <Subject 1>) stands at the window with her hands clasped behind her; the adjutant faces her from the right, his cape hanging straight. He turns his head toward her, brow tightening, and speaks with his jaw held low. <Subject 2> (S1) says, voice hesitant and pressed low: <d>[Chinese] 指挥官,这不合规矩.</d> He closes his lips. He holds her gaze and keeps his hands behind his back. The commander keeps her face still and does not answer yet.
+
+overall_soundscape: A low ventilation hum, a faint tablet buzz from his side, and the soft creak of a deck plate under a shifting boot.
+
+non_diegetic_music: N/A

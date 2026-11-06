@@ -1,0 +1,54 @@
+name: image_i2i
+description: 图生图 —— 保输入图的构图/机位，按提示词重画风格、材质与细节。denoise 是唯一刻度。现役通道＝Z-Image-Turbo（2026-10-04 换），刻度见下面 args.denoise 注释里的本机梯子。
+provider: local
+args:
+  # 初始化图。留空则跑不起来（control 步骤会明确报错，不会白烧 GPU）。
+  src_image: ""
+  # 例：'E:\创作\武昭君仪\打戏练习件_长枪vs义体腿\首帧\P3A_双人站位_首帧_736x416.png'
+  prompt: ""
+  # 例："赛博朋克雨夜长巷，左侧持长枪的女子弓步前刺，右侧人形机甲挥拳，霓虹灯牌、蒸汽、湿地面反光，电影感写实CG"
+  # ⚠️ denoise 刻度（2026-10-04 Z-Image-Turbo 本机 5 点梯子；768x1344，同 seed 同提示词，
+  #   逐像素对源图量 MAD 与亮度相关；尺子＝tmp/wzy/z_i2i_ladder.py）：
+  #   0.30 → MAD 5.29   亮度相关 0.986   几乎只动材质
+  #   0.45 → MAD 6.81   亮度相关 0.977   画风开始改，构图锁死
+  #   0.60 → MAD 9.35   亮度相关 0.956   画风明显改，构图仍锁 ←「保构图换画风」甜点区
+  #   0.75 → MAD 23.97  亮度相关 0.768   构图开始漂
+  #   0.90 → MAD 106.81 亮度相关 0.020   等于重画
+  #   ⇒ 可用带 ≈0.45~0.70。
+  #   🔴 旧 FLUX.1 通道的刻度（0.30 构图相关 0.833 / 0.60 掉到 0.571）**不跨通道适用**，
+  #      FLUX.1 权重已退役，那两个数字只作历史留档，别再拿来选档。
+  denoise: 0.6
+  # width/height 只喂"跑前自审"（G5 分辨率口径）；i2i 的实际尺寸由 src_image 决定
+  width: 736
+  height: 416
+  steps: 8
+  seed: ""
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（机制关口）
+    hint: 图片口径：分辨率/字面化词/落点；锁脸铁律由 i2i 锚点那条链把守，本流可裸文字
+    auto_gates: [G5, G7, G11, G13]
+    prompt_kind: image
+    characters: none
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    prompt: "{{args.prompt}}"
+    refs: "{{args.src_image}}"
+
+  - task: control
+    id: gen
+    label: 图生图（保构图重绘）
+    hint: denoise 0.45~0.70 保构图换画风（Z-Image 本机梯子）；0.90 等于重画。产物落批次夹 i2i/
+    workflow: "comfy/z_image_i2i_api.json"
+    prompt: "{{args.prompt}}"
+    src_image: "{{args.src_image}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    steps: "{{args.steps}}"
+    denoise: "{{args.denoise}}"
+    seed: "{{args.seed}}"
+    prefix: "i2i_{{run_id}}"
+    stage: "i2i"
+    timeout: 900

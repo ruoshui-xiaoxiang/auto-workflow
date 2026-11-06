@@ -1,5 +1,7 @@
 name: selftest
 description: 引擎自检：报告 / manifest / 失败讲人话。不碰显存、不调模型、不出图
+provider: local
+prompt_kind: image
 args:
   word: hello
 steps:

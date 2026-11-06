@@ -1,0 +1,57 @@
+=== S01 ===
+源：S01 古代线：留信、夜行、雾起、倒地.mp4  8.6 MB  15.1s  4779kbps  1280x720  24.00fps
+   压预览版 4000k …
+   预览版：6.4 MB  3545kbps  box 顺序 ftyp->moov->free->mdat
+✓ 版本已挂上：/m/c3cfb8f6f7b6ed6b/S01_v1.mp4（6677368 字节）
+✓ 首帧缩略已上传（取自 5.0s 处）
+  画布：https://www.huahuayoueryuan.com/studio
+=== S02 ===
+源：S02 霓虹初醒.mp4  9.1 MB  15.1s  5060kbps  1280x720  24.00fps
+   压预览版 4000k …
+   预览版：6.0 MB  3333kbps  box 顺序 ftyp->moov->free->mdat
+✓ 版本已挂上：/m/c3cfb8f6f7b6ed6b/S02_v1.mp4（6291788 字节）
+✓ 首帧缩略已上传（取自 5.0s 处）
+  画布：https://www.huahuayoueryuan.com/studio
+=== S13 ===
+源：S13 旧址失效：闭锁的铁门.mp4  10.0 MB  15.1s  5559kbps  1280x720  24.00fps
+   压预览版 4000k …
+   预览版：6.2 MB  3466kbps  box 顺序 ftyp->moov->free->mdat
+✓ 版本已挂上：/m/c3cfb8f6f7b6ed6b/S13_v1.mp4（6543898 字节）
+✓ 首帧缩略已上传（取自 5.0s 处）
+  画布：https://www.huahuayoueryuan.com/studio
+=== T04 ===
+源：T04 古代线：雾涌探土、往回走.mp4  7.9 MB  12.1s  5444kbps  1280x720  24.00fps
+   压预览版 4000k …
+   预览版：5.0 MB  3469kbps  box 顺序 ftyp->moov->free->mdat
+✓ 版本已挂上：/m/c3cfb8f6f7b6ed6b/T04_v1.mp4（5244449 字节）
+✓ 首帧缩略已上传（取自 4.0s 处）
+  画布：https://www.huahuayoueryuan.com/studio
+=== T09 ===
+源：T09 巷道冲突：围拽与警告.mp4  8.1 MB  14.1s  4808kbps  1280x720  24.00fps
+   压预览版 4000k …
+   预览版：5.5 MB  3280kbps  box 顺序 ftyp->moov->free->mdat
+✓ 版本已挂上：/m/c3cfb8f6f7b6ed6b/T09_v1.mp4（5769643 字节）
+✓ 首帧缩略已上传（取自 4.7s 处）
+  画布：https://www.huahuayoueryuan.com/studio
+=== T10 ===
+源：T10 巷道冲突：外板下坠与红符号.mp4  8.1 MB  15.1s  4522kbps  1280x720  24.00fps
+   压预览版 4000k …
+   预览版：6.0 MB  3335kbps  box 顺序 ftyp->moov->free->mdat
+✓ 版本已挂上：/m/c3cfb8f6f7b6ed6b/T10_v1.mp4（6295696 字节）
+✓ 首帧缩略已上传（取自 5.0s 处）
+  画布：https://www.huahuayoueryuan.com/studio
+=== T11 ===
+源：T11 巷道冲突：喝止与新武器之疑.mp4  8.4 MB  13.1s  5413kbps  1280x720  24.00fps
+   压预览版 4000k …
+   预览版：5.3 MB  3415kbps  box 顺序 ftyp->moov->free->mdat
+✓ 版本已挂上：/m/c3cfb8f6f7b6ed6b/T11_v1.mp4（5587029 字节）
+✓ 首帧缩略已上传（取自 4.4s 处）
+  画布：https://www.huahuayoueryuan.com/studio
+=== T12 ===
+源：T12 巷战第一合：扯枪与撞空当.mp4  11.3 MB  15.1s  6264kbps  1280x720  24.00fps
+   压预览版 4000k …
+   预览版：6.2 MB  3421kbps  box 顺序 ftyp->moov->free->mdat
+✓ 版本已挂上：/m/c3cfb8f6f7b6ed6b/T12_v1.mp4（6458361 字节）
+✓ 首帧缩略已上传（取自 5.0s 处）
+  画布：https://www.huahuayoueryuan.com/studio
+ALL DONE, 失败 0

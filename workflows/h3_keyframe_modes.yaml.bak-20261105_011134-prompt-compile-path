@@ -1,0 +1,89 @@
+name: h3_keyframe_modes
+description: H3 可选首尾帧单流（W1c）：同一个模板 comfy/h3_keyframes_optional_api.json，按 args.input_mode 决定 0/1/2 张图——T2VA 不接图、I2VA 只接首帧、L2VA 只接尾帧、FL2VA 首尾各一张。旧静态模板保留兼容，本流是新入口，不批量迁移历史批次。prompt_kind 由 run.py 按 input_mode 派生（h3_t2va/h3_i2va/h3_l2va/h3_fl2va），YAML 里不写第二份模式表。FL2VA 默认单镜；多镜须在提示词里显式写 [Shot N] 切点。
+provider: local
+args:
+  theme: ""
+  prompt_file: ""
+  # 素材顺序：I2VA/FL2VA 第 1 张=首帧；L2VA 唯一一张=尾帧；T2VA 必须为空。
+  ref_images: []
+  input_mode: i2va          # t2va / i2va / l2va / fl2va
+  prompt_kind: ""           # run.py 按 input_mode 派生；不要手填成与模式不一致的值
+  width: 736
+  height: 416
+  length: 124
+  duration: 5.1667
+  steps: 8
+  seed: 42
+  lora: minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors
+  lora_strength: 0.7
+  head_chunks: 4
+  use_llm_polish: true
+  llm_backend: dashscope
+steps:
+  # ── W2 强制编译（与 h3_i2va_video/h3_i2va_batch 同构）───────────────────
+  # 原稿按字节快照＋记 sha256 → translate 只写批次目录的编译稿（**不回写原稿**）→
+  # compile_check 在提交前复核原稿哈希未变＋格式/台词/语言/长度；任一失败停在这三步之后、
+  # pre/gen 之前，GPU 0 次。
+  - task: shell
+    id: snapshot
+    label: 原稿字节快照（编译前）
+    command: py -3.12 -B "D:/AIWorkflow/tools/prompt_compile.py" snapshot --source "{{args.prompt_file}}" --out-dir "{{batch_dir}}/prompt_compile" --run-id "{{run_id}}"
+    timeout: 120
+  - task: llm
+    id: translate
+    label: 中文自动改写（H3 英文合规）
+    hint: 正文含中文时调云端 LLM 改写成官方骨架英文，写入批次目录的独立编译稿（不回写原稿）；已是英文则原样放行，snapshot 已生成 identity 编译稿
+    enabled: "{{args.use_llm_polish}}"
+    read_from: "{{args.prompt_file}}"
+    write_to: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    skip_if_no_cjk: true
+    backend: "{{args.llm_backend}}"
+    system: |-
+      你是 H3 提示词合规改写器。输入是一份 H3 官方骨架提示词（正文中混有中文），把它改写成全英文版本并输出。硬性规则：
+      1) 首行逐字保留：不要改模式首行里的模式名、时间与 <Picture N> 引用。
+      2) 三个字段名各出现恰一次、顺序不变：integrated_multimodal_description: → overall_soundscape: → non_diegetic_music:；字段之间空一行。
+      3) integrated_multimodal_description: 正文保持 [Shot N] 结构；画面风格、人物外貌、服装、构图、场景以参考图（首帧/尾帧/参考图）为锚保持一致，再沿时间线发展动作；运镜写成自然英文动词，禁止出现摄影器材名词（tripod、dolly、gimbal、crane 等）。
+      4) <d>…</d> 内的台词逐字保留原语言不翻译；说话人编号 (S1) 等写在 <d> 外。英文双引号内的画内可见文字保留原文。
+      5) overall_soundscape 用 1-4 句英文概括环境声、动作声与非语言人声；non_diegetic_music 用 1-3 句英文写配器、速度、节奏，无配乐写 N/A。
+      6) 除台词与画内文字外不得残留任何中文字符。
+      7) 只输出改写后的完整提示词本身：不要 markdown 代码块，不要解释，不要任何前后缀。
+    max_tokens: 1500
+    temperature: 0.3
+  - task: shell
+    id: compile_check
+    label: 编译稿提交前校验（原稿哈希＋格式/台词/语言/长度）
+    command: py -3.12 -B "D:/AIWorkflow/tools/prompt_compile.py" verify --source "{{args.prompt_file}}" --state-dir "{{batch_dir}}/prompt_compile" --run-id "{{run_id}}" --compiled "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    timeout: 120
+  - task: gate
+    id: pre
+    mode: auto
+    label: 可选首尾帧预检
+    prompt_kind: "{{args.prompt_kind}}"
+    input_mode: "{{args.input_mode}}"
+    auto_gates: [G1, G2, G3, G4, G5, G6, G7, G8, G11, G13]
+    prompt_file: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    refs: "{{args.ref_images}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    lora: "{{args.lora}}"
+    workflow_json: "D:/AIWorkflow/engine/comfy/h3_keyframes_optional_api.json"
+  - task: video
+    id: gen
+    label: 可选首尾帧出片
+    workflow: comfy/h3_keyframes_optional_api.json
+    input_mode: "{{args.input_mode}}"
+    prompt_kind: "{{args.prompt_kind}}"
+    prompt_file: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    ref_images: "{{args.ref_images}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    steps: "{{args.steps}}"
+    seed: "{{args.seed}}"
+    lora: "{{args.lora}}"
+    lora_strength: "{{args.lora_strength}}"
+    head_chunks: "{{args.head_chunks}}"
+    prefix: "h3kf_{{run_id}}"
+    stage: video
+    timeout: 10800

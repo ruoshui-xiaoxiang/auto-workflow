@@ -1,0 +1,123 @@
+name: h3_ref2va_video
+description: 本地 H3 出视频（ref2va 多图＋可选参考视频）—— 与 ref2v 4-step LoRA 严格配对的 4 步 + T8 双时钟 + 原生音频。**主力出片通道**；产物 mp4 落 批次夹/video/。关口化后：跑前自审（G）→ 提示词人工关口（H3）→ 出片 → 看片人工关口（H4）
+# ---------------------------------------------------------------------------
+# 用法（正式出片一律走引擎，不要再用 ComfyUI_H3\run_h3.py 裸跑 —— 那条路没有
+# args 日志、不进批次归档，参数只活在对话里）：
+#
+#   py run.py h3_ref2va_video --project 武昭君仪 ^
+#      --set theme="三阶 P1B 试探" ^
+#      --set prompt_file="D:\AIWorkflow\ComfyUI_H3\prompts_H3官方骨架\wuzhaojunyi_三阶P1B.txt" ^
+#      --set "ref_images=E:\创作\无音项目\图\定妆\wuyin_anchor_role.png,E:\创作\无音项目\图\定妆\xiaoQ_anchor_role.png,...4张" ^
+#      --set width=864 --set height=1536
+#
+# 提示词单一真源＝ ComfyUI_H3\prompts_H3官方骨架\<镜号>.txt（09-28 起）；本文件不再存提示词正文。
+# ⚠ 老目录 ComfyUI_H3\prompts\ 里的 56 份 .txt 全是**中文十块**（09-13～09-26 期间写的），
+#   那是云端 SD 的格式，喂本地 H3 会被当台词念出来。preflight 已开（config.yaml），
+#   G7 会把这些稿判"混用"直接拦下 —— 别照旧路径挑 prompt_file，也别为此关闸。
+#   格式契约见手册 20_通用规范层\G2_提示词结构与接口契约.md。
+# 参考图必须正好 4 张（模板就 4 个 __REFn__ 槽：多挂被静默丢、少挂留字面量直接失败），
+# 顺序＝提示词里 <Picture 1..4> 的编号；每张图旁放一份 <图名>.anchor.json
+# （{"character": "...", "role": "face|costume|scene|style"}），G3 才核得出槽位身份。
+# ---------------------------------------------------------------------------
+args:
+  theme: "无音 · 未命名镜"
+  prompt_file: ""          # 正式出片走这个
+  prompt: ""               # 内联，仅对照实验用；与 prompt_file 二者至少给一个
+  width: 736
+  height: 416
+  length: 124              # 帧数@24fps；124≈5.17s，362≈15.08s（H3 区间 124–362）
+  duration: 5.2            # 期望秒数，仅用于 G6 一致性核对
+  steps: 4                 # 与下方 4-step LoRA 严格配对，禁止只改一边
+  lora: "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors"
+  lora_strength: 1.0
+  head_chunks: 4
+  ref_images:
+    - 'E:\创作\无音项目\图\定妆\wuyin_anchor_role.png'
+    - 'E:\创作\无音项目\图\定妆\xiaoQ_anchor_role.png'
+    - 'E:\hailluoai\MiniMax Design\current Data\Projects\无音_virtual_production\renders\shot06_prop\prop_umbrella_a.png'
+    - 'E:\创作\无音项目\图\画风参考\用户选定_鞠婧祎古装.jpg'
+  ref_videos: []           # 0–1 段；挂上即走 ref2va 的参考视频通道（实测多烧约 8 分钟/条）
+  seed: ""
+  use_llm_polish: false
+  llm_backend: cloud
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（机制关口）
+    hint: G1–G7 纯算术/字符串判定；不过就停，不打扰人
+    auto_gates: [G1, G2, G3, G4, G5, G6, G7, G11]
+    prompt_file: "{{args.prompt_file}}"
+    refs: "{{args.ref_images}}"
+    ref_videos: "{{args.ref_videos}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    lora: "{{args.lora}}"
+    workflow_json: "comfy/h3_i2v_ref2va_api.json"
+
+  - task: gate
+    id: H3
+    mode: human
+    label: 提示词定稿（人工关口）
+    hint: 我对镜头戏的理解会偏，偏了就是整批返工 —— 必须你先审
+    prompt_file: "{{args.prompt_file}}"
+    refs: "{{args.ref_images}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    lora: "{{args.lora}}"
+    show_prompt: true
+    numbering:
+      - "过 = 按这份提示词提交生成"
+      - "改<哪块> = 我改完重新上报"
+      - "否 <理由> = 这条不拍"
+
+  - task: llm
+    id: polish
+    label: 润色提示词
+    # 2026-09-28 勘误（C64）：原 hint/system 让 LLM 按中文【六块】扩写 —— 那是云端 SD 的
+    # 十块模板的压缩版，本地 H3 官方格式是**英文六段**（subject_definitions→summary→
+    # retention_analysis→detailed_description→overall_soundscape→non_diegetic_music，
+    # 真源 prompts/official_h3/ref-en.txt）。中文分块喂 H3 会被当台词念出来（A/B 实测
+    # 十块 4/5 乱码 vs 官方骨架 0/5），且开闸后 G7 直接判"混用"必拦。
+    # 所以这条路径要么别开（默认 use_llm_polish: false 就是关的），要么按六段英文写。
+    hint: 默认关闭——进片提示词一律手写官方六段（真源 prompts/official_h3/ref-en.txt），不用 LLM 扩写；本步 system 只是兜底样例，开它之前先核对格式闸 G7
+    enabled: "{{args.use_llm_polish}}"
+    static: "{{args.prompt}}"
+    backend: "{{args.llm_backend}}"
+    system: "你是视频提示词工程师。输出 H3 Ref2VA 官方六段英文结构：subject_definitions / summary / retention_analysis / detailed_description / overall_soundscape / non_diegetic_music。禁止使用中文分块标题（【…】），禁止写元叙述句。只输出提示词本身。"
+    prompt: "主题：{{args.theme}}"
+    max_tokens: 800
+    temperature: 0.8
+
+  - task: video
+    id: gen
+    label: H3 出片
+    hint: ref2va 多图（＋可选参考视频）+ 8 步 + ref2v LoRA + T8 双时钟 + 原生音频；素材自动拷进 ComfyUI input
+    workflow: "comfy/h3_i2v_ref2va_api.json"
+    prompt_file: "{{args.prompt_file}}"
+    prompt: "{{polish.text}}"
+    ref_images: "{{args.ref_images}}"
+    ref_videos: "{{args.ref_videos}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    steps: "{{args.steps}}"
+    lora: "{{args.lora}}"
+    lora_strength: "{{args.lora_strength}}"
+    head_chunks: "{{args.head_chunks}}"
+    seed: "{{args.seed}}"
+    prefix: "h3ref_{{run_id}}"
+    stage: "video"
+    timeout: 3600
+
+  - task: gate
+    id: H4
+    mode: human
+    label: 看片挑号（人工关口）
+    hint: 候选成片推给你；废片重跑的圈定在 H5，别在这儿追问花钱
+    videos: "{{gen.files}}"
+    numbering:
+      - "报编号 = 选定进下一步"
+      - "重做 <编号> = 进 H5 圈重跑范围"

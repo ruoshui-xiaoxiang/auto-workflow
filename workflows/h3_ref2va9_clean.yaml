@@ -1,0 +1,93 @@
+name: h3_ref2va9_clean
+description: 【派生自 h3_ref2va9_daily.yaml，只换模板/步数/LoRA 三处】clean20 版 Ref2VA 满额度流：9 图／3 视频／3 原声／3 独立音频，20 步不挂 LoRA。 Ref2VA 官方满额度单遍链（W4c）：模板 comfy/h3_i2v_ref2va9_nolora_api.json 按实际素材数动态注入 9 图／3 参考视频／3 参考片原声／3 独立音频，总文件 ≤12。旧 4 图静态模板 h3_i2v_ref2va_api.json 与 h3_ref2va_video.yaml 保留兼容，本流是新入口，不迁移历史批次。配方仍是 Ref2V 家族 4 步（lora/steps 由 args 给，UI/摘要显示真实值）；参考音频此前 engine spec 里根本没有字段 ⇒ G4 只能"登记不判"，本流把 ref_audios/ref_video_audios 一并交闸。
+provider: local
+args:
+  theme: ""
+  prompt_file: ""
+  ref_images: []
+  ref_videos: []
+  ref_video_audios: []
+  ref_audios: []
+  input_mode: ref2va
+  prompt_kind: ""
+  width: 736
+  height: 416
+  length: 124
+  duration: 5.1667
+  steps: 20                    # 干净档固定 20 步（recipe_key 靠 steps==20 且无 LoRA 认 clean20）
+  seed: 42
+  lora: ""                     # 模板里没有 LoraLoaderModelOnly，挂任何权重都会被 run_plan 判成"20 步却挂 LoRA"
+  lora_strength: 1.0           # 无 LoRA ⇒ 强度不参与，留默认值只为摘要好读
+  head_chunks: 4
+  use_llm_polish: true
+  llm_backend: dashscope
+steps:
+  - task: shell
+    id: snapshot
+    label: 原稿字节快照（编译前）
+    command: py -3.12 -B "{{wf_root}}/../tools/prompt_compile.py" snapshot --source "{{args.prompt_file}}" --out-dir "{{batch_dir}}/prompt_compile" --run-id "{{run_id}}"
+    timeout: 120
+  - task: llm
+    id: translate
+    label: 中文自动改写（H3 官方六段英文）
+    hint: 正文含中文时按官方六段改写成英文，写入批次目录的独立编译稿（不回写原稿）；已是英文则原样放行
+    enabled: "{{args.use_llm_polish}}"
+    read_from: "{{args.prompt_file}}"
+    write_to: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    skip_if_no_cjk: true
+    backend: "{{args.llm_backend}}"
+    system: |-
+      你是 MiniMax H3 Ref2VA 提示词合规改写器。输入是一份 H3 官方全参考六段提示词（subject_definitions / summary / retention_analysis / detailed_description / overall_soundscape / non_diegetic_music），其中重写段落混有中文。把它改写成全英文版本并输出。硬性规则：
+      1) 六个字段名各出现恰一次、顺序不变：subject_definitions: → summary: → retention_analysis: → detailed_description: → overall_soundscape: → non_diegetic_music:；字段之间空一行。
+      2) 只翻译重写段落；<d>…</d> 内台词逐字保留原语言，英文双引号内的画内可见文字保留原文；<Picture N>/<Video N>/<Audio N>/<Subject N> 标签与编号原样保留。
+      3) summary 的方括号任务类型前缀、retention_analysis 的档位标记逐字保留。
+      4) detailed_description 里的 [Shot N] 与切点时间码逐字保留；不得增删分镜。
+      5) 不得缩写、合并、删减信息；不得截断；输出必须完整到最后一个字段。
+      6) 除台词与画内文字外不得残留任何中文字符。
+      7) 只输出改写后的完整提示词本身：不要 markdown 代码块，不要解释，不要任何前后缀。
+    max_tokens: 1500
+    temperature: 0.3
+  - task: shell
+    id: compile_check
+    label: 编译稿提交前校验（原稿哈希＋六段/台词/语言/长度）
+    command: py -3.12 -B "{{wf_root}}/../tools/prompt_compile.py" verify --source "{{args.prompt_file}}" --state-dir "{{batch_dir}}/prompt_compile" --run-id "{{run_id}}" --compiled "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    timeout: 120
+  - task: gate
+    id: pre
+    mode: auto
+    label: Ref2VA 素材与额度预检
+    prompt_kind: "{{args.prompt_kind}}"
+    input_mode: "{{args.input_mode}}"
+    auto_gates: [G1, G2, G3, G4, G5, G6, G7, G8, G11, G13]
+    prompt_file: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    refs: "{{args.ref_images}}"
+    ref_videos: "{{args.ref_videos}}"
+    ref_video_audios: "{{args.ref_video_audios}}"
+    ref_audios: "{{args.ref_audios}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    lora: ""                     # 模板里没有 LoraLoaderModelOnly，挂任何权重都会被 run_plan 判成"20 步却挂 LoRA"
+    workflow_json: "D:/AIWorkflow/engine/comfy/h3_i2v_ref2va9_nolora_api.json"
+  - task: video
+    id: gen
+    label: Ref2VA 出片（9图/3视频/3音频）
+    workflow: comfy/h3_i2v_ref2va9_nolora_api.json
+    input_mode: "{{args.input_mode}}"
+    prompt_kind: "{{args.prompt_kind}}"
+    prompt_file: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    ref_images: "{{args.ref_images}}"
+    ref_videos: "{{args.ref_videos}}"
+    ref_video_audios: "{{args.ref_video_audios}}"
+    ref_audios: "{{args.ref_audios}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    steps: "{{args.steps}}"
+    seed: "{{args.seed}}"
+    lora: ""                     # 模板里没有 LoraLoaderModelOnly，挂任何权重都会被 run_plan 判成"20 步却挂 LoRA"
+    lora_strength: 1.0           # 无 LoRA ⇒ 强度不参与，留默认值只为摘要好读
+    head_chunks: "{{args.head_chunks}}"
+    prefix: "h3r9c_{{run_id}}"
+    stage: video
+    timeout: 14400

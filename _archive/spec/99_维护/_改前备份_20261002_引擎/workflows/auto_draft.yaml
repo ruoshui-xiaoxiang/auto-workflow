@@ -1,0 +1,48 @@
+name: auto_draft
+description: 闭环自动出图：云端LLM生成提示词 → 出图 → AI判分 → 低分自动改写重试（最多N轮），最终产物落 final
+args:
+  theme: "沈无音 · 套e01（定妆立绘）"
+  prompt: "21岁年轻女子，清冷骨相，眼尾略长，唇色淡，不施脂粉，面无表情，眼下淡青；及腰黑长直发，头顶半盘发髻插银质步摇横穿外露，两侧蓝花钗，额间朱砂莲花钿；身量高挑，站姿与坐姿都极直；月白与鸦青渐变宽袖襦裙，白色交领中衣、交领最低点只到胸上不露肤、胸前交叠处一直合到腰，裙摆整片垂坠无开衩、双脚并立时裙摆合拢盖到脚面，料子旧洗得发白，腰间淡蓝织带末端磨得起毛，挂米色小布袋。写实3D CG渲染，电影感，浅景深，竖幅9:16构图，素净灰白背景，单人立像，皮肤质感真实"
+  count: 1
+  threshold: 78
+  max_tries: 3
+  rewrite_mode: text   # text=VL判分+文本LLM改写(省)  vl=VL看图直接改写(信息无损,贵)
+  llm_backend: cloud
+  width: 2560
+  height: 3840
+  scale_by: 4
+  steps: 28
+  # 无音人脸 LoRA 已过拟合全噪、待重训，默认留空；重训后改成 'wuyin_face_lora_v1.safetensors:0.4'
+  loras: ""
+  # ⚠️ 本工作流依赖云端 LLM 生成/改写提示词；token-plan 两把 key 都 401、兜底链默认关时这一步会失败。
+  # ⚠️ 沈无音定妆铁律：主角定妆一律 i2i 挂脸锚派生（锚＝图\定妆\char_e01.png），禁纯文生图 → 本流仅供探索。
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（机制关口）
+    hint: 图片口径：分辨率/字面化词/落点；锁脸铁律由 i2i 锚点那条链把守，本流可裸文字
+    auto_gates: [G5, G7, G11]
+    prompt_kind: image
+    characters: none
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    prompt: "{{args.prompt}}"
+
+  - task: auto
+    id: auto
+    theme: "{{args.theme}}"
+    prompt: "{{args.prompt}}"
+    count: "{{args.count}}"
+    threshold: "{{args.threshold}}"
+    max_tries: "{{args.max_tries}}"
+    rewrite_mode: "{{args.rewrite_mode}}"
+    backend: "{{args.llm_backend}}"
+    workflow: "comfy/draft_upscale_api.json"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    scale_by: "{{args.scale_by}}"
+    steps: "{{args.steps}}"
+    loras: "{{args.loras}}"
+    prefix: "auto_{{run_id}}"
+    stage: "final"

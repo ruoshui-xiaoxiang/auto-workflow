@@ -1,0 +1,58 @@
+name: h3_fl2va_clean_play
+description: 通道4「跑着玩」精细档：fl2va 锁首帧 + **20 步、不挂 LoRA**（模板已摘掉 LoraLoaderModelOnly）。跑前自审(G, auto) → 直接出片，无人工关口、不发飞书。
+provider: local
+# ---------------------------------------------------------------------------
+# 为什么要单独一条：turbo 8-step LoRA 满强度有已知 identity drift（首帧是参考图、动起来换人），
+# 而 20 步不挂 LoRA 是漂移最轻的一档；但模板里 lora_name 是 __LORA__ 占位符，传空字符串会被
+# ComfyUI 判无效 LoRA 名 —— 所以用 comfy/h3_i2v_fl2va_nolora_api.json（把 13 号 LoRA 节点摘掉、
+# 4.model 直接接 2 号 UNETLoader），由 comfy/make_nolora_templates.py 生成。
+# 代价：20 步比 8 步慢约 2.5 倍（124 帧竖屏量级 10–15 分钟）。
+# ---------------------------------------------------------------------------
+args:
+  theme: "play · 精细20步"
+  prompt_file: ""
+  width: 864
+  height: 1536
+  length: 124
+  duration: 5.1667
+  steps: 20
+  seed: 42
+  lora: ""                 # 这条模板没有 LoRA 节点
+  lora_strength: 1.0
+  head_chunks: 4
+  ref_images: []           # 必须正好 1 张（首帧）
+  use_llm_polish: false
+  llm_backend: dashscope
+  enable_audio: true
+  resolution_tier: draft
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（精细档）
+    auto_gates: [G1, G2, G3, G4, G5, G6, G7, G8, G11, G13]
+    prompt_kind: h3_i2va
+    prompt_file: "{{args.prompt_file}}"
+    refs: "{{args.ref_images}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    lora: "{{args.lora}}"
+    workflow_json: "comfy/h3_i2v_fl2va_nolora_api.json"
+
+  - task: video
+    id: gen
+    label: H3 出片（首帧 · 20 步无 LoRA）
+    workflow: "comfy/h3_i2v_fl2va_nolora_api.json"
+    prompt_kind: h3_i2va
+    prompt_file: "{{args.prompt_file}}"
+    ref_images: "{{args.ref_images}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    steps: "{{args.steps}}"
+    seed: "{{args.seed}}"
+    head_chunks: "{{args.head_chunks}}"
+    prefix: "h3clean_{{run_id}}"
+    stage: "video"
+    timeout: 10800

@@ -1,0 +1,145 @@
+﻿# 工作流框架全局配置
+# 约定：路径全 ASCII；服务幂等启动
+
+models:
+  # 云端后端（webui 设置面板填入 API Key；引擎侧 key 从环境变量读，不入库）
+  # remote: true 表示不需本地拉起，base_url 为 OpenAI 兼容端点（token-plan 用 /compatible-mode/v1）
+  cloud:
+    name: qwen3.8-max
+    base_url: "https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode"
+    api_key_env: "AW_CLOUD_API_KEY"
+    remote: true
+    startup_timeout: 30
+  # 百炼按量付费（DashScope）。key 取法三级：env AW_VL_API_KEY → env AW_DASHSCOPE_API_KEY →
+  # E:\密钥文件\阿里多模态.txt（第 1 行 key、第 2 行 base，base 可省）；base 必须带 /v1（tasks 拼 "/chat/completions"）。
+  # ⚠2026-11-04 更正（本行原写"实测该文件不存在 ⇒ _vl_credentials() 恒 None、vl_* 全空转"，那是过期结论）：
+  #   · 实测 _vl_credentials() 一直能从 HKCU\Environment\AW_DASHSCOPE_API_KEY 拿到 key（指纹 085b2671c2，
+  #     与 .dashscope_current、webui_settings.json 的 dashscope.api_key、阿里.txt 首把 **同一把**）；
+  #   · 同日已按代码期望格式补建 阿里多模态.txt（2 行 / 无 BOM / LF / 0600），三处读法均解析通过：
+  #     tasks._vl_credentials（env 摘除后仍走文件拿到同一把）、qwen_judge.load_key（正则抓 sk-）、webui.load_vl_config。
+  # ⚠真正的堵点在账号、不在文件：该 key 所在阿里云账号**欠费**（code=Arrearage），
+  #   qwen-plus 与 qwen3-vl-plus 同报 HTTP 400 ⇒ 整条 DashScope 按量线阻塞，不只 vl_qc。
+  #   充值前 vl_qc 的行为是 enabled:true ＋ 每帧 ok:false＋错误原文（软门不装成通过），充值后无需改任何代码。
+  #   另：阿里.txt 里那两把 115 字符旧 key 打 DashScope 是 401 invalid_api_key（已失效）；
+  #   Token Plan.txt 与 webui_settings:cloud 两把是**另一个 base**，拿 DashScope 端点测出 401 属正常，不能据此判死。
+  # vl_aesthetic 2026-10-19 摘注册、**2026-11-04 连判分本体一起摘**（审美判定交给人），vl_content_check 保留（opt-in 且会把 disabled 写进 rec["vl"]）
+  dashscope:
+    name: qwen-plus
+    base_url: "https://dashscope.aliyuncs.com/compatible-mode"
+    api_key_env: "AW_DASHSCOPE_API_KEY"
+    remote: true
+    startup_timeout: 30
+
+# LLM 兜底链：默认走按量付费 dashscope（2026-10-12；Token Plan 已失效）。
+# 需要兜底时在工作流/--set 里显式写 llm_backend: cloud,dashscope
+fallback_chain: [dashscope]
+
+comfyui:
+  # 2026-09-14 统一实例：引擎指向 **H3 那个实例（8189，ComfyUI 0.39.0（2026-10-19 勘误：原写 0.30.2 已过期，实测 tag v0.39.0 / commit b0b74356））**，
+  # 它因为模型目录共享而能同时跑 FLUX / SDXL / H3（阶段0已验证）。
+  # E: 那个 8188（0.29.2）保留不动，只是引擎不再指向它。
+  base_url: "http://127.0.0.1:8189"
+  root: 'D:\AIWorkflow\ComfyUI_H3'
+  # 与 H3 实例的启动脚本 run_H3_ComfyUI.bat 用同一个输出目录，避免"两个事实源"漂移。
+  output_dir: 'D:\AIWorkflow\ComfyUI_H3\output'
+  input_dir: 'D:\AIWorkflow\ComfyUI_H3\ComfyUI\input'
+  # 引擎自起时用的命令（对齐 run_H3_ComfyUI.bat：带 sage、指定端口与输出目录）
+  # 2026-10-15 用户裁「默认通用模式」：全引擎统一 无sage + --use-ck-attention + --reserve-vram 6.0。
+# 证据：H3 生产镜 ck 与 sage 平手（122s vs 125s）且 reserve 6 零影响（逐字节一致）；
+# 接力批 sage 在 EXPT8 必崩（ck 必需）；z_image 图片流烟雾通过。sageattention 装而不用。
+  launch_cmd: 'cmd /c ".\python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build --reserve-vram 6.0 --use-ck-attention --port 8189 --output-directory D:\AIWorkflow\ComfyUI_H3\output"'
+  # R11 接力批入口（h3_movie relay_pairs）：与通用 launch_cmd 现为同一条命令（保留键位以兼容按批分派）——原注释：EXPT8 euler 阶段带 sage 必崩
+  # （R11-01 硬条件3），故接力批用这条无 sage + reserve 6 的命令拉起。
+  launch_cmd_relay: 'cmd /c ".\python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build --reserve-vram 6.0 --use-ck-attention --port 8189 --output-directory D:\AIWorkflow\ComfyUI_H3\output"'
+  log: 'D:\AIWorkflow\logs\comfyui_h3.log'
+  startup_timeout: 300
+
+# 一键成片只使用项目内已核验的本地二进制；不依赖 PATH，避免版本漂移。
+media_tools:
+  ffmpeg: 'D:\AIWorkflow\tools\ffmpeg.exe'
+  ffprobe: 'D:\AIWorkflow\LivePortrait-main\bin\ffprobe.exe'
+
+log_dir: 'D:\AIWorkflow\logs\workflows'   # 只放 .log（排障用），交付物一律进 output_root
+
+# ---- 「值」的落点根（10-02 批 5-2：运行决定单跟项目走）--------------------------
+# 决定单路径 = creation_root\<projects_registry.asset_dir>\_项目档案\运行决定单.json
+# 取法只有 engine\decision_sheet.py 一处（同 delivery_root.py 的路子）；
+# 脚本里再写一遍 E:\创作 就是第二份抄本——项目根挪一次它就悄悄指老地方（GAP-X1 那 76 处的坑）。
+paths:
+  creation_root: 'E:\创作'
+
+# ---- 交付根由 project 派生（2026-09-20 关口化 G11）------------------------------
+# 换项目只改 project（或命令行 --project 覆盖），不再手改下面那行绝对路径。
+# 动因：output_root 一直写死 无音\批次，9-18 仙戮四条产物就串进了无音批次夹，事后没人发现。
+pool_root: 'E:\图像影音资源池'
+project: '无音'                # 当前项目 → 引擎拼 pool_root\<project>\<batch_subdir>
+batch_subdir: '批次'
+# 项目代号别名：主题/批次名里出现别的项目代号即判串项目（G11 用）
+project_aliases:
+  武昭君仪: [wuzhaojunyi, 武昭君仪]
+  无音: [wuyin, 无音, 沈无音]
+  仙戮: [xianlu, 仙戮, 双生]
+  圣女: [shengnv, 圣女]
+  三材两风: [三材两风, sancai, 三材两风_试片]
+  他的口吻: [他的口吻, tadekouwen, 我替杀父仇人写自传]
+# 兜底：显式给 output_root 时以它为准，但引擎会校验它含不含当前 project
+output_root: 'E:\图像影音资源池\无音\批次'
+# 这些角色出现在提示词里却没挂任何参考图 → G7b 直接拦（铁律：指定角色必须带参考图出脸，
+# 纯文字出脸必漂；实验/对照类工作流若要故意裸跑，把本项临时清空并在主题里写"对照"）
+characters_needing_anchor: [沈无音, 无音, 小Q, 薇拉, 白玖璃]
+# 跑前自审闸（tools\check_preflight.py）：G1–G7 + G11 在提交生成前跑
+# warn 只进日志与报告；error 直接拦。
+# 09-28 恢复 on（用户委托按建议裁，冲掉 09-27 那次"临时关掉没收回"）。恢复的前提是判据已对齐：
+# G7 现在**先认格式再选判据**，Ref2VA 六段不再被骨架判据假拦（旧缺陷 C57 已修，回归用例
+# tests/test_gates_phase3.py::test_g7_c57_ref2va_yaml_without_prompt_kind_is_not_blocked；
+# 09-28 03:31 实测：把 preflight 拨回 on 后 tests/ 107 项全过，含 test_gate_e2e 那条真走一遍闸的）。
+# 没有命令行绕过开关（引擎只有本项＋preflight_strict）⇒ 确要临时绕过只能把它改成 off，
+# **那就必须在本行旁边写清"关到哪天、为什么"**，事后收回——09-27 那次就是没写，才会挂到被查出来。
+# 关掉的是整条 G1–G12，含 9-18 那次四条 H3 全废的根因（参考图槽位配错），别当省事。
+preflight: on
+# strict 仍保持 off：warn 现在包含"骨架正文里的否定式""密度超公式但在实测带内"这类**留痕项**，
+# 把 warn 当失败会拦掉现役稿，反而逼人绕闸。
+preflight_strict: off
+# ---- 产物侧机检（10-03 批 7-4 接进来的那把相对尺）----
+# 与 preflight 是两件事：preflight 是**跑之前**自审提示词/配置；本项是**跑完之后**
+# 量"这一批产物互相像不像"（同批 DINO 两两余弦，最低 <0.75 停批、均值 <0.80 只警示）。
+# 用户 10-02 批 6 问 4 裁定：只接这把相对尺，绝对带（faceL/faceWhite/lpalex/gedge/faceHR）
+# 只报不拦——它们是在一个项目的 12 张人判样本上标定的，换项目 3/3 假拦。
+# 关掉不叫违规，但必须留字据（台账 bypassed 段），所以这里默认 on；
+# 阈值不在本文件，权威在 tools\qc_batch_consistency.py 的两行常量（注册表 qc_batch_dino_*）。
+qc:
+  batch_consistency: on
+# selftest* 工作流的落点：绝不能往交付根写，否则自测会造出假批次
+selftest_output_root: 'D:\AIWorkflow\tmp\selftest_批次'
+status_file: 'D:\AIWorkflow\logs\workflows\status.json'
+
+# ---- 人工关口往哪儿"喊一声"（2026-09-20 定：纯本地，不走飞书）----
+# 关口停住时：pending 台账 + HTML 报告标 awaiting_human + Windows 气泡 +
+# 待批清单落 logs\workflows\待批关口.txt。
+# 批准两条路：在 Qoder 里跟我说一句（手机端实测图与视频都能看，素材呈审就在会话里做），
+# 或跑 python run.py --approve <run_id> <gate> 再 --resume last（2026-10-13 批准 bat 已删除）。
+# 飞书：入向通道未证实（应用只有 im:message.p2p_msg:readonly，群历史读被拒 230027），
+# 关口链路的推送已整段删除；只有 character_sheet 的"出图发群"还在用 @task("feishu")。
+
+# 飞书发图（feishu task 用）：user 身份 token_missing，只能 bot 身份两步传图
+feishu:
+  chat_id: 'oc_4f43e84db8b16403e036eb54d57bf49f'   # 用户本人接收群
+  lark_cli: 'C:\Users\若水\.local\share\qoder\lark-cli\node_modules\@larksuite\cli\bin\lark-cli.exe'
+
+# ==== 10-02 批1 追加（写在文件末尾是故意的，别往上挪）==========================
+# 上面 `preflight:` 那一段注释里有一句「09-28 03:31 实测：tests/ 107 项全过」。
+# 勘误追加在这儿，不写在它旁边——因为往那个键上方插任何行数，都会把 `:71` 这个
+# 被规则层按行号引用的锚推走（本次试写 2 行就把 preflight 从 :71 推到了 :73，
+# 已回退）。这正是登记表 C8 记过的那类病：**行号是脆的，键名才是稳的**。
+#
+# ① 「107 项」这个数：**单位是用例数，不是函数个数**。
+#    `def test_` 静态只能数到 74 个函数，@parametrize 会一对多展开成 108 条用例。
+#    拿 74 去对 107 是单位错配（`scan_system.py` 第一版就犯过，已改成现跑
+#    `pytest --collect-only` 取用例数）。
+# ② **这里不写实跑数**。10-02 一度写过「108 项」又写过「114 项」，两次都在加完新用例后
+#    当场变陈旧 —— 手写实测值进配置就会漂，跟"引用配置项写键名不写行号"是同一条纪律。
+#    要现在的数：`cd /d D:\AIWorkflow\engine` 后跑 `py -3.12 -m pytest tests -q`，
+#    或看 `E:\若水AI电影\system_manifest.json` 的 `engine.tests.collected_cases`（扫描器现算）。
+# ③ 本段只保留一条不会过期的信息：注释里那个「107 项」的**单位**是用例数，不是函数个数。
+
+

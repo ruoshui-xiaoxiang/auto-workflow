@@ -1,14 +1,12 @@
 {
-  "1": {"class_type": "UNETLoader", "inputs": {"unet_name": "flux1-dev-fp8.safetensors", "weight_dtype": "default"}},
-  "2": {"class_type": "DualCLIPLoader", "inputs": {"clip_name1": "clip_l.safetensors", "clip_name2": "t5xxl_fp8_e4m3fn.safetensors", "type": "flux"}},
-  "3": {"class_type": "CLIPTextEncode", "inputs": {"text": "__PROMPT__", "clip": ["2", 0]}},
-  "4": {"class_type": "CLIPTextEncode", "inputs": {"text": "", "clip": ["2", 0]}},
-  "5": {"class_type": "FluxGuidance", "inputs": {"guidance": "__GUIDANCE__", "conditioning": ["3", 0]}},
-  "6": {"class_type": "EmptySD3LatentImage", "inputs": {"width": "__W__", "height": "__H__", "batch_size": 1}},
-  "7": {"class_type": "KSampler", "inputs": {"seed": "__SEED__", "steps": "__STEPS__", "cfg": 1.0, "sampler_name": "euler", "scheduler": "simple", "denoise": 1.0, "model": ["1", 0], "positive": ["5", 0], "negative": ["4", 0], "latent_image": ["6", 0]}},
-  "8": {"class_type": "VAEDecode", "inputs": {"samples": ["7", 0], "vae": ["9", 0]}},
-  "9": {"class_type": "VAELoader", "inputs": {"vae_name": "flux-vae-bf16.safetensors"}},
-  "10": {"class_type": "UpscaleModelLoader", "inputs": {"model_name": "4x-UltraSharp.pth"}},
-  "11": {"class_type": "ImageUpscaleWithModel", "inputs": {"upscale_model": ["10", 0], "image": ["8", 0]}},
-  "12": {"class_type": "SaveImage", "inputs": {"filename_prefix": "__PREFIX__", "images": ["11", 0]}}
+  "_OFFICIAL-PATH-TOMBSTONE": "OFFICIAL-PATH-TOMBSTONE v1-json (FLUX 线退役 2026-10-19)",
+  "_这是什么": "路障桩。真模板已 move 进归档，正身一个字节没改；这个文件**不能**被当模板提交给 ComfyUI。",
+  "_退役": "2026-10-19 第⑫条(b)，用户裁定「改判＋退役处理」。同批退役 10 份，见 engine/comfy/_已退役_FLUX_20261019.md",
+  "_这条线原来干什么": "FLUX 线放大（tasks.py 的旧默认值，2026-10-19 已改指 Z-Image）",
+  "_原因": "FLUX.1 底模从没挂进 ComfyUI 的模型树 ⇒ /object_info 的 UNETLoader 只有 4 项，本模板的枚举位取不到值，一提交就红。⚠ 改判要点：**权重其实没丢**，整套 FLUX 件在 E:/Models/ComfyUI（flux1-dev-fp8 11350MB、unet/flux1-fill-dev-fp8 11351MB、controlnet/FLUX.1-dev-ControlNet-Union-Pro-fp8 3149MB、style_models/flux1-redux-dev 123MB、vae/flux-vae-bf16 160MB、5 个 FLUX LoRA），只是本机模型树是 junction 指 D:/AIWorkflow/models/comfyui/*，没认 E: 那棵树。",
+  "_可达性": "22 条现役工作流（engine/workflows/*.yaml）**零可达**——只有 image_depth.yaml 提到 FLUX，而那一行是它自己写的退役注释：「旧 FLUX 版模板 comfy/flux_controlnet_depth_api.json 随 FLUX.1 底模退役一起停用」。",
+  "_替代": "出图走 Z-Image 线（comfy/z_style_*_api.json，现役 31 份模板里都在）；要人脸一致性走即梦参考图（run.py 的 image 任务，engine/jimeng_client.py）。",
+  "_恢复": "1) 给 D:/AIWorkflow/models/comfyui 的 diffusion_models / unet / controlnet / style_models / vae 加 junction 指 E:/Models/ComfyUI 对应目录（或写 extra_model_paths.yaml）；2) 重启 8189（实测 200~300 秒）；3) GET /object_info 确认 UNETLoader 枚举从 4 变 5＋；4) 把本目录 10 份 json move 回 engine/comfy/ 覆盖桩；5) 跑 backups/_治理_20261019/runtime_model_audit.py 复验枚举位；6) 定清 FLUX 归哪条入口——FLUX 画风与 Z-Image 不同源，**同批不许混**（老规矩）。",
+  "_归档在哪": "D:/AIWorkflow/backups/_治理_20261019/归档件/FLUX线退役_20261019/draft_upscale_api.json",
+  "_归档md5": "2e07e3074ac5d08797e96a74fc32c57c"
 }

@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 chcp 65001 >nul
 echo ========================================
 echo   模型下载脚本
@@ -10,7 +10,7 @@ echo.
 pause
 
 set APP_DIR=%~dp0..
-set MODEL_DIR=%APP_DIR%\ComfyUI_windows_portable\ComfyUI\models\checkpoints
+set MODEL_DIR=%APP_DIR%\ComfyUI_H3\ComfyUI\models\checkpoints
 
 if not exist "%MODEL_DIR%" (
     echo 错误：ComfyUI 未安装，请先运行 setup.bat
@@ -32,3 +32,4 @@ echo.
 echo 模型已下载到：%MODEL_DIR%\flux1-dev.safetensors
 echo.
 pause
+

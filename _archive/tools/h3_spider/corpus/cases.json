@@ -1,0 +1,292 @@
+{
+ "clean": ["U01", "U05", "U08"],
+ "cases": [
+  {
+   "id": "L1-summary-prefix-missing",
+   "base": "U05",
+   "leg": "L1",
+   "code": "FMT-04",
+   "why": "summary 必须以方括号任务类型前缀开头",
+   "source": "ref-en §3",
+   "edits": [
+    {"target": "text", "op": "replace", "from": "summary: [reference generation]", "to": "summary:"}
+   ]
+  },
+  {
+   "id": "L1-summary-prefix-invalid",
+   "base": "U05",
+   "leg": "L1",
+   "code": "FMT-04",
+   "why": "summary 任务类型不在官方 6 值里",
+   "source": "ref-en §3",
+   "edits": [
+    {"target": "text", "op": "replace", "from": "[reference generation]", "to": "[story]"}
+   ]
+  },
+  {
+   "id": "L2-dialogue-repeated-punctuation",
+   "base": "U05",
+   "leg": "L2",
+   "code": "DLG-06",
+   "why": "台词内重复标点应规范成单个终止符",
+   "source": "base-en §4.4 / ref-en §5.4",
+   "edits": [
+    {"target": "text", "op": "replace", "from": "指挥官,这不合规矩.</d>", "to": "指挥官,这不合规矩!!!</d>"}
+   ]
+  },
+  {
+   "id": "L2-dialogue-no-terminator",
+   "base": "U05",
+   "leg": "L2",
+   "code": "DLG-06",
+   "why": "完整台词在 </d> 前必须以 . ? ! 收尾",
+   "source": "ref-en §5.4",
+   "edits": [
+    {"target": "text", "op": "replace", "from": "指挥官,这不合规矩.</d>", "to": "指挥官,这不合规矩</d>"}
+   ]
+  },
+  {
+   "id": "L2-voiceover-lips",
+   "base": "U05",
+   "leg": "L2",
+   "code": "DLG-05",
+   "why": "voiceover 的 <d> 之后必须写嘴唇闭合",
+   "source": "base-en §4.4",
+   "edits": [
+    {"target": "text", "op": "replace", "from": "says, voice hesitant and pressed low:", "to": "says in an off-screen voiceover:"},
+    {"target": "text", "op": "replace", "from": "</d> He closes his lips. ", "to": "</d> "}
+   ]
+  },
+  {
+   "id": "L2-dialogue-bracket",
+   "base": "U05",
+   "leg": "L2",
+   "code": "DLG-07",
+   "why": "<d> 内只放语言标记与原文，不能再有方括号",
+   "source": "base-en §4.4",
+   "edits": [
+    {"target": "text", "op": "replace", "from": "指挥官,这不合规矩.", "to": "指挥官,[这不合规矩.]"}
+   ]
+  },
+  {
+   "id": "L3-undefined-subject",
+   "base": "U05",
+   "leg": "L3",
+   "code": "SUB-02",
+   "why": "正文使用未定义的 Subject",
+   "source": "ref-en §2 / Output Rules:2",
+   "edits": [
+    {"target": "text", "op": "replace", "from": "<Subject 2> (S1) says", "to": "<Subject 9> (S1) says"}
+   ]
+  },
+  {
+   "id": "L3-duplicate-subject-definition",
+   "base": "U05",
+   "leg": "L3",
+   "code": "SUB-01",
+   "why": "同一个 Subject 标签重复定义",
+   "source": "ref-en §2.1",
+   "edits": [
+    {"target": "text", "op": "duplicate_line", "prefix": "<Subject 1>"}
+   ]
+  },
+  {
+   "id": "L3-defined-unused-subject",
+   "base": "U05",
+   "leg": "L3",
+   "code": "SUB-03",
+   "why": "定义了 Subject 却没用",
+   "source": "ref-en §2.1",
+   "edits": [
+    {"target": "text", "op": "insert_before", "marker": "summary:",
+     "text": "<Subject 4> is the commander referenced from <Picture 1>: a tall woman in a black robe.\n"}
+   ]
+  },
+  {
+   "id": "L4-i2va-first-line-invalid",
+   "base": "U01",
+   "leg": "L4",
+   "code": "PIC-05",
+   "why": "I2VA 首行必须逐字声明 Picture 1 在 0.00 秒",
+   "source": "base-en §2.1",
+   "edits": [
+    {"target": "text", "op": "replace",
+     "from": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.",
+     "to": "For the target video, at 0.00 seconds into the target video, <Picture 1> is referenced."}
+   ]
+  },
+  {
+   "id": "L4-fl2va-first-line-invalid",
+   "base": "U08",
+   "leg": "L4",
+   "code": "PIC-05",
+   "why": "FL2VA 首行必须是首末帧对齐说明，不能套 I2VA 首行",
+   "source": "base-en §2.1",
+   "edits": [
+    {"target": "text", "op": "replace",
+     "from": "How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 1) aligns with the 4.50-second mark of the target video.",
+     "to": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced."}
+   ]
+  },
+  {
+   "id": "L4-fl2va-picture2-missing",
+   "base": "U08",
+   "leg": "L4",
+   "code": "PIC-06",
+   "why": "FL2VA 有首末两帧，首行只声明 Picture 1 不够",
+   "source": "base-en §2.1 / §3.2",
+   "edits": [
+    {"target": "text", "op": "replace",
+     "from": "; Picture 2 (from Shot 1) aligns with the 4.50-second mark of the target video",
+     "to": ""}
+   ]
+  },
+  {
+   "id": "L4-duplicate-picture-definition",
+   "base": "U05",
+   "leg": "L4",
+   "code": "PIC-07",
+   "why": "同一个 Picture 标签重复定义会产生歧义",
+   "source": "ref-en §2.2",
+   "edits": [
+    {"target": "text", "op": "duplicate_line", "prefix": "<Picture 3>"}
+   ]
+  },
+  {
+   "id": "L5-dialogue-no-speaker",
+   "base": "U05",
+   "leg": "L5",
+   "code": "SPK-04",
+   "why": "每个 <d> 前 160 字内必须有 (Sx) 说话人 ID",
+   "source": "base-en §4.4",
+   "edits": [
+    {"target": "text", "op": "replace", "from": "<Subject 2> (S1) says", "to": "<Subject 2> says"}
+   ]
+  },
+  {
+   "id": "L5-retention-has-speaker",
+   "base": "U05",
+   "leg": "L5",
+   "code": "SPK-05",
+   "why": "retention_analysis 里不写 (Sx)",
+   "source": "ref-en §5.4",
+   "edits": [
+    {"target": "text", "op": "replace", "from": "retention_analysis:\n<Subject 1>", "to": "retention_analysis:\n<Subject 1> (S1)"}
+   ]
+  },
+  {
+   "id": "L5-speaker-order",
+   "base": "U05",
+   "leg": "L5",
+   "code": "SPK-02",
+   "why": "说话人编号必须按本镜第一次发声顺序分配",
+   "source": "base-en §4.4 / ref-en §5.4",
+   "edits": [
+    {"target": "text", "op": "replace", "from": "<Subject 2> (S1) says", "to": "<Subject 2> (S2) says"},
+    {"target": "text", "op": "insert_before", "marker": "overall_soundscape:",
+     "text": "<Subject 1> (S1) says: <d>[Chinese] 我知道.</d>\n"}
+   ]
+  },
+  {
+   "id": "L6-appearance-color-conflict",
+   "base": "U05",
+   "leg": "L6",
+   "code": "SRC-03",
+   "why": "主语外观把 robe 改成 crimson，但卡里 robe 是 black；crimson 只属于 lining",
+   "source": "ref-en §2.1 / characters.yaml",
+   "edits": [
+    {"target": "text", "op": "replace",
+     "from": "a tall woman in a black floor-length robe",
+     "to": "a tall woman in a crimson floor-length robe"}
+   ]
+  },
+  {
+   "id": "L6-appearance-unknown-word",
+   "base": "U05",
+   "leg": "L6",
+   "code": "SRC-01",
+   "why": "外观词不在角色卡里",
+   "source": "ref-en §2.1 / characters.yaml",
+   "edits": [
+    {"target": "text", "op": "replace", "from": "black leather gloves", "to": "black leather gauntlets"}
+   ]
+  },
+  {
+   "id": "L7-crop-invalid",
+   "base": "U05",
+   "leg": "L7",
+   "code": "AST-04",
+   "why": "crop 四元组必须 0<=x0<x1<=1 且 0<=y0<y1<=1",
+   "source": "h3_precheck crop 口径 / 设计 §7.2",
+   "edits": [
+    {"target": "asset", "id": "cmdr", "op": "set", "values": {"crop": [0.5, 0.2, 0.4, 0.9]}}
+   ]
+  },
+  {
+   "id": "L7-asset-missing",
+   "base": "U05",
+   "leg": "L7",
+   "code": "AST-01",
+   "why": "crop 或 staged 不存在",
+   "source": "设计 §7.2",
+   "edits": [
+    {"target": "asset", "id": "adjutant", "op": "set", "values": {"exists": false}}
+   ]
+  },
+  {
+   "id": "L7-asset-hash-mismatch",
+   "base": "U05",
+   "leg": "L7",
+   "code": "AST-02",
+   "why": "crop sha1 与 staged sha1 必须一致",
+   "source": "设计 §7.2",
+   "edits": [
+    {"target": "asset", "id": "adjutant", "op": "set", "values": {"staged_sha1": "bad"}}
+   ]
+  },
+  {
+   "id": "L8-state-source-unknown",
+   "base": "U05",
+   "leg": "L8",
+   "code": "SCN-03",
+   "why": "state_source 指向不存在的镜头",
+   "source": "设计 §7.2 / scenes.yaml 就近沿用",
+   "edits": [
+    {"target": "scene", "index": 0, "op": "set", "values": {"state_source": "U99:nowhere"}}
+   ]
+  },
+  {
+   "id": "L8-state-source-future",
+   "base": "U05",
+   "leg": "L8",
+   "code": "SCN-03",
+   "why": "state_source 不能指向本镜之后的镜头",
+   "source": "设计 §7.2 / scenes.yaml 就近沿用",
+   "edits": [
+    {"target": "scene", "index": 0, "op": "set", "values": {"state_source": "U08"}}
+   ]
+  },
+  {
+   "id": "L8-state-text-mismatch",
+   "base": "U05",
+   "leg": "L8",
+   "code": "SCN-04",
+   "why": "state_text 必须与 state_source 在 state_timeline 的登记值一致",
+   "source": "scenes.yaml state_timeline",
+   "edits": [
+    {"target": "scene", "index": 0, "op": "set", "values": {"state_text": "the planet is calm and untouched"}}
+   ]
+  },
+  {
+   "id": "L8-base-outside-state",
+   "base": "U05",
+   "leg": "L8",
+   "code": "SCN-01",
+   "why": "基础 outside 不能写状态词",
+   "source": "设计 §7.2",
+   "edits": [
+    {"target": "scene", "index": 0, "op": "set", "values": {"base_outside": "A shattered planet fills the window."}}
+   ]
+  }
+ ]
+}

@@ -245,7 +245,32 @@ def test_two_stage_workflows_keep_default_stage():
 
 
 def test_config_distinguishes_staging_from_delivery():
-    raw = (ROOT / "config.yaml").read_text(encoding="utf-8")
-    assert "output_root: 'E:\\FLUX_Workflow\\out'" in raw
-    assert "暂存" in raw and "交付" in raw
+    """暂存（ComfyUI 的 output_dir、引擎日志）与交付根必须是两个不同地方。
+
+    2026-09-20 改：原来这条钉死一个旧绝对路径（E:\\FLUX_Workflow\\out），
+    交付根换成资源池派生之后就一直红。改成按语义断言，不再钉路径。
+
+    2026-11-04 修一处**真 bug**（不是环境问题）：这条曾把「resolve 过的交付根」拿去和
+    「没 resolve 的 pool_root」比字符串前缀。本机 `E:\\图像影音资源池` 是 Junction →
+    `E:\\繁星\\30_素材库`，`.resolve()` 会跟过去，于是永远不等 ⇒ 恒红（用户 11-04 前
+    一直挂着这条红）。两条规矩：
+      · 判「是不是同一个地方／谁包含谁」时，**两边都 resolve**，用 `Path.is_relative_to`
+        按路径分量比，不用 `str.startswith`（`E:\\pool2` 也算以 `E:\\pool` 开头）。
+      · 判「配置里那段项目名对不对」时，用**配置原文**的 parts——那是人的意图，
+        resolve 之后 junction 可能把整段换成别的目录树，判真实路径会把意图判丢。
+    """
+    cfg = yaml.safe_load((ROOT / "config.yaml").read_text(encoding="utf-8"))
+    cfg_delivery = Path(cfg["output_root"])            # 配置原文（G11 判的就是它）
+    delivery = cfg_delivery.resolve()                  # 盘上真实身份（junction 会跟过去）
+    staging = Path(cfg["comfyui"]["output_dir"]).resolve()
+    pool = Path(cfg["pool_root"]).resolve()
+    assert staging != delivery, "暂存目录不能就是交付根，产物会散落"
+    assert cfg.get("pool_root") and cfg.get("project") and cfg.get("batch_subdir"), \
+        "交付根须由 pool_root/project/batch_subdir 派生（G11）"
+    assert delivery.is_relative_to(pool), \
+        f"交付根 {delivery} 不在资源池 {pool} 下（config 写的是 {cfg['pool_root']}）"
+    assert cfg["project"] in cfg_delivery.parts, \
+        "output_root 的项目段必须等于当前 project（按配置原文判，见 docstring 第 2 条）"
+    assert not Path(cfg["log_dir"]).resolve().is_relative_to(delivery), \
+        "日志不能写进交付夹，批次夹要自包含交付物"
 

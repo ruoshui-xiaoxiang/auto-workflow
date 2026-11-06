@@ -1,0 +1,155 @@
+{
+ "version": 1,
+ "contract": "fanxing-agent-v1",
+ "contract_sha256": "267a43b1f187abd6d3c842d3ab4bc699f7ccdc816b2e7000a00052c9d7aca778",
+ "updated_at": "2026-11-04 21:41:55",
+ "agents": {
+  "local": {
+   "agent_id": "local",
+   "name": "本地",
+   "owner": "若水",
+   "status": "active",
+   "scopes": [
+    "workflow:read",
+    "workflow:run",
+    "knowledge:read",
+    "memory:read:self",
+    "memory:write:self",
+    "skill:read",
+    "agent:read"
+   ],
+   "contract": "fanxing-agent-v1",
+   "contract_sha256": "267a43b1f187abd6d3c842d3ab4bc699f7ccdc816b2e7000a00052c9d7aca778",
+   "joined_at": "2026-11-01 05:13:08",
+   "last_seen": "2026-11-04 21:41:55",
+   "agent_signature": "0def6d3780137fb38c4d4d757aba1211173f675bac9c0241c2928d7a2f2a6042",
+   "system_signature": "88544023409f051b3d52e878132bb17cbf508c70145c34400e37619376c96e09"
+  },
+  "test_agent_001": {
+   "agent_id": "test_agent_001",
+   "name": "测试代理",
+   "owner": "若水",
+   "status": "active",
+   "scopes": [
+    "workflow:read",
+    "workflow:run",
+    "knowledge:read",
+    "memory:read:self",
+    "memory:write:self",
+    "skill:read",
+    "agent:read"
+   ],
+   "contract": "fanxing-agent-v1",
+   "contract_sha256": "267a43b1f187abd6d3c842d3ab4bc699f7ccdc816b2e7000a00052c9d7aca778",
+   "joined_at": "2026-11-01 05:19:51",
+   "last_seen": "2026-11-01 05:22:30",
+   "agent_signature": "6165895593cc72326d38a6e61791a0c65083c38131b701178497ca1961cb1b09",
+   "system_signature": "4777c845f8c8d5c5d12d30d14505f47b6eb3eb7857ac16979fa515eb24b643a7"
+  },
+  "h3-spider": {
+   "agent_id": "h3-spider",
+   "name": "H3 蜘蛛",
+   "owner": "若水",
+   "status": "active",
+   "scopes": [
+    "workflow:read",
+    "workflow:run",
+    "knowledge:read",
+    "memory:read:self",
+    "memory:write:self",
+    "skill:read",
+    "agent:read"
+   ],
+   "contract": "fanxing-agent-v1",
+   "contract_sha256": "267a43b1f187abd6d3c842d3ab4bc699f7ccdc816b2e7000a00052c9d7aca778",
+   "joined_at": "2026-11-01 05:24:33",
+   "last_seen": "2026-11-01 05:24:50",
+   "agent_signature": "2be7166d747b2fb3549a6b5068e3e0f661cf1e209e3471bda3e0573ce52f42f0",
+   "system_signature": "3ceae32978bf2341bda28787f1fb7feeabf15301073f2c1c2949ecbe48926728"
+  },
+  "kimi-k3": {
+   "agent_id": "kimi-k3",
+   "name": "Kimi K3",
+   "owner": "若水",
+   "status": "active",
+   "scopes": [
+    "workflow:read",
+    "workflow:run",
+    "knowledge:read",
+    "memory:read:self",
+    "memory:write:self",
+    "skill:read",
+    "agent:read"
+   ],
+   "contract": "fanxing-agent-v1",
+   "contract_sha256": "267a43b1f187abd6d3c842d3ab4bc699f7ccdc816b2e7000a00052c9d7aca778",
+   "joined_at": "2026-11-01 05:27:08",
+   "last_seen": "2026-11-01 05:27:14",
+   "agent_signature": "0e4d8c709263de003c1654169c31dd2063ae1b256a952ebbe79de6c828cc799c",
+   "system_signature": "94fe3a266636e9b3d25568721cf8ee1fb0348ef68b8b9fc7579fd945639af5bd"
+  },
+  "blue-big-fish": {
+   "agent_id": "blue-big-fish",
+   "name": "蓝色大肥鱼",
+   "owner": "若水",
+   "status": "active",
+   "scopes": [
+    "workflow:read",
+    "workflow:run",
+    "knowledge:read",
+    "memory:read:self",
+    "memory:write:self",
+    "skill:read",
+    "agent:read"
+   ],
+   "contract": "fanxing-agent-v1",
+   "contract_sha256": "267a43b1f187abd6d3c842d3ab4bc699f7ccdc816b2e7000a00052c9d7aca778",
+   "joined_at": "2026-11-01 05:43:11",
+   "last_seen": "2026-11-01 05:43:38",
+   "agent_signature": "b1766e6e931154e57ad3d6db3864a26304b3bba40e99db6db0d16493b80556da",
+   "system_signature": "12ab2840478d66774b8a73f717097ec4c7182f07dc119cdd9de9b1255feeceee"
+  },
+  "doubao": {
+   "agent_id": "doubao",
+   "name": "豆包",
+   "owner": "若水",
+   "status": "active",
+   "scopes": [
+    "workflow:read",
+    "workflow:run",
+    "knowledge:read",
+    "memory:read:self",
+    "memory:write:self",
+    "skill:read",
+    "agent:read"
+   ],
+   "contract": "fanxing-agent-v1",
+   "contract_sha256": "267a43b1f187abd6d3c842d3ab4bc699f7ccdc816b2e7000a00052c9d7aca778",
+   "joined_at": "2026-11-01 05:54:59",
+   "last_seen": null,
+   "agent_signature": "299fe81f329cccc33c92fa93533c57b1859b1acdf52fbf67e65da35a4af6f5a7",
+   "system_signature": "1e2c3a43af6fcd6c8461be0c6d5a99ad4a9484476de6cc9e96f3d726831b72e4"
+  },
+  "minimax-design": {
+   "agent_id": "minimax-design",
+   "name": "MiniMax Design",
+   "owner": "若水",
+   "status": "active",
+   "scopes": [
+    "workflow:read",
+    "workflow:run",
+    "knowledge:read",
+    "memory:read:self",
+    "memory:write:self",
+    "skill:read",
+    "agent:read"
+   ],
+   "contract": "fanxing-agent-v1",
+   "contract_sha256": "267a43b1f187abd6d3c842d3ab4bc699f7ccdc816b2e7000a00052c9d7aca778",
+   "joined_at": "2026-11-01 20:13:38",
+   "last_seen": "2026-11-02 05:32:57",
+   "agent_signature": "c7a7303fb0bbef14d618da2f16225b7f99d2eb88b9a17e0edf8c2e9b09800751",
+   "system_signature": "48149d8c9c273261ff37f87abd1012a8d474021bcfb33b53bb80a4365d085524"
+  }
+ }
+}

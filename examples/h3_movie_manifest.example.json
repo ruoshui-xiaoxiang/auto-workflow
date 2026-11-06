@@ -1,0 +1,60 @@
+{
+  "title": "space_battle_sequence",
+  "profile": "stable_t8",
+  "seed_base": 4200,
+  "_relay_pairs_readme": [
+    "R11 段间接力（规则真源 E:\\本地工作流规范手册\\20_通用规范层\\R11_段间接续生成.md）：",
+    "relay_pairs 每对 [父镜, 子镜] 由【人】判定'子镜开头直接承接父镜结尾动作'后才写（R11-01 承接归人判）。",
+    "接力镜的 generation.width/height 必须 64 对齐（如 768x448，lift=2x low）；与其它镜画布可以不同，",
+    "成片统一按 output_width/height 归一。跑接力批前确认 ComfyUI 为无 sage 启动 + --reserve-vram 6.0。",
+    "下面这对只是示例写法；本例两镜是否真承接由人判，不需要接力就整键删掉。"
+  ],
+  "relay_pairs": [["shot01_establish", "shot02_shield_hit"]],
+  "defaults": {
+    "width": 736,
+    "height": 416,
+    "length": 124,
+    "steps": 8,
+    "lora": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+    "lora_strength": 1.0,
+    "head_chunks": 4
+  },
+  "shots": [
+    {
+      "id": "shot01_establish",
+      "type": "scifi_combat",
+      "subjects": ["allied_cruiser", "enemy_frigate"],
+      "events": ["fleets_cross_on_intersecting_paths", "engines_flare"],
+      "prompt_file": "D:/AIWorkflow/ComfyUI_H3/prompts/shot01_establish.txt",
+      "ref_images": ["D:/AIWorkflow/replace_with_shot01_first_frame.png"],
+      "seed": 4200,
+      "generation": { "width": 768, "height": 448 },
+      "continuity": {
+        "chain_id": "space_battle_a",
+        "camera_axis": "left_to_right",
+        "travel_direction": "screen_right",
+        "palette_id": "rust_cyan_cold_starlight",
+        "end_state": "allied_cruiser_reaches_frame_right"
+      }
+    },
+    {
+      "id": "shot02_shield_hit",
+      "type": "scifi_combat",
+      "subjects": ["allied_cruiser"],
+      "events": ["missiles_hit_blue_energy_shield", "ship_banks_away"],
+      "prompt_file": "D:/AIWorkflow/ComfyUI_H3/prompts/shot02_shield_hit.txt",
+      "ref_images": ["D:/AIWorkflow/replace_with_shot02_first_frame.png"],
+      "seed": 4201,
+      "generation": { "width": 768, "height": 448 },
+      "continuity": {
+        "chain_id": "space_battle_a",
+        "prev_id": "shot01_establish",
+        "camera_axis": "left_to_right",
+        "travel_direction": "screen_right",
+        "palette_id": "rust_cyan_cold_starlight",
+        "start_state": "allied_cruiser_reaches_frame_right",
+        "end_state": "shield_holds_ship_banks_away"
+      }
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+﻿name: character_sheet
+description: 角色立绘批次出图（合并自 pipeline.py 链路 A）—— 底模按种子出 N 张变体 → 拼总览图 → 发飞书。LoRA 是可选插件（留空=纯底模）。2026-10-04 底模由 FLUX.1-dev 换成 Z-Image-Turbo。
+provider: local
+args:
+  theme: "沈无音 · 套e01（定妆立绘）"
+  prompt: "21岁年轻女子，清冷骨相，眼尾略长，唇色淡，不施脂粉，面无表情，眼下淡青；及腰黑长直发，头顶半盘发髻插银质步摇横穿外露，两侧蓝花钗，额间朱砂莲花钿；身量高挑，站姿与坐姿都极直；月白与鸦青渐变宽袖襦裙，白色交领中衣、交领最低点只到胸上不露肤、胸前交叠处一直合到腰，裙摆整片垂坠无开衩、双脚并立时裙摆合拢盖到脚面，料子旧洗得发白，腰间淡蓝织带末端磨得起毛，挂米色小布袋。写实3D CG渲染，电影感，浅景深，竖幅9:16构图，素净灰白背景，单人立像，皮肤质感真实"
+  count: 3
+  width: 640
+  height: 960
+  # 2026-10-04 换 Z-Image-Turbo（蒸馏模型，官方 6~8 步；28 步是 FLUX.1 时代的档）
+  steps: 8
+  # LoRA 是可选插件，不是工作流主件：留空 = 纯底模出图；要风格锁定就填
+  # ⚠️ 出沈无音时必须留空——'saintess_*' 是圣女的 LoRA，会把无音带成圣女味
+  loras: ''
+  # ⚠️ 沈无音定妆铁律（E:\创作\无音项目\人设\00_人设定稿与定稿提示词.md）：
+  #    主角定妆一律 **i2i 挂脸锚派生**（锚＝图\定妆\char_e01.png），**禁纯文生图**
+  #    （纯文生图实测"三张长出三张不同的脸"，且会把"清冷骨相/眼下淡青"读成憔悴）。
+  #    本工作流是纯文生图 → 出无音会漂脸，仅供探索/占位；正式定妆走 工具\gen_costume.py --anchor。
+  use_llm_polish: false
+  llm_backend: dashscope
+  send_feishu: true
+  caption: ""
+  # 其他圣女场景（改成上面 theme/prompt 再跑一轮即可，一次跑一个场景）：
+  #   月下湖: "svface, saintess, by a moonlit lake at night, silver moonlight shimmering on water, flowing ribbons, pale blue hanfu, ethereal cold glow, exquisite delicate face, perfectly symmetrical features, slender nose, soft defined jawline, detailed sparkling eyes with catchlights, flawless porcelain skin with subtle blush, refined elegant makeup, photorealistic xianxia, sharp focus on face, 8k"
+  #   晨雾竹林: "svface, saintess, walking through a misty bamboo grove at dawn, green bamboo, soft volumetric fog, white gauze hanfu, cold serene expression, exquisite delicate face, perfectly symmetrical features, slender nose, soft defined jawline, detailed sparkling eyes with catchlights, flawless porcelain skin with subtle blush, refined elegant makeup, cinematic xianxia photography, sharp focus on face, 8k"
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（机制关口）
+    hint: 图片口径：分辨率/字面化词/落点；锁脸铁律由 i2i 锚点那条链把守，本流可裸文字
+    auto_gates: [G5, G7, G11, G13]
+    prompt_kind: image
+    characters: none
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    prompt: "{{args.prompt}}"
+
+  - task: llm
+    id: polish
+    label: 润色提示词
+    hint: 把中文主题改写成英文提示词；默认关闭，直接用上面的 prompt
+    enabled: "{{args.use_llm_polish}}"
+    static: "{{args.prompt}}"
+    backend: "{{args.llm_backend}}"
+    system: "你是 FLUX 提示词工程师。把主题扩写成一段 60~120 词的英文照片级提示词，只输出提示词本身，不要解释或引号。"
+    prompt: "主题：{{args.theme}}"
+    max_tokens: 300
+    temperature: 0.8
+  - task: comfyui
+    id: draft
+    label: 出立绘
+    hint: FLUX 按种子出 N 张变体；LoRA 走 loras 参数（可选插件）
+    workflow: "comfy/z_image_turbo_api.json"
+    prompt: "{{polish.text}}"
+    count: "{{args.count}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    steps: "{{args.steps}}"
+    loras: "{{args.loras}}"
+    prefix: "sheet_{{run_id}}"
+    stage: "sheets"
+  - task: sheets
+    id: overview
+    label: 拼总览图
+    hint: 把所有变体拼成一张网格，便于挑种
+    files: "{{draft.files}}"
+    seeds: "{{draft.seeds}}"
+    cols: 3
+    title: "角色立绘 · {{run_id}}"
+  - task: feishu
+    id: send
+    label: 发飞书
+    hint: bot 身份两步传图到接收群；enabled=false 可关
+    enabled: "{{args.send_feishu}}"
+    files: "{{overview.files}}"
+    caption: "{{args.caption}}"
+

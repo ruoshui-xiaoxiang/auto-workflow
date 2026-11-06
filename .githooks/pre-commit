@@ -1,0 +1,4 @@
+#!/bin/sh
+# 存档仓 pre-commit：敏感数据 + 大件拦截
+python "D:/AIWorkflow/tools/precommit_secret_scan.py"
+exit $?

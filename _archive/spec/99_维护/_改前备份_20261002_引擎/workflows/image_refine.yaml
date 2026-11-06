@@ -1,0 +1,21 @@
+name: image_refine
+description: 两段式·精修 —— 按编号取草稿，USDU 生成式放大 2x（保留原构图）；832x1216 草稿实测 183.5 秒一张
+args:
+  manifest: ""
+  pick: ""
+  tile: 512
+  steps: 12
+  upscale_by: 2.0
+  denoise: 0.35
+steps:
+  - task: refine
+    id: refine
+    label: 生成式精修
+    hint: 保留选中草稿的构图，分块重绘放大 2 倍到 1664x2432
+    files: "{{args.picked_files}}"
+    prompt: "{{args.picked_prompt}}"
+    tile: "{{args.tile}}"
+    steps: "{{args.steps}}"
+    upscale_by: "{{args.upscale_by}}"
+    denoise: "{{args.denoise}}"
+    prefix: "refine_{{run_id}}"

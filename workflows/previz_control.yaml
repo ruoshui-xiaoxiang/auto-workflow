@@ -1,0 +1,47 @@
+name: previz_control
+description: previz 灰模帧 → **Z-Image Fun ControlNet**（图内 Canny 提边）锁构图出图（P4 通道）。灰模帧拷进 ComfyUI input 当控制图，图内提边后喂控制网。产物图片落批次夹 control/。⚠ 2026-10-04 底模由 FLUX.1 换成 Z-Image-Turbo＋alibaba-pai 的 Fun ControlNet（15 层全量档，Apache-2.0）；旧 FLUX 版随底模退役停用。
+provider: local
+args:
+  # 灰模帧（previz 关键帧）。正式出镜按"镜头分级投入"只对动作戏用；静镜走首尾帧直出。
+  src_image: 'E:\图像影音资源池\无音\素材\shot04_v5\shot04_v5_000.png'
+  # ⚠️ 占位提示词（验证用）。正式出镜用逐镜定稿提示词，经 --set prompt="..." 传入。
+  prompt: "沈无音在古风庭院的石凳上垂眸读书：21 岁清冷温婉、及腰黑长直发、头顶半盘发髻插银质步摇、两侧蓝花钗、额间朱砂莲花钿、月白与鸦青渐变交领汉服、腰间淡蓝织带挂着米色小布袋；青石地面、一张石桌一个石凳、旁有古树，竹影与洒落的光斑，背景轻微虚化。电影级写实 CG，浅景深，柔和天光。只采用输入图的构图、人物姿态与机位结构，画风按本描述渲染；不得继承灰色模型材质、不得出现灰色塑料感、不得保留占位方块。8K 细节。"
+  width: 1024
+  height: 576
+  steps: 8
+  # 强度刻度（10-04 本机实测，`tmp\wzy\cn_adherence.py` 那套尺子）：
+  #   0.65 → 只部分贴合（纵向投影相关 0.05 上下）
+  #   1.00 → 拐点，构图基本锁死（hall 组纵向 0.92、布局相关 0.956）
+  #   1.50 → 与 1.00 无增益（已饱和），别再加
+  # 官方卡片口径是 control_context_scale 最优 0.65~1.00，与本机实测的拐点位置一致。
+  strength: 1.0
+  seed: ""
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（机制关口）
+    hint: 图片口径：分辨率/字面化词/落点；锁脸铁律由 i2i 锚点那条链把守，本流可裸文字
+    auto_gates: [G5, G7, G11, G13]
+    prompt_kind: image
+    characters: none
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    prompt: "{{args.prompt}}"
+    refs: "{{args.src_image}}"
+
+  - task: control
+    id: gen
+    label: 锁剪影出图（Z-Image Fun ControlNet）
+    hint: 灰模帧 → 图内 Canny 提边 → Z-Image Fun ControlNet；灰模帧自动拷进 ComfyUI input
+    workflow: "comfy/z_image_cn_canny_api.json"
+    prompt: "{{args.prompt}}"
+    src_image: "{{args.src_image}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    steps: "{{args.steps}}"
+    strength: "{{args.strength}}"
+    seed: "{{args.seed}}"
+    prefix: "previzctrl_{{run_id}}"
+    stage: "control"
+    timeout: 900

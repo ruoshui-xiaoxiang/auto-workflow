@@ -1,0 +1,8 @@
+{
+  "character": "仅取道具/环境，不采用人物",
+  "shot": "C02",
+  "anchors": [
+    "C02_ref.png"
+  ],
+  "anchor_kind": "prop_or_env"
+}

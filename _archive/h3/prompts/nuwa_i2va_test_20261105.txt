@@ -1,0 +1,7 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description: [Shot 1] A single continuous cinematic shot preserves the exact composition, identity, face, hair, costume and colors of <Picture 1>. Nuwa stands amid a vast sea of clouds beneath a fractured celestial sky, holding the five-colored crystals. The camera makes a very slow, gentle push in. Clouds drift softly in the distance; a few strands of hair and the edges of her sleeves move lightly in the wind. Faint multicolored light glimmers across the crystals and broken sky. Nuwa remains poised and calm, with only subtle natural breathing and a slight lift of her gaze. Keep her facial features, clothing, body proportions and hands consistent with the reference image throughout. The shot remains steady and continuous, with no cut. Epic ancient Chinese myth, cinematic natural light, layered cloud depth, restrained magical glow.
+
+overall_soundscape: A soft high-altitude wind moves through the clouds, with a faint crystalline shimmer from the glowing stones. No dialogue or voices.
+
+non_diegetic_music: A restrained orchestral texture with low strings and distant airy tones, slowly swelling without a strong beat.

@@ -1,0 +1,68 @@
+[
+ {
+  "face_px": [
+   64,
+   80
+  ],
+  "texture_lapvar": 688.5,
+  "edge_gmag_mean": 51.92,
+  "midtone_ratio": 0.1165,
+  "flat_ratio": 0.1856,
+  "name": "锚_jm9862(风格)"
+ },
+ {
+  "face_px": [
+   312,
+   433
+  ],
+  "texture_lapvar": 817.1,
+  "edge_gmag_mean": 53.44,
+  "midtone_ratio": 0.4142,
+  "flat_ratio": 0.1996,
+  "name": "锚_jmfacev2(脸)"
+ },
+ {
+  "face_px": [
+   155,
+   208
+  ],
+  "texture_lapvar": 1082.8,
+  "edge_gmag_mean": 72.67,
+  "midtone_ratio": 0.1667,
+  "flat_ratio": 0.2134,
+  "name": "dz0b2p_D2p(变白批)"
+ },
+ {
+  "face_px": [
+   171,
+   231
+  ],
+  "texture_lapvar": 1169.5,
+  "edge_gmag_mean": 66.4,
+  "midtone_ratio": 0.1852,
+  "flat_ratio": 0.2459,
+  "name": "dz0b2pp_E1"
+ },
+ {
+  "face_px": [
+   164,
+   216
+  ],
+  "texture_lapvar": 1081.5,
+  "edge_gmag_mean": 71.93,
+  "midtone_ratio": 0.2366,
+  "flat_ratio": 0.2596,
+  "name": "dz0b2pp_E2"
+ },
+ {
+  "face_px": [
+   198,
+   245
+  ],
+  "texture_lapvar": 1065.0,
+  "edge_gmag_mean": 58.46,
+  "midtone_ratio": 0.4577,
+  "flat_ratio": 0.4248,
+  "name": "dz0b2pp_E3"
+ }
+]

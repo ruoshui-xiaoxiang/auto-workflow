@@ -1,0 +1,145 @@
+{
+  "_readme": [
+    "genres_registry.json —— 题材／项目**两层键**的登记源（2026-10-19 建，治理批新功能①）。",
+    "",
+    "为什么要有它：用户痛点 #3 是「一致性很难保证，一换题材就又要重新测试」。",
+    "根因不是没测，是**没人记着哪些判据是跨题材成立的、哪些一换题材就作废**，于是每换一次就把全部判据重测一遍，",
+    "而重测出来的新数又没地方登记，下次再换题材还得再测。这份表就是那个登记处。",
+    "",
+    "★ 纪律（与 thresholds_registry.json 同一条哲学）：",
+    "  · 本表**只管键与元数据**——哪个题材、哪一层、值住在哪个文件的哪个位置、标定过没有、样本几张。",
+    "  · **一个标定值都不抄。** 毒词表不抄、光影句不抄、绝对带的数字不抄。抄进来就是第二个会漂的真源。",
+    "    要值就去 `values_live_in` 指的那个文件现读。",
+    "  · 判据分两类，**必须分开登记**：",
+    "      ① `universal`（通用）＝换题材仍成立。例：运动量测、运镜判据、批内一致性相对尺。",
+    "      ② `per_genre` / `per_project`（题材标定／项目标定）＝换题材就失效。例：QC 绝对带、提示词毒词表。",
+    "    把 ① 误登记成 ② ⇒ 白重测；把 ② 误登记成 ① ⇒ 拿别的题材的判据判这个题材，**假阴**（该拦的没拦）。",
+    "",
+    "为什么「运动与运镜」不进题材维度：它们量的是**画面里有没有动、动多大、镜头怎么移**，",
+    "与画风无关（10-02 实测口径：736×416 强制拉伸 + Farneback，跨项目沿用）。",
+    "而「绝对带」量的是**这批图像不像被打了回的那批**，那是分布判断，换画风分布就换 ⇒ 必须按题材/项目标定。",
+    "",
+    "自检：py D:/AIWorkflow/tools/check_official_path.py   （[P2] 校它在不在，[P10] 校它内部自洽）"
+  ],
+  "schema_version": 1,
+  "updated": "2026-10-19",
+
+  "dimensions": {
+    "_note": "三个维度需要题材／项目分层。每个维度只登记**键在哪、值住在哪、标定状态**，不登记值。",
+
+    "prompt_vocab": {
+      "维度": "提示词词汇与画风公式（文）",
+      "为什么分层": "同一句提示词在不同画风档下是好是坏**正好相反**。实测来历：2026-09-25 深夜用户把全片画风从「即梦同款高精度 3D 半写实国漫」改判为「高精度 CG 半写实·写实赛博朋克」，于是原来那套毒词表方向整个反过来——35mm／定焦／胶片／细颗粒／次表面散射／浅景深／写实／影视级 在国漫档里是「把整批渲成游戏 CG」的病灶词，在写实档里是他点名要的规格。**不处理这个，闸会把每一张合规图都拦下。**",
+      "values_live_in": "D:/AIWorkflow/tools/prompt_lint.py 的 RENDER_TOXIC_BY_PROFILE（字典，键＝档位名）",
+      "selected_by": "环境变量 WZY_STYLE（prompt_lint.py:31），默认 realistic_cyber",
+      "已有档位": ["guoman_3d", "realistic_cyber"],
+      "档位自校验": "prompt_lint.py:289-290 已经有一条：`if STYLE_PROFILE not in RENDER_TOXIC_BY_PROFILE` ⇒ 报「画风档 %s 没有毒词表 ⇒ 会拿别的档的表来判它」。这条别删，它是防止静默用错档的唯一防线。",
+      "🔴已知问题": "环境变量名叫 **WZY**_STYLE（武昭君仪的缩写），但它管的是通用画风档 ⇒ 名字泄露了它是从单项目脚本长出来的。且 prompt_lint.py 是**项目绑定**脚本（:18 D 写死 tmp/wzy、:19 import 时 os.chdir、:33 import 时读 style_baseline.txt）⇒ 通用闸依赖它这件事已在 Phase 4 断开（否定词表改走 tools/ban_words.py），但**毒词表这一维仍然只有 prompt_lint 里有**。要真解耦得把 RENDER_TOXIC_BY_PROFILE 也拎成纯数据模块，与 ban_words.py 同一套做法。",
+      "未裁": "新题材要不要新增档位、还是复用现有两档 —— 没有规则，靠人判。建议：先拿现有两档跑，出现「合规图被拦」或「病灶词没拦住」再新增，别预防性造档。"
+    },
+
+    "style_baseline_image": {
+      "维度": "风格基准（图）",
+      "为什么分层": "「像不像这个画风」只能对着**实物基准图**判，不能靠通用美学分。实测否掉过一把尺：LAION 美学分在实圈 36 张上 AUC 只有 0.374（≈瞎猜），所以判画风必须用本库的参考图对齐，不能用现成分数。",
+      "values_live_in": "D:/AIWorkflow/画风库/画风库.json（结构化）＋ 画风库.xlsx（主表+标签反查索引）＋ 画风库/imgs|样片|备选图|景别|补测画风/（基准图本体）",
+      "规则真源": "D:/AIWorkflow/ComfyUI_H3/图片链_工作流规则.md §四-补二十二～二十五",
+      "维护脚本": "D:/AIWorkflow/画风库/_维护/build_style_library.py、build_style_xlsx.py；选档 CLI 画风库/选画风.py",
+      "键位登记（只登记编号与数量，不登记内容）": {
+        "布光_现役": {"编号": ["S01", "S02", "S06", "S07", "S10", "S11", "S12"], "n": 7},
+        "布光_未选": {"编号": ["S03", "S04", "S05", "S08", "S09"], "n": 5, "为什么留着": "未选≠无效，是 10-05 五轮实测里用户没挑中的；留着才能回答「当初为什么不选它」"},
+        "画风尾巴_现役": {"编号": ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "N2", "N5"], "n": 9},
+        "画风尾巴_补测存档": {"编号": ["N1", "N2", "N3", "N4", "N5", "N6", "N7", "N8", "N9", "N10", "N11", "N12", "N13", "N14"], "n": 14},
+        "景别": {"编号": ["F1", "F2", "F3", "F4", "F5", "F6"], "n": 6},
+        "组合": {"n": 49, "来历": "7 布光 × 7 画风"},
+        "标签反查": {"n": 19},
+        "别试清单": {"n": 8, "为什么单列": "这是**负面知识**——试过且不行的。不登记就会有人再试一遍，白烧一遍机器时间"}
+      },
+      "标定状态": "✅ 已标定（2026-10-05 五轮实测：12 组初选→用户挑中 7→扩 seed＋剥词配对→49 张→14 档补测）",
+      "引擎参数住在": "画风库.json 的 `引擎参数` 段（13 项：预设文件/模型/文本编码器/VAE/shift/KSampler/尺寸/负面通道/LoRA/耗时/复现性/组装方式/用词三条纪律）",
+      "🔴覆盖边界": "**只覆盖角色批**。场景批 54 张**未入库**（那批用的是 v2）。所以拿本库去判场景画风＝超范围使用。"
+    },
+
+    "qc_absolute_bands": {
+      "维度": "QC 绝对带（数值判据）",
+      "为什么分层": "绝对带量的是「这批图像不像被打了回的那批」，是**分布判断**。10-02 实测：拿武昭君仪标定出来的绝对带去测通用角色库 ⇒ **3/3 全 FAIL**，而那 3 张是未被打回的基线稿 ⇒ 判据跨项目直接失效。",
+      "values_live_in": "D:/AIWorkflow/tools/qc.py 的绝对带字典（键如 faceWhite / faceL / faceA / lpalex / dino，每个含 fail_* 与 warn_* 及 note）",
+      "登记处": "D:/AIWorkflow/engine/thresholds_registry.json —— 绝对带条目在那边按 `scope` 字段分层，本表**不重复登记条目**，只登记「这个维度需要题材分层」这件事与已标定的项目。指针：thresholds_registry.json 的 id=qc_absolute_bands_faceWhite（scope 写的就是「项目标定（武昭君仪 12 张人判样本）」）。",
+      "已标定项目": [
+        {
+          "project": "武昭君仪",
+          "样本": "12 张人判样本",
+          "标定日期": "2026-10-02 前后",
+          "enforced": false,
+          "为什么没升成拦": "样本太少。thresholds_registry 那条 note 写着「样本攒到 60 条以上才讨论升 block」"
+        }
+      ],
+      "⚠对照：哪些是**通用**的（不要跟着分层）": [
+        "qc_batch_dino_floor —— 同批 DINO 互比最低值。scope 写明「通用（相对尺，跨项目仍成立）」",
+        "qc_batch_dino_mean_warn —— 同批两两余弦均值的警示线。同为相对尺",
+        "motion_dead_speed_max / motion_dead_amplitude_max / motion_* —— 运动量测，通用",
+        "运镜判据（脸高占比斜率等）—— 通用"
+      ],
+      "🔴一条必须记住的限定": "批内相对尺**只答「同批像不像」，不答「能不能进片」**。10-03 实测：同一取法下，人判「变白」打回的 dz0b2p 得 0.853/0.817、人判「偏卡通」打回的 dz0b2pp 得 0.846/0.824，两批都**过**这把尺 ⇒ 它是必要条件不是充分条件。把人判打回过的东西写成「机检通过」是假阴。"
+    }
+  },
+
+  "genres": {
+    "_note": [
+      "题材层。**本表现在只登记有据可查的两个题材档**，不预防性造空档。",
+      "🔴 证据边界：这两个档是从 `prompt_lint.py` 的 `RENDER_TOXIC_BY_PROFILE` **实读**出来的，不是我编的。",
+      "画风库那 9+14 档「画风尾巴」是**图层的风格基准**，与这里的「题材档」不是同一层东西：",
+      "题材档决定「哪些词是毒词」（文），画风尾巴决定「长什么样算对」（图）。别把两套编号混用。"
+    ],
+    "guoman_3d": {
+      "名": "国漫档（即梦同款高精度 3D 半写实国漫）",
+      "layer": "genre",
+      "prompt_vocab_calibrated": true,
+      "style_baseline_calibrated": "部分——画风库 9 档现役尾巴里 T1 厚涂／T2 平涂／T4 版画 等属这一路，但**没有按题材档重新归组**",
+      "qc_absolute_bands_calibrated": false,
+      "样本数": 0,
+      "状态": "⚠ 曾是默认档，2026-09-25 深夜被改判为 realistic_cyber。**毒词表保留不删**——那四批人审标签是在它下面验出来的，删了就毁掉标定证据（prompt_lint.py:30 的原话）"
+    },
+    "realistic_cyber": {
+      "名": "写实赛博朋克档（高精度 CG 半写实·写实赛博朋克）",
+      "layer": "genre",
+      "prompt_vocab_calibrated": true,
+      "style_baseline_calibrated": "部分——画风库 T6 写实 等属这一路，同样没按题材档归组",
+      "qc_absolute_bands_calibrated": false,
+      "样本数": 0,
+      "状态": "✅ 现役默认档（WZY_STYLE 未设时就是它）"
+    }
+  },
+
+  "projects": {
+    "_note": [
+      "项目层。**键必须与 `engine/projects_registry.json` 的 projects[].id 逐字相同**——",
+      "那份表是项目声明的唯一真源，本表不复制它的字段（aliases / asset_dir 都不抄），只加「标定状态」这一维。",
+      "由 check_official_path.py [P10] 校两边键集合是否一致：本表多出或少了都会报 error。",
+      "⚠ 两个维度别混：projects_registry 的 `id` ↔ 资源池(E:/图像影音资源池)下的目录名；",
+      "  `asset_dir` ↔ 创作根(E:/创作)下的目录名。"
+    ],
+    "无音": {"layer": "project", "genre": null, "qc_absolute_bands_calibrated": false, "样本数": 0, "备注": "有专门的 LoRA 训练批（9 月），但 QC 绝对带未标定"},
+    "仙戮": {"layer": "project", "genre": null, "qc_absolute_bands_calibrated": false, "样本数": 0, "备注": "asset_dir=仙戮双生；9-18 曾发生四条产物串进无音批次夹（output_root 写死导致），是 projects_registry 引入的直接动因"},
+    "圣女": {"layer": "project", "genre": null, "qc_absolute_bands_calibrated": false, "样本数": 0, "备注": "pipeline 已于 2026-09-12 退役，能力并入 engine/workflows/character_sheet.yaml；🔴 尚无运行决定单 ⇒ 出片会被 G13 拦"},
+    "武昭君仪": {"layer": "project", "genre": null, "qc_absolute_bands_calibrated": true, "样本数": 12, "备注": "✅ 唯一标定过绝对带的项目。⚠ 它的工作目录与规则底座仍在 tmp/wzy/（c12_source.txt、style_baseline.txt、h3/ 产物、run_dz0b2ppp.py、run_qiang.py）；49MB 定妆锚点已于 2026-10-19 迁至 E:/图像影音资源池/武昭君仪/素材/face_anchors/"},
+    "tt_slimemast": {"layer": "project", "genre": null, "qc_absolute_bands_calibrated": false, "样本数": 0, "备注": null},
+    "鲲鹏": {"layer": "project", "genre": null, "qc_absolute_bands_calibrated": false, "样本数": 0, "备注": "别名含 逍遥游"},
+    "巨鲲出海": {"layer": "project", "genre": null, "qc_absolute_bands_calibrated": false, "样本数": 0, "备注": "竖屏（鲲出海竖屏）"},
+    "仙女星系": {"layer": "project", "genre": null, "qc_absolute_bands_calibrated": false, "样本数": 0, "备注": "🔴 尚无运行决定单 ⇒ G13 会拦。与 仙女星系v2 共用 asset_dir=仙女星系战争项目"},
+    "仙女星系v2": {"layer": "project", "genre": null, "qc_absolute_bands_calibrated": false, "样本数": 0, "备注": "🔴 尚无运行决定单 ⇒ G13 会拦"},
+    "太空战": {"layer": "project", "genre": null, "qc_absolute_bands_calibrated": false, "样本数": 0, "备注": "🔴 尚无运行决定单 ⇒ G13 会拦"},
+    "机械战星": {"layer": "project", "genre": null, "qc_absolute_bands_calibrated": false, "样本数": 0, "备注": "🔴 尚无运行决定单 ⇒ G13 会拦"},
+    "抖音人物": {"layer": "project", "genre": null, "qc_absolute_bands_calibrated": false, "样本数": 0, "备注": "🔴 尚无运行决定单 ⇒ G13 会拦。projects_registry 里 asset_dir=None（E:/创作 下没有对应目录）"},
+    "HM860发布会": {"layer": "project", "genre": null, "qc_absolute_bands_calibrated": false, "样本数": 0, "备注": "2026-10-19 第⑬条新建（HM-860《通用智能架构》发布会片）。决定单已 `decision_sheet.py init` 建成**空白单**（值全空、无人代填）⇒ G13 仍按『空槽即拦』拦。题材档留 null：本片是产品发布会/宣传体裁，既不是 guoman_3d 也不是 realistic_cyber，**没有对应毒词档**，硬套等于用错判据（同 known_gaps 最后一条）。QC 绝对带未标定，0 样本。"},
+    "三材两风": {"layer": "project", "genre": null, "qc_absolute_bands_calibrated": false, "样本数": 0, "备注": "2026-10-21 会话内登记（三材×两风一分钟二采试片；asset_dir=三材两风_试片）。项目级决定单按默认包落单；题材档留 null：项目含 live-action／国漫赛璐璐两种走向，现有 guoman_3d／realistic_cyber 两档都不覆盖，硬套等于用错判据（同 known_gaps 最后一条）。QC 绝对带未标定，0 样本。"},
+    "夏夜院坝": {"layer": "project", "genre": null, "qc_absolute_bands_calibrated": false, "样本数": 0, "备注": "2026-10-24 会话内登记（即梦5.0 lite 静帧→H3 动画；asset_dir=夏夜院坝）。题材档与 QC 绝对带均未标定，0 样本；不代填题材档。"}
+  },
+
+  "known_gaps": [
+    "🔴 15 个项目里**只有 1 个**（武昭君仪，12 样本）标定过 QC 绝对带，且 enforced=false。其余 14 个出片时这一维**等于没有判据**——不是判据松，是根本没有。",
+    "🔴 6 个项目连运行决定单都没有（仙女星系/仙女星系v2/太空战/机械战星/抖音人物/圣女）⇒ 下次出片被 G13 拦。G13 项目级 6 槽只能人落单（--set 被拒），agent 不能代填。",
+    "⚠ 题材档与画风库两套编号**没有映射表**：guoman_3d / realistic_cyber（文，毒词表）与 T1~T7/N1~N14（图，风格基准）目前靠人脑对应。要建立映射需要人判（哪几档画风属哪个题材），agent 不代裁。",
+    "⚠ 画风库**只覆盖角色批**，场景批 54 张未入库 ⇒ 场景画风目前无基准可对齐。",
+    "⚠ 所有 project 的 `genre` 字段都是 null：哪个项目属哪个题材档**没有登记过**。填它需要人判（例：武昭君仪是古风国漫还是写实赛博？10-04 之后它的画风档被改判过，改判前后产物混在同一批里）。"
+  ]
+}

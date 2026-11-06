@@ -1,11 +1,11 @@
-# auto-workflow — 本地模型工作流框架
+# auto-workflow — 云端工作流框架
 
-用现有的本地服务（llama.cpp 四档 + ComfyUI）编排自动化任务。**一个 YAML = 一个工作流**，
+用云端 LLM（cloud + dashscope 兜底）与 ComfyUI 编排自动化任务。**一个 YAML = 一个工作流**，
 引擎不动代码；任务类型（llm / comfyui / refine / files / shell）在 `tasks.py` 注册。
 
 ```
-workflows\*.yaml  →  run.py 引擎  →  tasks.py 任务模块  →  本地服务
-     (定义)         (调度/占位符/     (能力插件)          llama-server + ComfyUI 8188
+workflows\*.yaml  →  run.py 引擎  →  tasks.py 任务模块  →  云端 LLM + 本地 ComfyUI
+     (定义)         (调度/占位符/     (能力插件)          cloud/dashscope + ComfyUI 8188
                     日志/报告/状态)
 ```
 
@@ -31,7 +31,13 @@ python run.py image_batch_draft --set count=2
 出图运行中会打印一行报告路径，**双击那个 HTML** 即看流程方框、进度和草稿网格；
 点图选编号，页面底部给出可直接复制的精修命令。报告零依赖、不开服务、不占端口。
 
-## 网页操作（webui，2026-09-03 新增）
+## 网页操作（webui，2026-09-03 新增）**⚠ 已废（2026-10-19）**
+
+🔴 本节保留只为说明「这堆代码是干什么的」，**不是现役入口**。门面只留两个（用户 2026-10-19 裁定）：
+**人用**＝桌面「娱乐流」图标 → `E:\LocalAI\娱乐流.bat`（只起 ComfyUI 8189 ＋ `/extensions/comfyui-entertainment-panel/index.html`）；
+**agent 用**＝`python run.py <workflow> [--tier play|draft|final]`。真源：`D:\AIWorkflow\官方路径.json`。
+8787（engine WebUI）与 8790（说话出片 UI）都登记在该文件 `deprecated` 段（状态「待归档」，
+原文件一字未动，所以本节描述的行为仍然成立——只是别再当入口用）。
 
 不想敲命令行时用网页版：双击 `start-webui.bat`（或 `python webui.py`）起本地服务
 （`http://127.0.0.1:8787`），浏览器里点按钮操作 —— 输入主题/数量 → 出图 →
@@ -62,15 +68,13 @@ python run.py image_batch_draft --set count=2
 
 ## 核心机制
 
-- **LLM 兜底链**：`backend: auto` 按 `config.yaml` 的 `fallback_chain`（默认 `[t3, q14, t2]`）
-  依次尝试；端口未监听时自动调 launcher 拉起，launcher 秒退会带着它的日志尾部立刻降级下一个
-  （日志见 `logs\workflows\launcher_<档>_<run_id>.log`）。
-  `enabled: false` 时不调模型、不触发 launcher、不参与显存仲裁，直接把 `static` 当结果返回 ——
+- **LLM 兜底链**：`backend: cloud,dashscope` 按 `config.yaml` 的 `fallback_chain`（默认 `[cloud, dashscope]`）
+  依次尝试；云端不可用时自动降级到按量付费。
+  `enabled: false` 时不调模型，直接把 `static` 当结果返回 ——
   接口留着但不接上，下游 `{{polish.text}}` 照常可用。
-- **ComfyUI 任务**：出图与精修共用 `ensure_comfyui()`；服务未运行时先按显存仲裁
-  **清掉 `kill_ports_before_start` 列出的端口（11434/11435/11436/1234）上的 llama-server**
-  再拉起（16G 卡显存互斥）。启动命令默认硬编码，写 `config.yaml` 的 `comfyui.launch_cmd`
-  即成为唯一来源。含 LLM 步骤的工作流请把 LLM 排在生图前。
+- **ComfyUI 任务**：出图与精修共用 `ensure_comfyui()`；服务未运行时自动拉起。
+  启动命令默认硬编码，写 `config.yaml` 的 `comfyui.launch_cmd`
+  即成为唯一来源。
 - **产物闸门**：坏产物不再静默入库，四条都在提交/收尾处 fail-loud ——
   ① 空提示词或字面量 `"None"` 拒绝提交；② 产物尺寸 ≠ 请求尺寸（模板里有多余放大节点）报错；
   ③ 整幅近乎纯色的废图报错；④ 精修按 tile 网格估算分块数，超 `max_tiles`（默认 64 ≈ 9 分钟）
@@ -85,7 +89,7 @@ python run.py image_batch_draft --set count=2
   error 而非留下永久 running，且下次开跑会把上次遗留的 running 自愈成 error。
   **监控器契约**：三态不可扩；`parent_run` 是精修指回上游草稿的父指针、`picked` 是那次挑的编号；
   `running` 条目在**每个步骤边界**重写，所以运行中就能读到实时步骤进度（原来只在头尾写，
-  十几分钟的运行全程显示 pending）。监控器只读这个文件，不参与显存仲裁。
+  十几分钟的运行全程显示 pending）。监控器只读这个文件。
 
 ## 新增一个工作流
 

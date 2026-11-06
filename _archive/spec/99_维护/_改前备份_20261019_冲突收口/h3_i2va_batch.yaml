@@ -1,0 +1,49 @@
+name: h3_i2va_batch
+description: H3 fl2va 首帧视频·无人值守批次版。与 h3_i2va_video 同图同参，仅去掉 H3/H4 人工门（用户 2026-09-23 授权自主执行、不再人审）；机器预检以本文件 `auto_gates` 声明为准（10-02 起另含 G13 留痕闸）。
+provider: local
+args:
+  theme: ""
+  prompt_file: ""
+  ref_images: []
+  # 16GB 显存稳定基线：先用 736x416x124；1344x768 仅手工精品重渲。
+  width: 736
+  height: 416
+  length: 124
+  duration: 5.1667
+  steps: 8
+  seed: 42
+  lora: minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors
+  lora_strength: 1.0
+  head_chunks: 4
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 首帧视频预检
+    prompt_kind: h3_i2va
+    auto_gates: [G1, G2, G3, G4, G5, G6, G7, G8, G11, G13]
+    prompt_file: "{{args.prompt_file}}"
+    refs: "{{args.ref_images}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    lora: "{{args.lora}}"
+    workflow_json: "D:/AIWorkflow/engine/comfy/h3_i2v_fl2va_api.json"
+  - task: video
+    id: gen
+    label: H3首帧出片(无人值守)
+    workflow: comfy/h3_i2v_fl2va_api.json
+    prompt_kind: h3_i2va
+    prompt_file: "{{args.prompt_file}}"
+    ref_images: "{{args.ref_images}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    steps: "{{args.steps}}"
+    seed: "{{args.seed}}"
+    lora: "{{args.lora}}"
+    lora_strength: "{{args.lora_strength}}"
+    head_chunks: "{{args.head_chunks}}"
+    prefix: "xn_{{run_id}}"
+    stage: video
+    timeout: 10800

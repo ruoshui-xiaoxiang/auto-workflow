@@ -1,0 +1,17 @@
+中文侧 20 份：warn 50／error 23
+   H3R23|正文语言|error                         20
+   §五|运镜|warn                               17
+   H3R8|光影|warn                             17
+   H3R20|20b 同拍完成|warn                      11
+   H3R13|抽象词|warn                           3
+   H3R20|20a 双向拉扯|error                     3
+   H3R3/11/15|步数|warn                       1
+   H3R1|道具锁|warn                            1
+英文侧 20 份：warn 40／error 2
+   H3R8|光影|warn                             17
+   §五|运镜|warn                               11
+   H3R20|20b 同拍完成|warn                      7
+   H3R19|特写质感|warn                          2
+   H3R13|抽象词|warn                           2
+   H3R20|20a 双向拉扯|error                     2
+   H3R3/11/15|步数|warn                       1

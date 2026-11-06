@@ -105,14 +105,18 @@ def test_unknown_param_rejected_by_handler_logic():
 
 
 def test_image_batch_draft_llm_off_by_default():
-    """一步式工作流默认不碰 LLM：use_llm=false，polish 走 static 直接出图。
-    （2026-09-03 修：此前默认 auto 拉兜底链致 t3/q14/t2 全失败）"""
+    """一步式工作流默认不碰 LLM：`use_llm_polish: false`，polish 走 static 直接出图。
+    （2026-09-03 修：此前默认 auto 拉兜底链致 t3/q14/t2 全失败。
+     10-03 批 7-4：参数名统一成 use_llm_polish；同时**表单不再预填**——
+     流级默认不是这批人给的决定，预填会让 G13 被绕开，所以这里改查 yaml 层的默认值。）"""
     m = webui.workflow_meta("image_batch_draft")
-    assert m["fields"]["use_llm"]["value"] is False
-    assert m["fields"]["use_llm"]["type"] == "bool"
-    # step 层：polish 的 enabled 引用 args.use_llm，且有 static 兜底
     y = webui.yaml.safe_load(
         (webui.WF_DIR / "image_batch_draft.yaml").read_text(encoding="utf-8"))
+    assert y["args"]["use_llm_polish"] is False, "省钱的默认值本身不能变"
+    assert m["fields"]["use_llm_polish"]["value"] is None, "决定单槽不许预填"
+    assert m["fields"]["use_llm_polish"].get("required_decision") is True
+    assert m["fields"]["use_llm_polish"]["type"] == "bool"
+    # step 层：polish 的 enabled 引用 args.use_llm_polish（10-03 统一后的正名），且有 static 兜底
     polish = [s for s in y["steps"] if s.get("id") == "polish"][0]
-    assert polish.get("enabled") == "{{args.use_llm}}"
+    assert polish.get("enabled") == "{{args.use_llm_polish}}"
     assert "static" in polish

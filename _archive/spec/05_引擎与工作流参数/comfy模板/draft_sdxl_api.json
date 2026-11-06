@@ -1,0 +1,66 @@
+{
+  "1": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "sd_xl_base_1.0.safetensors"
+    },
+    "pos": [20, 60]
+  },
+  "2": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "__PROMPT__",
+      "clip": ["1", 1]
+    },
+    "pos": [400, 60]
+  },
+  "3": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "lowres, blurry, worst quality, low quality, jpeg artifacts, watermark, signature, text, logo, bad anatomy, extra limbs, extra fingers, deformed, disfigured, mutated, oversaturated",
+      "clip": ["1", 1]
+    },
+    "pos": [400, 260]
+  },
+  "4": {
+    "class_type": "EmptyLatentImage",
+    "inputs": {
+      "width": "__W__",
+      "height": "__H__",
+      "batch_size": 1
+    },
+    "pos": [20, 460]
+  },
+  "5": {
+    "class_type": "KSampler",
+    "inputs": {
+      "seed": "__SEED__",
+      "steps": "__STEPS__",
+      "cfg": "__GUIDANCE__",
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "denoise": 1.0,
+      "model": ["1", 0],
+      "positive": ["2", 0],
+      "negative": ["3", 0],
+      "latent_image": ["4", 0]
+    },
+    "pos": [780, 60]
+  },
+  "6": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": ["5", 0],
+      "vae": ["1", 2]
+    },
+    "pos": [1160, 60]
+  },
+  "7": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "__PREFIX__",
+      "images": ["6", 0]
+    },
+    "pos": [1540, 60]
+  }
+}

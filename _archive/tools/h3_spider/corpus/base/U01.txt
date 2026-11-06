@@ -1,0 +1,9 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description:
+Live-action, cinematic, a cold grey-blue palette, shallow depth of field, fine film grain.
+[Shot 1] Begin exactly from Picture 1, preserving her back-facing silhouette, the high ponytail, the long robe and the window frame. One continuous floor-to-ceiling pane runs across the back wall with no mullions or cross bars; a narrow hand rail sits at hip height; the deck plates are polished dark metal that mirror the window; a structural column with a gold eagle crest stands at the far end of the wall. Cold white overhead light falls from above and slightly behind the lens; a blue rim runs along the window edge from the planet outside; the floor throws a soft reflection of both. A planet hangs beyond the right side of the window; its fragmentation state is defined per shot in state_timeline. Several capital ships hold position at mid distance, none closing. the planet is still largely intact, only its near edge beginning to break apart, no glowing fissures yet. Wide shot, fixed framing. She stands with her back to the lens, her right hand resting on the rail, and looks out at the drifting fragments. Her shoulders barely move; only slow breathing lifts the shoulder line, and the hem of the robe hangs almost still.
+
+overall_soundscape: A low ventilation hum runs under the room, cooling metal ticks somewhere behind the wall, and fine grit brushes the outer glass in slow, sparse taps.
+
+non_diegetic_music: N/A

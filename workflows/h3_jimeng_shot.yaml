@@ -1,0 +1,106 @@
+name: h3_jimeng_shot
+description: 单镜标准链（2026-10-19 第⑬条落地）：即梦出首帧 → 跑前自审 → **首帧目审（H3 人工关口）** → H3 出片 → 看片挑号（H4 人工关口）。这条链存在的意义是把「即梦首帧」第一次真正接进引擎编排——以前 image 任务能力在链上但没有任何 YAML 走它（见 官方路径.json `e2e_verification_20261019.即梦接线_20261019.还差的`）。人工闸的接线抄自 `h3_ref2va_video.yaml`／`h3_i2va_video.yaml`（10-19 第⑫条(c)），**闸不超时自动放行**（R5-17）。
+provider: local
+args:
+  theme: ""
+  # 首帧：即梦（云端，免费档 seedream_5.0_lite）。⚠ 不许自动回落本地出图（forbidden 7）。
+  frame_prompt_file: ""
+  frame_source: jimeng
+  frame_kind: first_frame
+  frame_ratio: "16:9"
+  frame_resolution: 2K
+  frame_count: 1
+  frame_anchor: ""           # 有参考脸/造型时填，kind 属 cast|first_frame 时用它算 ArcFace
+  frame_refs: []             # 有序参考图（本地路径或 res:/node:/uri:/vid:）——出主持人这类锁脸镜头时填它
+  frame_project_id: ""       # 即梦画布 UUID（canvas create 返回的 projectId），必填
+  # 成片：H3 官方 I2VA 骨架（单 <Picture 1> 首帧锚）
+  prompt_file: ""
+  width: 1344
+  height: 768                # ⚠ 渲染必须是 32 的倍数（G5 实测：756 会被拦「不是 32 的倍数，VAE 会报尺寸错」）
+                             #    16:9 的 756 是**成片裁切**口径：渲 1344×768 → 后期裁 1344×756，别把裁后尺寸填进链
+  length: 124                # 124 帧 = 5.17s；>18 字台词要上 141/158/175
+  duration: 5.17
+  steps: 8
+  seed: ""
+  lora: minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors
+  lora_strength: 1.0         # 基准 v9 的验收强度；要压 identity drift 用 0.7 是**项目级决定**，别在链里默认改
+  head_chunks: 4
+  use_llm_polish: ""         # 运行级槽：每批由人给（空＝G13 拦，机器不代填）
+  enable_audio: ""           # 运行级槽：同上
+  resolution_tier: ""        # 运行级槽：同上（留痕位，引擎不下发）
+steps:
+  # ── 第⑬条：首帧这一步过去没有任何 YAML 走过 ──────────────────────────
+  - task: image
+    id: frames
+    label: 即梦出首帧（免费档，不走本地）
+    source: "{{args.frame_source}}"
+    project_id: "{{args.frame_project_id}}"   # 即梦画布 UUID，必填（空值 CLI 回 CLI_INPUT_REQUIRED）
+    kind: "{{args.frame_kind}}"
+    prompt_file: "{{args.frame_prompt_file}}"
+    refs: "{{args.frame_refs}}"   # 空＝纯文生首帧；填了就是 i2i 挂参考图（主持人这类锁脸镜头必须挂）
+    ratio: "{{args.frame_ratio}}"
+    resolution: "{{args.frame_resolution}}"
+    count: "{{args.frame_count}}"
+    anchor: "{{args.frame_anchor}}"
+    out: first_frame
+  # ── 跑前自审（机器闸，含 G13 留痕）──────────────────────────────────
+  - task: gate
+    id: pre
+    mode: auto
+    label: 成片提示词跑前自审
+    prompt_kind: h3_i2va
+    auto_gates: [G1, G2, G3, G4, G5, G6, G7, G8, G11, G13]
+    prompt_file: "{{args.prompt_file}}"
+    refs: "{{frames.files}}"          # 首帧的实际产物就是 <Picture 1> ⇒ 拿它进身份/槽位核对
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    lora: "{{args.lora}}"
+    workflow_json: "comfy/h3_i2v_fl2va_api.json"
+  # ── H3 人工关口：首帧目审＋提示词定稿（闸不超时自动放行，R5-17）────────
+  - task: gate
+    id: H3
+    mode: human
+    label: 首帧目审＋提示词定稿（人工关口）
+    hint: 一镜 7 分钟、多镜串行链——错一帧顺着链往下传。要审的是语义与物理（站位/朝向/谁挡谁/道具数量/左右关系），这些尺子量不到
+    prompt_file: "{{args.prompt_file}}"
+    refs: "{{frames.files}}"
+    files: "{{frames.files}}"          # ⚠ 必须是 files：t_gate 的附件只取 files/videos，只写 refs 等于只发文字不发图（10-19 查出旧 H3 就是这个洞）
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    lora: "{{args.lora}}"
+    show_prompt: true
+    numbering:
+      - "过 = 按这份首帧＋这份提示词提交渲染"
+      - "改<说哪一处> = 我改完重新上报"
+      - "否 <理由> = 这条不拍"
+  # ── 渲染 ────────────────────────────────────────────────────────────
+  - task: video
+    id: gen
+    label: H3 出片（单首帧 I2VA）
+    workflow: comfy/h3_i2v_fl2va_api.json
+    prompt_kind: h3_i2va
+    prompt_file: "{{args.prompt_file}}"
+    ref_images: "{{frames.files}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    steps: "{{args.steps}}"
+    seed: "{{args.seed}}"
+    lora: "{{args.lora}}"
+    lora_strength: "{{args.lora_strength}}"
+    head_chunks: "{{args.head_chunks}}"
+    prefix: "hm860_{{run_id}}"
+    stage: video
+    timeout: 10800
+  # ── H4 人工关口：看片挑号 ───────────────────────────────────────────
+  - task: gate
+    id: H4
+    mode: human
+    label: 看片挑号（人工关口）
+    hint: 成片推给你；要重跑哪几条直接报编号（本链没有 H5 这道闸）
+    videos: "{{gen.files}}"
+    numbering:
+      - "报编号 = 选定进下一步"
+      - "重做 <编号> = 重跑那一镜"

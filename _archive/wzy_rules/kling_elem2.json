@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "status": 200,
+  "body": {
+    "generationId": "Aez-ynm8fx1caDWe3iBLpO1Ro2iBRK-Q8WMw4jz3XuhzNy-8fxLNu-b39ThXam7zCx99pqIE",
+    "status": "COMPLETED",
+    "createTime": 1790440067359,
+    "finishTime": 1790440090874,
+    "works": [
+      {
+        "status": "COMPLETED",
+        "contentType": "image",
+        "url": "https://p4-fdl.klingai.com/ksc2/sjDLGeOGfRP_9wKFbfGvrv3tFtpXxWtPq-S8aXDLkDdnq3DTD44IfpwoTQyktboC3yqrM0r63o5GNr3JqaU7Ri5c6w3ixf3kqJsSzEb53kwOIgfgcpGaeJscGBWiw-s4.png?x-kcdn-pid=112344&pkey=AAUbBtaX1mr_0R-I7lFX2XmYNFV7tSINz0vejUF38MjY0TfYVqrvc9leDhD9qh7_80RzCy8w6HAIc0kUw9AxqP0cqNdCSFat8nD-9rJ6WXYp6mIKNg9T8_AGW-WZKA1Xglw&cacheKey=CiJzaW5nbGUuc2VjdXJpdHkua2xpbmcubWV0YV9lbmNyeXB0ElCo5bcLqm5hc4LTbnmm1AmjOr6OYQsjXuU6/RsYhpAClLkuyRqcVPc8XQgVpaf6lLBnONitSuZl32/tPjpF8s56uYYGjpQ8S5new3L8LLXSfRoSM3fb7wMl2Fj3O+srsempz23IIiBLmq1F3fNf6zrjFPbbpiaCiqxC56/HULWPK/TWsUe9lCgFMAE=",
+        "urlWithoutWatermark": "https://p2-fdl.klingai.com/ksc2/nks2FcJxtDMvoNkkNiJE9FKACzTOBhbLSk73i5ckhPK49jEQbQziswbyPEGoOxSKwdT4u7bBcOy2JenCnVBxSj61P8EjZctJYUElu6lDdGA.png?x-kcdn-pid=112344&pkey=AAUA1J6Y73Ggvt6Gdj9Rwb3_BRYMWTZ3n4H_pnyTpneaP8iA-lt8ZSSi4IHcOTQgD14wacuQSnSthBtrEA_u5LK01q9G-BptWtUa3-pvojF7wPYeBBjOG8hIuj0OBl_B0dE&cacheKey=CiJzaW5nbGUuc2VjdXJpdHkua2xpbmcubWV0YV9lbmNyeXB0ElCo5bcLqm5hc4LTbnmm1AmjOr6OYQsjXuU6/RsYhpAClLkuyRqcVPc8XQgVpaf6lLBnONitSuZl32/tPjpF8s56tNpOlF59KIQ/AoTug+6l0RoSM3fb7wMl2Fj3O+srsempz23IIiBHsw7rYTqqvNoPAWnyh8qD1O0R6QKv/2OT+C5/5Hcj3CgFMAE=",
+        "url_without_watermark": "https://p2-fdl.klingai.com/ksc2/nks2FcJxtDMvoNkkNiJE9FKACzTOBhbLSk73i5ckhPK49jEQbQziswbyPEGoOxSKwdT4u7bBcOy2JenCnVBxSj61P8EjZctJYUElu6lDdGA.png?x-kcdn-pid=112344&pkey=AAUA1J6Y73Ggvt6Gdj9Rwb3_BRYMWTZ3n4H_pnyTpneaP8iA-lt8ZSSi4IHcOTQgD14wacuQSnSthBtrEA_u5LK01q9G-BptWtUa3-pvojF7wPYeBBjOG8hIuj0OBl_B0dE&cacheKey=CiJzaW5nbGUuc2VjdXJpdHkua2xpbmcubWV0YV9lbmNyeXB0ElCo5bcLqm5hc4LTbnmm1AmjOr6OYQsjXuU6/RsYhpAClLkuyRqcVPc8XQgVpaf6lLBnONitSuZl32/tPjpF8s56tNpOlF59KIQ/AoTug+6l0RoSM3fb7wMl2Fj3O+srsempz23IIiBHsw7rYTqqvNoPAWnyh8qD1O0R6QKv/2OT+C5/5Hcj3CgFMAE=",
+        "content_type": "image"
+      }
+    ],
+    "generation_id": "Aez-ynm8fx1caDWe3iBLpO1Ro2iBRK-Q8WMw4jz3XuhzNy-8fxLNu-b39ThXam7zCx99pqIE",
+    "create_time": 1790440067359,
+    "finish_time": 1790440090874
+  }
+}

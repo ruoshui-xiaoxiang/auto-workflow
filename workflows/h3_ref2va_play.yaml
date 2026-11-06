@@ -1,0 +1,77 @@
+name: h3_ref2va_play
+description: 通道4「跑着玩」专用 ref2va（四图全参考）：跑前自审(G, auto) → 直接出片，**无人工关口、不发飞书**。正式出片走 `h3_ref2va9_daily`（9图/3视频/3音频，总≤12）；旧 4 图兼容走 `h3_ref2va_video`。
+provider: local
+# ---------------------------------------------------------------------------
+# 为什么另开一条，而不是复用 h3_ref2va_video：
+#   生产那条带 H3（提示词定稿）与 H4（看片挑号）两道 mode: human 的关口，
+#   停住会发飞书等人回话； speak-ui 是本地玩具入口，不该往生产渠道推消息，
+#   也不该在浏览器里挂成一个永不结束的 awaiting_human。
+#   ⇒ 本文件只删人工关口，**生成参数与生产严格同配对，一个字没动**：
+#     steps 4 ↔ minimax_h3_ref2v_turbo_4step_v0.1（禁止只改一边），head_chunks 4，
+#     模板 comfy/h3_i2v_ref2va_api.json（4 个 __REFn__ 槽）。
+#
+# 硬要求（踩过的坑，别绕）：
+#   1) 参考图**必须正好 4 张**：多挂被静默丢、少挂会把 `__REF4__` 字面量提交给
+#      LoadImage 直接失败。顺序＝提示词里 <Picture 1..4> 的编号。
+#   2) 提示词必须是官方**英文六段**（subject_definitions → summary →
+#      retention_analysis → detailed_description → overall_soundscape →
+#      non_diegetic_music），中文十块是云端 SD 的格式，喂 H3 会被当台词念。
+#      真源 ComfyUI_H3\prompts\official_h3\ref-en.txt §1/§7。G7 会拦混用。
+#   3) ref2va 模板**没有 first_frame**：构图与站位不锁（身份靠四图 +
+#      <Subject N> 绑定）。要锁机位请回 h3_i2va_video（fl2va 首帧）。
+# ---------------------------------------------------------------------------
+args:
+  theme: "play · 未命名镜"
+  prompt_file: ""
+  width: 736
+  height: 416
+  length: 124              # 帧数@24fps；G6 放行区间 107–345（B1 裁定 10-23：官方 4–15s 为准）；107–123 属训练区间外、放行但标风险；旧 362 已停止用于新批次
+  duration: 5.2            # 期望秒数，仅用于 G6 一致性核对
+  steps: 4                 # 与下方 4-step LoRA 严格配对，禁止只改一边
+  lora: "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors"
+  lora_strength: 1.0
+  head_chunks: 4
+  ref_images: []           # 必须正好 4 张
+  ref_videos: []           # 0–1 段；挂上多烧约 8 分钟/条
+  seed: ""
+  # G13 要求的三个运行级显式槽（speak-ui 每次由人选定，机器不代填）
+  use_llm_polish: false
+  llm_backend: dashscope
+  enable_audio: true
+  resolution_tier: draft
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（机制关口）
+    hint: G1–G7 纯算术/字符串判定；不过就停，不占 GPU
+    auto_gates: [G1, G2, G3, G4, G5, G6, G7, G11, G13]
+    prompt_kind: h3_ref2va
+    prompt_file: "{{args.prompt_file}}"
+    refs: "{{args.ref_images}}"
+    ref_videos: "{{args.ref_videos}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    lora: "{{args.lora}}"
+    workflow_json: "comfy/h3_i2v_ref2va_api.json"
+
+  - task: video
+    id: gen
+    label: H3 出片（ref2va 四图 · 无人审直出）
+    hint: 四图全参考 + 4 步 + ref2v 4-step LoRA + T8 双时钟；素材自动拷进 ComfyUI input
+    workflow: "comfy/h3_i2v_ref2va_api.json"
+    prompt_file: "{{args.prompt_file}}"
+    ref_images: "{{args.ref_images}}"
+    ref_videos: "{{args.ref_videos}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    steps: "{{args.steps}}"
+    lora: "{{args.lora}}"
+    lora_strength: "{{args.lora_strength}}"
+    head_chunks: "{{args.head_chunks}}"
+    seed: "{{args.seed}}"
+    prefix: "h3play_{{run_id}}"
+    stage: "video"
+    timeout: 3600

@@ -1,0 +1,23 @@
+subject_definitions:
+<Subject 1> is 薇拉's face anchor in <Picture 1>, with long black hair, a cold refined bone structure and a plain white robe; only the facial identity is taken from this image.
+<Subject 2> is 薇拉's costume anchor in <Picture 2>, a dark-blue cross-collar robe with wide sleeves; only the garment design and decoration density are taken.
+<Subject 3> is 白玖璃 in <Picture 3>, a young woman with a high ponytail and a rust-red trimmed collar.
+<Subject 4> is the stone platform environment in <Picture 4>, weathered granite slabs under moonlight with a sea of cloud far below.
+
+summary:
+[reference generation] The target video shows <Subject 2> 薇拉 and <Subject 3> 白玖璃 standing sideways facing each other on <Subject 4>, raising their arms at the same moment and pressing two palms of light together at the centre line of the frame.
+
+retention_analysis:
+<Subject 1> (appears in [Shot 1]): fully_preserved - 薇拉's facial identity, hairstyle and bone structure are retained.
+<Subject 2> (appears in [Shot 1]): fully_preserved - the robe silhouette, cross-collar direction and sleeve width are retained.
+<Subject 3> (appears in [Shot 1]): partially_preserved - the ponytail and the rust-red collar trim are retained, the pose changes.
+<Subject 4> (appears in [Shot 1]): weak_reference - only the granite material and the cold moonlight are kept.
+
+detailed_description:
+[Shot 1] At 00:00.000, a medium shot establishes <Subject 4>: <Subject 2> stands on the right of the frame and <Subject 3> on the left, both in profile facing each other. They raise their arms at the same moment; a ball of light gathers in each open palm, and the two balls collide on the centre line of the frame. The impact pushes both of them back half a step, feet scraping on the granite, and both stop in a stable stance with shoulders settled. The light then fades from the contact point outward. Throughout: 薇拉 stays in the dark-blue cross-collar robe and 白玖璃 keeps the high ponytail; neither garment changes shape and no extra prop appears.
+
+overall_soundscape:
+Low-frequency energy hum from the colliding light, wind passing the stone platform, and the scrape of shoes on granite. No speech, no narration.
+
+non_diegetic_music:
+N/A

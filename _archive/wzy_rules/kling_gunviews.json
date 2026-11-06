@@ -1,0 +1,31 @@
+{
+  "ok": true,
+  "status": 200,
+  "body": {
+    "generationId": "AW7ptv4-fmvMBQROLfNNI2UD_NQi_mFBMD_HWE9wwchYmDyqtS4XijSqeUfzJ7SdmN3l59lD",
+    "status": "COMPLETED",
+    "createTime": 1790439877089,
+    "finishTime": 1790439893098,
+    "works": [
+      {
+        "status": "COMPLETED",
+        "contentType": "image",
+        "url": "https://p4-fdl.klingai.com/ksc2/ixTR6rj7d8gJor1Bu96sJIYB8dXspzaT6C7u-2XtkEVbgRtPZ_sJN6oIzbixGYzC0sbentPJkCAvAxM_Ig0pWncyygF69Lz30rGpZYlVPz616fJv6HDZxVlzM7Ygcred.png?x-kcdn-pid=112344&pkey=AAUSOGaAEwyCv7bIHGEvensqp4phPk1V4Yt5Yu1p26WZtVH5kFSWoaYMy6secVLi6HAKNH0botPDfM7APQxqO1hevO4dOtU9wW0cIwS5w-Vf4osHYym27ZbcywUMgkiSMQQ&cacheKey=CiJzaW5nbGUuc2VjdXJpdHkua2xpbmcubWV0YV9lbmNyeXB0ElCo5bcLqm5hc4LTbnmm1AmjOr6OYQsjXuU6/RsYhpAClC2dfhhWYCPGZ9dBEP57FIRmRdkyBjJaYq5B6u0CDBVgRqT1X9M9ALOaTaoKNvlf4RoSM3fb7wMl2Fj3O+srsempz23IIiDy76Ks4FSDIxARwd5w9rz6Ky9JtzVVVONeYe0Yeaol7ygFMAE=",
+        "urlWithoutWatermark": "https://p4-fdl.klingai.com/ksc2/QWt--1rfqf3PiwrCT6mXZgM9wY591LAhpjMJGMZ_s-fGfVNlAiivhgusMVXRHa60CpeZDtYdjLTZkUVkPm6V2a3OmmLX_QYwlRS5Jjwj9rs.png?x-kcdn-pid=112344&pkey=AAWHjpYxqgBCbQtduCTngQVUhYoYnlNFCenSJFVzv15NF6vnVsNxs-H8droFbTasYQk8JKfb9Vj1X2YTjSvBcAa_8sbGG-QV2vvX32mb9-kEdTkUz4w0_CChy4x-CxwYHnY&cacheKey=CiJzaW5nbGUuc2VjdXJpdHkua2xpbmcubWV0YV9lbmNyeXB0ElCo5bcLqm5hc4LTbnmm1AmjOr6OYQsjXuU6/RsYhpAClC2dfhhWYCPGZ9dBEP57FIRmRdkyBjJaYq5B6u0CDBVgPDkhnXV7VZmm8eo3f+AWWRoSM3fb7wMl2Fj3O+srsempz23IIiAi/CBDWksA25zuwrGPuqqwtOVYBtSOMB0CAcpynz+A7igFMAE=",
+        "content_type": "image",
+        "url_without_watermark": "https://p4-fdl.klingai.com/ksc2/QWt--1rfqf3PiwrCT6mXZgM9wY591LAhpjMJGMZ_s-fGfVNlAiivhgusMVXRHa60CpeZDtYdjLTZkUVkPm6V2a3OmmLX_QYwlRS5Jjwj9rs.png?x-kcdn-pid=112344&pkey=AAWHjpYxqgBCbQtduCTngQVUhYoYnlNFCenSJFVzv15NF6vnVsNxs-H8droFbTasYQk8JKfb9Vj1X2YTjSvBcAa_8sbGG-QV2vvX32mb9-kEdTkUz4w0_CChy4x-CxwYHnY&cacheKey=CiJzaW5nbGUuc2VjdXJpdHkua2xpbmcubWV0YV9lbmNyeXB0ElCo5bcLqm5hc4LTbnmm1AmjOr6OYQsjXuU6/RsYhpAClC2dfhhWYCPGZ9dBEP57FIRmRdkyBjJaYq5B6u0CDBVgPDkhnXV7VZmm8eo3f+AWWRoSM3fb7wMl2Fj3O+srsempz23IIiAi/CBDWksA25zuwrGPuqqwtOVYBtSOMB0CAcpynz+A7igFMAE="
+      },
+      {
+        "status": "COMPLETED",
+        "contentType": "image",
+        "url": "https://p4-fdl.klingai.com/ksc2/kpr9iEgpCiqPcifCf_5NvE7Y5z9kMEmmF3XoTQj7xQ0ZFaUX07WJ2NXsToQiTIb0K7kKe87CqAq_6s0uqfloGbFZHTogUgmF2Vm9E_t5HGJwQDEISWj7Wyff18CB3b1B.png?x-kcdn-pid=112344&pkey=AAUa9kOPZYq37Oo0Cefb6OogSKKhjWq6ExyeqnWp9Gh7CC1iXCGgMW-F8bYgqL5VrKWLc5cdQK-4Jy8GI8IwW6RSBQkUiER5WOOxOjHNxFJRnR6Skh6rcX0R3n14Z28fF9Y&cacheKey=CiJzaW5nbGUuc2VjdXJpdHkua2xpbmcubWV0YV9lbmNyeXB0ElCo5bcLqm5hc4LTbnmm1AmjOr6OYQsjXuU6/RsYhpAClBaJxqs0VxXEYokgJ913PPhC6GTYPEkaNQM5KjUPgq/PgyM9doldiq7gBMa9CrMs3BoSM3fb7wMl2Fj3O+srsempz23IIiAubiHYeFC2BiBM6VEoeqBwgrLrM01g92BnWtfkYgmShigFMAE=",
+        "urlWithoutWatermark": "https://p2-fdl.klingai.com/ksc2/l2nRdLwaLD_NonZvIX2px9HtN47HDJydOY_6Ft0XZyM3Tg66KKYXGbPqJz2Hfe8TuU1fnNPhDcNwg7vbQwP3p_YZtecSb1GTA2kKOpb8u0U.png?x-kcdn-pid=112344&pkey=AAVSibQDfGLg4GRvgw2L4N5RXXpS5-omFmAOuOXLwKzQemqoMJmLymXWpok-usB1qmeSIwFJJ-xj6RIxbqgXfqfp2Dhg5Jx82qsOFtoKv7iQfcq4a8ssqa-vyvU01M82FHM&cacheKey=CiJzaW5nbGUuc2VjdXJpdHkua2xpbmcubWV0YV9lbmNyeXB0ElCo5bcLqm5hc4LTbnmm1AmjOr6OYQsjXuU6/RsYhpAClBaJxqs0VxXEYokgJ913PPhC6GTYPEkaNQM5KjUPgq/PiuV9gP4I7PSFlhIVsCbsgxoSM3fb7wMl2Fj3O+srsempz23IIiDVLy2Fnwulq0kO/HArtMr9xjDAZ5eN1PNv827mdDPWeigFMAE=",
+        "content_type": "image",
+        "url_without_watermark": "https://p2-fdl.klingai.com/ksc2/l2nRdLwaLD_NonZvIX2px9HtN47HDJydOY_6Ft0XZyM3Tg66KKYXGbPqJz2Hfe8TuU1fnNPhDcNwg7vbQwP3p_YZtecSb1GTA2kKOpb8u0U.png?x-kcdn-pid=112344&pkey=AAVSibQDfGLg4GRvgw2L4N5RXXpS5-omFmAOuOXLwKzQemqoMJmLymXWpok-usB1qmeSIwFJJ-xj6RIxbqgXfqfp2Dhg5Jx82qsOFtoKv7iQfcq4a8ssqa-vyvU01M82FHM&cacheKey=CiJzaW5nbGUuc2VjdXJpdHkua2xpbmcubWV0YV9lbmNyeXB0ElCo5bcLqm5hc4LTbnmm1AmjOr6OYQsjXuU6/RsYhpAClBaJxqs0VxXEYokgJ913PPhC6GTYPEkaNQM5KjUPgq/PiuV9gP4I7PSFlhIVsCbsgxoSM3fb7wMl2Fj3O+srsempz23IIiDVLy2Fnwulq0kO/HArtMr9xjDAZ5eN1PNv827mdDPWeigFMAE="
+      }
+    ],
+    "generation_id": "AW7ptv4-fmvMBQROLfNNI2UD_NQi_mFBMD_HWE9wwchYmDyqtS4XijSqeUfzJ7SdmN3l59lD",
+    "create_time": 1790439877089,
+    "finish_time": 1790439893098
+  }
+}

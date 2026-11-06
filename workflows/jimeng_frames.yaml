@@ -1,0 +1,27 @@
+name: jimeng_frames
+description: 首帧批量链（2026-10-19 第⑬条配套）：只走即梦出图，**不带渲染、不带人工闸**——它的用途是"一批关键帧一次出完，再整批送目审"，渲染与关口在 `h3_jimeng_shot.yaml` 那边。⚠ 出图这一步不许自动回落本地（forbidden 7）：即梦不行就停下报原因码，两条路由人挑。无 gate 步 ⇒ 按 R5-03 本链不跑跑前自审；提示词侧走即梦图片通道口径（主体＋行为＋环境，负面词写成正向句，≤2000 字），不吃 H3 官方骨架。
+provider: jimeng
+args:
+  theme: ""
+  frame_prompt_file: ""
+  frame_refs: []
+  frame_anchor: ""
+  frame_kind: first_frame
+  frame_ratio: "16:9"
+  frame_resolution: 2K
+  frame_count: 1
+  project_id: ""             # 即梦画布 UUID（`canvas create` 返回的 projectId）。⚠ 必填：CLI 实测空值回 CLI_INPUT_REQUIRED/fieldPath=project-id
+steps:
+  - task: image
+    id: frames
+    label: 即梦出关键帧（免费档，不回落）
+    source: jimeng
+    project_id: "{{args.project_id}}"
+    kind: "{{args.frame_kind}}"
+    prompt_file: "{{args.frame_prompt_file}}"
+    refs: "{{args.frame_refs}}"
+    anchor: "{{args.frame_anchor}}"
+    ratio: "{{args.frame_ratio}}"
+    resolution: "{{args.frame_resolution}}"
+    count: "{{args.frame_count}}"
+    out: first_frame

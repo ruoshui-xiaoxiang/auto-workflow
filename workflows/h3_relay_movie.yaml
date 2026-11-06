@@ -1,0 +1,47 @@
+name: h3_relay_movie
+description: D 接力编排（R11）——薄流，复用 h3_movie 的 relay_pairs 执行；不新造提交器。manifest 顶层 relay_pairs=[["父镜id","子镜id"],…] 由人判；父段走 h3_relay_parent_api，续段走 h3_relay_cont_api，子镜后期会剥上下文前缀并出接缝报告。硬条件：服务必须以【无 sage】启动（R11-01 硬条件3），且接力镜画布 64 对齐（576×1024 满足）。只接 CLI（面板不收集 manifest）。
+provider: local
+prompt_kind: h3_i2va
+args:
+  manifest: ""
+  profile: stable_t8
+  dry_run: false
+  relay_ctx: 22
+  width: 576
+  height: 1024
+  length: 124
+  degrade_sizes: ""
+  output_width: 576
+  output_height: 1024
+  fps: 24
+  loudness: -16
+  true_peak: -1.5
+  timeout: 10800
+  use_llm_polish: false
+  resolution_tier: draft
+  enable_audio: true
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 接力跑前落点核对（G11/G13）
+    hint: manifest 驱动，提示词在 manifest 里；这里只核对落点与运行决定
+    auto_gates: [G11, G13]
+  - task: h3_movie
+    id: movie
+    label: H3 接力编排（父段→续段）
+    hint: relay_pairs 由人给；父段入链、子镜续段、剥前缀、接缝只报不拦；服务必须无 sage
+    manifest: "{{args.manifest}}"
+    profile: "{{args.profile}}"
+    dry_run: "{{args.dry_run}}"
+    relay_ctx: "{{args.relay_ctx}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    degrade_sizes: "{{args.degrade_sizes}}"
+    output_width: "{{args.output_width}}"
+    output_height: "{{args.output_height}}"
+    fps: "{{args.fps}}"
+    loudness: "{{args.loudness}}"
+    true_peak: "{{args.true_peak}}"
+    timeout: "{{args.timeout}}"

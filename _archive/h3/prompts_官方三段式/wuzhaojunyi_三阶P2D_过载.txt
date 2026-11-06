@@ -1,0 +1,6 @@
+integrated_multimodal_description:
+[Shot 1] High-precision CG semi-realistic, ancient wuxia meets cyberpunk. Neon alley. From previous geometry. The burly thug pushes himself upright from the wall, eyes bloodshot. Mechanical arm overloads: blue-white arcs surge along the entire limb, pistons cycle rapidly with loud hydraulic scream. He steps in and drives an overhead smash with maximum arcs. Wu Junyi flips both palms and raises the wrapped shaft horizontally overhead to hard-block—“hong”. The shaft is driven downward; she sinks into a half-horse stance, heels slide half a step back on wet ground, arms trembling under the force. They lock in a power struggle; arcs race along the shaft and spray sparks. The white cloth wrapping loosens under the vibration; several strips hang and flutter. Wu Junyi’s brows knit, teeth clenched, she does not yield another step. Final pose holds the strained lock. Camera medium-amplitude slow push-in into the power struggle. Motion continuous. Character locks, mechanical arm fully overloaded, cloth beginning to loosen. Neon pure color glow only.
+overall_soundscape:
+Overload surge and hydraulic scream, crackling max arcs, heavy overhead impact, shaft strain, heel slides, cloth loosening soft rustle, spark crackle, low neon hum. One rage roar only, no spoken words. Clean continuous levels.
+non_diegetic_music:
+N/A

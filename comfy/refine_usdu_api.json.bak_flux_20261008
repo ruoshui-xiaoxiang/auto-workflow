@@ -1,0 +1,164 @@
+{
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "flux1-dev-fp8.safetensors",
+      "weight_dtype": "default"
+    },
+    "pos": [
+      20,
+      60
+    ]
+  },
+  "2": {
+    "class_type": "DualCLIPLoader",
+    "inputs": {
+      "clip_name1": "clip_l.safetensors",
+      "clip_name2": "t5xxl_fp8_e4m3fn.safetensors",
+      "type": "flux"
+    },
+    "pos": [
+      20,
+      260
+    ]
+  },
+  "3": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "__PROMPT__",
+      "clip": [
+        "2",
+        0
+      ]
+    },
+    "pos": [
+      400,
+      60
+    ]
+  },
+  "4": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "",
+      "clip": [
+        "2",
+        0
+      ]
+    },
+    "pos": [
+      400,
+      260
+    ]
+  },
+  "5": {
+    "class_type": "FluxGuidance",
+    "inputs": {
+      "guidance": "__GUIDANCE__",
+      "conditioning": [
+        "3",
+        0
+      ]
+    },
+    "pos": [
+      780,
+      60
+    ]
+  },
+  "6": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "flux-vae-bf16.safetensors"
+    },
+    "pos": [
+      20,
+      460
+    ]
+  },
+  "7": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "__IMAGE__"
+    },
+    "pos": [
+      20,
+      660
+    ]
+  },
+  "9": {
+    "class_type": "UpscaleModelLoader",
+    "inputs": {
+      "model_name": "4x-UltraSharp.pth"
+    },
+    "pos": [
+      20,
+      860
+    ]
+  },
+  "8": {
+    "class_type": "UltimateSDUpscale",
+    "inputs": {
+      "image": [
+        "7",
+        0
+      ],
+      "model": [
+        "1",
+        0
+      ],
+      "positive": [
+        "5",
+        0
+      ],
+      "negative": [
+        "4",
+        0
+      ],
+      "vae": [
+        "6",
+        0
+      ],
+      "upscale_model": [
+        "9",
+        0
+      ],
+      "seed": "__SEED__",
+      "steps": "__STEPS__",
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": "__DENOISE__",
+      "upscale_by": "__UPSCALE_BY__",
+      "mode_type": "Linear",
+      "tile_width": "__TILE__",
+      "tile_height": "__TILE__",
+      "mask_blur": 8,
+      "tile_padding": 32,
+      "seam_fix_mode": "None",
+      "seam_fix_denoise": 1.0,
+      "seam_fix_width": 64,
+      "seam_fix_mask_blur": 8,
+      "seam_fix_padding": 16,
+      "force_uniform_tiles": true,
+      "tiled_decode": false,
+      "batch_size": 1
+    },
+    "pos": [
+      1160,
+      60
+    ]
+  },
+  "10": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "__PREFIX__",
+      "images": [
+        "8",
+        0
+      ]
+    },
+    "pos": [
+      1540,
+      60
+    ]
+  }
+}

@@ -1,20 +1,44 @@
-name: image_draft_batch
+﻿name: image_draft_batch
 description: 两段式·草稿 —— 原生 1MP / 低步数 / 不放大（实测 24.1 秒一张），批量出可筛草稿；产出 manifest 供精修按编号选
+provider: local
 args:
-  theme: "古风少女，雪中寺庙，电影感"
-  prompt: "A graceful ancient-style maiden in flowing hanfu before a snow-covered temple, cinematic light, photorealistic, detailed fabric"
+  theme: "沈无音 · 套e01（定妆立绘）"
+  prompt: "21岁年轻女子，清冷骨相，眼尾略长，唇色淡，不施脂粉，面无表情，眼下淡青；及腰黑长直发，头顶半盘发髻插银质步摇横穿外露，两侧蓝花钗，额间朱砂莲花钿；身量高挑，站姿与坐姿都极直；月白与鸦青渐变宽袖襦裙，白色交领中衣、交领最低点只到胸上不露肤、胸前交叠处一直合到腰，裙摆整片垂坠无开衩、双脚并立时裙摆合拢盖到脚面，料子旧洗得发白，腰间淡蓝织带末端磨得起毛，挂米色小布袋。写实3D CG渲染，电影感，浅景深，竖幅9:16构图，素净灰白背景，单人立像，皮肤质感真实"
   count: 16
   use_llm_polish: false
-  llm_backend: auto
+  llm_backend: dashscope
   width: 832
   height: 1216
-  steps: 12
+  # ⚠️ 尺寸与定稿提示词里的"竖幅9:16"不一致（832×1216 是 2:3）；要严格 9:16 改 768×1344
+  # 2026-10-04 换 Z-Image-Turbo（蒸馏模型，官方 6~8 步）
+  steps: 8
   # 默认不加 LoRA（webui 高级参数下拉可按需点选）；要指定可写
-  # loras: 'flux\Hanfu_Elegant_Flux.safetensors:0.4'
+  # 🔴 旧例子 'flux\Hanfu_Elegant_Flux.safetensors:0.4' 两头都不成立：该文件盘上没有，
+  #    且 FLUX 侧 LoRA 随 FLUX.1 底模退役一起失效。Z-Image 侧要挂 LoRA 见
+  #    图片链_工作流规则.md §3.1「LoRA 供给」段。
+  # 无音人脸 LoRA 已过拟合全噪、待重训，默认留空；重训后改成 'wuyin_face_lora_v1.safetensors:0.4'
   loras: ""
   # 做对照组时锁 seed（留空 = 每张随机，保持原行为）
   seed: ""
+  # 身份锁（11-04）：false＝这批**允许换脸换装**，批内身份尺只报不拦。
+  # 本流是纯文生图草稿批（用途就是撒开挑），散是预期不是缺陷；
+  # 要它拦人请把这里改 true（定妆批请走 character_sheet／i2i 锚点链，那条默认 true）。
+  identity_lock: false
+  # ⚠️ 沈无音定妆铁律：主角定妆一律 i2i 挂脸锚派生（锚＝图\定妆\char_e01.png），禁纯文生图。
+  #    本工作流是纯文生图 → 出无音会漂脸，仅供探索/占位。
 steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（机制关口）
+    hint: 图片口径：分辨率/字面化词/落点；锁脸铁律由 i2i 锚点那条链把守，本流可裸文字
+    auto_gates: [G5, G7, G11, G13]
+    prompt_kind: image
+    characters: none
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    prompt: "{{args.prompt}}"
+
   - task: llm
     id: polish
     label: 润色提示词
@@ -30,7 +54,7 @@ steps:
     id: draft
     label: 批量出草稿
     hint: 原生 1MP / 12 步 / 不放大，约 24 秒一张，出完打开报告按编号挑
-    workflow: "comfy/draft_flux_api.json"
+    workflow: "comfy/z_image_turbo_api.json"
     prompt: "{{polish.text}}"
     count: "{{args.count}}"
     width: "{{args.width}}"
@@ -38,4 +62,6 @@ steps:
     steps: "{{args.steps}}"
     loras: "{{args.loras}}"
     seed: "{{args.seed}}"
+    identity_lock: "{{args.identity_lock}}"
     prefix: "draft_{{run_id}}"
+

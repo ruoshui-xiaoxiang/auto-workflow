@@ -1,5 +1,5 @@
 name: h3_i2va_batch
-description: H3 fl2va 首帧视频·无人值守批次版。机器预检以本文件 `auto_gates` 声明为准（10-02 起另含 G13 留痕闸）。⚠ 10-19 收口改写：旧那句「与 h3_i2va_video 同图同参，仅去掉 H3／H4 人工门」**实测不成立**，真差异是四处——① 本链 10-21 起**加回** `translate`（中文→官方骨架英文改写，默认开；`--set use_llm_polish=false` 可关）——旧状态是中文正文不改写、G7 在 `--tier play` 档照记放行 ⇒ 直接进模型（实测被当台词念）；② `lora_strength` 本链 1.0（＝验收过基准 v9 的强度）、video 链 0.7（10-14 为压 turbo LoRA 的 identity drift 降的）；③ 本链去掉了 H3／H4 两道人工关口（用户 2026-09-23 授权自主执行、不再人审）；④ 10-19 起 video 链的 H3／H4 才真装回去（此前那条链上根本没有人工门，见 tests/test_gates_phase3 那条一直红着的步骤顺序断言）。**参数一个没动**——本条只把声明改成实话；要真等价得逐项对齐，那是改产物，需另裁。娱乐流面板的「图生视频·锁首帧」10-19 起指本链（用户裁『改指 batch 链』），10-21 后 translate 默认开，面板给中文会被自动改写；要保留中文请 `--set use_llm_polish=false`（draft/final 档会被 G7 拦，play 档才降级放行）。
+description: H3 fl2va 首帧视频·无人值守批次版。机器预检以本文件 `auto_gates` 声明为准（10-02 起另含 G13 留痕闸）。⚠ 10-19 收口改写：旧那句「与 h3_i2va_video 同图同参，仅去掉 H3／H4 人工门」**实测不成立**，真差异是四处——① 本链 10-21 起**加回** `translate`（中文→官方骨架英文改写，默认开；`--set use_llm_polish=false` 可关）——旧状态是中文正文不改写、G7 在 `--tier play` 档照记放行 ⇒ 直接进模型（实测被当台词念）；② `lora_strength` 本链 1.0（＝验收过基准 v9 的强度）、video 链 0.7（10-14 为压 turbo LoRA 的 identity drift 降的）；③ 本链去掉了 H3／H4 两道人工关口（用户 2026-09-23 授权自主执行、不再人审）；④ 10-19 起 video 链的 H3／H4 才真装回去（此前那条链上根本没有人工门，见 tests/test_gates_phase3 那条一直红着的步骤顺序断言）。**参数一个没动**——本条只把声明改成实话；要真等价得逐项对齐，那是改产物，需另裁。娱乐流面板的单镜 I2VA×single8 自 S3 起走 `h3_keyframe_modes`（矩阵入口）；本链只在用户选编排=batch 时使用。translate 默认开，面板给中文会被自动改写；要保留中文请 `--set use_llm_polish=false`（draft/final 档会被 G7 拦，play 档才降级放行）。
 provider: local
 args:
   theme: ""
@@ -19,13 +19,23 @@ args:
   use_llm_polish: true
   llm_backend: dashscope
 steps:
+  # ── W2 强制编译（2026-10-23）────────────────────────────────────────────
+  # 旧写法 `write_to: {{args.prompt_file}}` 会把英文稿**回写原稿**（计划 W2 明令禁止）。
+  # 现在：snapshot 先按字节保存原稿＋记 sha256 → translate 只写批次目录的编译稿 →
+  # compile_check 在提交前复核「原稿哈希未变＋格式/台词/语言/长度全过」；任一失败停在这里，
+  # 后面的 pre/gen 不会跑（GPU 0 次）。
+  - task: shell
+    id: snapshot
+    label: 原稿字节快照（编译前）
+    command: py -3.12 -B "{{wf_root}}/../tools/prompt_compile.py" snapshot --source "{{args.prompt_file}}" --out-dir "{{batch_dir}}/prompt_compile" --run-id "{{run_id}}"
+    timeout: 120
   - task: llm
     id: translate
     label: 中文自动改写（H3 英文合规）
-    hint: 正文含中文时调云端 LLM 改写成官方骨架英文并回写 prompt_file；已是英文则原样放行不调模型
+    hint: 正文含中文时调云端 LLM 改写成官方骨架英文，写入批次目录的独立编译稿（不回写原稿）；已是英文则原样放行，snapshot 已生成 identity 编译稿
     enabled: "{{args.use_llm_polish}}"
     read_from: "{{args.prompt_file}}"
-    write_to: "{{args.prompt_file}}"
+    write_to: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
     skip_if_no_cjk: true
     backend: "{{args.llm_backend}}"
     system: |-
@@ -39,13 +49,18 @@ steps:
       7) 只输出改写后的完整提示词本身：不要 markdown 代码块，不要解释，不要任何前后缀。
     max_tokens: 1500
     temperature: 0.3
+  - task: shell
+    id: compile_check
+    label: 编译稿提交前校验（原稿哈希＋格式/台词/语言/长度）
+    command: py -3.12 -B "{{wf_root}}/../tools/prompt_compile.py" verify --source "{{args.prompt_file}}" --state-dir "{{batch_dir}}/prompt_compile" --run-id "{{run_id}}" --compiled "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    timeout: 120
   - task: gate
     id: pre
     mode: auto
     label: 首帧视频预检
     prompt_kind: h3_i2va
     auto_gates: [G1, G2, G3, G4, G5, G6, G7, G8, G11, G13]
-    prompt_file: "{{args.prompt_file}}"
+    prompt_file: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
     refs: "{{args.ref_images}}"
     width: "{{args.width}}"
     height: "{{args.height}}"
@@ -57,7 +72,7 @@ steps:
     label: H3首帧出片(无人值守)
     workflow: comfy/h3_i2v_fl2va_api.json
     prompt_kind: h3_i2va
-    prompt_file: "{{args.prompt_file}}"
+    prompt_file: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
     ref_images: "{{args.ref_images}}"
     width: "{{args.width}}"
     height: "{{args.height}}"

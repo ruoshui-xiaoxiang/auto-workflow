@@ -1,0 +1,61 @@
+name: image_outpaint
+description: 扩画布 —— 在原图四周垫出新区并按提示词补画。现役通道＝Z-Image-Turbo（2026-10-04 换，本机 768x1344 左右各垫 256 → 1280x1344 成立，垫出区有内容且无纯白/纯黑条）。原始区内部保留，但四周 feather 像素内会被重画：本机实测 feather=40 时原始区最外 40 列差异＝平台的 14.3×，40~80 列回落到 1.2× ⇒ 被吃掉的就是 feather 那一条，接缝风险照旧，先小垫量试。
+provider: local
+args:
+  # 垫图。留空则跑不起来（control 步骤会明确报错）。
+  src_image: ""
+  prompt: ""
+  # ⚠️ 提示词要同时描述"画面主体"和"新垫出来那一片该长什么"
+  # 例："雨夜赛博朋克长巷，两人对峙：左侧持长枪的女子，右侧人形机甲；画面上方露出更多高楼与霓虹天空，下方延伸出更长的湿地面与倒影"
+  # 四个方向的垫量（像素，8 的倍数最稳）。left/right 加宽，top/bottom 加高。
+  pad_l: 0
+  pad_t: 96
+  pad_r: 0
+  pad_b: 160
+  # 羽化像素。⚠️ 原始区四周 feather 像素内 mask>0 ⇒ 会被重画；本次实测底部边界带出现过硬边黑块，
+  #    接缝不干净时先调小 feather / 调 grow 再试。
+  #    （上面那句「底部硬边黑块」是 2026-09-28 FLUX.1 通道的观察，随该通道退役留档；
+  #     Z-Image 通道本次未复现黑块，只量到 feather 带宽 40 列。）
+  feather: 40
+  grow: 12
+  denoise: 1.0
+  # width/height 要填**源图**尺寸（只喂跑前自审；输出尺寸＝源图 + 四向垫量）
+  width: 736
+  height: 416
+  steps: 8
+  seed: ""
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（机制关口）
+    hint: 图片口径：分辨率/字面化词/落点；锁脸铁律由 i2i 锚点那条链把守，本流可裸文字
+    auto_gates: [G5, G7, G11, G13]
+    prompt_kind: image
+    characters: none
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    prompt: "{{args.prompt}}"
+    refs: "{{args.src_image}}"
+
+  - task: control
+    id: gen
+    label: 扩画布（垫图 + 补画）
+    hint: 原图 + 四向垫量 = 新尺寸；feather 像素内会被重画。产物落批次夹 outpaint/
+    workflow: "comfy/z_image_outpaint_api.json"
+    prompt: "{{args.prompt}}"
+    src_image: "{{args.src_image}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    steps: "{{args.steps}}"
+    denoise: "{{args.denoise}}"
+    pad_l: "{{args.pad_l}}"
+    pad_t: "{{args.pad_t}}"
+    pad_r: "{{args.pad_r}}"
+    pad_b: "{{args.pad_b}}"
+    feather: "{{args.feather}}"
+    grow: "{{args.grow}}"
+    seed: "{{args.seed}}"
+    prefix: "outpaint_{{run_id}}"
+    stage: "outpaint"
+    timeout: 900

@@ -1,0 +1,42 @@
+name: selftest_gates
+description: 关口自测（不生成任何图/视频）：验证 auto 跑前闸能拦、human 关口会推飞书并停住、--approve 后 --resume 能续跑且不重复上报
+provider: local
+args:
+  theme: "关口自测 · 镜99"
+  prompt_file: "D:\\AIWorkflow\\tmp\\selftest_prompt.txt"
+  refs: []
+  w: 864
+  h: 1536
+  length: 124
+  lora: "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors"
+  shot_png: ""
+steps:
+  - task: gate
+    id: pre
+    label: 跑前自审（机制关口）
+    hint: 纯算术/字符串判定，不过就停，不打扰人
+    mode: auto
+    auto_gates: [G1, G2, G3, G4, G5, G6, G7, G11]
+    prompt_kind: h3_ref2va   # 10-02 批1：原先空着，通道归属完全靠 channel_of() 末行的无条件兜底；显式声明后通道不变（已自证）
+    prompt_file: "{{args.prompt_file}}"
+    refs: "{{args.refs}}"
+    width: "{{args.w}}"
+    height: "{{args.h}}"
+    length: "{{args.length}}"
+    lora: "{{args.lora}}"
+
+  - task: gate
+    id: H3
+    label: 提示词定稿（人工关口）
+    hint: 未获批准就停在这里，不占 GPU
+    mode: human
+    prompt_file: "{{args.prompt_file}}"
+    refs: "{{args.refs}}"
+    files: "{{args.shot_png}}"
+    numbering:
+      - "本条是关口自测推送，回『过』即验证通过"
+
+  - task: shell
+    id: after
+    label: 关口之后的步骤（用来证明续跑真的走下去了）
+    command: "echo 关口已放行，后续步骤执行成功"

@@ -1,0 +1,67 @@
+﻿name: image_draft_batch_sdxl
+description: 两段式·草稿（SDXL 底模）—— sd_xl_base_1.0 + dpmpp_2m/karras，1MP 不放大，批量出可筛草稿；与 FLUX 版（image_draft_batch）并列，界面里选哪条就是哪个底模。**SDXL 专用 LoRA 只有这条链能用**
+provider: local
+args:
+  theme: "沈无音 · 套e01（定妆立绘）"
+  prompt: "21岁年轻女子，清冷骨相，眼尾略长，唇色淡，不施脂粉，面无表情，眼下淡青；及腰黑长直发，头顶半盘发髻插银质步摇横穿外露，两侧蓝花钗，额间朱砂莲花钿；身量高挑，站姿与坐姿都极直；月白与鸦青渐变宽袖襦裙，白色交领中衣、交领最低点只到胸上不露肤、胸前交叠处一直合到腰，裙摆整片垂坠无开衩、双脚并立时裙摆合拢盖到脚面，料子旧洗得发白，腰间淡蓝织带末端磨得起毛，挂米色小布袋。写实3D CG渲染，电影感，浅景深，竖幅9:16构图，素净灰白背景，单人立像，皮肤质感真实"
+  count: 8
+  use_llm_polish: false
+  llm_backend: dashscope
+  width: 832
+  height: 1216
+  steps: 28
+  # SDXL 的 cfg 走引擎的 guidance 参数（draft_sdxl_api.json 里 KSampler.cfg = __GUIDANCE__）
+  guidance: 7.0
+  # ⚠️ 这里填 SDXL 专用 LoRA（挂不上 FLUX 的那批）：
+  #   'asian_face_community_v1.safetensors:0.8'   （自训日本女演员脸，无触发词）
+  #   'ip-adapter-faceid-plusv2_sdxl_lora.safetensors:1.0'（需配 IP-Adapter 本体，未装）
+  #   'saintess_style_lora_v1.safetensors:0.2' / 'saintess_face_lora_v1.safetensors:0.2'
+  # 多个用逗号分隔：'a.safetensors:0.8,b.safetensors:0.3'
+  loras: ""
+  # 做对照组时锁 seed（留空 = 每张随机）
+  seed: ""
+  # 身份锁（11-04）：false＝允许换脸换装，批内身份尺只报不拦（本流是纯文生图草稿批）。
+  identity_lock: false
+  # ⚠️ 沈无音定妆铁律：主角定妆一律 i2i 挂脸锚派生（锚＝图\定妆\char_e01.png），禁纯文生图。
+  #    本工作流是纯文生图 → 出无音会漂脸，仅供探索/占位。
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（机制关口）
+    hint: 图片口径：分辨率/字面化词/落点；锁脸铁律由 i2i 锚点那条链把守，本流可裸文字。
+          10-02 批1 补上的这道闸 —— 本流以前**没有任何 gate 步**，
+          提示词从来没经过 G 闸就直接出图（见 system_manifest GAP-E4）。
+    auto_gates: [G5, G7, G11, G13]
+    prompt_kind: image
+    characters: none
+    prompt: "{{args.prompt}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+  - task: llm
+    id: polish
+    label: 润色提示词
+    hint: 把中文主题改写成英文提示词；默认关闭，直接用上面的 prompt
+    enabled: "{{args.use_llm_polish}}"
+    static: "{{args.prompt}}"
+    backend: "{{args.llm_backend}}"
+    system: "你是 SDXL 提示词工程师。把主题扩写成一段 60~120 词的英文照片级提示词，只输出提示词本身，不要解释或引号。"
+    prompt: "主题：{{args.theme}}"
+    max_tokens: 300
+    temperature: 0.8
+  - task: comfyui
+    id: draft
+    label: 批量出草稿(SDXL)
+    hint: sd_xl_base_1.0 / 28 步 / cfg 7 / dpmpp_2m+karras / 1MP 不放大
+    workflow: "comfy/draft_sdxl_api.json"
+    prompt: "{{polish.text}}"
+    count: "{{args.count}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    steps: "{{args.steps}}"
+    guidance: "{{args.guidance}}"
+    loras: "{{args.loras}}"
+    seed: "{{args.seed}}"
+    identity_lock: "{{args.identity_lock}}"
+    prefix: "sdxl_{{run_id}}"
+

@@ -1,0 +1,109 @@
+{
+ "cases": [
+  {
+   "id": "H-L1-audio-invalid",
+   "base": "U05",
+   "leg": "L1",
+   "code": "FMT-04",
+   "why": "summary 任务类型不在官方 6 值里（换一个不同值）",
+   "source": "ref-en §3",
+   "edits": [
+    {"target": "text", "op": "replace", "from": "[reference generation]", "to": "[audio generation]"}
+   ]
+  },
+  {
+   "id": "H-L2-u08-repeat-question",
+   "base": "U08",
+   "leg": "L2",
+   "code": "DLG-06",
+   "why": "问句重复问号",
+   "source": "ref-en §5.4",
+   "edits": [
+    {"target": "text", "op": "replace", "from": "难道传闻是真的?</d>", "to": "难道传闻是真的????</d>"}
+   ]
+  },
+  {
+   "id": "H-L2-u08-voiceover",
+   "base": "U08",
+   "leg": "L2",
+   "code": "DLG-05",
+   "why": "U08 改成 voiceover 并删掉唇闭合",
+   "source": "base-en §4.4",
+   "edits": [
+    {"target": "text", "op": "replace", "from": "says, voice almost a whisper:", "to": "says in an off-screen voiceover:"},
+    {"target": "text", "op": "replace",
+     "from": "He closes his lips and his throat moves once as he swallows. ",
+     "to": "He swallows once. "}
+   ]
+  },
+  {
+   "id": "H-L4-fl2va-wrong-duration",
+   "base": "U08",
+   "leg": "L4",
+   "code": "PIC-06",
+   "why": "FL2VA 末帧秒数写错（4.00 而非 4.50）",
+   "source": "base-en §2.1",
+   "edits": [
+    {"target": "text", "op": "replace", "from": "4.50-second mark", "to": "4.00-second mark"}
+   ]
+  },
+  {
+   "id": "H-L5-long-gap",
+   "base": "U05",
+   "leg": "L5",
+   "code": "SPK-04",
+   "why": "(Sx) 与 <d> 之间超过 160 字",
+   "source": "base-en §4.4",
+   "edits": [
+    {"target": "text", "op": "replace",
+     "from": "says, voice hesitant and pressed low: <d>",
+     "to": "says, voice hesitant and pressed low: word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word <d>"}
+   ]
+  },
+  {
+   "id": "H-L6-adjutant-coat",
+   "base": "U05",
+   "leg": "L6",
+   "code": "SRC-03",
+   "why": "副官 coat 改成 crimson；crimson 在卡里只属于 lining",
+   "source": "ref-en §2.1 / characters.yaml",
+   "edits": [
+    {"target": "text", "op": "replace", "from": "a black military coat", "to": "a crimson military coat"}
+   ]
+  },
+  {
+   "id": "H-L7-bridge-crop",
+   "base": "U05",
+   "leg": "L7",
+   "code": "AST-04",
+   "why": "crop x1=1.2 超出 1.0",
+   "source": "h3_precheck crop 口径 / 设计 §7.2",
+   "edits": [
+    {"target": "asset", "id": "bridge", "op": "set", "values": {"crop": [0.0, 0.0, 1.2, 1.0]}}
+   ]
+  },
+  {
+   "id": "H-L8-u08-source-mismatch",
+   "base": "U08",
+   "leg": "L8",
+   "code": "SCN-04",
+   "why": "U08 沿用 U05 的状态，但文本改成另一句",
+   "source": "scenes.yaml state_timeline",
+   "edits": [
+    {"target": "scene", "index": 0, "op": "set",
+     "values": {"state_source": "U05", "state_text": "the planet is calm and untouched"}}
+   ]
+  },
+  {
+   "id": "H-L8-u08-source-future",
+   "base": "U08",
+   "leg": "L8",
+   "code": "SCN-03",
+   "why": "U08 不能沿用 U12 的未来状态",
+   "source": "scenes.yaml state_timeline",
+   "edits": [
+    {"target": "scene", "index": 0, "op": "set", "values": {"state_source": "U12"}}
+   ]
+  }
+ ]
+}

@@ -1,0 +1,6 @@
+integrated_multimodal_description:
+[Shot 1] High-precision CG semi-realistic, ancient wuxia meets cyberpunk. Neon alley. From previous geometry (spear already in hands). The mechanical arm swings a horizontal right-to-left arc at her head side, blue-white trail. Wu Junyi steps slightly in rather than back; left wrist rotates, the forward section of the wrapped shaft rises diagonally and meets the mechanical fist with a solid “dong”. Both palms immediately roll outward in one continuous motion, deflecting the fist past her left shoulder (no face contact). Using the deflection momentum she twists waist and drives both palms forward; the tip of the wrapped shaft stabs straight at his chest. He leans back and retreats half a step; the tip grazes past his sternum and he grunts. Wu Junyi recovers the shaft, tip raised toward his throat, rear end pressed at her waist, rooted bow stance. He stands half-leaning, mechanical arm hanging, arcs flickering. Final pose holds. Camera small-amplitude slow truck following the lateral deflection and thrust. Motion continuous. Spear remains fully wrapped, always in hands. Character locks. Neon pure color glow only.
+overall_soundscape:
+Mechanical horizontal whoosh, solid shaft impact and roll, tip thrust whoosh, foot recovery, low neon hum. No dialogue. Clean continuous levels.
+non_diegetic_music:
+N/A

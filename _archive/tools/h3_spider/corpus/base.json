@@ -1,0 +1,180 @@
+{
+ "U01": {
+  "text_file": "base/U01.txt",
+  "meta": {
+   "mode": "i2va",
+   "canvas": "fl2va",
+   "duration": 8.0,
+   "pictures": 1,
+   "cards": {
+    "the commander": "a tall woman in a black floor-length robe with subtly woven gold patterns, a narrow crimson lining along the front and hem, gold shoulder pieces, black leather gloves, and black boots; her straight black hair is drawn into a high ponytail with a gold ornament; pale skin and a sharp profile\n",
+    "the adjutant": "a man of about twenty-six in a black military coat with dense gold embroidery across the chest and shoulders, a crimson inner lining, a long black cape, black leather gloves, and short dark hair\n"
+   },
+   "state_timeline": {
+    "U01": "the planet is still largely intact, only its near edge beginning to break apart, no glowing fissures yet",
+    "U05": "roughly half the planet has broken away, glowing orange fissures across the broken face, the dust veil thickening",
+    "U08": "more than half the planet is gone, the remaining shell glowing at its rim, the dust thinning",
+    "U12": "the planet is reduced to a debris ring, its core no longer visible, the dust settled"
+   },
+   "shot_ids": [
+    "U01",
+    "U02",
+    "U03",
+    "U04",
+    "U05",
+    "U06",
+    "U07",
+    "U08",
+    "U09",
+    "U10",
+    "U11",
+    "U12"
+   ]
+  },
+  "assets": [],
+  "scenes": []
+ },
+ "U05": {
+  "text_file": "base/U05.txt",
+  "meta": {
+   "mode": "ref2va",
+   "canvas": "multiref",
+   "duration": 4.5,
+   "pictures": 3,
+   "cards": {
+    "the commander": "a tall woman in a black floor-length robe with subtly woven gold patterns, a narrow crimson lining along the front and hem, gold shoulder pieces, black leather gloves, and black boots; her straight black hair is drawn into a high ponytail with a gold ornament; pale skin and a sharp profile\n",
+    "the adjutant": "a man of about twenty-six in a black military coat with dense gold embroidery across the chest and shoulders, a crimson inner lining, a long black cape, black leather gloves, and short dark hair\n"
+   },
+   "state_timeline": {
+    "U01": "the planet is still largely intact, only its near edge beginning to break apart, no glowing fissures yet",
+    "U05": "roughly half the planet has broken away, glowing orange fissures across the broken face, the dust veil thickening",
+    "U08": "more than half the planet is gone, the remaining shell glowing at its rim, the dust thinning",
+    "U12": "the planet is reduced to a debris ring, its core no longer visible, the dust settled"
+   },
+   "shot_ids": [
+    "U01",
+    "U02",
+    "U03",
+    "U04",
+    "U05",
+    "U06",
+    "U07",
+    "U08",
+    "U09",
+    "U10",
+    "U11",
+    "U12"
+   ]
+  },
+  "assets": [
+   {
+    "asset_id": "cmdr",
+    "kind": "character",
+    "source": "D:/AIWorkflow/画风库/图片风格/已确认_帝国女军官_20261029/交付_2560/已确认-02_舰桥·侧脸近景_指挥台.png",
+    "crop": [
+     0.1,
+     0.02,
+     0.58,
+     1.0
+    ],
+    "crop_path": "corpus/fake/crop_00.png",
+    "staged": "corpus/fake/staged_00.png",
+    "exists": true,
+    "sha1": "corpus-sha1-00",
+    "staged_sha1": "corpus-sha1-00",
+    "faces": 1,
+    "expected_faces": 1
+   },
+   {
+    "asset_id": "adjutant",
+    "kind": "character",
+    "source": "C:/Temp/opencode/KB23_frames/xiao.png",
+    "crop": [
+     0.0,
+     0.04,
+     0.47,
+     1.0
+    ],
+    "crop_path": "corpus/fake/crop_01.png",
+    "staged": "corpus/fake/staged_01.png",
+    "exists": true,
+    "sha1": "corpus-sha1-01",
+    "staged_sha1": "corpus-sha1-01",
+    "faces": 1,
+    "expected_faces": 1
+   },
+   {
+    "asset_id": "bridge",
+    "kind": "scene",
+    "source": "D:/AIWorkflow/画风库/图片风格/已确认_帝国女军官_20261029/交付_2560/已确认-01_舰桥·背身全身_无框舷窗.png",
+    "crop": [
+     0.42,
+     0.02,
+     1.0,
+     0.98
+    ],
+    "crop_path": "corpus/fake/crop_02.png",
+    "staged": "corpus/fake/staged_02.png",
+    "exists": true,
+    "sha1": "corpus-sha1-02",
+    "staged_sha1": "corpus-sha1-02",
+    "faces": 0,
+    "expected_faces": 0
+   }
+  ],
+  "scenes": [
+   {
+    "scene_id": "U05:bridge",
+    "shot": "U05",
+    "name": "bridge",
+    "base_outside": "A planet hangs beyond the right side of the window; its fragmentation state is defined per shot in state_timeline. Several capital ships hold position at mid distance, none closing.\n",
+    "state_text": "roughly half the planet has broken away, glowing orange fissures across the broken face, the dust veil thickening",
+    "state_source": "U05"
+   }
+  ]
+ },
+ "U08": {
+  "text_file": "base/U08.txt",
+  "meta": {
+   "mode": "fl2va",
+   "canvas": "fl2va",
+   "duration": 4.5,
+   "pictures": 2,
+   "cards": {
+    "the commander": "a tall woman in a black floor-length robe with subtly woven gold patterns, a narrow crimson lining along the front and hem, gold shoulder pieces, black leather gloves, and black boots; her straight black hair is drawn into a high ponytail with a gold ornament; pale skin and a sharp profile\n",
+    "the adjutant": "a man of about twenty-six in a black military coat with dense gold embroidery across the chest and shoulders, a crimson inner lining, a long black cape, black leather gloves, and short dark hair\n"
+   },
+   "state_timeline": {
+    "U01": "the planet is still largely intact, only its near edge beginning to break apart, no glowing fissures yet",
+    "U05": "roughly half the planet has broken away, glowing orange fissures across the broken face, the dust veil thickening",
+    "U08": "more than half the planet is gone, the remaining shell glowing at its rim, the dust thinning",
+    "U12": "the planet is reduced to a debris ring, its core no longer visible, the dust settled"
+   },
+   "shot_ids": [
+    "U01",
+    "U02",
+    "U03",
+    "U04",
+    "U05",
+    "U06",
+    "U07",
+    "U08",
+    "U09",
+    "U10",
+    "U11",
+    "U12"
+   ]
+  },
+  "assets": [],
+  "scenes": [
+   {
+    "scene_id": "U08:bridge",
+    "shot": "U08",
+    "name": "bridge",
+    "base_outside": "A planet hangs beyond the right side of the window; its fragmentation state is defined per shot in state_timeline. Several capital ships hold position at mid distance, none closing.\n",
+    "state_text": "more than half the planet is gone, the remaining shell glowing at its rim, the dust thinning",
+    "state_source": "U08"
+   }
+  ]
+ }
+}

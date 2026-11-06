@@ -1,0 +1,53 @@
+======================================================================
+scan_system.py · 若水AI电影 七层现状扫描（只读）
+======================================================================
+  层1 规则层          E:\本地工作流规范手册                               存在
+  层2 通道层          D:\AIWorkflow\ComfyUI_H3                   存在
+  层3 引擎层          D:\AIWorkflow\engine                       存在
+  层4 关口层          D:\AIWorkflow\tools                        存在
+  层5 资产层          E:\创作                                      存在
+  层6 交付层          D:\AIWorkflow\tools                        存在
+  层7 记忆与技能层       C:\Users\若水\.qoder\memory                  存在
+----------------------------------------------------------------------
+  规则层   ：手册 492 份文件／通用层 5 份（其中规则文件 3 份、50 条条目、0 条没写执行者）
+             索引 §5 计划 R1、R2、R3、R4、R5、R6、R7、R8、R9、R10／已成文 R2、R4、R5／未成文 R1、R3、R6、R7、R8、R9、R10 ｜ 项目层 1 个／冲突表 C85 条＋风险编号 7 个（最大号 30，跳号）
+             过期红警报：preflight 实测 on(@78)／未更正 0 处｜同行已更正 1 处｜下面追了勘误块 1 处｜仅提及 6 处、判不了 0 处｜引错行号 2 处
+  通道层   ：12 份 md 真源／8 条通道，机器认得 3 条／静默兜底 无
+  引擎层   ：config 122 行／project=无音／workflow 17 份（provider 0、prompt_kind 14）／def test_ 209 个、pytest 用例 303 条、实跑通过 未测量
+  关口层   ：ALL_GATES 11 个（G1,G2,G3,G4,G5,G6,G7,G8,G11,G12,G13）／兜底子集 9 个／带闸流 16 份并集 G1,G11,G13,G2,G3,G4,G5,G6,G7,G8／缺 G11 的流 0 份／编号缺 G9、G10
+  资产层   ：10180 文件／5019 张图／21.44 GiB／37 个一级目录；sidecar 13 份（role 13、anchor_kind 0）
+             作用域内死链 29 处（扫 4091 个文本文件；全盘死绝对路径 1149 处**不算行动清单**）
+             确认整目录复制 1 组／同名目录对 32 组（已算 4 个 md5，上限 40）／判废区 1 处
+  交付层   ：审片区本地目录 有／hex 生成器 有／lark-cli 真安装+插件副本 4 处（沙箱快照另 10 份）、在 PATH 否
+             后期：ffmpeg 2 把／fx_light.py 2 份（变体 2）落点＝交付层 1 份＋资产层 1 份（归档/历史遗留）
+  记忆技能 ：三根 md 数 91/58/41／skill 目录 58 个／references 23 篇最新 2026-09-23（落后通道真源 10.4（兜底算法 11） 天）
+  开关矩阵 ：5 处，其中单一真源 3 处
+  端口     ：生产实例 8189（config.yaml）／共 5 个端口被声明，其中非生产仍被写死 3 个
+----------------------------------------------------------------------
+  缺口 23 条：high 3／mid 14／low 6 ｜ 证据自检 OK
+    GAP-A1   [mid  ] 通用角色库两份清单自相矛盾：MANIFEST.json 实测 863 条 vs MANIFEST.md 自称「产物总数 791」 ⇒ 以 json 为总索引超集（17 字段、file 指向缺 
+    GAP-A4   [low  ] LoRA 产物 13 个权重文件／2.57 GiB 无 asset.json ⇒ D5 已裁「算」，建 `class: lora`
+    GAP-A7   [mid  ] 资产档已开始落地：全库 10 份，分布 {"舰体设计": 10}。但覆盖仍极低：10 份对 5,019 张图，且只覆盖 舰体设计 一个项目 ⇒ 其余项目的「权威锚是哪几张」仍然没人回答得了
+    GAP-C1   [high ] 8 条通道的真源厚薄差 48.2 倍（口径＝每条通道全部真源文件字节数之和）：cloud_sd → 真源合计 4.1 KiB ＜ 最厚那条 95.3 KiB 的 35%；image_chain
+    GAP-C2   [mid  ] `channel_of()` 的登记表里没有这些通道声明的 kind 词：qianwen（声明 kind：qianwen/qwen/bailian） ⇒ 它们的稿子**现在**会走`未裁` 分  ← 待用户裁
+    GAP-C4   [mid  ] 注册表与 `channel_of()` 的门词表**没对齐**：4 个词登记成别名却**从没裁过通道归属**（hailuo、kling、seedance、vidu）⇒ 它们的稿子现在吃的是**
+    GAP-C5   [mid  ] 已裁身份但**判据未落地**的通道 3 条（hailuo_cloud、kling_cloud、vidu_cloud）：注册表里 declared_kind 为空、真源 md 已建档但通篇 [未
+    GAP-D2   [low  ] `lark-cli.exe` 有 2 处真安装（runtimes／cli）＋ 2 处别的 agent 插件副本，另有 10 份 Doubao 沙箱快照不算安装；4 处都不在 PATH。封装脚本
+    GAP-D3   [low  ] 已收拢但有尾巴：叠光管线 `fx_light.py` 实测 2 份，交付层 1 份（post\fx_light.py）。资产层仍有实测副本 1 份（工具\fx_light.py）；版本变体 2
+    GAP-D4   [mid  ] 交付层**有代码但没有规则真源**：审片区／飞书三件套的约定（16 位 hex 防猜、无鉴权、审完删、faststart、≈1 Mbps、三条消息顺序）现在只活在 `tools\review_
+    GAP-E1   [mid  ] `config.yaml:57` 的 `project: 无音` 是**默认项目**（换项目走 `--project`，`run.py:493` 写明「别改 config 路径」）⇒ 本轮**
+    GAP-E2   [high ] 17 个 workflow yaml 里 0 个写了 provider（缺 17 个）、3 个没写 prompt_kind ⇒ provider 全靠 `channel_of()` 兜底猜，这
+    GAP-E3   [low  ] config.yaml 注释自称测试「107 项」，实测 pytest 收集到 **303 条用例** ⇒ 文档自述与盘上不符（M1：证据优先于文档自述。⚠ 这里比的是**用例**数，不是 `
+    GAP-G1   [mid  ] 名实不符的**文档侧已闭**：`R5_关口与授权.md` 已按实测成文（**逐个闸**写判据、H 从 yaml 的 gate 步 id 派生），索引 §5 那句「G1–G12／H1–H7」也已
+    GAP-G2   [low  ] 关口子集现状：兜底列表 `G1,G2,G3,G4,G5,G6,G7,G8,G11`；**现役实情由 17 份 yaml 的 auto_gates 决定**——16 份带闸流并集是 `G1,G1
+    GAP-G3   [mid  ] 名字像机检裁判的脚本 16 个，其中 **14 个在调用面里一次都没出现**（引擎三入口＋config＋全部 workflow＋bat/ps1）：analyze_face_diversity.
+    GAP-M1   [mid  ] skill 事实源 `references\` 23 篇最新只到 2026-09-23，而通道真源已到 2026-10-04 ⇒ 落后 **10.4 天**（数值取自 `sync_skill.
+    GAP-M2   [mid  ] 项目级记忆**按会话隔离**：实测 30 个根（8 个非空、共 58 份 md，最新 2026-10-02），而跨会话能读到的只有用户级（91 份）与 `E:\公共记忆`（41 份）两处。⇒ 
+    GAP-P1   [mid  ] 引擎生产实例是 8189 端口，但另有 3 个端口仍被声明类文件写死：8188（20 处，如 D:\AIWorkflow\tools\compare_epochs_realistic.py:8
+    GAP-R1   [mid  ] 索引 §5 计划了 10 份通用层文件（R1、R2、R3、R4、R5、R6、R7、R8、R9、R10），实际只成文 3 份（R2、R4、R5）；未成文的 R1、R3、R6、R7、R8、R9、R
+    GAP-R3   [low  ] 通用层关于 `preflight: off` 的说法**事实层面已全部更正到位**（20_通用规范层: 同行已更正 1 处、下面追加勘误块 1 处），`config.yaml:78` 实测也是
+    GAP-S1   [high ] 想知道「系统现在的配置」要读 5 处（preflight、preflight_strict、knobs.on、prompt_kind、channel_of() 兜底），其中只有 3 处是单一真
+    GAP-X1   [mid  ] `E:\创作` 之外这 8 处资产位置**已按用户 10-02 裁定 (a) 升为资产层正式成员**（算进总量）：E:\LocalAI(104.5 GiB)、E:\hailluoai(7.5 
+----------------------------------------------------------------------
+  耗时 6.51s ｜ 本脚本只读，除 manifest 外不写任何文件
+  已写出：E:\若水AI电影\system_manifest.json（170640 字节）

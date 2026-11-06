@@ -1,0 +1,7 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description: [Shot 1] A vast observation corridor runs the full width of the frame. On the left, an entire inclined panoramic glass wall; beyond it a planet breaking apart occupies one third of the frame. The corridor itself is empty. Cold white ceiling strips throw even bands of light across the polished metal floor, each band mirrored in the surface below. The planet's interior burns orange and red through widening tectonic cracks; continents have already peeled away into a slowly turning ring of debris. That orange stays at the edges: it rims the window frames and lies along the floor as reflected light, while the corridor's own cold white remains the only light shaping the architecture. Black, deep grey and cold steel blue hold the whole frame, and the only saturated note is the worn brass on the structural columns. Matte wool, brushed brass, polished stainless steel and thick glass, every metal part carrying visible use. Throughout: the corridor stays empty, the glass stays intact, the planet's glow never crosses into the corridor as a wash of colour. A slow small-amplitude push in, about eight percent of the frame.
+
+overall_soundscape: Deep low-frequency hum of the hull, continuous and even, with occasional faint metallic creaks from distant structure under thermal stress. Quiet, clean, spacious. No voices, no dialogue, no music.
+
+non_diegetic_music: N/A

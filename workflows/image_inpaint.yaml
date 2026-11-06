@@ -1,0 +1,54 @@
+name: image_inpaint
+description: 局部重绘 —— 只重画掩膜内的区域，掩膜外原样保留。现役通道＝Z-Image-Turbo（2026-10-04 换）：本机实测洞内 MAD 46.9 / 洞外 1.83（内外比 25.7×），越过 grow 带 20 像素后回落到平台的 1.19× ⇒ 掩膜被遵守且无越界接缝。掩膜＝输入 PNG 的 alpha 通道：**alpha=0（透明）处才是要重画的地方**，alpha=255 的像素保留。
+provider: local
+args:
+  # 带 alpha 空洞的 PNG。留空则跑不起来（control 步骤会明确报错）。
+  # ⚠️ 若这张图**没有** alpha 通道，LoadImage 会给出全 0 的掩膜 ⇒ 采样器什么都不重画，输出≈原图（白跑）。
+  src_image: ""
+  # 掩膜怎么造（三种都行）：
+  #   1) 画图工具里把要换掉的区域抠成透明（导出 PNG 保留 alpha）
+  #   2) python: cv2.imdecode(...,IMREAD_COLOR) → np.dstack([img, alpha255]) → 目标区 alpha=0 → imencode 存盘
+  #   3) ComfyUI 里用 SAM/手动掩膜节点出一个"黑=mask0、白=mask1"的图，再转成 alpha
+  prompt: ""
+  # 提示词只描述"掩膜里该长出什么"，别描述整幅画面
+  # 例（把左侧的人抹掉）："雨夜空巷的湿地面，砖墙、金属管线与反光水洼，画面里没有任何人物"
+  denoise: 1.0
+  # 掩膜外扩像素。边界会羽化，扩太多会把旁边的像素也改掉
+  grow: 6
+  # width/height 只喂跑前自审（实际尺寸由 src_image 决定）
+  width: 736
+  height: 416
+  steps: 8
+  seed: ""
+  # 历史留档：2026-09-28 在 FLUX.1 通道量到掩膜外差异 11.09 ≈ 当时 VAE 往返地板 10.60。
+  # Z-Image 通道本次量到掩膜外差异 1.83（未单独标 VAE 地板，两通道数字不可互借）。
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（机制关口）
+    hint: 图片口径：分辨率/字面化词/落点；锁脸铁律由 i2i 锚点那条链把守，本流可裸文字
+    auto_gates: [G5, G7, G11, G13]
+    prompt_kind: image
+    characters: none
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    prompt: "{{args.prompt}}"
+    refs: "{{args.src_image}}"
+
+  - task: control
+    id: gen
+    label: 局部重绘（掩膜内重画）
+    hint: alpha 透明处才会被重画；掩膜外只经 VAE 往返。产物落批次夹 inpaint/
+    workflow: "comfy/z_image_inpaint_api.json"
+    prompt: "{{args.prompt}}"
+    src_image: "{{args.src_image}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    steps: "{{args.steps}}"
+    denoise: "{{args.denoise}}"
+    grow: "{{args.grow}}"
+    seed: "{{args.seed}}"
+    prefix: "inpaint_{{run_id}}"
+    stage: "inpaint"
+    timeout: 900

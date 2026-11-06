@@ -1,0 +1,91 @@
+- [用户研究 AI 项目画像](user-research-ai-profile.md) — 用户从事 AI / 形式化框架 / 游戏具身实验，自建本地 AI 栈（5060 Ti + ComfyUI/FLU…
+- [用户酒店业务面](user-hotel-business-side.md) — **单体酒店**＋金天鹅 PMS，想自动化房态并考虑 AI 变现；**偏好自建不买厂商模块**；想办入住/汇总客人信息/上云多端；可自主·人确认·不可交三档边界与 PII 红线
+- [协作方式要求](feedback-collaboration-style.md) — 先讨论再动手、计划待审、批次制"开跑"、脚本改了整份回写他在审文档、剪辑后期 agent 包办；★他给灵感时先只列最少的必需缺口（特效形态/谁放谁挨/场地介质/台词）他一次填全并自带台词；★**元规则 M1**（§32）：改顶层规则要事实证据＋他点头，**批次授权只覆盖执行不覆盖改规则**，判据不许写死文件名/行号/计数；★§33 多项一句话裁定逐项跟踪，前提被实测推翻先更正再执行；★**§36 口径优先级**：官方/厂商规范赢，我们自写的只在他明确要求时作补充（落成三态、别一刀切）；★**§40 许可/兼容疑虑不停手**——他说"先下下来实测"，档位之争他选最强档
+- [低预期评估外部能力](feedback-low-expectation-external-capability.md) — 评估云端/外部 AI 能力按低预期算，别被发布会宣传词带偏；流程承重墙放本地可控手段，
+- [证据闭环陷阱](feedback-evidence-loop-trap.md) — 别把建机器当成果；completed vs confirmed；★同族⑩ 数字**从盘上重读**；⑫ 探针被注释污染／单位错配；⑭ grep 0≠没实现；⑮—⑳ 盲区≠放行／分母与派生件；㉑—㉔ 在册词表≠现役判据／"更严"≠"更对"／漂移才是证据／清单要与盘一致；㉕—㉗ 别升级成"X不可控"／我写的防线≠在生效／**相关类指标先量无关对的地板，不过地板＝没测**；㉘—㉛ 过滤参数被静默忽略＝通用列表比报错危险／别人替你标的许可不算许可／**失败样本会混进召回指标当满分**／**同方向偏差不靠重复收敛**
+- [测试跑手填提示词](feedback-test-with-manual-prompts.md) — 验证/对照类出图任务一律手填 prompt、关 LLM 润色/auto 生成，保可控对照；正式生产才开 LLM
+- [指定角色必带参考图](feedback-character-reference-image.md) — 锁角色必须带脸锚；锚点分辨率/画风/第几手决定成败；风格锚只挂原始素材；★**通道边界：即梦/Seedance 视频纯 t2v 长点名句可跨 8 镜自洽，不挂锚也行，但必须补"正常人眼不发光"**；★**当首帧/脸锚的图"脸被照亮且完整"优先于"这张最好看"——半张脸沉黑的 editorial 光法直接出局**
+- [生成角色前先递写法卡](feedback-character-prompt-card-first.md) — ★下次要出角色先提醒＋过三问；骨架用B、槽位词库用A；鞋/袜/露头必填；改他的稿先删再加；形制按角色定不设库级限制
+- [用户角色/服装审美口味](user-visual-taste.md) — 清冷素净；三根轴判造型（材质/形制/年代感）；排斥西式四元素
+- [提示词迭代解法库](feedback-prompt-iteration-priors.md) — ①–㉑㉒ 全在文内；★句位定风险、名词先验压不住、一次只动一根轴；㉒改别人的稿主杠杆是删词，顺默认好写逆默认写不动
+- [我不是颜值评委](feedback-i-am-not-the-beauty-judge.md) — ★挑图只做机械筛查（硬伤/缺角/跨视图不一致），好不好看让他报号，再把他的选择存成口味档案
+- [图片一致性机检能力清单](reference-image-consistency-qc.md) — 哪些尺子有效；★尺子丢维度上的否定结论不算结论
+- [AI 短片发抖音的硬门槛](reference-ai-content-publishing-douyin.md) — 《AI生成合成内容标识办法》第4/6/10条＋抖音不声明就自动挂"疑似AI"标；交付前实测清单（画幅分辨率／响度／开场静音／自加音乐／水印烧字）；复刻外部 IP 的风险归他裁
+- [本地脸/身份迁移](reference-local-face-identity-transfer.md) — Redux/FaceID 挂锚全败；跨批次复用同一体锁不住
+- [角色设定图/场景图/站位图 流水线](reference-character-scene-asset-pipeline.md) — 这类前置资产的既有工具在 `E:\创作\无音项目\工具\`（gen_costume/gen_scene_anchors，走云端 Seedream）；分流口径＝有脸走云端、无脸走本地；★通用角色库批次＝[角色句+形态句+画风句] 矩阵只换一句、新角色不挂锚、机检查串脸
+- [百度人物参考案例库](reference-baidu-character-library.md) — E:\BaiduNetdiskDownload；三套写法画像；华丽靠件数不靠光
+- [内容边界](feedback-content-boundary.md) — **不参与生成露骨色情内容**（用户本机出图链路曾用于此，已当场说明边界）；其余创意出图/视频/修图照常全包，不主动提、不说教
+- [生产提示词先审](feedback-review-production-prompts.md) — 实际用于正式生成（视频/图片）的提示词，必须先给用户审一遍确认后再跑；**用户审的是桌面那份提示词文档，
+- [递文件链接的格式坑](feedback-file-link-format.md) — URL 用尖括号包＋正斜杠；反斜杠/成对下划线会让链接被吃掉、用户以为文件被删；他说"文件没了"时先在盘上核实给哈希
+- [主目录只留在用素材](feedback-workspace-hygiene.md) — 判废/被取代/不进片的图文稿搬进桌面「项目资源池」，保原相对路径+MANIFEST 留痕，搬前先查硬编码引用
+- [搬文件只复制不删源](feedback-copy-not-move.md) — 默认 copy；sha256 复核后可删源（09-14 授权）；★删自己造的备份要先逐份哈希实比活区（延伸三）；🔴**算"删了会丢什么"前先查 junction／硬链接——两个路径≠两份文件**（延伸四，10-04 实测 models\ 全是 junction）；海螺 renders/output_files 永保留
+- [凭证连片段都不许回显](feedback-credential-no-echo.md) — 只报类型/长度/HTTP 码；脱敏阈值取宽会漏 key 前缀；出错当场自报并建议轮换
+- [本机网络基线与百度网盘下载](reference-local-network-baseline.md) — 线路实测 450–500 Mbps、IPv6 走中国移动；代理基线＝关，但装有 **Clash Party**（`E:\代理\`，mihomo 听 7890，**起 GUI 会自己打开系统代理⇒必须主动报**）；"开了会员还慢"真因是海量小文件排队；附卡密代下类灰产判据
+- [Civitai 接入手册](reference-civitai-access.md) — 直连不通须走 7890；key 在 `E:\密钥文件\civitai.txt`；下载要登录、Cloudflare 只放 curl；🔴 **`search=` 被静默忽略须用 `query=`**；HF 单源搜＝严重低估 LoRA；civitai 给 SHA256 可硬对账；装机前先读 header 触发词
+- [国内网络下载镜像](reference-cn-download-mirrors.md) — HF 走 hf-mirror、PyPI 阿里源（缺包走官方+代理）；★取 GitHub **别 clone**（全局 insteadOf 把 git 打死），按 tree 挑文件走 raw＋blob sha 对账
+- [Pixabay 素材直链抓取](reference-pixabay-assets.md) — 音效/音乐素材：WebFetch 403 须走内置浏览器；搜索页提结果、详情页 JSON-LD script 含 cdn 直链（evaluate_script 提取）curl 下载
+- [Wikimedia Commons 真物件参考图](reference-commons-asset-refs.md) — 取武器/道具设定级真照片的正路＋只取 CC0/PD；🔴无描述性 UA 会回 2KB HTML；本机百度网盘库**没有**物件设定图
+- [E盘公共记忆库](reference-public-memory.md) — 共享记忆 E:\公共记忆\：改 projects\*.md → bump 到分+摘要 → py build_index.py；index.json 勿手改；★10-07 勘察（14 条目／**9 个 agent 生态**／79 处引用／sync_skill.py:30 硬引用）＋「按 agent 分区改造」**已暂缓等 CN 跑完**；🔴同一 Windows 用户⇒ACL 分不清是哪个 agent 在写，隔离只能 hook＋约定
+- [用户网站 huahuayoueryuan（产品站→审片站）](reference-user-website.md) — SSH/SCP 部署非 FTP；`/downloads/seedance_ref/` 是 Seedance r2v 的公网 URL 依赖；★10-04 实测下行 **8.88 MB/s**、5 并发聚合 14.6 MB/s（**推翻旧"60KB/s"结论**，白天/手机/观众侧未测）；媒体必走 nginx（Node 无 Range）；他已裁此站改成专门审片站
+- [AI 计费定价来源](reference-ai-pricing.md) — Qoder/DeepSeek/百炼/ARK 与云端视频比价；Seedance 2.5 token 公式；★真账单：5.0-pro 挂图 ¥0.60/张、4.0 ¥0.20；★09-30 现查 mini NV2V ¥0.023/千（15s 480p＝¥3.47）＋2.5/720p 15s＝¥22.74（**报价＝实付，公式三验**），**报价前必重查目录**；★10-14 六臂同题实测：批量抽取首选 **MiMo-Flash 关思考**（3.8s/¥0.0014/3-3，160 部≈10 分钟），DeepSeek 退为召回复核档，**开思考对抽取是净损失**；MiMo key 两把（按量 402 余额 0，走计划模式 token-plan 网关）
+- [MiniMax/Hailuo API 与密钥](reference-minimax-api.md) — MiniMax/Hailuo API 接入手册——密钥文件位置、
+- [火山方舟账号与 arkcli 配置](reference-ark-account.md) — 账号与 arkcli 配置——platform profile 修复法、★09-28 真账单逐张实付＋授权码被转写坏(CSRF)的修法；★09-30 `env $VAR arkcli` 静默返回空（改内联赋值）＋新 EP `ep-20260930120016-86k2n`＋Seedance **不支持 seed**；★09-30 「余额够不够」只能查 `pricing models` 的 `IsOverdue`（CLI 无现金余额字段，billing 是 T+1）
+- [可灵 CLI 调用与账户](reference-kling-cli.md) — 可灵官方 CLI 本机调用方式与账户信息——2026-09-22 升到 0.2.0（motion_control…
+- [可灵开放平台 API 直调](reference-kling-api.md) — 可灵开放平台 REST API 直调——Bearer 单密钥（E:\密钥文件\可灵api.txt）、
+- [即梦官方 CLI 与凭证](reference-dreamina-cli.md) — 即梦官方 CLI（dreamina.exe）调用方式与凭证——无 API Key 走本机 OAuth 会话（ar…；★09-28 本机登录态失效（ret=3018／user_credit 全 0）需 relogin，取回产物改走 dreamina-canvas
+- [即梦画布 CLI](reference-dreamina-canvas-cli.md) — 多参考 i2i 写法与 0 积分实测；花费只看 node quote maxCredits
+- [百炼 TTS 直调方法](reference-bailian-tts.md) — 百炼 TTS 双通道边界——token-plan 网关只有 qwen 系 TTS（无 cosyvoice、
+- [本地 F5-TTS 声音克隆](reference-local-tts-f5.md) — zero-shot 克隆真人参考音频；模型在 E:\LocalAI\models\F5-TTS；ref_text 需逐字一致（faster-whisper 转写）；装前 dry-run 护 torch；★09-30 改 AI 片台词不重跑的正路＝whisper 逐字量窗＋原声压 0.22＋edge-tts(Yunjian，Yunxi 不出声) 叠；🔴人声与音效同轨不能只删人声，尾字会漏
+- [飞书沟通渠道](reference-feishu-communication.md) — 飞书 bot 通信：发送侧实测可靠（文本/图两段式/视频须封面/媒体不能带文字，30MB 上限）；★审片三件套＝文本结论→逐镜拼图→成片；中转 JSON 写 cwd（/tmp 对 Windows python 不可见）；PIL 标签必须显式 msyh.ttc 否则汉字全变方块
+- [鸣潮截图位置与发飞书处理](reference-wuwang-screenshot-path.md) — 鸣潮拍照模式存 `D:\DGames\...\Client\Saved\ScreenShot\`（13MB PNG）；发飞书先 ffmpeg -q:v 2 转 JPEG 保分辨率；⚠ lark-cli 输出是带空格 pretty JSON，grep 无空格会静默失配
+- [性能监控换装 TrafficMonitor](reference-gpu-monitor-trafficmonitor.md) — 本机 GPU 监控正解＝`D:\AIWorkflow\tools\TrafficMonitor`（+MinimalPowerPlugin，CPU≈0.1%）；NVIDIA 面板已弃用；★判"监控不准"先跑 dmon+ComfyUI queue+output mtime 三件套（10-01 实例：8% 是真的，任务没在跑）；🔴 **ComfyUI `/system_stats` 的 `vram_free` 是缓存旧账不可信，显存一律用 `nvidia-smi`**
+- [金天鹅云 PMS 接口实测](reference-jineetian-hotel-pms.md) — 金天鹅云 PMS（pms.tianehui.cn / g.tianehui.cn 网关）
+- [AI 视频质量评估](feedback-video-quality-standards.md) — AI 视频质量评估不能只看动作节拍命中，必须查叙事逻辑；含已验证的视频提示词工艺（逐拍拆解+服饰锚点锁细节+不与…
+- [官方 Seedance 2.5 提示词 skill](reference-seedance-official-prompt-skill.md) — 火山方舟官方 Seedance 2.5 提示词工程 skill `sd25-pe`——安装命令/落盘位置/官方分…
+- [H3 官方提示词规范（权重仓自带）](reference-minimax-h3-official-prompt-spec.md) — ★10-03 更正与**现役口径**在文末：§2.1 第一行四形、`Throughout` 官方0次、运镜官方在`[Shot 1]`第二句、幅度速度按需（无 medium 档）、正文英文已建闸、专名取拉丁形、武器只写 long staff、单镜不加 At 切点
+- [r2v 提示词显式写运镜](feedback-r2v-prompt-camera.md) — r2v 视频提示词必须显式写运镜时序（镜头如何运动），不能只写角色动作+场景靠灰模带镜；且运镜只能用运动描述、
+- [短片配乐与混音](feedback-bgm-mixing.md) — 短片配乐原则——音乐绝不能压原声（尤其角色音效）；**但结局是用户选择"就原声就行"→BGM 不是默认步骤、
+- [国漫短剧剧本创作原则](feedback-script-writing-approach.md) — AI 国漫短剧剧本创作原则：日常场景切入立人物、不靠旁白、背景慢解锁、
+- [跨镜连续性](feedback-cross-shot-continuity.md) — 场景抽成"场景锚定段"逐镜一字带上+分层光影；道具从成片抽帧锁形；★批量改写/翻译时公共段一次定译（按句 id 替换＋六道验收不过不写盘）
+- [打戏镜头语法（国漫式放技能）](feedback-combat-shot-grammar.md) — 国漫打戏"放技能"的可复用镜头语法（一镜一拍／相位不重叠／远程命中时施术者与受术者不同框／粗动作+特效帧级同步）
+- [生成阶段 vs 后期分层归口](feedback-generation-vs-post-layer.md) — 用户定调「该生成阶段补的生成阶段补，该后期的后期」；判据＝后期只会加东西+改时间轴、造不出物理 ⇒ 依赖几何/遮挡/动量归生成，全屏与纯时间维度归后期
+- [成本意识默认](feedback-cost-consciousness.md) — 先估总价、能省则省；只重做失败/漂移镜不整批重跑；本地优先；**比价只做初筛，选型靠同帧实测+用户盲选**
+- [长镜切分段](feedback-split-long-shots.md) — **默认不分段：一条连续生成优先**；拆太细会碎，只在单条吃不下且用户点头时才拆；**参考图数量别省；关键帧按提示词点名的关键镜头抽、重复帧组只留首尾（像素差≤3.6 算重复，去重后重编序号重烧标签）**
+- [previz 运镜节奏](feedback-previz-camera-rhythm.md) — 运镜要有焦点锚+节奏感(缓→停→急)；上升/穿云镜不能匀速拉完，要有中段大全景停顿拍
+- [灰模特写镜局限](feedback-previz-closeup-limitation.md) — 灰模只定机位/节奏，特写镜无脸无精细度；特写质检拆三层(灰模→Seedream特写静帧→r2v锁脸)
+- [优先稳定 API 通道](feedback-prefer-stable-api-channel.md) — 生成/外部调用走 API（arkcli 等），网页浏览器自动化仅兜底且须用户同意；账户闸门交还真人
+- [出图/出视频先走本地](feedback-local-first-generation.md) — 出图与出视频默认先走本地管线（ComfyUI Z-Image-Turbo／SDXL、本地 H3），
+- [本机图片链能力边界](reference-local-image-chain.md) — ★10-04 现役底模＝**Z-Image-Turbo**（FLUX.1 已退役删权重，全链零依赖）；i2i 保构图取 **denoise 0.6**（旧 FLUX 的 0.3 不跨通道套）；✅ ControlNet 锁剪影＋锁深度均已补回（ComfyUI 原生，拐点 **1.0**，depth 到 2.0 会过驱抄灰阶，控制够强会压过提示词）；🔴 **深度图须调用方给**——估计器出的深度图锐边 0 %＝零效应，手工搓粗深度块即可
+- [出图模型提示词规范在哪](reference-image-prompt-specs.md) — 🔴BFL 整套 prompting 文档绑 FLUX.2/3，**本机 flux1-dev 官方零规范**(README 只说 minimal inference code)；Seedream 官方正文本机有 09-28 全文快照(反对逗号堆词)；★机制层 CLIP-L 只读前 77 token／T5 不截⇒前约 70 词权重双份；🔴本地通道无成文写法规范(拟立，待点头)
+- [MiniMax H3 本地部署](reference-minimax-h3-local.md) — pruned INT8 16GB 已跑通；T2VA/I2VA 参数与耗时在文内
+- [特效打戏后期叠光管线](reference-fx-light-overlay.md) — fx_light.py 算子表；招式光优先走生成层直出，后期只补强
+- [H3 提示词规则总纲](reference-h3-prompt-rules.md) — 真源 ComfyUI_H3\H3提示词工程规则方案.md＋h3_rule_gate.py；H3R1–H3R23（23＝正文语言闸，接在 G7）
+- [仙戮·双生 项目](reference-xianlu-project.md) — 《仙戮·双生》（薇拉 vs 白玖璃）竖屏短片项目——复刻目标片、素材真源、关键帧归属、
+- [Qoder 平台能力实测（Agent/Skill/Hook）](reference-qoder-agent-skill-hooks.md) — 桌面端 Custom Agent / Skill / Hook 三层真实能力字段表与路径；★技能有**四个根**（含 `~/.bailian/skills`）、**新开会话≠干净**、隔离靠分工作目录（项目级已探针验证生效）
+- [Qoder 与 Qoder CN 互不可见](reference-cross-instance-session-visibility.md) — MCP 会话工具读不到另一实例（原话「未在 Qoder 中登记」）；旁路读 `com.qodercn.app.stable\logs\<批次>\qodercli\sessions\*.log`（**批次名中段＝PID**，20MB 滚动切片，`type=result` 即一轮收尾）；导出件 md 有 5410 个完整 Input JSON 但 **9% 调用无 Response**、90 处 `…` 截断且**我的 awk 归因尺子失准过**；接管三步＝先读盘不读会话／中断后必重新导出／14.5MB 只能按需 grep
+- [海螺 AI 设计工具](reference-hailuo-design-tool.md) — 海螺 AI 设计工具（MiniMax Design）项目路径与能力边界——Electron 桌面 GUI 黑盒无…
+- [动画动作拆解瓶颈](feedback-animation-decomposition.md) — 用户关注动作拆解与成片灵动连贯；诊断须区分动作设计、模型跟随和跨段剪接；★09-30 **别用我自己的分类替换用户点名的现象**（我列四条"方位"病灶，他要的是距离与动量，且病根在我改写的措辞）；★同日晚**动作怎么改他自己给方案**（我荐"减镜数改结构"他没采纳，镜数时长不许顺手改；我只给"层"菜单让他挑）
+- [ffmpeg 位置与用法](reference-ffmpeg-location.md) — 两把分工；中文路径与滤镜冒号坑在文内
+- [音乐反应波形层](reference-audio-visualizer-waveform.md) — 给视频叠"随音乐变动"的发光波形层的可复用做法：时域峰值包络在成品音乐上是平的（画出来不动），
+- [虚拟 Visa 卡方案](reference-virtual-visa-card.md) — Dupay 已停服；2026 替代：融达 rdvcc.com（开卡 $1、充值 USDT/支付宝、ChatGPT 成功率 95%）、Coinepay
+- [DeepSeek + Codex 集成](reference-deepseek-codex-integration.md) — DeepSeek 接入 Codex CLI 的配置方法、成本对比；
+- [剧本/分镜/角色动画开源工具盘点](reference-script-storyboard-animation-tools.md) — ★09-28 复核：判档三指标（正式发版/PyPI 下载量/近半年推送）；低星不占承重位；分镜可视化是空场（全站 4 条命中 3 个 0★）
+- [影视剧情节拍与镜头节奏基准](reference-film-pacing-craft.md) — 影视"场景/情节/镜头节奏"专业基准与来源——McKee 场景价值翻转、Swain scene-sequel、
+- [分镜参考素材来源与反推方法](reference-storyboard-reference-sources.md) — 分镜/絵コンテ 参考素材的来源与取舍（Blender Studio 已订阅化、CC-BY 开源短片、
+- [用户浏览器＝已登录真实浏览器](reference-user-browser-shopping.md) — 用 user-browser-use MCP 在用户已登录的真实浏览器里干活（淘宝等登录态可直接用）；
+- [剑星 UE4SS 陷阱 + 游戏截图路径](reference-stellarblade-ue4ss-trap.md) — 剑星(Stellar Blade)本机速查：UE4SS 打不开的正解＝停用 ue4ss\UE4SS_Signat…
+- [影视 Skill 落点与同步](reference-cinematic-skill.md) — 影视 Skill「cinematic-video-production」的事实源与两份副本位置、同步规则、
+- [报服务器风险要点名进程身份](feedback-server-security-reporting.md) — 向用户报服务器安全/权限风险时必须点名"哪个进程身份能碰到它"，
+- [本地工作流规范手册（E盘副本集）](reference-local-workflow-manual.md) — 通用层成文 3 份（R2/R4/R5，10-03 前叫 G_）＋两层规则；副本集由 `99_维护\build_manual.py` 派生（**派生文件只重生成不手改**）；★改完真源收尾＝`--check --strict`→刷新→`--check` 复验＋`check_tables`＋`check_layers`＋`check_registry --strict`＋`check_thresholds`（五件）；★10-03 批12 后：**316 份**、收尾**六件**（＋`check_official_contract.py`）、通用层条目 **50**、新立 **R2-16 官方为准三态**（当年 315 份、新立 **R5-15**（产物侧只接相对尺）、六件新机器件补进 SCRIPTS 登记；★现役闸子集看 workflow 的 `auto_gates`，不是 run_checks 兜底；🔴转义坑三形态（真控制字符）见该文
+- [通道规则分治（各路径不共用）](feedback-per-channel-rules.md) — H3/云端SD/图片/千问/即梦各切自己的规则，实测结论不跨通道套用；只共用机制层；★09-30 即梦实跑：拍数优先于格式合规、抽帧判不了缺席、无 seed 运动量是噪声；★**即梦图片侧实际字数闸门 ≳300 可用／≳700 被拒，与 CLI `maxLength=2000` 不是一回事**（H3 侧 1043 词正常出片，别互借）
+- [千问 CLI 与 SkillHub](reference-qianwen-cli.md) — qianwen 1.9.0 出身核验；forge-pack 6 技能已装；★09-28 实测原生 /api/v1/models 有 89 条视频模型（含可灵/Vidu/PixVerse/MiniMax-H3），套餐 key 已 401
+- [磁盘整理目标态与铁律](feedback-disk-organization-rules.md) — 桌面只留快捷方式、一份源＋E 盘一份备份；★引用扫描根含被搬物自身；备份验收＝缺0且陈旧0
+- [腾讯 WorkBuddy 口碑核查](reference-workbuddy-tencent.md) — 定价/热度数字；★两条硬负面（04-02 登录崩溃致歉、灰产"8.88元充值"改 hosts 劫持→封号+交出终端权限）；酒店线甜区但 PII 不可进
+- [装第三方 skill 的规矩](feedback-third-party-skill-install.md) — ★按完整规格装、**自带脚本一个不装**、脚本读懂后自己重写、正文照装只补 frontmatter；.enc 默认不碰但决定权在用户（解时要拿厂商校验字段对账）
+- [两批第三方 skill 包与自写替代脚本](reference-installed-skill-packs.md) — 已装 14 个（22号 frontmatter 是我补的、cybershot 没装）；自写脚本在 E:\创作\技能配套脚本；160 部剧本解进 E:\创作\剧本文本库；★分支包 E:\创作\即梦技能包\pack.py 随装随卸；★09-30 四臂对照（文本＋火山实跑出片 ¥13.88）：打斗 skill 只给**结构**不给**通道适配**，臂② 是唯一拍出敌我双方的
+- [「若水AI电影」七层架构](reference-ruoshui-ai-film-architecture.md) — 总纲＋manifest（现读勿手改）；批 4–16 记录在文内；★待裁-17：A 线生成器仍出中文正文
+- [色彩光影标准与现成件](reference-color-lighting-standards.md) — 布光语汇/色彩科学/ΔE 三层；🔴色彩≠打光（乘法）；检光 light_scopes.py 只量不判（★码值域直读，别让解码链替你展幅）；★参考片→提示词正路（切镜＋三态标注＋读数换词表）；枚举量级与漏斗
+- [资料库类目地图](reference-e-drive-asset-libraries.md) — 按用途九类＋实测体量；四空缺；10-04 新增中式色彩库（742 色24列＋暖427冷258）
+- [删改文件的边界与转义坑](feedback-destructive-edit-boundaries.md) — **批量替换前先打印将删行范围**（编译绿≠内容齐，我删掉过 16 条正常登记）；生成含 Windows 路径的代码用 chr(92) 或 Write/Edit，别在 heredoc 里再套一层源码（\n吃 r、\f 吃 f）；★延伸四：批量改文件内容须过「按文件自身编码回写 + 语法闸 + 失败即还原」，反解乱码要拿整串试；🔴延伸五：写 `.json/.jsonc` **禁用 PowerShell `ConvertTo-Json|Set-Content`**（PS 5.1 UTF8 必带 BOM ⇒ 一个 BOM 让 MiMo 整份配置不加载，"API 全丢"实为加载失败；Get-Content 还会把中文二次解码）；改配置要过「计数断言＝1 ＋ 写前备份 ＋ 写后结构断言 ＋ 与备份忽略空白逐行 diff」
+- [CUF 资产版图与境外 vault](reference-cuf-assets-and-vault.md) — 10-11 核实：D 盘 1 GB 备份＋47.250 机 /root/git 三 bare 仓（remote=vault）；★GitHub 直连正解＝隔离 HOME（`-c insteadOf` 反向覆盖无效）；🔴待裁 公开仓默认 key 32 处／提交邮箱＝手机号派生 Gmail
+- [MiMo 配置与编码坑](reference-mimo-config-and-encoding.md) — 10-17 实测：🔴PS 5.1 写 `mimocode.jsonc` 带 **UTF-8 BOM** ⇒ MiMo 报「第1行第1列 InvalidSymbol」并**整个文件不加载**（provider+全部 MCP 一起消失，数据其实都在）；同次重写「千问」被二次解码成 `鍗冮棶`（码位要实测别心算）；★open-websearch 2.2.0 stdio 实测通、bing 直连出结果、无需 daemon；🔴别 `npm --prefix` 装进 Electron 应用目录（更新会抹），正解＝npm 真全局 `AppData\Local\nodejs`；MiMo 读 `~/.agents/skills`（与 Qoder 共享）；🔴它家记忆**不是每轮注入**而是 `memory` 工具按需检索、FTS 在 Windows 上因 `parsePath` 只认正斜杠而整条空转 ⇒ 10-07 写进 `~/.local/share/mimocode/memory/**/MEMORY.md` 的指针**未生效**；真注入点＝`~/.config/mimocode/AGENTS.md`（10-17 已建，待新会话复测）

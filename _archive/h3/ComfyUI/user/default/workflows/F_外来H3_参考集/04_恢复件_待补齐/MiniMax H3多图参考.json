@@ -1,0 +1,3182 @@
+{
+  "id": "2566699e-f41c-4307-b029-ca87d18ed34b",
+  "revision": 0,
+  "last_node_id": 134,
+  "last_link_id": 199,
+  "nodes": [
+    {
+      "id": 103,
+      "type": "LoadImage",
+      "pos": [
+        348.0635261842194,
+        953.3736177900853
+      ],
+      "size": [
+        876.6855294492887,
+        578.4075480518272
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "label": "upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            195
+          ]
+        },
+        {
+          "label": "MASK",
+          "name": "MASK",
+          "type": "MASK"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.30.0",
+        "Node name for S&R": "LoadImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "pasted/image (162).png",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "pasted/image (162).png",
+        "upload": "image"
+      }
+    },
+    {
+      "id": 104,
+      "type": "ResolutionSelector",
+      "pos": [
+        1254.749055633508,
+        1325.3736177900853
+      ],
+      "size": [
+        601.8118083787595,
+        126
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "showAdvanced": true,
+      "inputs": [
+        {
+          "label": "aspect_ratio",
+          "name": "aspect_ratio",
+          "type": "COMBO",
+          "widget": {
+            "name": "aspect_ratio"
+          },
+          "link": null
+        },
+        {
+          "label": "megapixels",
+          "name": "megapixels",
+          "type": "FLOAT",
+          "widget": {
+            "name": "megapixels"
+          },
+          "link": null
+        },
+        {
+          "label": "multiple",
+          "name": "multiple",
+          "type": "INT",
+          "widget": {
+            "name": "multiple"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "width",
+          "name": "width",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "label": "height",
+          "name": "height",
+          "type": "INT",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.30.0",
+        "Node name for S&R": "ResolutionSelector",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "16:9 (Widescreen)",
+        0.4,
+        32
+      ],
+      "widgets_values_named": {
+        "aspect_ratio": "16:9 (Widescreen)",
+        "megapixels": 0.4,
+        "multiple": 32
+      }
+    },
+    {
+      "id": 106,
+      "type": "PrimitiveFloat",
+      "pos": [
+        1254.749055633508,
+        1139.3736177900853
+      ],
+      "size": [
+        601.8118083787595,
+        126
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "value",
+          "name": "value",
+          "type": "FLOAT",
+          "widget": {
+            "name": "value"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "FLOAT",
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            197
+          ]
+        }
+      ],
+      "title": "Float (duration)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.30.0",
+        "Node name for S&R": "PrimitiveFloat",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        15
+      ],
+      "widgets_values_named": {
+        "value": 15
+      }
+    },
+    {
+      "id": 107,
+      "type": "LoadImage",
+      "pos": [
+        341.31817716657156,
+        1606.3254316702535
+      ],
+      "size": [
+        876.6855294492887,
+        578.4075480518272
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "label": "upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "label": "MASK",
+          "name": "MASK",
+          "type": "MASK"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.30.0",
+        "Node name for S&R": "LoadImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "黑长姬发_13_白色花纹宽袖袍.png",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "黑长姬发_13_白色花纹宽袖袍.png",
+        "upload": "image"
+      }
+    },
+    {
+      "id": 108,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        1887.469985089209,
+        953.3736177900853
+      ],
+      "size": [
+        1589.3248576364483,
+        1227.9952472727746
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 198
+        },
+        {
+          "label": "audio",
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 199
+        },
+        {
+          "label": "meta_batch",
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "label": "vae",
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        },
+        {
+          "label": "frame_rate",
+          "name": "frame_rate",
+          "type": "FLOAT",
+          "widget": {
+            "name": "frame_rate"
+          },
+          "link": null
+        },
+        {
+          "label": "loop_count",
+          "name": "loop_count",
+          "type": "INT",
+          "widget": {
+            "name": "loop_count"
+          },
+          "link": null
+        },
+        {
+          "label": "filename_prefix",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": null
+        },
+        {
+          "label": "format",
+          "name": "format",
+          "type": "COMBO",
+          "widget": {
+            "name": "format"
+          },
+          "link": null
+        },
+        {
+          "label": "pingpong",
+          "name": "pingpong",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "pingpong"
+          },
+          "link": null
+        },
+        {
+          "label": "save_output",
+          "name": "save_output",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "save_output"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "Filenames",
+          "name": "Filenames",
+          "type": "VHS_FILENAMES"
+        }
+      ],
+      "title": "二采输出（轻量稳定）",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "4ee72c065db22c9d96c2427954dc69e7b908444b",
+        "Node name for S&R": "VHS_VideoCombine",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": {
+        "frame_rate": 24,
+        "loop_count": 0,
+        "filename_prefix": "MiniMaxH3/MiniMax_H3",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "paused": false,
+          "hidden": false,
+          "params": {
+            "score": 9,
+            "filename": "MiniMax_H3_00351-audio.mp4",
+            "cos_url": "https://rh-images.xiaoyaoyou.com//f3702e87df4f7c1cfaf2188fec913990/output/MiniMaxH3/stable_4v4a_00002_p86-audio_zgkoa_1786786717.mp4",
+            "workflow": "MiniMax_H3_00351.png",
+            "fullpath": "D:\\ComfyUI-BIUL_JX\\ComfyUI\\output\\MiniMaxH3\\MiniMax_H3_00351-audio.mp4",
+            "format": "video/h264-mp4",
+            "subfolder": "MiniMaxH3",
+            "label": "Normal",
+            "type": "output",
+            "frame_rate": 24
+          }
+        }
+      },
+      "widgets_values_named": {
+        "frame_rate": 24,
+        "loop_count": 0,
+        "filename_prefix": "MiniMaxH3/MiniMax_H3",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "paused": false,
+          "hidden": false,
+          "params": {
+            "score": 9,
+            "filename": "MiniMax_H3_00351-audio.mp4",
+            "cos_url": "https://rh-images.xiaoyaoyou.com//f3702e87df4f7c1cfaf2188fec913990/output/MiniMaxH3/stable_4v4a_00002_p86-audio_zgkoa_1786786717.mp4",
+            "workflow": "MiniMax_H3_00351.png",
+            "fullpath": "D:\\ComfyUI-BIUL_JX\\ComfyUI\\output\\MiniMaxH3\\MiniMax_H3_00351-audio.mp4",
+            "format": "video/h264-mp4",
+            "subfolder": "MiniMaxH3",
+            "label": "Normal",
+            "type": "output",
+            "frame_rate": 24
+          }
+        }
+      }
+    },
+    {
+      "id": 134,
+      "type": "bb523570-e008-4672-9933-d9f004bc9c04",
+      "pos": [
+        1254.749055633508,
+        953.3736177900853
+      ],
+      "size": [
+        601.8118083787595,
+        126
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "ref_images.ref_image_0",
+          "name": "ref_images.ref_image_0",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 195
+        },
+        {
+          "label": "prompt",
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": 196
+        },
+        {
+          "label": "values.a",
+          "name": "values.a",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 197
+        }
+      ],
+      "outputs": [
+        {
+          "label": "frames",
+          "name": "frames",
+          "type": "IMAGE",
+          "links": [
+            198
+          ]
+        },
+        {
+          "label": "generated_audio",
+          "name": "generated_audio",
+          "type": "AUDIO",
+          "links": [
+            199
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.6",
+        "previewExposures": [
+          {
+            "name": "videopreview",
+            "sourceNodeId": "121",
+            "sourcePreviewName": "videopreview"
+          }
+        ]
+      },
+      "widgets_values": [
+        "For the target video, at 0.00 seconds into the target video, <Picture 1> is fully referenced as the environment and fixed camera reference, while <Picture 2> is fully referenced as the female character identity reference.\n\nintegrated_multimodal_description:\n\n<Picture 1> defines the complete environment, Windows desktop layout, spatial composition, lighting, sofa placement, and fixed camera framing.\n\nThe final video must strictly preserve the complete scene shown in <Picture 1>.\n\nTreat <Picture 1> as a photorealistic Windows dynamic desktop wallpaper in which the living-room environment physically exists behind the Windows desktop UI.\n\nThe environment consists of:\n\na large warm-gray fabric sofa occupying the lower half of the frame;\nsoft textured upholstery with realistic fabric detail;\na large black throw pillow on the left side of the sofa;\nlight-gray cushions behind it;\na dark charcoal knitted blanket naturally resting across the far-right sofa cushion;\na dark charcoal-gray wall filling most of the background;\na black metal shelving unit on the far left;\na leafy indoor plant positioned on the upper shelf;\nwarm amber integrated shelf lighting;\na small glossy black decorative object;\na small stack of books;\na partially visible framed monochrome artwork at the far right edge.\n\nPreserve the exact sofa position, sofa scale, cushion arrangement, blanket position, shelving position, wall proportions, background composition, spatial depth, and perspective from <Picture 1>.\n\nThe lighting must also remain consistent with <Picture 1>:\n\nsoft cinematic low-key interior lighting;\ndark neutral ambient light;\nsubtle cool ambient illumination across the wall;\nwarm amber accent light coming from the left shelving unit;\nsoft realistic highlights and shadows across the sofa;\nnatural dimensional contrast;\npremium modern apartment atmosphere.\n\nDo not brighten the entire room.\nDo not change the lighting direction.\nDo not change the wall color.\nDo not redesign the furniture.\nDo not move the shelving unit.\nDo not remove the plant.\nDo not remove the framed artwork.\nDo not change the sofa into leather.\nDo not change the sofa color or material.\nDo not add additional furniture.\n\nThe Windows desktop UI from <Picture 1> must remain clearly visible and completely stable throughout the entire video.\n\nPreserve the desktop icons vertically arranged along the far-left side, including their original positions and spacing.\n\nPreserve the Windows taskbar across the entire bottom edge.\n\nPreserve the weather display on the lower-left side.\n\nPreserve the centered Windows taskbar icons.\n\nPreserve the lower-right system tray, clock and date area.\n\nThe Windows interface must remain visually separate from the photorealistic wallpaper environment and must not deform when the woman moves behind or near it.\n\nThe desktop icons and taskbar behave like a fixed foreground UI overlay.\n\nThe woman exists inside the dynamic wallpaper scene behind the Windows UI.\n\nShe must never interact with the Windows icons, taskbar, search bar, system tray or other desktop UI elements.\n\nThe Windows UI must not move, animate, disappear, flicker, distort, regenerate or change position.\n\nThe camera is completely locked to the exact framing of <Picture 1> for the entire 30-second video.\n\nNo camera movement.\nNo pan.\nNo tilt.\nNo dolly.\nNo zoom.\nNo reframing.\nNo perspective change.\nNo focal-length change.\nNo camera-height change.\nNo cuts.\nNo transitions.\n\nThe sofa, shelving unit, plant, cushions, blanket, artwork, wall, lighting, Windows desktop icons and taskbar remain spatially locked throughout the entire shot.\n\n<Picture 2> defines the identity and appearance of the only female character in the video.\n\nUse the front view, back view, and facial close-up in <Picture 2> only as complementary identity references for the same single adult woman.\n\nStrictly preserve her facial identity, face shape, facial proportions, eyes, nose, lips, skin tone, apparent adult age, body proportions, extremely long straight black hair, blunt straight bangs, hair length, and overall appearance.\n\nConvert the character naturally into a photorealistic live-action adult woman while preserving the recognizable identity of <Picture 2>.\n\nDo not reproduce the white background or multi-view character-sheet layout from <Picture 2>.\n\nDo not generate multiple versions of the woman.\n\nOnly one woman exists in the final video.\n\nHer identity must remain unchanged throughout all wardrobe changes.\n\nThe woman performs primarily on the center-right and right side of the sofa area.\n\nKeep the left side of the frame relatively clean for dialogue subtitles while preserving the existing Windows desktop icons.\n\nAll entrances and exits occur exclusively through the far-right edge of the frame.\n\nThe woman must physically walk completely beyond the right edge before every wardrobe change.\n\nWardrobe changes occur entirely off-screen.\n\nWhen she returns, she must physically walk back into the same fixed environment from the far-right edge with the new outfit already completely formed.\n\nNever transform, morph, dissolve, or replace clothing while the woman is visible.\n\nThe background must remain perfectly continuous during every entrance, exit, and off-screen wardrobe change.\n\nAt 0.00-3.00 seconds, the woman is already sitting naturally on the center-right side of the warm-gray fabric sofa.\n\nShe is wearing the white patterned wide-sleeve robe from <Picture 2>.\n\nShe gently adjusts her extremely long straight black hair, then looks toward the computer screen, directly toward the camera, with a warm, natural, slightly playful smile.\n\nShe says in Mandarin:\n\n“说吧……今天想看什么？”\n\nHer voice is young, natural, soft, warm, and slightly playful.\n\nHer lip movements synchronize precisely with the Mandarin dialogue.\n\nPale-purple Chinese subtitles appear progressively in the left-middle area in sync with her pronunciation:\n\n“说吧……今天想看什么？”\n\nA minimal white speaker icon appears beside the subtitle, with a thin white audio waveform beneath it reacting naturally to her voice.\n\nAt 3.00-4.50 seconds, she stops speaking and closes her mouth naturally.\n\nAn adult male voice speaks entirely from off-screen:\n\n“想看JK。”\n\nNo male character appears visually.\n\nThe woman remains silent and listens naturally without moving her lips.\n\nWhite Chinese subtitles appear progressively:\n\n“想看JK”\n\nA minimal white microphone icon appears beside the subtitle, and the waveform reacts to the male voice.\n\nAt 4.50-6.50 seconds, the woman gives a small amused smile and gently nods.\n\nShe replies:\n\n“好，等我一下。”\n\nHer lip movements synchronize precisely with the Mandarin dialogue.\n\nAfter finishing the sentence, she places one hand naturally against the sofa, leans forward slightly, and rises using realistic body mechanics.\n\nHer extremely long hair and wide sleeves respond naturally to the movement.\n\nAt 6.50-10.00 seconds, she finishes standing, turns naturally toward screen-right, and walks toward the far-right edge.\n\nHer footsteps are physically synchronized with her movement.\n\nHer long black hair and white robe respond naturally to each step.\n\nShe physically crosses the far-right frame boundary until her entire body is completely absent.\n\nNo teleportation, sudden disappearance, fade-out, or transformation.\n\nThe sofa is left completely empty.\n\nAt 10.00-14.00 seconds, hold the empty sofa for approximately one second.\n\nThe Windows desktop, icons, taskbar, sofa, cushions, blanket, shelving unit, plant, artwork, lighting, framing, and perspective remain completely unchanged.\n\nThe same woman then physically walks back into frame from the far-right edge.\n\nShe has changed clothes entirely off-screen.\n\nShe now wears a clean white academy-style top, a blue-black plaid pleated mini skirt, white over-the-knee socks, white cross-detail garter accents, and coordinated academy-style footwear.\n\nHer face, skin tone, age, body proportions, extremely long straight black hair, blunt bangs, and identity remain exactly the same as <Picture 2>.\n\nShe walks naturally to the center-right area in front of the sofa and remains standing.\n\nShe gently adjusts her skirt, then makes a small controlled turn toward each side to present the outfit.\n\nThe skirt and long hair respond naturally to her movement.\n\nNo exaggerated posing or spinning.\n\nAt 14.00-17.00 seconds, she faces the computer screen again with a playful, pleased smile and says:\n\n“噔噔～我回来了，老公，怎么样？”\n\nHer delivery is light, natural, playful, and slightly proud without exaggerated cute acting.\n\nHer lips synchronize precisely with the Mandarin dialogue.\n\nPale-purple Chinese subtitles progressively display:\n\n“噔噔～我回来了，老公，怎么样？”\n\nThe waveform reacts naturally to her voice.\n\nAt 17.00-18.50 seconds, she finishes speaking and closes her mouth.\n\nThe off-screen adult male voice replies:\n\n“嗯～不错。”\n\nThe woman remains silent and does not move her lips.\n\nShe listens naturally and gives a small pleased smile after hearing the response.\n\nWhite Chinese subtitles progressively display:\n\n“嗯～不错。”\n\nThe waveform reacts to the male voice.\n\nAt 18.50-21.00 seconds, she appears to suddenly remember another outfit.\n\nHer expression changes subtly into a playful, slightly mischievous look.\n\nShe says:\n\n“等等～还有一套。”\n\nHer lips synchronize precisely with the Mandarin dialogue.\n\nPale-purple subtitles progressively display:\n\n“等等～还有一套。”\n\nAfter finishing the sentence, she turns naturally toward screen-right and walks toward the far-right edge.\n\nHer skirt and extremely long hair respond naturally to the movement.\n\nShe physically crosses the right frame boundary until her entire body is completely absent.\n\nAt 21.00-23.00 seconds, the sofa remains empty.\n\nThe woman is completely off-screen.\n\nNo wardrobe-changing process is visible.\n\nThe Windows desktop, icons, taskbar, sofa, cushions, blanket, shelving unit, plant, artwork, lighting, camera, and perspective remain completely unchanged.\n\nAt 23.00-25.00 seconds, the same woman physically walks back into frame from the far-right edge.\n\nShe has completed the second wardrobe change entirely off-screen.\n\nShe now wears a fitted black blazer, white shirt, burgundy plaid tie, burgundy-and-black plaid pleated mini skirt, sheer nude tights, and black loafers.\n\nHer facial identity, age, skin tone, body proportions, extremely long straight black hair, blunt bangs, and overall appearance remain exactly the same.\n\nShe walks naturally to the center-right area in front of the sofa.\n\nShe gently adjusts the lower edge of her blazer and skirt, then looks toward the computer screen with a more confident and refined expression.\n\nAt 25.00-26.50 seconds, she smiles naturally and asks:\n\n“这套呢？”\n\nHer voice carries a subtle sense of expectation.\n\nHer lips synchronize precisely with the Mandarin dialogue.\n\nPale-purple Chinese subtitles progressively display:\n\n“这套呢？”\n\nThe waveform reacts to her voice.\n\nAt 26.50-27.50 seconds, she closes her mouth and listens.\n\nThe off-screen adult male voice replies:\n\n“这套也好看。”\n\nThe woman does not move her lips during his dialogue.\n\nShe listens naturally and gives a satisfied smile.\n\nWhite Chinese subtitles progressively display:\n\n“这套也好看。”\n\nThe waveform reacts to the male voice.\n\nAt 27.50-30.00 seconds, she turns naturally and walks back toward the warm-gray fabric sofa.\n\nShe sits down using realistic body mechanics.\n\nThe fabric sofa cushion compresses subtly beneath her weight.\n\nShe gently adjusts her blazer collar and then her extremely long black hair.\n\nShe looks directly toward the computer screen, slightly tilts her head, and gives a warm, close, mildly teasing smile.\n\nShe says:\n\n“机会用完啦。老公想留哪套呢？”\n\nDeliver “机会用完啦” lightly, as though announcing a playful rule.\n\nDeliver “老公想留哪套呢？” slightly more slowly with a natural rising intonation at the end.\n\nHer lips synchronize precisely with the Mandarin dialogue.\n\nPale-purple Chinese subtitles progressively display:\n\n“机会用完啦。老公想留哪套呢？”\n\nShe maintains eye contact and the playful smile through the final moment.\n\noverall_soundscape:\n\nNatural Mandarin dialogue is the primary audio.\n\nThe female voice is a young adult voice, natural, soft, warm, intimate, and slightly playful.\n\nThe male voice is an adult male voice, natural, mature, concise, and always completely off-screen.\n\nOnly one person speaks at a time.\n\nWhenever the male voice speaks, the woman remains silent with her mouth naturally closed.\n\nWhenever the woman speaks, her Mandarin lip synchronization must precisely match her dialogue.\n\nAdd subtle realistic footsteps synchronized with her walking.\n\nAdd subtle natural clothing rustle synchronized with movement.\n\nWhen she rises from or sits on the fabric sofa, add extremely subtle realistic fabric and cushion compression sounds.\n\nNo background music.\n\nNo exaggerated sound effects.\n\nnegative_constraints:\n\nidentity drift, face change, face morphing, facial proportion change, age change, skin tone change, hairstyle change, hair shortening, bangs change, body proportion change, body shape change, character duplication, multiple women, extra person, visible male character, male face, male body, male hand, male reflection, male shadow, third character, anime character, illustration, CGI character, 3D character, doll appearance, plastic skin, mannequin appearance, robotic movement, stiff movement, anatomical deformation, extra arms, extra legs, extra fingers, fused fingers, malformed hands, malformed legs, malformed feet, teleportation, sudden appearance, sudden disappearance, fade-in, fade-out, entering from the left, exiting to the left, incorrect entrance direction, visible wardrobe transformation, clothing morphing, melting clothes, flickering clothes, gradual clothing change, mixed outfits, incomplete outfit, body-clothing fusion, second room, background replacement, sofa change, sofa movement, cushion movement, blanket movement, shelving movement, plant disappearance, artwork disappearance, lighting change, desktop wallpaper change, desktop icon change, taskbar change, Windows UI change, UI distortion, UI flicker, camera movement, camera cut, pan, tilt, dolly, zoom, reframing, perspective drift, camera shake, exaggerated expression, exaggerated cute acting, incorrect speaker, woman speaking male dialogue, male voice speaking female dialogue, overlapping dialogue, lip-sync error, incorrect Mandarin pronunciation, incorrect dialogue, missing dialogue, repeated dialogue, premature dialogue, garbled Chinese subtitles, incorrect Chinese characters, English subtitles, bottom subtitles, subtitles covering the face, subtitles appearing too early, complete sentence appearing before pronunciation, static waveform, malformed waveform, malformed UI, extra UI, extra text, watermark, platform logo"
+      ],
+      "widgets_values_named": {
+        "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> is fully referenced as the environment and fixed camera reference, while <Picture 2> is fully referenced as the female character identity reference.\n\nintegrated_multimodal_description:\n\n<Picture 1> defines the complete environment, Windows desktop layout, spatial composition, lighting, sofa placement, and fixed camera framing.\n\nThe final video must strictly preserve the complete scene shown in <Picture 1>.\n\nTreat <Picture 1> as a photorealistic Windows dynamic desktop wallpaper in which the living-room environment physically exists behind the Windows desktop UI.\n\nThe environment consists of:\n\na large warm-gray fabric sofa occupying the lower half of the frame;\nsoft textured upholstery with realistic fabric detail;\na large black throw pillow on the left side of the sofa;\nlight-gray cushions behind it;\na dark charcoal knitted blanket naturally resting across the far-right sofa cushion;\na dark charcoal-gray wall filling most of the background;\na black metal shelving unit on the far left;\na leafy indoor plant positioned on the upper shelf;\nwarm amber integrated shelf lighting;\na small glossy black decorative object;\na small stack of books;\na partially visible framed monochrome artwork at the far right edge.\n\nPreserve the exact sofa position, sofa scale, cushion arrangement, blanket position, shelving position, wall proportions, background composition, spatial depth, and perspective from <Picture 1>.\n\nThe lighting must also remain consistent with <Picture 1>:\n\nsoft cinematic low-key interior lighting;\ndark neutral ambient light;\nsubtle cool ambient illumination across the wall;\nwarm amber accent light coming from the left shelving unit;\nsoft realistic highlights and shadows across the sofa;\nnatural dimensional contrast;\npremium modern apartment atmosphere.\n\nDo not brighten the entire room.\nDo not change the lighting direction.\nDo not change the wall color.\nDo not redesign the furniture.\nDo not move the shelving unit.\nDo not remove the plant.\nDo not remove the framed artwork.\nDo not change the sofa into leather.\nDo not change the sofa color or material.\nDo not add additional furniture.\n\nThe Windows desktop UI from <Picture 1> must remain clearly visible and completely stable throughout the entire video.\n\nPreserve the desktop icons vertically arranged along the far-left side, including their original positions and spacing.\n\nPreserve the Windows taskbar across the entire bottom edge.\n\nPreserve the weather display on the lower-left side.\n\nPreserve the centered Windows taskbar icons.\n\nPreserve the lower-right system tray, clock and date area.\n\nThe Windows interface must remain visually separate from the photorealistic wallpaper environment and must not deform when the woman moves behind or near it.\n\nThe desktop icons and taskbar behave like a fixed foreground UI overlay.\n\nThe woman exists inside the dynamic wallpaper scene behind the Windows UI.\n\nShe must never interact with the Windows icons, taskbar, search bar, system tray or other desktop UI elements.\n\nThe Windows UI must not move, animate, disappear, flicker, distort, regenerate or change position.\n\nThe camera is completely locked to the exact framing of <Picture 1> for the entire 30-second video.\n\nNo camera movement.\nNo pan.\nNo tilt.\nNo dolly.\nNo zoom.\nNo reframing.\nNo perspective change.\nNo focal-length change.\nNo camera-height change.\nNo cuts.\nNo transitions.\n\nThe sofa, shelving unit, plant, cushions, blanket, artwork, wall, lighting, Windows desktop icons and taskbar remain spatially locked throughout the entire shot.\n\n<Picture 2> defines the identity and appearance of the only female character in the video.\n\nUse the front view, back view, and facial close-up in <Picture 2> only as complementary identity references for the same single adult woman.\n\nStrictly preserve her facial identity, face shape, facial proportions, eyes, nose, lips, skin tone, apparent adult age, body proportions, extremely long straight black hair, blunt straight bangs, hair length, and overall appearance.\n\nConvert the character naturally into a photorealistic live-action adult woman while preserving the recognizable identity of <Picture 2>.\n\nDo not reproduce the white background or multi-view character-sheet layout from <Picture 2>.\n\nDo not generate multiple versions of the woman.\n\nOnly one woman exists in the final video.\n\nHer identity must remain unchanged throughout all wardrobe changes.\n\nThe woman performs primarily on the center-right and right side of the sofa area.\n\nKeep the left side of the frame relatively clean for dialogue subtitles while preserving the existing Windows desktop icons.\n\nAll entrances and exits occur exclusively through the far-right edge of the frame.\n\nThe woman must physically walk completely beyond the right edge before every wardrobe change.\n\nWardrobe changes occur entirely off-screen.\n\nWhen she returns, she must physically walk back into the same fixed environment from the far-right edge with the new outfit already completely formed.\n\nNever transform, morph, dissolve, or replace clothing while the woman is visible.\n\nThe background must remain perfectly continuous during every entrance, exit, and off-screen wardrobe change.\n\nAt 0.00-3.00 seconds, the woman is already sitting naturally on the center-right side of the warm-gray fabric sofa.\n\nShe is wearing the white patterned wide-sleeve robe from <Picture 2>.\n\nShe gently adjusts her extremely long straight black hair, then looks toward the computer screen, directly toward the camera, with a warm, natural, slightly playful smile.\n\nShe says in Mandarin:\n\n“说吧……今天想看什么？”\n\nHer voice is young, natural, soft, warm, and slightly playful.\n\nHer lip movements synchronize precisely with the Mandarin dialogue.\n\nPale-purple Chinese subtitles appear progressively in the left-middle area in sync with her pronunciation:\n\n“说吧……今天想看什么？”\n\nA minimal white speaker icon appears beside the subtitle, with a thin white audio waveform beneath it reacting naturally to her voice.\n\nAt 3.00-4.50 seconds, she stops speaking and closes her mouth naturally.\n\nAn adult male voice speaks entirely from off-screen:\n\n“想看JK。”\n\nNo male character appears visually.\n\nThe woman remains silent and listens naturally without moving her lips.\n\nWhite Chinese subtitles appear progressively:\n\n“想看JK”\n\nA minimal white microphone icon appears beside the subtitle, and the waveform reacts to the male voice.\n\nAt 4.50-6.50 seconds, the woman gives a small amused smile and gently nods.\n\nShe replies:\n\n“好，等我一下。”\n\nHer lip movements synchronize precisely with the Mandarin dialogue.\n\nAfter finishing the sentence, she places one hand naturally against the sofa, leans forward slightly, and rises using realistic body mechanics.\n\nHer extremely long hair and wide sleeves respond naturally to the movement.\n\nAt 6.50-10.00 seconds, she finishes standing, turns naturally toward screen-right, and walks toward the far-right edge.\n\nHer footsteps are physically synchronized with her movement.\n\nHer long black hair and white robe respond naturally to each step.\n\nShe physically crosses the far-right frame boundary until her entire body is completely absent.\n\nNo teleportation, sudden disappearance, fade-out, or transformation.\n\nThe sofa is left completely empty.\n\nAt 10.00-14.00 seconds, hold the empty sofa for approximately one second.\n\nThe Windows desktop, icons, taskbar, sofa, cushions, blanket, shelving unit, plant, artwork, lighting, framing, and perspective remain completely unchanged.\n\nThe same woman then physically walks back into frame from the far-right edge.\n\nShe has changed clothes entirely off-screen.\n\nShe now wears a clean white academy-style top, a blue-black plaid pleated mini skirt, white over-the-knee socks, white cross-detail garter accents, and coordinated academy-style footwear.\n\nHer face, skin tone, age, body proportions, extremely long straight black hair, blunt bangs, and identity remain exactly the same as <Picture 2>.\n\nShe walks naturally to the center-right area in front of the sofa and remains standing.\n\nShe gently adjusts her skirt, then makes a small controlled turn toward each side to present the outfit.\n\nThe skirt and long hair respond naturally to her movement.\n\nNo exaggerated posing or spinning.\n\nAt 14.00-17.00 seconds, she faces the computer screen again with a playful, pleased smile and says:\n\n“噔噔～我回来了，老公，怎么样？”\n\nHer delivery is light, natural, playful, and slightly proud without exaggerated cute acting.\n\nHer lips synchronize precisely with the Mandarin dialogue.\n\nPale-purple Chinese subtitles progressively display:\n\n“噔噔～我回来了，老公，怎么样？”\n\nThe waveform reacts naturally to her voice.\n\nAt 17.00-18.50 seconds, she finishes speaking and closes her mouth.\n\nThe off-screen adult male voice replies:\n\n“嗯～不错。”\n\nThe woman remains silent and does not move her lips.\n\nShe listens naturally and gives a small pleased smile after hearing the response.\n\nWhite Chinese subtitles progressively display:\n\n“嗯～不错。”\n\nThe waveform reacts to the male voice.\n\nAt 18.50-21.00 seconds, she appears to suddenly remember another outfit.\n\nHer expression changes subtly into a playful, slightly mischievous look.\n\nShe says:\n\n“等等～还有一套。”\n\nHer lips synchronize precisely with the Mandarin dialogue.\n\nPale-purple subtitles progressively display:\n\n“等等～还有一套。”\n\nAfter finishing the sentence, she turns naturally toward screen-right and walks toward the far-right edge.\n\nHer skirt and extremely long hair respond naturally to the movement.\n\nShe physically crosses the right frame boundary until her entire body is completely absent.\n\nAt 21.00-23.00 seconds, the sofa remains empty.\n\nThe woman is completely off-screen.\n\nNo wardrobe-changing process is visible.\n\nThe Windows desktop, icons, taskbar, sofa, cushions, blanket, shelving unit, plant, artwork, lighting, camera, and perspective remain completely unchanged.\n\nAt 23.00-25.00 seconds, the same woman physically walks back into frame from the far-right edge.\n\nShe has completed the second wardrobe change entirely off-screen.\n\nShe now wears a fitted black blazer, white shirt, burgundy plaid tie, burgundy-and-black plaid pleated mini skirt, sheer nude tights, and black loafers.\n\nHer facial identity, age, skin tone, body proportions, extremely long straight black hair, blunt bangs, and overall appearance remain exactly the same.\n\nShe walks naturally to the center-right area in front of the sofa.\n\nShe gently adjusts the lower edge of her blazer and skirt, then looks toward the computer screen with a more confident and refined expression.\n\nAt 25.00-26.50 seconds, she smiles naturally and asks:\n\n“这套呢？”\n\nHer voice carries a subtle sense of expectation.\n\nHer lips synchronize precisely with the Mandarin dialogue.\n\nPale-purple Chinese subtitles progressively display:\n\n“这套呢？”\n\nThe waveform reacts to her voice.\n\nAt 26.50-27.50 seconds, she closes her mouth and listens.\n\nThe off-screen adult male voice replies:\n\n“这套也好看。”\n\nThe woman does not move her lips during his dialogue.\n\nShe listens naturally and gives a satisfied smile.\n\nWhite Chinese subtitles progressively display:\n\n“这套也好看。”\n\nThe waveform reacts to the male voice.\n\nAt 27.50-30.00 seconds, she turns naturally and walks back toward the warm-gray fabric sofa.\n\nShe sits down using realistic body mechanics.\n\nThe fabric sofa cushion compresses subtly beneath her weight.\n\nShe gently adjusts her blazer collar and then her extremely long black hair.\n\nShe looks directly toward the computer screen, slightly tilts her head, and gives a warm, close, mildly teasing smile.\n\nShe says:\n\n“机会用完啦。老公想留哪套呢？”\n\nDeliver “机会用完啦” lightly, as though announcing a playful rule.\n\nDeliver “老公想留哪套呢？” slightly more slowly with a natural rising intonation at the end.\n\nHer lips synchronize precisely with the Mandarin dialogue.\n\nPale-purple Chinese subtitles progressively display:\n\n“机会用完啦。老公想留哪套呢？”\n\nShe maintains eye contact and the playful smile through the final moment.\n\noverall_soundscape:\n\nNatural Mandarin dialogue is the primary audio.\n\nThe female voice is a young adult voice, natural, soft, warm, intimate, and slightly playful.\n\nThe male voice is an adult male voice, natural, mature, concise, and always completely off-screen.\n\nOnly one person speaks at a time.\n\nWhenever the male voice speaks, the woman remains silent with her mouth naturally closed.\n\nWhenever the woman speaks, her Mandarin lip synchronization must precisely match her dialogue.\n\nAdd subtle realistic footsteps synchronized with her walking.\n\nAdd subtle natural clothing rustle synchronized with movement.\n\nWhen she rises from or sits on the fabric sofa, add extremely subtle realistic fabric and cushion compression sounds.\n\nNo background music.\n\nNo exaggerated sound effects.\n\nnegative_constraints:\n\nidentity drift, face change, face morphing, facial proportion change, age change, skin tone change, hairstyle change, hair shortening, bangs change, body proportion change, body shape change, character duplication, multiple women, extra person, visible male character, male face, male body, male hand, male reflection, male shadow, third character, anime character, illustration, CGI character, 3D character, doll appearance, plastic skin, mannequin appearance, robotic movement, stiff movement, anatomical deformation, extra arms, extra legs, extra fingers, fused fingers, malformed hands, malformed legs, malformed feet, teleportation, sudden appearance, sudden disappearance, fade-in, fade-out, entering from the left, exiting to the left, incorrect entrance direction, visible wardrobe transformation, clothing morphing, melting clothes, flickering clothes, gradual clothing change, mixed outfits, incomplete outfit, body-clothing fusion, second room, background replacement, sofa change, sofa movement, cushion movement, blanket movement, shelving movement, plant disappearance, artwork disappearance, lighting change, desktop wallpaper change, desktop icon change, taskbar change, Windows UI change, UI distortion, UI flicker, camera movement, camera cut, pan, tilt, dolly, zoom, reframing, perspective drift, camera shake, exaggerated expression, exaggerated cute acting, incorrect speaker, woman speaking male dialogue, male voice speaking female dialogue, overlapping dialogue, lip-sync error, incorrect Mandarin pronunciation, incorrect dialogue, missing dialogue, repeated dialogue, premature dialogue, garbled Chinese subtitles, incorrect Chinese characters, English subtitles, bottom subtitles, subtitles covering the face, subtitles appearing too early, complete sentence appearing before pronunciation, static waveform, malformed waveform, malformed UI, extra UI, extra text, watermark, platform logo"
+      }
+    },
+    {
+      "id": 133,
+      "type": "JjkText",
+      "pos": [
+        1254.749055633508,
+        1511.3736177900853
+      ],
+      "size": [
+        601.8118083787595,
+        675.4559244538632
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            196
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "1.0.0",
+        "Node name for S&R": "JjkText"
+      },
+      "widgets_values": [
+        "For the target video, at 0.00 seconds into the target video, <Picture 1> is fully referenced as the complete environment, Windows desktop layout, spatial composition, lighting, sofa placement, and fixed camera framing, while <Picture 2> is fully referenced as the sole identity and appearance reference for the female character.\nintegrated_multimodal_description: Create a single continuous 15-second photorealistic live-action Windows dynamic desktop video.\n<Picture 1> defines the complete environment, Windows desktop layout, spatial composition, lighting, sofa placement, and fixed camera framing.\nThe final video must strictly preserve the complete scene shown in <Picture 1>.\nTreat <Picture 1> as a photorealistic Windows dynamic desktop wallpaper in which the living-room environment physically exists behind the Windows desktop UI.\nThe environment consists of a large warm-gray fabric sofa occupying the lower half of the frame, soft textured upholstery with realistic fabric detail, a large black throw pillow on the left side of the sofa, light-gray cushions behind it, a dark charcoal knitted blanket naturally resting across the far-right sofa cushion, a dark charcoal-gray wall filling most of the background, a black metal shelving unit on the far left, a leafy indoor plant positioned on the upper shelf, warm amber integrated shelf lighting, a small glossy black decorative object, a small stack of books, and a partially visible framed monochrome artwork at the far-right edge.\nPreserve the exact sofa position, sofa scale, cushion arrangement, blanket position, shelving position, wall proportions, background composition, spatial depth, and perspective from <Picture 1>.\nThe lighting remains consistent with <Picture 1>: soft cinematic low-key interior lighting, dark neutral ambient light, subtle cool ambient illumination across the wall, warm amber accent light from the left shelving unit, soft realistic highlights and shadows across the sofa, natural dimensional contrast, and a premium modern apartment atmosphere.\nDo not brighten the entire room, change the lighting direction, change the wall color, redesign the furniture, move the shelving unit, remove the plant, remove the framed artwork, change the sofa color or material, or add additional furniture.\nThe Windows desktop UI from <Picture 1> remains clearly visible and completely stable throughout the entire video.\nPreserve the desktop icons vertically arranged along the far-left side, the Windows taskbar across the entire bottom edge, the lower-left weather display, the centered Windows taskbar icons, and the lower-right system tray, clock, and date.\nThe Windows interface remains visually separate from the photorealistic wallpaper environment.\nThe desktop icons and taskbar behave as a completely fixed foreground UI overlay, while the woman physically exists inside the dynamic wallpaper scene behind the Windows UI.\nShe never interacts with the Windows icons, taskbar, search bar, system tray, or other desktop UI elements.\nThe Windows UI never moves, animates, disappears, flickers, distorts, regenerates, or changes position.\nThe camera is completely locked to the exact framing of <Picture 1> throughout the entire 15-second video.\nNo camera movement.\nNo pan.\nNo tilt.\nNo dolly.\nNo zoom.\nNo reframing.\nNo perspective change.\nNo focal-length change.\nNo camera-height change.\nNo cuts.\nNo transitions.\nThe sofa, shelving unit, plant, cushions, blanket, artwork, wall, lighting, Windows desktop icons, and taskbar remain spatially locked throughout the entire shot.\n<Picture 2> defines the identity and appearance of the only female character.\nUse the front view, back view, and facial close-up contained in <Picture 2> only as complementary references for the SAME single adult woman.\nStrictly preserve her facial identity, face shape, facial proportions, eyes, nose, lips, skin tone, apparent adult age, body proportions, extremely long straight black hair, blunt straight bangs, hair length, and overall appearance.\nConvert the character naturally into a photorealistic live-action adult woman while preserving the recognizable identity of <Picture 2>.\nShe has realistic adult skin texture, subtle pores, natural facial details, realistic individual hair strands, realistic clothing materials, natural blinking, natural breathing, subtle facial micro-expressions, and physically believable human movement.\nDo not reproduce the white background or multi-view character-sheet layout from <Picture 2>.\nOnly ONE woman exists throughout the entire video.\nHer identity remains completely unchanged across all three outfits.\nWardrobe changes affect clothing only.\nHer face, age, skin tone, hairstyle, extremely long straight black hair, blunt bangs, hair length, body shape, body proportions, and identity never change.\nThe woman performs primarily on the center-right and right side of the sofa area.\nKeep the left-middle area relatively clean for dialogue UI while preserving the existing Windows desktop icons.\nAll entrances and exits occur exclusively through the FAR RIGHT edge of the frame.\nShe never enters from the left and never exits from the left.\nEvery entrance and exit occurs through real continuous physical walking.\nThe woman must physically cross completely beyond the far-right frame boundary before each wardrobe change.\nWardrobe changes occur entirely off-screen.\nOnly after her entire body has completely left the frame may her clothing change.\nWhen she returns, the new outfit is already completely formed.\nNever show clothing transformation, morphing, melting, flickering, gradual replacement, or mixed outfits.\nAUDIO AND SUBTITLE SYNCHRONIZATION HAS HIGH PRIORITY.\nThe actually generated speech audio is the ONLY timing master for dialogue, lip movement, subtitles, speaker icons, and waveform animation.\nDo not independently time subtitles according to the nominal scene timestamps.\nThe scene timestamps define only the approximate order and pacing of actions.\nThey do NOT override the actual duration of generated speech.\nFor every dialogue event, first establish the actual spoken audio.\nThen synchronize the woman's lip movement, subtitle progression, speaker indicator, and waveform to that exact audio event.\nA subtitle begins only at the exact moment when its corresponding voice becomes audible.\nBefore the first audible syllable, no character from that dialogue may appear.\nReveal Chinese subtitle characters progressively according to the actual pronunciation rhythm of the generated speech.\nEach visible character or phrase corresponds only to words or syllables that have already been audibly spoken.\nIf the speaker pauses, subtitle progression pauses.\nIf the generated speech is slightly faster or slower than expected, the subtitle follows the actual speech instead of the nominal timestamp.\nThe final subtitle character appears only when the corresponding final spoken syllable is actually pronounced.\nNever allow subtitles to lead the voice.\nNever allow subtitles to lag behind the voice.\nNever reveal future words.\nNever display the complete sentence before it has actually been spoken.\nNever continue subtitle progression after the voice has stopped.\nAfter each spoken line completely ends, hold the completed subtitle for approximately 0.2 seconds and then remove it before the next dialogue event begins.\nEach quoted dialogue line creates exactly ONE spoken audio event and exactly ONE corresponding subtitle event.\nThe subtitle is only a visual transcription of the existing spoken audio.\nSubtitle text must never create another voice event.\nOnly dialogue explicitly enclosed inside quotation marks is spoken aloud.\nAll other text in this prompt is instruction only and must never be spoken.\nFemale dialogue uses pale-purple Chinese subtitle text with a minimal white speaker icon.\nMale dialogue uses white Chinese subtitle text with a minimal white microphone icon.\nA thin white waveform appears beneath the active subtitle.\nThe waveform is driven directly by the actual amplitude and timing of the SAME active audio event.\nThe subtitle progression, waveform, speaker icon, and lip movement all share the SAME audio timing source.\nWhen no speech is audible, no subtitle progresses and the waveform becomes nearly flat.\nAt approximately 0.00 seconds, the woman is already sitting naturally on the center-right side of the warm-gray fabric sofa.\nShe wears the original white patterned wide-sleeve robe shown in <Picture 2>, preserving its white primary color, crossed collar structure, wide sleeves, long silhouette, subtle pale gray-white floral pattern, and realistic textile texture.\nShe gently adjusts her extremely long straight black hair, looks directly toward the computer screen/camera, and gives a warm, natural, slightly playful smile.\nShe says once in Mandarin:\n“说吧，今天想看什么？”\nHer young adult female voice is natural, soft, warm, conversational, and slightly playful.\nHer actual generated voice controls the complete timing of this dialogue event.\nHer lip movement begins together with the first audible syllable and stops together with the final audible syllable.\nThe progressive pale-purple Chinese subtitle and waveform are driven directly by this same audio event.\nOnly after her actual voice has completely ended may the next dialogue event begin.\nImmediately after the woman's first dialogue has completely ended, leave only a very short natural conversational pause.\nThe adult male voice then speaks once entirely from off-screen:\n“想看JK。”\nThe male character never appears visually.\nNo male face, body, hand, reflection, or shadow appears anywhere in the frame.\nThe woman remains completely silent with naturally closed lips throughout the entire male dialogue.\nThe actual generated male voice controls the progressive white subtitle and waveform.\nDo not begin the male subtitle or male audio before the woman's previous voice has completely ended.\nImmediately after the male voice has completely ended, the woman gives a small amused smile and gently nods once.\nShe replies once:\n“等我一下。”\nHer actual generated female voice controls her lip movement, progressive pale-purple subtitle, and waveform.\nAs the final part of the sentence is spoken, she naturally begins preparing to rise from the sofa.\nDo not begin the exit movement before the spoken response is clearly established.\nAfter her voice has completely ended, she completes standing using realistic human body mechanics, immediately turns toward screen-right, and walks briskly but naturally toward the far-right edge.\nThe warm-gray sofa cushion subtly recovers as her weight leaves it.\nHer extremely long black hair and white robe respond naturally to the movement.\nHer footsteps remain physically synchronized with her walking.\nShe crosses completely beyond the FAR RIGHT frame boundary.\nHer entire body must be absent before the wardrobe state changes.\nNo teleportation.\nNo sudden disappearance.\nNo fade-out.\nNo visible transformation.\nAt approximately the first third of the video, after a very brief clean off-screen interval, the SAME woman physically walks back into frame from the FAR RIGHT edge.\nShe has completed the first wardrobe change entirely off-screen.\nShe now wears a clean coordinated white academy-style top, a blue-black plaid pleated mini skirt, white over-the-knee socks, white cross-detail garter accents, and coordinated academy-style footwear.\nHer face, skin tone, adult age, body proportions, extremely long straight black hair, blunt bangs, hair length, and identity remain exactly unchanged.\nShe takes several natural steps into the center-right area in front of the sofa.\nShe lightly adjusts the pleated skirt and makes one brief controlled body turn to naturally present the outfit.\nThe skirt and long hair respond naturally to her movement.\nNo exaggerated posing.\nNo exaggerated spinning.\nNo full rotation.\nAfter completing the brief presentation, she looks directly toward the computer screen/camera with a playful and expectant smile.\nShe asks once:\n“怎么样？”\nHer actual generated voice controls the timing of her lip movement, progressive pale-purple subtitle, and waveform.\nDo not begin the next speaker until this female audio event has completely ended.\nAfter her voice has completely ended, leave a very short natural conversational pause.\nThe off-screen adult male replies once:\n“不错。”\nThe actual generated male voice controls the progressive white subtitle and waveform.\nThe woman remains completely silent with naturally closed lips throughout his entire response.\nAfter the male voice has completely ended, she gives a small pleased smile.\nImmediately afterward, her eyes show a quick moment of realization and her expression becomes slightly mischievous.\nShe says once:\n“还有一套。”\nHer actual generated female voice controls her lip movement, progressive pale-purple subtitle, and waveform.\nNear the end of the sentence, her body may naturally prepare to turn toward screen-right, but she must not leave the frame before the dialogue has clearly finished.\nAfter her voice completely ends, she immediately turns and walks briskly but naturally toward the FAR RIGHT edge.\nHer pleated skirt and extremely long black hair respond naturally to the movement.\nShe physically crosses completely beyond the far-right frame boundary.\nHer entire body becomes absent before the second wardrobe change occurs.\nNo teleportation.\nNo fade-out.\nNo visible clothing transformation.\nAt approximately the final third of the video, after another very brief clean off-screen interval, the SAME woman physically walks back into frame from the FAR RIGHT edge.\nThe second wardrobe change has already been completed entirely off-screen.\nShe now wears a fitted black blazer, white shirt, burgundy plaid tie, burgundy-and-black plaid pleated mini skirt, sheer nude tights, and black loafers.\nHer face, facial proportions, skin tone, adult age, body proportions, extremely long straight black hair, blunt bangs, hair length, and identity remain completely unchanged.\nShe takes several natural steps into the center-right area in front of the sofa.\nShe briefly adjusts the lower edge of her blazer and skirt and looks toward the screen with a confident and refined expression.\nShe asks once:\n“这套呢？”\nHer actual generated voice controls her lip movement, progressive pale-purple subtitle, and waveform.\nOnly after the female voice has completely ended may the male response begin.\nAfter a very short natural pause, the off-screen adult male replies once:\n“也好看。”\nThe actual generated male voice controls the progressive white subtitle and waveform.\nThe woman remains completely silent with naturally closed lips during his entire response.\nAfter hearing the completed male response, she gives a satisfied smile.\nImmediately after the male dialogue has completely ended, she turns naturally toward the warm-gray fabric sofa and sits down on the center-right cushion using realistic body mechanics.\nThe fabric sofa compresses subtly beneath her weight.\nShe looks directly toward the computer screen/camera, slightly tilts her head, and gives a warm, intimate, mildly teasing smile.\nShe says once:\n“机会用完啦，老公留哪套？”\nHer actual generated female voice is the master timing source for this final dialogue event.\nHer lip movement begins exactly with the first audible syllable and ends exactly with the final audible syllable.\nThe progressive pale-purple subtitle and waveform are driven directly by this same final audio event.\nThe first subtitle character must not appear before her voice begins.\nThe final subtitle character appears only with the corresponding final spoken syllable.\nShe maintains direct eye contact and a playful smile through the final moment.\nThroughout the entire video, dialogue synchronization has priority over rigid sub-second timestamp matching.\nPreserve the overall duration at approximately 15 seconds, but allow very small local timing adjustments between actions so that every spoken line can finish naturally before the next dialogue event begins.\nNever compress, overlap, truncate, or accelerate a spoken line merely to satisfy a nominal timestamp.\nIf a generated dialogue line lasts slightly longer than expected, shorten the following non-speaking action or transition instead of desynchronizing the audio and subtitle.\nThe priority order is:\nactual spoken audio timing;\nspeaker separation;\nlip synchronization;\nsubtitle synchronization;\nwaveform synchronization;\ncharacter action timing;\nwardrobe transitions.\nEvery dialogue line is spoken exactly ONCE.\nNever repeat a dialogue line.\nNever create an echo or duplicate voice.\nNever treat visible subtitle text as another dialogue instruction.\nNever let the woman speak the man's dialogue.\nNever let the male voice speak the woman's dialogue.\nNever overlap male and female voices.\nThe active speaker must completely finish before the next speaker begins.\nWhenever the male voice speaks, the woman's mouth remains naturally closed.\nDo not generate additional dialogue before, between, or after the explicitly quoted lines.\nMaintain the same single woman, same fixed Windows desktop environment, same camera, same perspective, and same lighting throughout the entire video.\nAvoid identity drift, face change, age change, hairstyle change, hair shortening, body proportion change, character duplication, additional people, visible male characters, anime appearance, CGI appearance, plastic skin, malformed anatomy, extra limbs, malformed hands, teleportation, incorrect entrance direction, visible wardrobe transformation, mixed outfits, background replacement, furniture movement, Windows UI changes, camera movement, cuts, zooms, perspective drift, exaggerated acting, duplicated dialogue, repeated voice lines, incorrect speaker, overlapping voices, subtitle leading audio, subtitle lagging audio, premature subtitles, delayed subtitles, complete subtitle appearing before speech, delayed dialogue, premature dialogue, or lip-sync drift.\noverall_soundscape: The actually generated Mandarin speech audio is the master clock for the entire dialogue system. Use one consistent young adult female Mandarin voice throughout the video, natural, soft, warm, conversational, intimate, and slightly playful. Use one consistent adult male Mandarin voice for all male dialogue, natural, mature, concise, and always completely off-screen. Preserve strict turn-taking. Only one voice may be active at any moment. Each quoted dialogue line is spoken exactly once. Every subtitle event, waveform animation, speaker indicator, and female lip movement derives its timing directly from the corresponding actual audio event rather than from predetermined subtitle timestamps. During male dialogue, the woman's lips remain naturally closed. Add only subtle synchronized footsteps, natural clothing rustle, and very soft fabric-sofa compression sounds. Keep environmental sounds quiet enough that they never interfere with speech recognition or dialogue clarity. No background music, no cinematic score, no additional voices, no improvised speech, no repeated dialogue, no duplicated audio, no echo, and no exaggerated_"
+      ],
+      "widgets_values_named": {
+        "text": "For the target video, at 0.00 seconds into the target video, <Picture 1> is fully referenced as the complete environment, Windows desktop layout, spatial composition, lighting, sofa placement, and fixed camera framing, while <Picture 2> is fully referenced as the sole identity and appearance reference for the female character.\nintegrated_multimodal_description: Create a single continuous 15-second photorealistic live-action Windows dynamic desktop video.\n<Picture 1> defines the complete environment, Windows desktop layout, spatial composition, lighting, sofa placement, and fixed camera framing.\nThe final video must strictly preserve the complete scene shown in <Picture 1>.\nTreat <Picture 1> as a photorealistic Windows dynamic desktop wallpaper in which the living-room environment physically exists behind the Windows desktop UI.\nThe environment consists of a large warm-gray fabric sofa occupying the lower half of the frame, soft textured upholstery with realistic fabric detail, a large black throw pillow on the left side of the sofa, light-gray cushions behind it, a dark charcoal knitted blanket naturally resting across the far-right sofa cushion, a dark charcoal-gray wall filling most of the background, a black metal shelving unit on the far left, a leafy indoor plant positioned on the upper shelf, warm amber integrated shelf lighting, a small glossy black decorative object, a small stack of books, and a partially visible framed monochrome artwork at the far-right edge.\nPreserve the exact sofa position, sofa scale, cushion arrangement, blanket position, shelving position, wall proportions, background composition, spatial depth, and perspective from <Picture 1>.\nThe lighting remains consistent with <Picture 1>: soft cinematic low-key interior lighting, dark neutral ambient light, subtle cool ambient illumination across the wall, warm amber accent light from the left shelving unit, soft realistic highlights and shadows across the sofa, natural dimensional contrast, and a premium modern apartment atmosphere.\nDo not brighten the entire room, change the lighting direction, change the wall color, redesign the furniture, move the shelving unit, remove the plant, remove the framed artwork, change the sofa color or material, or add additional furniture.\nThe Windows desktop UI from <Picture 1> remains clearly visible and completely stable throughout the entire video.\nPreserve the desktop icons vertically arranged along the far-left side, the Windows taskbar across the entire bottom edge, the lower-left weather display, the centered Windows taskbar icons, and the lower-right system tray, clock, and date.\nThe Windows interface remains visually separate from the photorealistic wallpaper environment.\nThe desktop icons and taskbar behave as a completely fixed foreground UI overlay, while the woman physically exists inside the dynamic wallpaper scene behind the Windows UI.\nShe never interacts with the Windows icons, taskbar, search bar, system tray, or other desktop UI elements.\nThe Windows UI never moves, animates, disappears, flickers, distorts, regenerates, or changes position.\nThe camera is completely locked to the exact framing of <Picture 1> throughout the entire 15-second video.\nNo camera movement.\nNo pan.\nNo tilt.\nNo dolly.\nNo zoom.\nNo reframing.\nNo perspective change.\nNo focal-length change.\nNo camera-height change.\nNo cuts.\nNo transitions.\nThe sofa, shelving unit, plant, cushions, blanket, artwork, wall, lighting, Windows desktop icons, and taskbar remain spatially locked throughout the entire shot.\n<Picture 2> defines the identity and appearance of the only female character.\nUse the front view, back view, and facial close-up contained in <Picture 2> only as complementary references for the SAME single adult woman.\nStrictly preserve her facial identity, face shape, facial proportions, eyes, nose, lips, skin tone, apparent adult age, body proportions, extremely long straight black hair, blunt straight bangs, hair length, and overall appearance.\nConvert the character naturally into a photorealistic live-action adult woman while preserving the recognizable identity of <Picture 2>.\nShe has realistic adult skin texture, subtle pores, natural facial details, realistic individual hair strands, realistic clothing materials, natural blinking, natural breathing, subtle facial micro-expressions, and physically believable human movement.\nDo not reproduce the white background or multi-view character-sheet layout from <Picture 2>.\nOnly ONE woman exists throughout the entire video.\nHer identity remains completely unchanged across all three outfits.\nWardrobe changes affect clothing only.\nHer face, age, skin tone, hairstyle, extremely long straight black hair, blunt bangs, hair length, body shape, body proportions, and identity never change.\nThe woman performs primarily on the center-right and right side of the sofa area.\nKeep the left-middle area relatively clean for dialogue UI while preserving the existing Windows desktop icons.\nAll entrances and exits occur exclusively through the FAR RIGHT edge of the frame.\nShe never enters from the left and never exits from the left.\nEvery entrance and exit occurs through real continuous physical walking.\nThe woman must physically cross completely beyond the far-right frame boundary before each wardrobe change.\nWardrobe changes occur entirely off-screen.\nOnly after her entire body has completely left the frame may her clothing change.\nWhen she returns, the new outfit is already completely formed.\nNever show clothing transformation, morphing, melting, flickering, gradual replacement, or mixed outfits.\nAUDIO AND SUBTITLE SYNCHRONIZATION HAS HIGH PRIORITY.\nThe actually generated speech audio is the ONLY timing master for dialogue, lip movement, subtitles, speaker icons, and waveform animation.\nDo not independently time subtitles according to the nominal scene timestamps.\nThe scene timestamps define only the approximate order and pacing of actions.\nThey do NOT override the actual duration of generated speech.\nFor every dialogue event, first establish the actual spoken audio.\nThen synchronize the woman's lip movement, subtitle progression, speaker indicator, and waveform to that exact audio event.\nA subtitle begins only at the exact moment when its corresponding voice becomes audible.\nBefore the first audible syllable, no character from that dialogue may appear.\nReveal Chinese subtitle characters progressively according to the actual pronunciation rhythm of the generated speech.\nEach visible character or phrase corresponds only to words or syllables that have already been audibly spoken.\nIf the speaker pauses, subtitle progression pauses.\nIf the generated speech is slightly faster or slower than expected, the subtitle follows the actual speech instead of the nominal timestamp.\nThe final subtitle character appears only when the corresponding final spoken syllable is actually pronounced.\nNever allow subtitles to lead the voice.\nNever allow subtitles to lag behind the voice.\nNever reveal future words.\nNever display the complete sentence before it has actually been spoken.\nNever continue subtitle progression after the voice has stopped.\nAfter each spoken line completely ends, hold the completed subtitle for approximately 0.2 seconds and then remove it before the next dialogue event begins.\nEach quoted dialogue line creates exactly ONE spoken audio event and exactly ONE corresponding subtitle event.\nThe subtitle is only a visual transcription of the existing spoken audio.\nSubtitle text must never create another voice event.\nOnly dialogue explicitly enclosed inside quotation marks is spoken aloud.\nAll other text in this prompt is instruction only and must never be spoken.\nFemale dialogue uses pale-purple Chinese subtitle text with a minimal white speaker icon.\nMale dialogue uses white Chinese subtitle text with a minimal white microphone icon.\nA thin white waveform appears beneath the active subtitle.\nThe waveform is driven directly by the actual amplitude and timing of the SAME active audio event.\nThe subtitle progression, waveform, speaker icon, and lip movement all share the SAME audio timing source.\nWhen no speech is audible, no subtitle progresses and the waveform becomes nearly flat.\nAt approximately 0.00 seconds, the woman is already sitting naturally on the center-right side of the warm-gray fabric sofa.\nShe wears the original white patterned wide-sleeve robe shown in <Picture 2>, preserving its white primary color, crossed collar structure, wide sleeves, long silhouette, subtle pale gray-white floral pattern, and realistic textile texture.\nShe gently adjusts her extremely long straight black hair, looks directly toward the computer screen/camera, and gives a warm, natural, slightly playful smile.\nShe says once in Mandarin:\n“说吧，今天想看什么？”\nHer young adult female voice is natural, soft, warm, conversational, and slightly playful.\nHer actual generated voice controls the complete timing of this dialogue event.\nHer lip movement begins together with the first audible syllable and stops together with the final audible syllable.\nThe progressive pale-purple Chinese subtitle and waveform are driven directly by this same audio event.\nOnly after her actual voice has completely ended may the next dialogue event begin.\nImmediately after the woman's first dialogue has completely ended, leave only a very short natural conversational pause.\nThe adult male voice then speaks once entirely from off-screen:\n“想看JK。”\nThe male character never appears visually.\nNo male face, body, hand, reflection, or shadow appears anywhere in the frame.\nThe woman remains completely silent with naturally closed lips throughout the entire male dialogue.\nThe actual generated male voice controls the progressive white subtitle and waveform.\nDo not begin the male subtitle or male audio before the woman's previous voice has completely ended.\nImmediately after the male voice has completely ended, the woman gives a small amused smile and gently nods once.\nShe replies once:\n“等我一下。”\nHer actual generated female voice controls her lip movement, progressive pale-purple subtitle, and waveform.\nAs the final part of the sentence is spoken, she naturally begins preparing to rise from the sofa.\nDo not begin the exit movement before the spoken response is clearly established.\nAfter her voice has completely ended, she completes standing using realistic human body mechanics, immediately turns toward screen-right, and walks briskly but naturally toward the far-right edge.\nThe warm-gray sofa cushion subtly recovers as her weight leaves it.\nHer extremely long black hair and white robe respond naturally to the movement.\nHer footsteps remain physically synchronized with her walking.\nShe crosses completely beyond the FAR RIGHT frame boundary.\nHer entire body must be absent before the wardrobe state changes.\nNo teleportation.\nNo sudden disappearance.\nNo fade-out.\nNo visible transformation.\nAt approximately the first third of the video, after a very brief clean off-screen interval, the SAME woman physically walks back into frame from the FAR RIGHT edge.\nShe has completed the first wardrobe change entirely off-screen.\nShe now wears a clean coordinated white academy-style top, a blue-black plaid pleated mini skirt, white over-the-knee socks, white cross-detail garter accents, and coordinated academy-style footwear.\nHer face, skin tone, adult age, body proportions, extremely long straight black hair, blunt bangs, hair length, and identity remain exactly unchanged.\nShe takes several natural steps into the center-right area in front of the sofa.\nShe lightly adjusts the pleated skirt and makes one brief controlled body turn to naturally present the outfit.\nThe skirt and long hair respond naturally to her movement.\nNo exaggerated posing.\nNo exaggerated spinning.\nNo full rotation.\nAfter completing the brief presentation, she looks directly toward the computer screen/camera with a playful and expectant smile.\nShe asks once:\n“怎么样？”\nHer actual generated voice controls the timing of her lip movement, progressive pale-purple subtitle, and waveform.\nDo not begin the next speaker until this female audio event has completely ended.\nAfter her voice has completely ended, leave a very short natural conversational pause.\nThe off-screen adult male replies once:\n“不错。”\nThe actual generated male voice controls the progressive white subtitle and waveform.\nThe woman remains completely silent with naturally closed lips throughout his entire response.\nAfter the male voice has completely ended, she gives a small pleased smile.\nImmediately afterward, her eyes show a quick moment of realization and her expression becomes slightly mischievous.\nShe says once:\n“还有一套。”\nHer actual generated female voice controls her lip movement, progressive pale-purple subtitle, and waveform.\nNear the end of the sentence, her body may naturally prepare to turn toward screen-right, but she must not leave the frame before the dialogue has clearly finished.\nAfter her voice completely ends, she immediately turns and walks briskly but naturally toward the FAR RIGHT edge.\nHer pleated skirt and extremely long black hair respond naturally to the movement.\nShe physically crosses completely beyond the far-right frame boundary.\nHer entire body becomes absent before the second wardrobe change occurs.\nNo teleportation.\nNo fade-out.\nNo visible clothing transformation.\nAt approximately the final third of the video, after another very brief clean off-screen interval, the SAME woman physically walks back into frame from the FAR RIGHT edge.\nThe second wardrobe change has already been completed entirely off-screen.\nShe now wears a fitted black blazer, white shirt, burgundy plaid tie, burgundy-and-black plaid pleated mini skirt, sheer nude tights, and black loafers.\nHer face, facial proportions, skin tone, adult age, body proportions, extremely long straight black hair, blunt bangs, hair length, and identity remain completely unchanged.\nShe takes several natural steps into the center-right area in front of the sofa.\nShe briefly adjusts the lower edge of her blazer and skirt and looks toward the screen with a confident and refined expression.\nShe asks once:\n“这套呢？”\nHer actual generated voice controls her lip movement, progressive pale-purple subtitle, and waveform.\nOnly after the female voice has completely ended may the male response begin.\nAfter a very short natural pause, the off-screen adult male replies once:\n“也好看。”\nThe actual generated male voice controls the progressive white subtitle and waveform.\nThe woman remains completely silent with naturally closed lips during his entire response.\nAfter hearing the completed male response, she gives a satisfied smile.\nImmediately after the male dialogue has completely ended, she turns naturally toward the warm-gray fabric sofa and sits down on the center-right cushion using realistic body mechanics.\nThe fabric sofa compresses subtly beneath her weight.\nShe looks directly toward the computer screen/camera, slightly tilts her head, and gives a warm, intimate, mildly teasing smile.\nShe says once:\n“机会用完啦，老公留哪套？”\nHer actual generated female voice is the master timing source for this final dialogue event.\nHer lip movement begins exactly with the first audible syllable and ends exactly with the final audible syllable.\nThe progressive pale-purple subtitle and waveform are driven directly by this same final audio event.\nThe first subtitle character must not appear before her voice begins.\nThe final subtitle character appears only with the corresponding final spoken syllable.\nShe maintains direct eye contact and a playful smile through the final moment.\nThroughout the entire video, dialogue synchronization has priority over rigid sub-second timestamp matching.\nPreserve the overall duration at approximately 15 seconds, but allow very small local timing adjustments between actions so that every spoken line can finish naturally before the next dialogue event begins.\nNever compress, overlap, truncate, or accelerate a spoken line merely to satisfy a nominal timestamp.\nIf a generated dialogue line lasts slightly longer than expected, shorten the following non-speaking action or transition instead of desynchronizing the audio and subtitle.\nThe priority order is:\nactual spoken audio timing;\nspeaker separation;\nlip synchronization;\nsubtitle synchronization;\nwaveform synchronization;\ncharacter action timing;\nwardrobe transitions.\nEvery dialogue line is spoken exactly ONCE.\nNever repeat a dialogue line.\nNever create an echo or duplicate voice.\nNever treat visible subtitle text as another dialogue instruction.\nNever let the woman speak the man's dialogue.\nNever let the male voice speak the woman's dialogue.\nNever overlap male and female voices.\nThe active speaker must completely finish before the next speaker begins.\nWhenever the male voice speaks, the woman's mouth remains naturally closed.\nDo not generate additional dialogue before, between, or after the explicitly quoted lines.\nMaintain the same single woman, same fixed Windows desktop environment, same camera, same perspective, and same lighting throughout the entire video.\nAvoid identity drift, face change, age change, hairstyle change, hair shortening, body proportion change, character duplication, additional people, visible male characters, anime appearance, CGI appearance, plastic skin, malformed anatomy, extra limbs, malformed hands, teleportation, incorrect entrance direction, visible wardrobe transformation, mixed outfits, background replacement, furniture movement, Windows UI changes, camera movement, cuts, zooms, perspective drift, exaggerated acting, duplicated dialogue, repeated voice lines, incorrect speaker, overlapping voices, subtitle leading audio, subtitle lagging audio, premature subtitles, delayed subtitles, complete subtitle appearing before speech, delayed dialogue, premature dialogue, or lip-sync drift.\noverall_soundscape: The actually generated Mandarin speech audio is the master clock for the entire dialogue system. Use one consistent young adult female Mandarin voice throughout the video, natural, soft, warm, conversational, intimate, and slightly playful. Use one consistent adult male Mandarin voice for all male dialogue, natural, mature, concise, and always completely off-screen. Preserve strict turn-taking. Only one voice may be active at any moment. Each quoted dialogue line is spoken exactly once. Every subtitle event, waveform animation, speaker indicator, and female lip movement derives its timing directly from the corresponding actual audio event rather than from predetermined subtitle timestamps. During male dialogue, the woman's lips remain naturally closed. Add only subtle synchronized footsteps, natural clothing rustle, and very soft fabric-sofa compression sounds. Keep environmental sounds quiet enough that they never interfere with speech recognition or dialogue clarity. No background music, no cinematic score, no additional voices, no improvised speech, no repeated dialogue, no duplicated audio, no echo, and no exaggerated_"
+      }
+    }
+  ],
+  "links": [
+    [
+      195,
+      103,
+      0,
+      134,
+      0,
+      "IMAGE"
+    ],
+    [
+      196,
+      133,
+      0,
+      134,
+      1,
+      "STRING"
+    ],
+    [
+      197,
+      106,
+      0,
+      134,
+      2,
+      "FLOAT"
+    ],
+    [
+      198,
+      134,
+      0,
+      108,
+      0,
+      "IMAGE"
+    ],
+    [
+      199,
+      134,
+      1,
+      108,
+      1,
+      "AUDIO"
+    ]
+  ],
+  "groups": [],
+  "definitions": {
+    "subgraphs": [
+      {
+        "id": "bb523570-e008-4672-9933-d9f004bc9c04",
+        "version": 1,
+        "state": {
+          "lastGroupId": 9,
+          "lastNodeId": 134,
+          "lastLinkId": 199,
+          "lastRerouteId": 0
+        },
+        "revision": 0,
+        "config": {},
+        "name": "New Subgraph",
+        "inputNode": {
+          "id": -10,
+          "bounding": [
+            4352.418019573019,
+            491.6081057648132,
+            182.23828125,
+            108
+          ]
+        },
+        "outputNode": {
+          "id": -20,
+          "bounding": [
+            7766.905534633008,
+            501.6081057648132,
+            142.60546875,
+            88
+          ]
+        },
+        "inputs": [
+          {
+            "id": "7e03fa8b-729c-4a45-b5de-cca74ca8201d",
+            "name": "ref_images.ref_image_0",
+            "type": "IMAGE",
+            "linkIds": [
+              191
+            ],
+            "localized_name": "ref_images.ref_image_0",
+            "label": "ref_images.ref_image_0",
+            "shape": 7,
+            "pos": [
+              51,
+              24
+            ]
+          },
+          {
+            "id": "d97aeb05-5887-4ee6-b303-2c25ad237906",
+            "name": "prompt",
+            "type": "STRING",
+            "linkIds": [
+              194
+            ],
+            "localized_name": "prompt",
+            "label": "prompt",
+            "pos": [
+              51,
+              44
+            ]
+          },
+          {
+            "id": "bf705180-85a2-49ae-8f72-8ea3173f0cce",
+            "name": "values.a",
+            "type": "FLOAT,INT,BOOLEAN",
+            "linkIds": [
+              190
+            ],
+            "localized_name": "values.a",
+            "label": "values.a",
+            "pos": [
+              51,
+              64
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "e46d229f-1b81-47b8-97ec-aa260a5a5690",
+            "name": "frames",
+            "type": "IMAGE",
+            "linkIds": [
+              192
+            ],
+            "localized_name": "frames",
+            "label": "frames",
+            "pos": [
+              24,
+              24
+            ]
+          },
+          {
+            "id": "1adeb9d6-9c00-4c82-abf7-005f67c395c3",
+            "name": "generated_audio",
+            "type": "AUDIO",
+            "linkIds": [
+              193
+            ],
+            "localized_name": "generated_audio",
+            "label": "generated_audio",
+            "pos": [
+              24,
+              44
+            ]
+          }
+        ],
+        "widgets": [],
+        "nodes": [
+          {
+            "id": 109,
+            "type": "UNETLoader",
+            "pos": [
+              4931.504044902511,
+              203.51134361489176
+            ],
+            "size": [
+              419.8102722167969,
+              82.3209457397461
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "unet_name",
+                "localized_name": "UNet名称",
+                "name": "unet_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "unet_name"
+                },
+                "link": null
+              },
+              {
+                "label": "weight_dtype",
+                "localized_name": "数据类型",
+                "name": "weight_dtype",
+                "type": "COMBO",
+                "widget": {
+                  "name": "weight_dtype"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "label": "MODEL",
+                "localized_name": "模型",
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  153
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.30.0",
+              "Node name for S&R": "UNETLoader",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              "minimax_h3\\minimax_h3_fl2va_int8_convrot.safetensors",
+              "default"
+            ],
+            "widgets_values_named": {
+              "unet_name": "minimax_h3\\minimax_h3_fl2va_int8_convrot.safetensors",
+              "weight_dtype": "default"
+            }
+          },
+          {
+            "id": 113,
+            "type": "MiniMaxH3AudioConditioningT8",
+            "pos": [
+              5381.314317119308,
+              204.24466575844644
+            ],
+            "size": [
+              471.25701609143516,
+              632
+            ],
+            "flags": {},
+            "order": 12,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "clip",
+                "localized_name": "clip",
+                "name": "clip",
+                "type": "CLIP",
+                "link": 155
+              },
+              {
+                "label": "video_vae",
+                "localized_name": "video_vae",
+                "name": "video_vae",
+                "type": "VAE",
+                "link": 156
+              },
+              {
+                "label": "audio_vae",
+                "localized_name": "audio_vae",
+                "name": "audio_vae",
+                "type": "VAE",
+                "link": 157
+              },
+              {
+                "label": "drive_audio",
+                "localized_name": "drive_audio",
+                "name": "drive_audio",
+                "shape": 7,
+                "type": "AUDIO",
+                "link": null
+              },
+              {
+                "label": "final_audio",
+                "localized_name": "final_audio",
+                "name": "final_audio",
+                "shape": 7,
+                "type": "AUDIO",
+                "link": null
+              },
+              {
+                "label": "first_frame",
+                "localized_name": "first_frame",
+                "name": "first_frame",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              },
+              {
+                "label": "last_frame",
+                "localized_name": "last_frame",
+                "name": "last_frame",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              },
+              {
+                "label": "ref_images.ref_image_0",
+                "localized_name": "ref_images.ref_image_0",
+                "name": "ref_images.ref_image_0",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": 191
+              },
+              {
+                "label": "ref_image_1",
+                "localized_name": "ref_images.ref_image_1",
+                "name": "ref_images.ref_image_1",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              },
+              {
+                "label": "ref_videos.ref_video_0",
+                "localized_name": "ref_videos.ref_video_0",
+                "name": "ref_videos.ref_video_0",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              },
+              {
+                "label": "ref_video_audios.ref_video_audio_0",
+                "localized_name": "ref_video_audios.ref_video_audio_0",
+                "name": "ref_video_audios.ref_video_audio_0",
+                "shape": 7,
+                "type": "AUDIO",
+                "link": null
+              },
+              {
+                "label": "ref_audios.ref_audio_0",
+                "localized_name": "ref_audios.ref_audio_0",
+                "name": "ref_audios.ref_audio_0",
+                "shape": 7,
+                "type": "AUDIO",
+                "link": null
+              },
+              {
+                "label": "prompt",
+                "localized_name": "prompt",
+                "name": "prompt",
+                "type": "STRING",
+                "widget": {
+                  "name": "prompt"
+                },
+                "link": 194
+              },
+              {
+                "label": "width",
+                "localized_name": "width",
+                "name": "width",
+                "type": "INT",
+                "widget": {
+                  "name": "width"
+                },
+                "link": null
+              },
+              {
+                "label": "height",
+                "localized_name": "height",
+                "name": "height",
+                "type": "INT",
+                "widget": {
+                  "name": "height"
+                },
+                "link": null
+              },
+              {
+                "label": "length",
+                "localized_name": "length",
+                "name": "length",
+                "type": "INT",
+                "widget": {
+                  "name": "length"
+                },
+                "link": null
+              },
+              {
+                "label": "task_type",
+                "localized_name": "task_type",
+                "name": "task_type",
+                "type": "COMBO",
+                "widget": {
+                  "name": "task_type"
+                },
+                "link": null
+              },
+              {
+                "label": "audio_mode",
+                "localized_name": "audio_mode",
+                "name": "audio_mode",
+                "type": "COMBO",
+                "widget": {
+                  "name": "audio_mode"
+                },
+                "link": null
+              },
+              {
+                "label": "audio_denoise_strength",
+                "localized_name": "audio_denoise_strength",
+                "name": "audio_denoise_strength",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "audio_denoise_strength"
+                },
+                "link": null
+              },
+              {
+                "label": "add_source_as_reference",
+                "localized_name": "add_source_as_reference",
+                "name": "add_source_as_reference",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "add_source_as_reference"
+                },
+                "link": null
+              },
+              {
+                "label": "prompt_primary_audio_ordinal",
+                "localized_name": "prompt_primary_audio_ordinal",
+                "name": "prompt_primary_audio_ordinal",
+                "type": "INT",
+                "widget": {
+                  "name": "prompt_primary_audio_ordinal"
+                },
+                "link": null
+              },
+              {
+                "label": "strict_prompt_tags",
+                "localized_name": "strict_prompt_tags",
+                "name": "strict_prompt_tags",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "strict_prompt_tags"
+                },
+                "link": null
+              },
+              {
+                "label": "ref_image_size",
+                "localized_name": "ref_image_size",
+                "name": "ref_image_size",
+                "type": "COMBO",
+                "widget": {
+                  "name": "ref_image_size"
+                },
+                "link": null
+              },
+              {
+                "label": "reference_video_policy",
+                "localized_name": "reference_video_policy",
+                "name": "reference_video_policy",
+                "type": "COMBO",
+                "widget": {
+                  "name": "reference_video_policy"
+                },
+                "link": null
+              },
+              {
+                "label": "ref_video_1",
+                "localized_name": "ref_videos.ref_video_1",
+                "name": "ref_videos.ref_video_1",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              },
+              {
+                "label": "ref_image_2",
+                "localized_name": "ref_images.ref_image_2",
+                "name": "ref_images.ref_image_2",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "label": "positive",
+                "localized_name": "positive",
+                "name": "positive",
+                "type": "CONDITIONING",
+                "links": [
+                  161,
+                  181
+                ]
+              },
+              {
+                "label": "av_latent",
+                "localized_name": "av_latent",
+                "name": "av_latent",
+                "type": "LATENT",
+                "links": [
+                  159,
+                  166
+                ]
+              },
+              {
+                "label": "mux_audio",
+                "localized_name": "mux_audio",
+                "name": "mux_audio",
+                "type": "AUDIO",
+                "links": []
+              },
+              {
+                "label": "conditioned_prompt",
+                "localized_name": "conditioned_prompt",
+                "name": "conditioned_prompt",
+                "type": "STRING",
+                "links": []
+              },
+              {
+                "label": "media_map_json",
+                "localized_name": "media_map_json",
+                "name": "media_map_json",
+                "type": "STRING",
+                "links": []
+              },
+              {
+                "label": "report",
+                "localized_name": "report",
+                "name": "report",
+                "type": "STRING",
+                "links": []
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfyui-workflow-encrypt",
+              "ver": "788cacae3699910d04c927e2082b9d44c197ed9b",
+              "Node name for S&R": "MiniMaxH3AudioConditioningT8",
+              "widget_ue_connectable": {
+                "width": true,
+                "length": true,
+                "height": true
+              },
+              "aux_id": "T8mars/minimax-h3-audio-T8"
+            },
+            "widgets_values": [
+              "For the target video, at 0.00 seconds into the target video, <Picture 1> is fully referenced as the environment and fixed camera reference, while <Picture 2> is fully referenced as the female character identity reference.\n\nintegrated_multimodal_description:\n\n<Picture 1> defines the complete environment, Windows desktop layout, spatial composition, lighting, sofa placement, and fixed camera framing.\n\nThe final video must strictly preserve the complete scene shown in <Picture 1>.\n\nTreat <Picture 1> as a photorealistic Windows dynamic desktop wallpaper in which the living-room environment physically exists behind the Windows desktop UI.\n\nThe environment consists of:\n\na large warm-gray fabric sofa occupying the lower half of the frame;\nsoft textured upholstery with realistic fabric detail;\na large black throw pillow on the left side of the sofa;\nlight-gray cushions behind it;\na dark charcoal knitted blanket naturally resting across the far-right sofa cushion;\na dark charcoal-gray wall filling most of the background;\na black metal shelving unit on the far left;\na leafy indoor plant positioned on the upper shelf;\nwarm amber integrated shelf lighting;\na small glossy black decorative object;\na small stack of books;\na partially visible framed monochrome artwork at the far right edge.\n\nPreserve the exact sofa position, sofa scale, cushion arrangement, blanket position, shelving position, wall proportions, background composition, spatial depth, and perspective from <Picture 1>.\n\nThe lighting must also remain consistent with <Picture 1>:\n\nsoft cinematic low-key interior lighting;\ndark neutral ambient light;\nsubtle cool ambient illumination across the wall;\nwarm amber accent light coming from the left shelving unit;\nsoft realistic highlights and shadows across the sofa;\nnatural dimensional contrast;\npremium modern apartment atmosphere.\n\nDo not brighten the entire room.\nDo not change the lighting direction.\nDo not change the wall color.\nDo not redesign the furniture.\nDo not move the shelving unit.\nDo not remove the plant.\nDo not remove the framed artwork.\nDo not change the sofa into leather.\nDo not change the sofa color or material.\nDo not add additional furniture.\n\nThe Windows desktop UI from <Picture 1> must remain clearly visible and completely stable throughout the entire video.\n\nPreserve the desktop icons vertically arranged along the far-left side, including their original positions and spacing.\n\nPreserve the Windows taskbar across the entire bottom edge.\n\nPreserve the weather display on the lower-left side.\n\nPreserve the centered Windows taskbar icons.\n\nPreserve the lower-right system tray, clock and date area.\n\nThe Windows interface must remain visually separate from the photorealistic wallpaper environment and must not deform when the woman moves behind or near it.\n\nThe desktop icons and taskbar behave like a fixed foreground UI overlay.\n\nThe woman exists inside the dynamic wallpaper scene behind the Windows UI.\n\nShe must never interact with the Windows icons, taskbar, search bar, system tray or other desktop UI elements.\n\nThe Windows UI must not move, animate, disappear, flicker, distort, regenerate or change position.\n\nThe camera is completely locked to the exact framing of <Picture 1> for the entire 30-second video.\n\nNo camera movement.\nNo pan.\nNo tilt.\nNo dolly.\nNo zoom.\nNo reframing.\nNo perspective change.\nNo focal-length change.\nNo camera-height change.\nNo cuts.\nNo transitions.\n\nThe sofa, shelving unit, plant, cushions, blanket, artwork, wall, lighting, Windows desktop icons and taskbar remain spatially locked throughout the entire shot.\n\n<Picture 2> defines the identity and appearance of the only female character in the video.\n\nUse the front view, back view, and facial close-up in <Picture 2> only as complementary identity references for the same single adult woman.\n\nStrictly preserve her facial identity, face shape, facial proportions, eyes, nose, lips, skin tone, apparent adult age, body proportions, extremely long straight black hair, blunt straight bangs, hair length, and overall appearance.\n\nConvert the character naturally into a photorealistic live-action adult woman while preserving the recognizable identity of <Picture 2>.\n\nDo not reproduce the white background or multi-view character-sheet layout from <Picture 2>.\n\nDo not generate multiple versions of the woman.\n\nOnly one woman exists in the final video.\n\nHer identity must remain unchanged throughout all wardrobe changes.\n\nThe woman performs primarily on the center-right and right side of the sofa area.\n\nKeep the left side of the frame relatively clean for dialogue subtitles while preserving the existing Windows desktop icons.\n\nAll entrances and exits occur exclusively through the far-right edge of the frame.\n\nThe woman must physically walk completely beyond the right edge before every wardrobe change.\n\nWardrobe changes occur entirely off-screen.\n\nWhen she returns, she must physically walk back into the same fixed environment from the far-right edge with the new outfit already completely formed.\n\nNever transform, morph, dissolve, or replace clothing while the woman is visible.\n\nThe background must remain perfectly continuous during every entrance, exit, and off-screen wardrobe change.\n\nAt 0.00-3.00 seconds, the woman is already sitting naturally on the center-right side of the warm-gray fabric sofa.\n\nShe is wearing the white patterned wide-sleeve robe from <Picture 2>.\n\nShe gently adjusts her extremely long straight black hair, then looks toward the computer screen, directly toward the camera, with a warm, natural, slightly playful smile.\n\nShe says in Mandarin:\n\n“说吧……今天想看什么？”\n\nHer voice is young, natural, soft, warm, and slightly playful.\n\nHer lip movements synchronize precisely with the Mandarin dialogue.\n\nPale-purple Chinese subtitles appear progressively in the left-middle area in sync with her pronunciation:\n\n“说吧……今天想看什么？”\n\nA minimal white speaker icon appears beside the subtitle, with a thin white audio waveform beneath it reacting naturally to her voice.\n\nAt 3.00-4.50 seconds, she stops speaking and closes her mouth naturally.\n\nAn adult male voice speaks entirely from off-screen:\n\n“想看JK。”\n\nNo male character appears visually.\n\nThe woman remains silent and listens naturally without moving her lips.\n\nWhite Chinese subtitles appear progressively:\n\n“想看JK”\n\nA minimal white microphone icon appears beside the subtitle, and the waveform reacts to the male voice.\n\nAt 4.50-6.50 seconds, the woman gives a small amused smile and gently nods.\n\nShe replies:\n\n“好，等我一下。”\n\nHer lip movements synchronize precisely with the Mandarin dialogue.\n\nAfter finishing the sentence, she places one hand naturally against the sofa, leans forward slightly, and rises using realistic body mechanics.\n\nHer extremely long hair and wide sleeves respond naturally to the movement.\n\nAt 6.50-10.00 seconds, she finishes standing, turns naturally toward screen-right, and walks toward the far-right edge.\n\nHer footsteps are physically synchronized with her movement.\n\nHer long black hair and white robe respond naturally to each step.\n\nShe physically crosses the far-right frame boundary until her entire body is completely absent.\n\nNo teleportation, sudden disappearance, fade-out, or transformation.\n\nThe sofa is left completely empty.\n\nAt 10.00-14.00 seconds, hold the empty sofa for approximately one second.\n\nThe Windows desktop, icons, taskbar, sofa, cushions, blanket, shelving unit, plant, artwork, lighting, framing, and perspective remain completely unchanged.\n\nThe same woman then physically walks back into frame from the far-right edge.\n\nShe has changed clothes entirely off-screen.\n\nShe now wears a clean white academy-style top, a blue-black plaid pleated mini skirt, white over-the-knee socks, white cross-detail garter accents, and coordinated academy-style footwear.\n\nHer face, skin tone, age, body proportions, extremely long straight black hair, blunt bangs, and identity remain exactly the same as <Picture 2>.\n\nShe walks naturally to the center-right area in front of the sofa and remains standing.\n\nShe gently adjusts her skirt, then makes a small controlled turn toward each side to present the outfit.\n\nThe skirt and long hair respond naturally to her movement.\n\nNo exaggerated posing or spinning.\n\nAt 14.00-17.00 seconds, she faces the computer screen again with a playful, pleased smile and says:\n\n“噔噔～我回来了，老公，怎么样？”\n\nHer delivery is light, natural, playful, and slightly proud without exaggerated cute acting.\n\nHer lips synchronize precisely with the Mandarin dialogue.\n\nPale-purple Chinese subtitles progressively display:\n\n“噔噔～我回来了，老公，怎么样？”\n\nThe waveform reacts naturally to her voice.\n\nAt 17.00-18.50 seconds, she finishes speaking and closes her mouth.\n\nThe off-screen adult male voice replies:\n\n“嗯～不错。”\n\nThe woman remains silent and does not move her lips.\n\nShe listens naturally and gives a small pleased smile after hearing the response.\n\nWhite Chinese subtitles progressively display:\n\n“嗯～不错。”\n\nThe waveform reacts to the male voice.\n\nAt 18.50-21.00 seconds, she appears to suddenly remember another outfit.\n\nHer expression changes subtly into a playful, slightly mischievous look.\n\nShe says:\n\n“等等～还有一套。”\n\nHer lips synchronize precisely with the Mandarin dialogue.\n\nPale-purple subtitles progressively display:\n\n“等等～还有一套。”\n\nAfter finishing the sentence, she turns naturally toward screen-right and walks toward the far-right edge.\n\nHer skirt and extremely long hair respond naturally to the movement.\n\nShe physically crosses the right frame boundary until her entire body is completely absent.\n\nAt 21.00-23.00 seconds, the sofa remains empty.\n\nThe woman is completely off-screen.\n\nNo wardrobe-changing process is visible.\n\nThe Windows desktop, icons, taskbar, sofa, cushions, blanket, shelving unit, plant, artwork, lighting, camera, and perspective remain completely unchanged.\n\nAt 23.00-25.00 seconds, the same woman physically walks back into frame from the far-right edge.\n\nShe has completed the second wardrobe change entirely off-screen.\n\nShe now wears a fitted black blazer, white shirt, burgundy plaid tie, burgundy-and-black plaid pleated mini skirt, sheer nude tights, and black loafers.\n\nHer facial identity, age, skin tone, body proportions, extremely long straight black hair, blunt bangs, and overall appearance remain exactly the same.\n\nShe walks naturally to the center-right area in front of the sofa.\n\nShe gently adjusts the lower edge of her blazer and skirt, then looks toward the computer screen with a more confident and refined expression.\n\nAt 25.00-26.50 seconds, she smiles naturally and asks:\n\n“这套呢？”\n\nHer voice carries a subtle sense of expectation.\n\nHer lips synchronize precisely with the Mandarin dialogue.\n\nPale-purple Chinese subtitles progressively display:\n\n“这套呢？”\n\nThe waveform reacts to her voice.\n\nAt 26.50-27.50 seconds, she closes her mouth and listens.\n\nThe off-screen adult male voice replies:\n\n“这套也好看。”\n\nThe woman does not move her lips during his dialogue.\n\nShe listens naturally and gives a satisfied smile.\n\nWhite Chinese subtitles progressively display:\n\n“这套也好看。”\n\nThe waveform reacts to the male voice.\n\nAt 27.50-30.00 seconds, she turns naturally and walks back toward the warm-gray fabric sofa.\n\nShe sits down using realistic body mechanics.\n\nThe fabric sofa cushion compresses subtly beneath her weight.\n\nShe gently adjusts her blazer collar and then her extremely long black hair.\n\nShe looks directly toward the computer screen, slightly tilts her head, and gives a warm, close, mildly teasing smile.\n\nShe says:\n\n“机会用完啦。老公想留哪套呢？”\n\nDeliver “机会用完啦” lightly, as though announcing a playful rule.\n\nDeliver “老公想留哪套呢？” slightly more slowly with a natural rising intonation at the end.\n\nHer lips synchronize precisely with the Mandarin dialogue.\n\nPale-purple Chinese subtitles progressively display:\n\n“机会用完啦。老公想留哪套呢？”\n\nShe maintains eye contact and the playful smile through the final moment.\n\noverall_soundscape:\n\nNatural Mandarin dialogue is the primary audio.\n\nThe female voice is a young adult voice, natural, soft, warm, intimate, and slightly playful.\n\nThe male voice is an adult male voice, natural, mature, concise, and always completely off-screen.\n\nOnly one person speaks at a time.\n\nWhenever the male voice speaks, the woman remains silent with her mouth naturally closed.\n\nWhenever the woman speaks, her Mandarin lip synchronization must precisely match her dialogue.\n\nAdd subtle realistic footsteps synchronized with her walking.\n\nAdd subtle natural clothing rustle synchronized with movement.\n\nWhen she rises from or sits on the fabric sofa, add extremely subtle realistic fabric and cushion compression sounds.\n\nNo background music.\n\nNo exaggerated sound effects.\n\nnegative_constraints:\n\nidentity drift, face change, face morphing, facial proportion change, age change, skin tone change, hairstyle change, hair shortening, bangs change, body proportion change, body shape change, character duplication, multiple women, extra person, visible male character, male face, male body, male hand, male reflection, male shadow, third character, anime character, illustration, CGI character, 3D character, doll appearance, plastic skin, mannequin appearance, robotic movement, stiff movement, anatomical deformation, extra arms, extra legs, extra fingers, fused fingers, malformed hands, malformed legs, malformed feet, teleportation, sudden appearance, sudden disappearance, fade-in, fade-out, entering from the left, exiting to the left, incorrect entrance direction, visible wardrobe transformation, clothing morphing, melting clothes, flickering clothes, gradual clothing change, mixed outfits, incomplete outfit, body-clothing fusion, second room, background replacement, sofa change, sofa movement, cushion movement, blanket movement, shelving movement, plant disappearance, artwork disappearance, lighting change, desktop wallpaper change, desktop icon change, taskbar change, Windows UI change, UI distortion, UI flicker, camera movement, camera cut, pan, tilt, dolly, zoom, reframing, perspective drift, camera shake, exaggerated expression, exaggerated cute acting, incorrect speaker, woman speaking male dialogue, male voice speaking female dialogue, overlapping dialogue, lip-sync error, incorrect Mandarin pronunciation, incorrect dialogue, missing dialogue, repeated dialogue, premature dialogue, garbled Chinese subtitles, incorrect Chinese characters, English subtitles, bottom subtitles, subtitles covering the face, subtitles appearing too early, complete sentence appearing before pronunciation, static waveform, malformed waveform, malformed UI, extra UI, extra text, watermark, platform logo",
+              1344,
+              768,
+              124,
+              "Ref2VA — 参考生音视频",
+              "native",
+              1,
+              false,
+              0,
+              true,
+              "match",
+              "official_2_to_15s"
+            ],
+            "widgets_values_named": {
+              "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> is fully referenced as the environment and fixed camera reference, while <Picture 2> is fully referenced as the female character identity reference.\n\nintegrated_multimodal_description:\n\n<Picture 1> defines the complete environment, Windows desktop layout, spatial composition, lighting, sofa placement, and fixed camera framing.\n\nThe final video must strictly preserve the complete scene shown in <Picture 1>.\n\nTreat <Picture 1> as a photorealistic Windows dynamic desktop wallpaper in which the living-room environment physically exists behind the Windows desktop UI.\n\nThe environment consists of:\n\na large warm-gray fabric sofa occupying the lower half of the frame;\nsoft textured upholstery with realistic fabric detail;\na large black throw pillow on the left side of the sofa;\nlight-gray cushions behind it;\na dark charcoal knitted blanket naturally resting across the far-right sofa cushion;\na dark charcoal-gray wall filling most of the background;\na black metal shelving unit on the far left;\na leafy indoor plant positioned on the upper shelf;\nwarm amber integrated shelf lighting;\na small glossy black decorative object;\na small stack of books;\na partially visible framed monochrome artwork at the far right edge.\n\nPreserve the exact sofa position, sofa scale, cushion arrangement, blanket position, shelving position, wall proportions, background composition, spatial depth, and perspective from <Picture 1>.\n\nThe lighting must also remain consistent with <Picture 1>:\n\nsoft cinematic low-key interior lighting;\ndark neutral ambient light;\nsubtle cool ambient illumination across the wall;\nwarm amber accent light coming from the left shelving unit;\nsoft realistic highlights and shadows across the sofa;\nnatural dimensional contrast;\npremium modern apartment atmosphere.\n\nDo not brighten the entire room.\nDo not change the lighting direction.\nDo not change the wall color.\nDo not redesign the furniture.\nDo not move the shelving unit.\nDo not remove the plant.\nDo not remove the framed artwork.\nDo not change the sofa into leather.\nDo not change the sofa color or material.\nDo not add additional furniture.\n\nThe Windows desktop UI from <Picture 1> must remain clearly visible and completely stable throughout the entire video.\n\nPreserve the desktop icons vertically arranged along the far-left side, including their original positions and spacing.\n\nPreserve the Windows taskbar across the entire bottom edge.\n\nPreserve the weather display on the lower-left side.\n\nPreserve the centered Windows taskbar icons.\n\nPreserve the lower-right system tray, clock and date area.\n\nThe Windows interface must remain visually separate from the photorealistic wallpaper environment and must not deform when the woman moves behind or near it.\n\nThe desktop icons and taskbar behave like a fixed foreground UI overlay.\n\nThe woman exists inside the dynamic wallpaper scene behind the Windows UI.\n\nShe must never interact with the Windows icons, taskbar, search bar, system tray or other desktop UI elements.\n\nThe Windows UI must not move, animate, disappear, flicker, distort, regenerate or change position.\n\nThe camera is completely locked to the exact framing of <Picture 1> for the entire 30-second video.\n\nNo camera movement.\nNo pan.\nNo tilt.\nNo dolly.\nNo zoom.\nNo reframing.\nNo perspective change.\nNo focal-length change.\nNo camera-height change.\nNo cuts.\nNo transitions.\n\nThe sofa, shelving unit, plant, cushions, blanket, artwork, wall, lighting, Windows desktop icons and taskbar remain spatially locked throughout the entire shot.\n\n<Picture 2> defines the identity and appearance of the only female character in the video.\n\nUse the front view, back view, and facial close-up in <Picture 2> only as complementary identity references for the same single adult woman.\n\nStrictly preserve her facial identity, face shape, facial proportions, eyes, nose, lips, skin tone, apparent adult age, body proportions, extremely long straight black hair, blunt straight bangs, hair length, and overall appearance.\n\nConvert the character naturally into a photorealistic live-action adult woman while preserving the recognizable identity of <Picture 2>.\n\nDo not reproduce the white background or multi-view character-sheet layout from <Picture 2>.\n\nDo not generate multiple versions of the woman.\n\nOnly one woman exists in the final video.\n\nHer identity must remain unchanged throughout all wardrobe changes.\n\nThe woman performs primarily on the center-right and right side of the sofa area.\n\nKeep the left side of the frame relatively clean for dialogue subtitles while preserving the existing Windows desktop icons.\n\nAll entrances and exits occur exclusively through the far-right edge of the frame.\n\nThe woman must physically walk completely beyond the right edge before every wardrobe change.\n\nWardrobe changes occur entirely off-screen.\n\nWhen she returns, she must physically walk back into the same fixed environment from the far-right edge with the new outfit already completely formed.\n\nNever transform, morph, dissolve, or replace clothing while the woman is visible.\n\nThe background must remain perfectly continuous during every entrance, exit, and off-screen wardrobe change.\n\nAt 0.00-3.00 seconds, the woman is already sitting naturally on the center-right side of the warm-gray fabric sofa.\n\nShe is wearing the white patterned wide-sleeve robe from <Picture 2>.\n\nShe gently adjusts her extremely long straight black hair, then looks toward the computer screen, directly toward the camera, with a warm, natural, slightly playful smile.\n\nShe says in Mandarin:\n\n“说吧……今天想看什么？”\n\nHer voice is young, natural, soft, warm, and slightly playful.\n\nHer lip movements synchronize precisely with the Mandarin dialogue.\n\nPale-purple Chinese subtitles appear progressively in the left-middle area in sync with her pronunciation:\n\n“说吧……今天想看什么？”\n\nA minimal white speaker icon appears beside the subtitle, with a thin white audio waveform beneath it reacting naturally to her voice.\n\nAt 3.00-4.50 seconds, she stops speaking and closes her mouth naturally.\n\nAn adult male voice speaks entirely from off-screen:\n\n“想看JK。”\n\nNo male character appears visually.\n\nThe woman remains silent and listens naturally without moving her lips.\n\nWhite Chinese subtitles appear progressively:\n\n“想看JK”\n\nA minimal white microphone icon appears beside the subtitle, and the waveform reacts to the male voice.\n\nAt 4.50-6.50 seconds, the woman gives a small amused smile and gently nods.\n\nShe replies:\n\n“好，等我一下。”\n\nHer lip movements synchronize precisely with the Mandarin dialogue.\n\nAfter finishing the sentence, she places one hand naturally against the sofa, leans forward slightly, and rises using realistic body mechanics.\n\nHer extremely long hair and wide sleeves respond naturally to the movement.\n\nAt 6.50-10.00 seconds, she finishes standing, turns naturally toward screen-right, and walks toward the far-right edge.\n\nHer footsteps are physically synchronized with her movement.\n\nHer long black hair and white robe respond naturally to each step.\n\nShe physically crosses the far-right frame boundary until her entire body is completely absent.\n\nNo teleportation, sudden disappearance, fade-out, or transformation.\n\nThe sofa is left completely empty.\n\nAt 10.00-14.00 seconds, hold the empty sofa for approximately one second.\n\nThe Windows desktop, icons, taskbar, sofa, cushions, blanket, shelving unit, plant, artwork, lighting, framing, and perspective remain completely unchanged.\n\nThe same woman then physically walks back into frame from the far-right edge.\n\nShe has changed clothes entirely off-screen.\n\nShe now wears a clean white academy-style top, a blue-black plaid pleated mini skirt, white over-the-knee socks, white cross-detail garter accents, and coordinated academy-style footwear.\n\nHer face, skin tone, age, body proportions, extremely long straight black hair, blunt bangs, and identity remain exactly the same as <Picture 2>.\n\nShe walks naturally to the center-right area in front of the sofa and remains standing.\n\nShe gently adjusts her skirt, then makes a small controlled turn toward each side to present the outfit.\n\nThe skirt and long hair respond naturally to her movement.\n\nNo exaggerated posing or spinning.\n\nAt 14.00-17.00 seconds, she faces the computer screen again with a playful, pleased smile and says:\n\n“噔噔～我回来了，老公，怎么样？”\n\nHer delivery is light, natural, playful, and slightly proud without exaggerated cute acting.\n\nHer lips synchronize precisely with the Mandarin dialogue.\n\nPale-purple Chinese subtitles progressively display:\n\n“噔噔～我回来了，老公，怎么样？”\n\nThe waveform reacts naturally to her voice.\n\nAt 17.00-18.50 seconds, she finishes speaking and closes her mouth.\n\nThe off-screen adult male voice replies:\n\n“嗯～不错。”\n\nThe woman remains silent and does not move her lips.\n\nShe listens naturally and gives a small pleased smile after hearing the response.\n\nWhite Chinese subtitles progressively display:\n\n“嗯～不错。”\n\nThe waveform reacts to the male voice.\n\nAt 18.50-21.00 seconds, she appears to suddenly remember another outfit.\n\nHer expression changes subtly into a playful, slightly mischievous look.\n\nShe says:\n\n“等等～还有一套。”\n\nHer lips synchronize precisely with the Mandarin dialogue.\n\nPale-purple subtitles progressively display:\n\n“等等～还有一套。”\n\nAfter finishing the sentence, she turns naturally toward screen-right and walks toward the far-right edge.\n\nHer skirt and extremely long hair respond naturally to the movement.\n\nShe physically crosses the right frame boundary until her entire body is completely absent.\n\nAt 21.00-23.00 seconds, the sofa remains empty.\n\nThe woman is completely off-screen.\n\nNo wardrobe-changing process is visible.\n\nThe Windows desktop, icons, taskbar, sofa, cushions, blanket, shelving unit, plant, artwork, lighting, camera, and perspective remain completely unchanged.\n\nAt 23.00-25.00 seconds, the same woman physically walks back into frame from the far-right edge.\n\nShe has completed the second wardrobe change entirely off-screen.\n\nShe now wears a fitted black blazer, white shirt, burgundy plaid tie, burgundy-and-black plaid pleated mini skirt, sheer nude tights, and black loafers.\n\nHer facial identity, age, skin tone, body proportions, extremely long straight black hair, blunt bangs, and overall appearance remain exactly the same.\n\nShe walks naturally to the center-right area in front of the sofa.\n\nShe gently adjusts the lower edge of her blazer and skirt, then looks toward the computer screen with a more confident and refined expression.\n\nAt 25.00-26.50 seconds, she smiles naturally and asks:\n\n“这套呢？”\n\nHer voice carries a subtle sense of expectation.\n\nHer lips synchronize precisely with the Mandarin dialogue.\n\nPale-purple Chinese subtitles progressively display:\n\n“这套呢？”\n\nThe waveform reacts to her voice.\n\nAt 26.50-27.50 seconds, she closes her mouth and listens.\n\nThe off-screen adult male voice replies:\n\n“这套也好看。”\n\nThe woman does not move her lips during his dialogue.\n\nShe listens naturally and gives a satisfied smile.\n\nWhite Chinese subtitles progressively display:\n\n“这套也好看。”\n\nThe waveform reacts to the male voice.\n\nAt 27.50-30.00 seconds, she turns naturally and walks back toward the warm-gray fabric sofa.\n\nShe sits down using realistic body mechanics.\n\nThe fabric sofa cushion compresses subtly beneath her weight.\n\nShe gently adjusts her blazer collar and then her extremely long black hair.\n\nShe looks directly toward the computer screen, slightly tilts her head, and gives a warm, close, mildly teasing smile.\n\nShe says:\n\n“机会用完啦。老公想留哪套呢？”\n\nDeliver “机会用完啦” lightly, as though announcing a playful rule.\n\nDeliver “老公想留哪套呢？” slightly more slowly with a natural rising intonation at the end.\n\nHer lips synchronize precisely with the Mandarin dialogue.\n\nPale-purple Chinese subtitles progressively display:\n\n“机会用完啦。老公想留哪套呢？”\n\nShe maintains eye contact and the playful smile through the final moment.\n\noverall_soundscape:\n\nNatural Mandarin dialogue is the primary audio.\n\nThe female voice is a young adult voice, natural, soft, warm, intimate, and slightly playful.\n\nThe male voice is an adult male voice, natural, mature, concise, and always completely off-screen.\n\nOnly one person speaks at a time.\n\nWhenever the male voice speaks, the woman remains silent with her mouth naturally closed.\n\nWhenever the woman speaks, her Mandarin lip synchronization must precisely match her dialogue.\n\nAdd subtle realistic footsteps synchronized with her walking.\n\nAdd subtle natural clothing rustle synchronized with movement.\n\nWhen she rises from or sits on the fabric sofa, add extremely subtle realistic fabric and cushion compression sounds.\n\nNo background music.\n\nNo exaggerated sound effects.\n\nnegative_constraints:\n\nidentity drift, face change, face morphing, facial proportion change, age change, skin tone change, hairstyle change, hair shortening, bangs change, body proportion change, body shape change, character duplication, multiple women, extra person, visible male character, male face, male body, male hand, male reflection, male shadow, third character, anime character, illustration, CGI character, 3D character, doll appearance, plastic skin, mannequin appearance, robotic movement, stiff movement, anatomical deformation, extra arms, extra legs, extra fingers, fused fingers, malformed hands, malformed legs, malformed feet, teleportation, sudden appearance, sudden disappearance, fade-in, fade-out, entering from the left, exiting to the left, incorrect entrance direction, visible wardrobe transformation, clothing morphing, melting clothes, flickering clothes, gradual clothing change, mixed outfits, incomplete outfit, body-clothing fusion, second room, background replacement, sofa change, sofa movement, cushion movement, blanket movement, shelving movement, plant disappearance, artwork disappearance, lighting change, desktop wallpaper change, desktop icon change, taskbar change, Windows UI change, UI distortion, UI flicker, camera movement, camera cut, pan, tilt, dolly, zoom, reframing, perspective drift, camera shake, exaggerated expression, exaggerated cute acting, incorrect speaker, woman speaking male dialogue, male voice speaking female dialogue, overlapping dialogue, lip-sync error, incorrect Mandarin pronunciation, incorrect dialogue, missing dialogue, repeated dialogue, premature dialogue, garbled Chinese subtitles, incorrect Chinese characters, English subtitles, bottom subtitles, subtitles covering the face, subtitles appearing too early, complete sentence appearing before pronunciation, static waveform, malformed waveform, malformed UI, extra UI, extra text, watermark, platform logo",
+              "width": 1344,
+              "height": 768,
+              "length": 124,
+              "task_type": "Ref2VA — 参考生音视频",
+              "audio_mode": "native",
+              "audio_denoise_strength": 1,
+              "add_source_as_reference": false,
+              "prompt_primary_audio_ordinal": 0,
+              "strict_prompt_tags": true,
+              "ref_image_size": "match",
+              "reference_video_policy": "official_2_to_15s"
+            }
+          },
+          {
+            "id": 110,
+            "type": "ComfyMathExpression",
+            "pos": [
+              4603.076197609318,
+              347.76340611219337
+            ],
+            "size": [
+              267.17936023142533,
+              128
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 11,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "values.a",
+                "localized_name": "values.a",
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 190
+              },
+              {
+                "label": "b",
+                "localized_name": "values.b",
+                "name": "values.b",
+                "shape": 7,
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": null
+              },
+              {
+                "label": "expression",
+                "localized_name": "表达式",
+                "name": "expression",
+                "type": "STRING",
+                "widget": {
+                  "name": "expression"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "label": "FLOAT",
+                "localized_name": "浮点",
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": []
+              },
+              {
+                "label": "INT",
+                "localized_name": "整数",
+                "name": "INT",
+                "type": "INT",
+                "links": []
+              },
+              {
+                "label": "BOOL",
+                "localized_name": "布尔值",
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": []
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.30.0",
+              "Node name for S&R": "ComfyMathExpression",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17"
+            ],
+            "widgets_values_named": {
+              "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17"
+            }
+          },
+          {
+            "id": 111,
+            "type": "MiniMaxH3MemoryEfficientSageAttentionPatch",
+            "pos": [
+              4931.504044902511,
+              339.475952782109
+            ],
+            "size": [
+              419.8102722167969,
+              26
+            ],
+            "flags": {},
+            "order": 8,
+            "mode": 4,
+            "inputs": [
+              {
+                "label": "model",
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 153
+              }
+            ],
+            "outputs": [
+              {
+                "label": "model",
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "links": [
+                  154,
+                  179,
+                  180
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfyui-kjnodes",
+              "ver": "b8b887cee3bb697c35002a29cc66bd35514b3ebe",
+              "Node name for S&R": "MiniMaxH3MemoryEfficientSageAttentionPatch",
+              "widget_ue_connectable": {}
+            }
+          },
+          {
+            "id": 112,
+            "type": "LoraLoaderBypassModelOnly",
+            "pos": [
+              4931.504044902511,
+              431.83228935463785
+            ],
+            "size": [
+              419.8102722167969,
+              106
+            ],
+            "flags": {},
+            "order": 9,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "model",
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 154
+              },
+              {
+                "label": "lora_name",
+                "localized_name": "lora_name",
+                "name": "lora_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "lora_name"
+                },
+                "link": null
+              },
+              {
+                "label": "strength_model",
+                "localized_name": "strength_model",
+                "name": "strength_model",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "strength_model"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "label": "MODEL",
+                "localized_name": "模型",
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  158
+                ]
+              }
+            ],
+            "title": "lora only",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.30.0",
+              "Node name for S&R": "LoraLoaderBypassModelOnly",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              "minimax_h3_turbo_4步加速_comfyui.safetensors",
+              1
+            ],
+            "widgets_values_named": {
+              "lora_name": "minimax_h3_turbo_4步加速_comfyui.safetensors",
+              "strength_model": 1
+            }
+          },
+          {
+            "id": 115,
+            "type": "MiniMaxH3DualClockSamplerT8",
+            "pos": [
+              5911.62840835718,
+              474.8774073644058
+            ],
+            "size": [
+              390,
+              194
+            ],
+            "flags": {},
+            "order": 13,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "model",
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 158
+              },
+              {
+                "label": "av_latent",
+                "localized_name": "av_latent",
+                "name": "av_latent",
+                "type": "LATENT",
+                "link": 159
+              },
+              {
+                "label": "steps",
+                "localized_name": "steps",
+                "name": "steps",
+                "type": "INT",
+                "widget": {
+                  "name": "steps"
+                },
+                "link": null
+              },
+              {
+                "label": "shift_video",
+                "localized_name": "shift_video",
+                "name": "shift_video",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "shift_video"
+                },
+                "link": null
+              },
+              {
+                "label": "shift_audio",
+                "localized_name": "shift_audio",
+                "name": "shift_audio",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "shift_audio"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "label": "model",
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "links": [
+                  160
+                ]
+              },
+              {
+                "label": "sampler",
+                "localized_name": "sampler",
+                "name": "sampler",
+                "type": "SAMPLER",
+                "links": [
+                  164
+                ]
+              },
+              {
+                "label": "sigmas",
+                "localized_name": "sigmas",
+                "name": "sigmas",
+                "type": "SIGMAS",
+                "links": [
+                  165
+                ]
+              }
+            ],
+            "title": "STABLE 4 video / 4 audio",
+            "properties": {
+              "cnr_id": "comfyui-workflow-encrypt",
+              "ver": "788cacae3699910d04c927e2082b9d44c197ed9b",
+              "Node name for S&R": "MiniMaxH3DualClockSamplerT8",
+              "widget_ue_connectable": {},
+              "aux_id": "T8mars/minimax-h3-audio-T8"
+            },
+            "widgets_values": [
+              6,
+              12,
+              3,
+              "dual_clock_euler",
+              "native_flow"
+            ],
+            "widgets_values_named": {
+              "steps": 6,
+              "shift_video": 12,
+              "shift_audio": 3,
+              "sampler_name": "dual_clock_euler",
+              "scheduler": "native_flow"
+            }
+          },
+          {
+            "id": 116,
+            "type": "RandomNoise",
+            "pos": [
+              5911.62840835718,
+              332.87740736440577
+            ],
+            "size": [
+              390,
+              82
+            ],
+            "flags": {},
+            "order": 1,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "noise_seed",
+                "localized_name": "噪波随机种",
+                "name": "noise_seed",
+                "type": "INT",
+                "widget": {
+                  "name": "noise_seed"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "label": "NOISE",
+                "localized_name": "噪波",
+                "name": "NOISE",
+                "type": "NOISE",
+                "links": [
+                  162
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.30.0",
+              "Node name for S&R": "RandomNoise",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              228905884857015,
+              "randomize"
+            ],
+            "widgets_values_named": {
+              "noise_seed": 228905884857015,
+              "control_after_generate": "randomize"
+            }
+          },
+          {
+            "id": 117,
+            "type": "BasicGuider",
+            "pos": [
+              5911.62840835718,
+              202.8774073644058
+            ],
+            "size": [
+              390,
+              70
+            ],
+            "flags": {},
+            "order": 14,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "model",
+                "localized_name": "模型",
+                "name": "model",
+                "type": "MODEL",
+                "link": 160
+              },
+              {
+                "label": "conditioning",
+                "localized_name": "条件",
+                "name": "conditioning",
+                "type": "CONDITIONING",
+                "link": 161
+              }
+            ],
+            "outputs": [
+              {
+                "label": "GUIDER",
+                "localized_name": "引导器",
+                "name": "GUIDER",
+                "type": "GUIDER",
+                "links": [
+                  163
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.30.0",
+              "Node name for S&R": "BasicGuider",
+              "widget_ue_connectable": {}
+            }
+          },
+          {
+            "id": 118,
+            "type": "SamplerCustomAdvanced",
+            "pos": [
+              6323.722997057542,
+              201.14733062891415
+            ],
+            "size": [
+              294.9933223451369,
+              467.572104728001
+            ],
+            "flags": {},
+            "order": 15,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "noise",
+                "localized_name": "噪波",
+                "name": "noise",
+                "type": "NOISE",
+                "link": 162
+              },
+              {
+                "label": "guider",
+                "localized_name": "引导器",
+                "name": "guider",
+                "type": "GUIDER",
+                "link": 163
+              },
+              {
+                "label": "sampler",
+                "localized_name": "采样器",
+                "name": "sampler",
+                "type": "SAMPLER",
+                "link": 164
+              },
+              {
+                "label": "sigmas",
+                "localized_name": "西格玛",
+                "name": "sigmas",
+                "type": "SIGMAS",
+                "link": 165
+              },
+              {
+                "label": "latent_image",
+                "localized_name": "Latent图像",
+                "name": "latent_image",
+                "type": "LATENT",
+                "link": 166
+              }
+            ],
+            "outputs": [
+              {
+                "label": "output",
+                "localized_name": "Latent",
+                "name": "output",
+                "type": "LATENT",
+                "links": [
+                  167
+                ]
+              },
+              {
+                "label": "denoised_output",
+                "localized_name": "降噪Latent",
+                "name": "denoised_output",
+                "type": "LATENT",
+                "links": []
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.30.0",
+              "Node name for S&R": "SamplerCustomAdvanced",
+              "widget_ue_connectable": {}
+            }
+          },
+          {
+            "id": 114,
+            "type": "CLIPLoader",
+            "pos": [
+              4931.504044902511,
+              597.8322893546379
+            ],
+            "size": [
+              419.8102722167969,
+              106
+            ],
+            "flags": {},
+            "order": 2,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "clip_name",
+                "localized_name": "CLIP名称",
+                "name": "clip_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "clip_name"
+                },
+                "link": null
+              },
+              {
+                "label": "type",
+                "localized_name": "类型",
+                "name": "type",
+                "type": "COMBO",
+                "widget": {
+                  "name": "type"
+                },
+                "link": null
+              },
+              {
+                "label": "device",
+                "localized_name": "设备",
+                "name": "device",
+                "shape": 7,
+                "type": "COMBO",
+                "widget": {
+                  "name": "device"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "label": "CLIP",
+                "localized_name": "CLIP",
+                "name": "CLIP",
+                "type": "CLIP",
+                "links": [
+                  155
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.30.0",
+              "Node name for S&R": "CLIPLoader",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+              "minimax",
+              "default"
+            ],
+            "widgets_values_named": {
+              "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+              "type": "minimax",
+              "device": "default"
+            }
+          },
+          {
+            "id": 119,
+            "type": "MiniMaxH3AVDecodeT8",
+            "pos": [
+              6323.722997057542,
+              728.719435356915
+            ],
+            "size": [
+              294.9933223451369,
+              120
+            ],
+            "flags": {},
+            "order": 16,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "av_latent",
+                "localized_name": "av_latent",
+                "name": "av_latent",
+                "type": "LATENT",
+                "link": 167
+              },
+              {
+                "label": "video_vae",
+                "localized_name": "video_vae",
+                "name": "video_vae",
+                "type": "VAE",
+                "link": 168
+              },
+              {
+                "label": "audio_vae",
+                "localized_name": "audio_vae",
+                "name": "audio_vae",
+                "type": "VAE",
+                "link": 169
+              }
+            ],
+            "outputs": [
+              {
+                "label": "frames",
+                "localized_name": "frames",
+                "name": "frames",
+                "type": "IMAGE",
+                "links": [
+                  170,
+                  176
+                ]
+              },
+              {
+                "label": "generated_audio",
+                "localized_name": "generated_audio",
+                "name": "generated_audio",
+                "type": "AUDIO",
+                "links": [
+                  171
+                ]
+              },
+              {
+                "label": "video_latent",
+                "localized_name": "video_latent",
+                "name": "video_latent",
+                "type": "LATENT",
+                "links": []
+              },
+              {
+                "label": "audio_latent",
+                "localized_name": "audio_latent",
+                "name": "audio_latent",
+                "type": "LATENT",
+                "links": [
+                  175
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfyui-workflow-encrypt",
+              "ver": "788cacae3699910d04c927e2082b9d44c197ed9b",
+              "Node name for S&R": "MiniMaxH3AVDecodeT8",
+              "widget_ue_connectable": {},
+              "aux_id": "T8mars/minimax-h3-audio-T8"
+            }
+          },
+          {
+            "id": 120,
+            "type": "VAELoader",
+            "pos": [
+              4931.504044902511,
+              763.8322893546379
+            ],
+            "size": [
+              419.8102722167969,
+              58
+            ],
+            "flags": {},
+            "order": 3,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "vae_name",
+                "localized_name": "vae名称",
+                "name": "vae_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "vae_name"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "label": "VAE",
+                "localized_name": "VAE",
+                "name": "VAE",
+                "type": "VAE",
+                "links": [
+                  156,
+                  168,
+                  173,
+                  188
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.30.0",
+              "Node name for S&R": "VAELoader",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              "minimax\\minimax_h3_video_vae_fp16.safetensors"
+            ],
+            "widgets_values_named": {
+              "vae_name": "minimax\\minimax_h3_video_vae_fp16.safetensors"
+            }
+          },
+          {
+            "id": 122,
+            "type": "VAEEncode",
+            "pos": [
+              6680.70274419144,
+              706.6421626455622
+            ],
+            "size": [
+              270,
+              46
+            ],
+            "flags": {},
+            "order": 18,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "pixels",
+                "localized_name": "像素",
+                "name": "pixels",
+                "type": "IMAGE",
+                "link": 172
+              },
+              {
+                "label": "vae",
+                "localized_name": "vae",
+                "name": "vae",
+                "type": "VAE",
+                "link": 173
+              }
+            ],
+            "outputs": [
+              {
+                "label": "LATENT",
+                "localized_name": "Latent",
+                "name": "LATENT",
+                "type": "LATENT",
+                "links": [
+                  174
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.31.1",
+              "Node name for S&R": "VAEEncode",
+              "widget_ue_connectable": {}
+            }
+          },
+          {
+            "id": 123,
+            "type": "PT_H3ConcatAVLatent",
+            "pos": [
+              6680.70274419144,
+              600.6421626455622
+            ],
+            "size": [
+              270,
+              46
+            ],
+            "flags": {},
+            "order": 19,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "video_latent",
+                "localized_name": "video_latent",
+                "name": "video_latent",
+                "type": "LATENT",
+                "link": 174
+              },
+              {
+                "label": "audio_latent",
+                "localized_name": "audio_latent",
+                "name": "audio_latent",
+                "type": "LATENT",
+                "link": 175
+              }
+            ],
+            "outputs": [
+              {
+                "label": "LATENT",
+                "localized_name": "Latent",
+                "name": "LATENT",
+                "type": "LATENT",
+                "links": [
+                  186
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfyui-workflow-encrypt",
+              "ver": "1.0.0",
+              "Node name for S&R": "PT_H3ConcatAVLatent",
+              "widget_ue_connectable": {}
+            }
+          },
+          {
+            "id": 124,
+            "type": "ImageResizeKJv2",
+            "pos": [
+              6680.70274419144,
+              204.6421626455621
+            ],
+            "size": [
+              270,
+              348
+            ],
+            "flags": {},
+            "order": 20,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "image",
+                "localized_name": "image",
+                "name": "image",
+                "type": "IMAGE",
+                "link": 176
+              },
+              {
+                "label": "mask",
+                "localized_name": "mask",
+                "name": "mask",
+                "shape": 7,
+                "type": "MASK",
+                "link": null
+              },
+              {
+                "label": "width",
+                "localized_name": "width",
+                "name": "width",
+                "type": "INT",
+                "widget": {
+                  "name": "width"
+                },
+                "link": 177
+              },
+              {
+                "label": "height",
+                "localized_name": "height",
+                "name": "height",
+                "type": "INT",
+                "widget": {
+                  "name": "height"
+                },
+                "link": 178
+              },
+              {
+                "label": "upscale_method",
+                "localized_name": "upscale_method",
+                "name": "upscale_method",
+                "type": "COMBO",
+                "widget": {
+                  "name": "upscale_method"
+                },
+                "link": null
+              },
+              {
+                "label": "keep_proportion",
+                "localized_name": "keep_proportion",
+                "name": "keep_proportion",
+                "type": "COMBO",
+                "widget": {
+                  "name": "keep_proportion"
+                },
+                "link": null
+              },
+              {
+                "label": "pad_color",
+                "localized_name": "pad_color",
+                "name": "pad_color",
+                "type": "STRING",
+                "widget": {
+                  "name": "pad_color"
+                },
+                "link": null
+              },
+              {
+                "label": "crop_position",
+                "localized_name": "crop_position",
+                "name": "crop_position",
+                "type": "COMBO",
+                "widget": {
+                  "name": "crop_position"
+                },
+                "link": null
+              },
+              {
+                "label": "divisible_by",
+                "localized_name": "divisible_by",
+                "name": "divisible_by",
+                "type": "INT",
+                "widget": {
+                  "name": "divisible_by"
+                },
+                "link": null
+              },
+              {
+                "label": "device",
+                "localized_name": "device",
+                "name": "device",
+                "shape": 7,
+                "type": "COMBO",
+                "widget": {
+                  "name": "device"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "label": "IMAGE",
+                "localized_name": "图像",
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  172
+                ]
+              },
+              {
+                "label": "width",
+                "localized_name": "width",
+                "name": "width",
+                "type": "INT",
+                "links": []
+              },
+              {
+                "label": "height",
+                "localized_name": "height",
+                "name": "height",
+                "type": "INT",
+                "links": []
+              },
+              {
+                "label": "mask",
+                "localized_name": "mask",
+                "name": "mask",
+                "type": "MASK",
+                "links": []
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfyui-workflow-encrypt",
+              "ver": "1.0.0",
+              "Node name for S&R": "ImageResizeKJv2",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              512,
+              512,
+              "nvidia_rtx_vsr",
+              "stretch",
+              "0, 0, 0",
+              "center",
+              32,
+              "cpu"
+            ],
+            "widgets_values_named": {
+              "width": 512,
+              "height": 512,
+              "upscale_method": "nvidia_rtx_vsr",
+              "keep_proportion": "stretch",
+              "pad_color": "0, 0, 0",
+              "crop_position": "center",
+              "divisible_by": 32,
+              "device": "cpu"
+            }
+          },
+          {
+            "id": 125,
+            "type": "ResolutionSelector",
+            "pos": [
+              4603.076197609318,
+              765.7634061121934
+            ],
+            "size": [
+              267.17936023142533,
+              170
+            ],
+            "flags": {},
+            "order": 4,
+            "mode": 0,
+            "showAdvanced": true,
+            "inputs": [
+              {
+                "label": "aspect_ratio",
+                "localized_name": "宽高比",
+                "name": "aspect_ratio",
+                "type": "COMBO",
+                "widget": {
+                  "name": "aspect_ratio"
+                },
+                "link": null
+              },
+              {
+                "label": "megapixels",
+                "localized_name": "百万像素",
+                "name": "megapixels",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "megapixels"
+                },
+                "link": null
+              },
+              {
+                "label": "multiple",
+                "localized_name": "倍数",
+                "name": "multiple",
+                "type": "INT",
+                "widget": {
+                  "name": "multiple"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "label": "width",
+                "localized_name": "宽度",
+                "name": "width",
+                "type": "INT",
+                "links": [
+                  177
+                ]
+              },
+              {
+                "label": "height",
+                "localized_name": "高度",
+                "name": "height",
+                "type": "INT",
+                "links": [
+                  178
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.30.0",
+              "Node name for S&R": "ResolutionSelector",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              "16:9 (Widescreen)",
+              0.8,
+              32
+            ],
+            "widgets_values_named": {
+              "aspect_ratio": "16:9 (Widescreen)",
+              "megapixels": 0.8,
+              "multiple": 32
+            }
+          },
+          {
+            "id": 126,
+            "type": "BasicScheduler",
+            "pos": [
+              7008.317422954962,
+              335.55661017547067
+            ],
+            "size": [
+              370,
+              130
+            ],
+            "flags": {},
+            "order": 10,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "model",
+                "localized_name": "模型",
+                "name": "model",
+                "type": "MODEL",
+                "link": 179
+              },
+              {
+                "label": "scheduler",
+                "localized_name": "调度器",
+                "name": "scheduler",
+                "type": "COMBO",
+                "widget": {
+                  "name": "scheduler"
+                },
+                "link": null
+              },
+              {
+                "label": "steps",
+                "localized_name": "步数",
+                "name": "steps",
+                "type": "INT",
+                "widget": {
+                  "name": "steps"
+                },
+                "link": null
+              },
+              {
+                "label": "denoise",
+                "localized_name": "降噪",
+                "name": "denoise",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "denoise"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "label": "SIGMAS",
+                "localized_name": "Sigmas",
+                "name": "SIGMAS",
+                "type": "SIGMAS",
+                "links": [
+                  185
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.30.0",
+              "Node name for S&R": "BasicScheduler",
+              "ue_properties": {
+                "widget_ue_connectable": {},
+                "input_ue_unconnectable": {},
+                "version": "7.5.2"
+              },
+              "widget_ue_connectable": {
+                "scheduler": true,
+                "denoise": true,
+                "steps": true
+              }
+            },
+            "widgets_values": [
+              "beta",
+              2,
+              0.2
+            ],
+            "widgets_values_named": {
+              "scheduler": "beta",
+              "steps": 2,
+              "denoise": 0.2
+            }
+          },
+          {
+            "id": 127,
+            "type": "RandomNoise",
+            "pos": [
+              7008.317422954962,
+              525.5566101754707
+            ],
+            "size": [
+              370,
+              82
+            ],
+            "flags": {},
+            "order": 5,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "noise_seed",
+                "localized_name": "噪波随机种",
+                "name": "noise_seed",
+                "type": "INT",
+                "widget": {
+                  "name": "noise_seed"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "label": "NOISE",
+                "localized_name": "噪波",
+                "name": "NOISE",
+                "type": "NOISE",
+                "links": [
+                  182
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.30.0",
+              "Node name for S&R": "RandomNoise",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              1093616428796813,
+              "randomize"
+            ],
+            "widgets_values_named": {
+              "noise_seed": 1093616428796813,
+              "control_after_generate": "randomize"
+            }
+          },
+          {
+            "id": 128,
+            "type": "KSamplerSelect",
+            "pos": [
+              7008.317422954962,
+              205.55661017547067
+            ],
+            "size": [
+              370,
+              70
+            ],
+            "flags": {},
+            "order": 6,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "sampler_name",
+                "localized_name": "采样器名称",
+                "name": "sampler_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "sampler_name"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "label": "SAMPLER",
+                "localized_name": "采样器",
+                "name": "SAMPLER",
+                "type": "SAMPLER",
+                "links": [
+                  184
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.30.0",
+              "Node name for S&R": "KSamplerSelect",
+              "ue_properties": {
+                "widget_ue_connectable": {},
+                "input_ue_unconnectable": {},
+                "version": "7.5.2"
+              },
+              "widget_ue_connectable": {
+                "sampler_name": true
+              }
+            },
+            "widgets_values": [
+              "res_multistep"
+            ],
+            "widgets_values_named": {
+              "sampler_name": "res_multistep"
+            }
+          },
+          {
+            "id": 129,
+            "type": "BasicGuider",
+            "pos": [
+              7008.317422954962,
+              667.5566101754706
+            ],
+            "size": [
+              370,
+              70
+            ],
+            "flags": {},
+            "order": 21,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "model",
+                "localized_name": "模型",
+                "name": "model",
+                "type": "MODEL",
+                "link": 180
+              },
+              {
+                "label": "conditioning",
+                "localized_name": "条件",
+                "name": "conditioning",
+                "type": "CONDITIONING",
+                "link": 181
+              }
+            ],
+            "outputs": [
+              {
+                "label": "GUIDER",
+                "localized_name": "引导器",
+                "name": "GUIDER",
+                "type": "GUIDER",
+                "links": [
+                  183
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.30.0",
+              "Node name for S&R": "BasicGuider",
+              "widget_ue_connectable": {}
+            }
+          },
+          {
+            "id": 121,
+            "type": "VHS_VideoCombine",
+            "pos": [
+              6402.091333247948,
+              781.8006339475719
+            ],
+            "size": [
+              430,
+              94
+            ],
+            "flags": {
+              "collapsed": true
+            },
+            "order": 17,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "images",
+                "localized_name": "images",
+                "name": "images",
+                "type": "IMAGE",
+                "link": 170
+              },
+              {
+                "label": "audio",
+                "localized_name": "audio",
+                "name": "audio",
+                "shape": 7,
+                "type": "AUDIO",
+                "link": 171
+              },
+              {
+                "label": "meta_batch",
+                "localized_name": "meta_batch",
+                "name": "meta_batch",
+                "shape": 7,
+                "type": "VHS_BatchManager",
+                "link": null
+              },
+              {
+                "label": "vae",
+                "localized_name": "vae",
+                "name": "vae",
+                "shape": 7,
+                "type": "VAE",
+                "link": null
+              },
+              {
+                "label": "frame_rate",
+                "localized_name": "frame_rate",
+                "name": "frame_rate",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "frame_rate"
+                },
+                "link": null
+              },
+              {
+                "label": "loop_count",
+                "localized_name": "loop_count",
+                "name": "loop_count",
+                "type": "INT",
+                "widget": {
+                  "name": "loop_count"
+                },
+                "link": null
+              },
+              {
+                "label": "filename_prefix",
+                "localized_name": "filename_prefix",
+                "name": "filename_prefix",
+                "type": "STRING",
+                "widget": {
+                  "name": "filename_prefix"
+                },
+                "link": null
+              },
+              {
+                "label": "format",
+                "localized_name": "format",
+                "name": "format",
+                "type": "COMBO",
+                "widget": {
+                  "name": "format"
+                },
+                "link": null
+              },
+              {
+                "label": "pingpong",
+                "localized_name": "pingpong",
+                "name": "pingpong",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "pingpong"
+                },
+                "link": null
+              },
+              {
+                "label": "save_output",
+                "localized_name": "save_output",
+                "name": "save_output",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "save_output"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "label": "Filenames",
+                "localized_name": "Filenames",
+                "name": "Filenames",
+                "type": "VHS_FILENAMES",
+                "links": []
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfyui-videohelpersuite",
+              "ver": "4ee72c065db22c9d96c2427954dc69e7b908444b",
+              "Node name for S&R": "VHS_VideoCombine",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": {
+              "frame_rate": 24,
+              "loop_count": 0,
+              "filename_prefix": "MiniMaxH3/MiniMax_H3",
+              "format": "video/h264-mp4",
+              "pix_fmt": "yuv420p",
+              "crf": 19,
+              "save_metadata": true,
+              "trim_to_audio": false,
+              "pingpong": false,
+              "save_output": true,
+              "videopreview": {
+                "paused": false,
+                "hidden": false,
+                "params": {
+                  "score": 11,
+                  "filename": "MiniMax_H3_00348-audio.mp4",
+                  "cos_url": "https://rh-images.xiaoyaoyou.com//f3702e87df4f7c1cfaf2188fec913990/output/MiniMaxH3/stable_4v4a_00001_p86-audio_iqprd_1786786385.mp4",
+                  "workflow": "MiniMax_H3_00348.png",
+                  "fullpath": "D:\\ComfyUI-BIUL_JX\\ComfyUI\\output\\MiniMaxH3\\MiniMax_H3_00348-audio.mp4",
+                  "format": "video/h264-mp4",
+                  "subfolder": "MiniMaxH3",
+                  "label": "Normal",
+                  "type": "output",
+                  "frame_rate": 24
+                }
+              }
+            },
+            "widgets_values_named": {
+              "frame_rate": 24,
+              "loop_count": 0,
+              "filename_prefix": "MiniMaxH3/MiniMax_H3",
+              "format": "video/h264-mp4",
+              "pix_fmt": "yuv420p",
+              "crf": 19,
+              "save_metadata": true,
+              "trim_to_audio": false,
+              "pingpong": false,
+              "save_output": true,
+              "videopreview": {
+                "paused": false,
+                "hidden": false,
+                "params": {
+                  "score": 11,
+                  "filename": "MiniMax_H3_00348-audio.mp4",
+                  "cos_url": "https://rh-images.xiaoyaoyou.com//f3702e87df4f7c1cfaf2188fec913990/output/MiniMaxH3/stable_4v4a_00001_p86-audio_iqprd_1786786385.mp4",
+                  "workflow": "MiniMax_H3_00348.png",
+                  "fullpath": "D:\\ComfyUI-BIUL_JX\\ComfyUI\\output\\MiniMaxH3\\MiniMax_H3_00348-audio.mp4",
+                  "format": "video/h264-mp4",
+                  "subfolder": "MiniMaxH3",
+                  "label": "Normal",
+                  "type": "output",
+                  "frame_rate": 24
+                }
+              }
+            }
+          },
+          {
+            "id": 130,
+            "type": "VAELoader",
+            "pos": [
+              4931.504044902511,
+              881.8322893546379
+            ],
+            "size": [
+              419.8102722167969,
+              58
+            ],
+            "flags": {},
+            "order": 7,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "vae_name",
+                "localized_name": "vae名称",
+                "name": "vae_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "vae_name"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "label": "VAE",
+                "localized_name": "VAE",
+                "name": "VAE",
+                "type": "VAE",
+                "links": [
+                  157,
+                  169,
+                  189
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.30.0",
+              "Node name for S&R": "VAELoader",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              "minimax\\minimax_h3_audio_vae_fp32.safetensors"
+            ],
+            "widgets_values_named": {
+              "vae_name": "minimax\\minimax_h3_audio_vae_fp32.safetensors"
+            }
+          },
+          {
+            "id": 131,
+            "type": "SamplerCustomAdvanced",
+            "pos": [
+              7408.622034210124,
+              205.35210556914393
+            ],
+            "size": [
+              280,
+              467.572104728001
+            ],
+            "flags": {},
+            "order": 22,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "noise",
+                "localized_name": "噪波",
+                "name": "noise",
+                "type": "NOISE",
+                "link": 182
+              },
+              {
+                "label": "guider",
+                "localized_name": "引导器",
+                "name": "guider",
+                "type": "GUIDER",
+                "link": 183
+              },
+              {
+                "label": "sampler",
+                "localized_name": "采样器",
+                "name": "sampler",
+                "type": "SAMPLER",
+                "link": 184
+              },
+              {
+                "label": "sigmas",
+                "localized_name": "西格玛",
+                "name": "sigmas",
+                "type": "SIGMAS",
+                "link": 185
+              },
+              {
+                "label": "latent_image",
+                "localized_name": "Latent图像",
+                "name": "latent_image",
+                "type": "LATENT",
+                "link": 186
+              }
+            ],
+            "outputs": [
+              {
+                "label": "output",
+                "localized_name": "Latent",
+                "name": "output",
+                "type": "LATENT",
+                "links": [
+                  187
+                ]
+              },
+              {
+                "label": "denoised_output",
+                "localized_name": "降噪Latent",
+                "name": "denoised_output",
+                "type": "LATENT",
+                "links": []
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.30.0",
+              "Node name for S&R": "SamplerCustomAdvanced",
+              "widget_ue_connectable": {}
+            }
+          },
+          {
+            "id": 132,
+            "type": "MiniMaxH3AVDecodeT8",
+            "pos": [
+              7408.622034210124,
+              732.9242102971449
+            ],
+            "size": [
+              280,
+              120
+            ],
+            "flags": {},
+            "order": 23,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "av_latent",
+                "localized_name": "av_latent",
+                "name": "av_latent",
+                "type": "LATENT",
+                "link": 187
+              },
+              {
+                "label": "video_vae",
+                "localized_name": "video_vae",
+                "name": "video_vae",
+                "type": "VAE",
+                "link": 188
+              },
+              {
+                "label": "audio_vae",
+                "localized_name": "audio_vae",
+                "name": "audio_vae",
+                "type": "VAE",
+                "link": 189
+              }
+            ],
+            "outputs": [
+              {
+                "label": "frames",
+                "localized_name": "frames",
+                "name": "frames",
+                "type": "IMAGE",
+                "links": [
+                  192
+                ]
+              },
+              {
+                "label": "generated_audio",
+                "localized_name": "generated_audio",
+                "name": "generated_audio",
+                "type": "AUDIO",
+                "links": [
+                  193
+                ]
+              },
+              {
+                "label": "video_latent",
+                "localized_name": "video_latent",
+                "name": "video_latent",
+                "type": "LATENT",
+                "links": []
+              },
+              {
+                "label": "audio_latent",
+                "localized_name": "audio_latent",
+                "name": "audio_latent",
+                "type": "LATENT",
+                "links": []
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfyui-workflow-encrypt",
+              "ver": "788cacae3699910d04c927e2082b9d44c197ed9b",
+              "Node name for S&R": "MiniMaxH3AVDecodeT8",
+              "widget_ue_connectable": {},
+              "aux_id": "T8mars/minimax-h3-audio-T8"
+            }
+          }
+        ],
+        "groups": [
+          {
+            "id": 1,
+            "title": "模型加载区",
+            "bounding": [
+              4900.145554912277,
+              124.60996879799723,
+              971.7540008399233,
+              842.9121881866586
+            ],
+            "color": "#3f789e",
+            "flags": {}
+          },
+          {
+            "id": 2,
+            "title": "一次采样",
+            "bounding": [
+              5899.485506039566,
+              123.83396310892638,
+              744.8352329225909,
+              843.690970288994
+            ],
+            "color": "#3f789e",
+            "flags": {}
+          },
+          {
+            "id": 5,
+            "title": "输出设置",
+            "bounding": [
+              4594.656300823019,
+              124.30378637934572,
+              285.82562328145514,
+              842.6514198088898
+            ],
+            "color": "#3f789e",
+            "flags": {}
+          },
+          {
+            "id": 7,
+            "title": "二次采样",
+            "bounding": [
+              6989.717938682959,
+              124.02408021215464,
+              717.1875959500485,
+              843.3863267730634
+            ],
+            "color": "#3f789e",
+            "flags": {}
+          },
+          {
+            "id": 9,
+            "title": "超分放大",
+            "bounding": [
+              6661.605878481267,
+              123.08240555221803,
+              309.27706414507816,
+              845.0514004251904
+            ],
+            "color": "#3f789e",
+            "flags": {}
+          }
+        ],
+        "links": [
+          {
+            "id": 155,
+            "origin_id": 114,
+            "origin_slot": 0,
+            "target_id": 113,
+            "target_slot": 0,
+            "type": "CLIP"
+          },
+          {
+            "id": 156,
+            "origin_id": 120,
+            "origin_slot": 0,
+            "target_id": 113,
+            "target_slot": 1,
+            "type": "VAE"
+          },
+          {
+            "id": 157,
+            "origin_id": 130,
+            "origin_slot": 0,
+            "target_id": 113,
+            "target_slot": 2,
+            "type": "VAE"
+          },
+          {
+            "id": 153,
+            "origin_id": 109,
+            "origin_slot": 0,
+            "target_id": 111,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 154,
+            "origin_id": 111,
+            "origin_slot": 0,
+            "target_id": 112,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 158,
+            "origin_id": 112,
+            "origin_slot": 0,
+            "target_id": 115,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 159,
+            "origin_id": 113,
+            "origin_slot": 1,
+            "target_id": 115,
+            "target_slot": 1,
+            "type": "LATENT"
+          },
+          {
+            "id": 160,
+            "origin_id": 115,
+            "origin_slot": 0,
+            "target_id": 117,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 161,
+            "origin_id": 113,
+            "origin_slot": 0,
+            "target_id": 117,
+            "target_slot": 1,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 162,
+            "origin_id": 116,
+            "origin_slot": 0,
+            "target_id": 118,
+            "target_slot": 0,
+            "type": "NOISE"
+          },
+          {
+            "id": 163,
+            "origin_id": 117,
+            "origin_slot": 0,
+            "target_id": 118,
+            "target_slot": 1,
+            "type": "GUIDER"
+          },
+          {
+            "id": 164,
+            "origin_id": 115,
+            "origin_slot": 1,
+            "target_id": 118,
+            "target_slot": 2,
+            "type": "SAMPLER"
+          },
+          {
+            "id": 165,
+            "origin_id": 115,
+            "origin_slot": 2,
+            "target_id": 118,
+            "target_slot": 3,
+            "type": "SIGMAS"
+          },
+          {
+            "id": 166,
+            "origin_id": 113,
+            "origin_slot": 1,
+            "target_id": 118,
+            "target_slot": 4,
+            "type": "LATENT"
+          },
+          {
+            "id": 167,
+            "origin_id": 118,
+            "origin_slot": 0,
+            "target_id": 119,
+            "target_slot": 0,
+            "type": "LATENT"
+          },
+          {
+            "id": 168,
+            "origin_id": 120,
+            "origin_slot": 0,
+            "target_id": 119,
+            "target_slot": 1,
+            "type": "VAE"
+          },
+          {
+            "id": 169,
+            "origin_id": 130,
+            "origin_slot": 0,
+            "target_id": 119,
+            "target_slot": 2,
+            "type": "VAE"
+          },
+          {
+            "id": 172,
+            "origin_id": 124,
+            "origin_slot": 0,
+            "target_id": 122,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 173,
+            "origin_id": 120,
+            "origin_slot": 0,
+            "target_id": 122,
+            "target_slot": 1,
+            "type": "VAE"
+          },
+          {
+            "id": 174,
+            "origin_id": 122,
+            "origin_slot": 0,
+            "target_id": 123,
+            "target_slot": 0,
+            "type": "LATENT"
+          },
+          {
+            "id": 175,
+            "origin_id": 119,
+            "origin_slot": 3,
+            "target_id": 123,
+            "target_slot": 1,
+            "type": "LATENT"
+          },
+          {
+            "id": 176,
+            "origin_id": 119,
+            "origin_slot": 0,
+            "target_id": 124,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 177,
+            "origin_id": 125,
+            "origin_slot": 0,
+            "target_id": 124,
+            "target_slot": 2,
+            "type": "INT"
+          },
+          {
+            "id": 178,
+            "origin_id": 125,
+            "origin_slot": 1,
+            "target_id": 124,
+            "target_slot": 3,
+            "type": "INT"
+          },
+          {
+            "id": 179,
+            "origin_id": 111,
+            "origin_slot": 0,
+            "target_id": 126,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 180,
+            "origin_id": 111,
+            "origin_slot": 0,
+            "target_id": 129,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 181,
+            "origin_id": 113,
+            "origin_slot": 0,
+            "target_id": 129,
+            "target_slot": 1,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 170,
+            "origin_id": 119,
+            "origin_slot": 0,
+            "target_id": 121,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 171,
+            "origin_id": 119,
+            "origin_slot": 1,
+            "target_id": 121,
+            "target_slot": 1,
+            "type": "AUDIO"
+          },
+          {
+            "id": 182,
+            "origin_id": 127,
+            "origin_slot": 0,
+            "target_id": 131,
+            "target_slot": 0,
+            "type": "NOISE"
+          },
+          {
+            "id": 183,
+            "origin_id": 129,
+            "origin_slot": 0,
+            "target_id": 131,
+            "target_slot": 1,
+            "type": "GUIDER"
+          },
+          {
+            "id": 184,
+            "origin_id": 128,
+            "origin_slot": 0,
+            "target_id": 131,
+            "target_slot": 2,
+            "type": "SAMPLER"
+          },
+          {
+            "id": 185,
+            "origin_id": 126,
+            "origin_slot": 0,
+            "target_id": 131,
+            "target_slot": 3,
+            "type": "SIGMAS"
+          },
+          {
+            "id": 186,
+            "origin_id": 123,
+            "origin_slot": 0,
+            "target_id": 131,
+            "target_slot": 4,
+            "type": "LATENT"
+          },
+          {
+            "id": 187,
+            "origin_id": 131,
+            "origin_slot": 0,
+            "target_id": 132,
+            "target_slot": 0,
+            "type": "LATENT"
+          },
+          {
+            "id": 188,
+            "origin_id": 120,
+            "origin_slot": 0,
+            "target_id": 132,
+            "target_slot": 1,
+            "type": "VAE"
+          },
+          {
+            "id": 189,
+            "origin_id": 130,
+            "origin_slot": 0,
+            "target_id": 132,
+            "target_slot": 2,
+            "type": "VAE"
+          },
+          {
+            "id": 191,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 113,
+            "target_slot": 7,
+            "type": "IMAGE"
+          },
+          {
+            "id": 194,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 113,
+            "target_slot": 12,
+            "type": "STRING"
+          },
+          {
+            "id": 190,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 110,
+            "target_slot": 0,
+            "type": "FLOAT"
+          },
+          {
+            "id": 192,
+            "origin_id": 132,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 193,
+            "origin_id": 132,
+            "origin_slot": 1,
+            "target_id": -20,
+            "target_slot": 1,
+            "type": "AUDIO"
+          }
+        ],
+        "extra": {}
+      }
+    ]
+  },
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.5010336527777426,
+      "offset": [
+        194.59460042660953,
+        -386.1847549300862
+      ]
+    },
+    "frontendVersion": "1.49.6",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

@@ -1,0 +1,8 @@
+{
+  "character": "宫格一张",
+  "shot": "V_grid",
+  "anchors": [
+    "宫格_C03.png"
+  ],
+  "anchor_kind": "face"
+}

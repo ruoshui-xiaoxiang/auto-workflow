@@ -1,0 +1,45 @@
+name: image_depth
+description: 深度 ControlNet 锁几何（实验性·尚未证实）—— src_image 出一张深度图当骨架，按提示词重画。⚠️ 2026-09-28 实测：本机 DepthAnythingV2-L 对风格化 CG 帧只给出糊团，喂进去出碎斑；换手搓高对比深度块后**仍是图案不是场景** ⇒ union 的 depth 模式有没有真生效还没证实。要锁构图请用 previz_control（Canny lineart，已验证）。
+args:
+  src_image: ""
+  # 也可以直接喂一张现成深度图（近=亮、远=暗），跳过自动提深度——把 workflow 换成
+  # 与 comfy/flux_controlnet_depth_api.json 同构、但 LoadImage 直连 ControlNetApplyAdvanced 的版本
+  prompt: ""
+  width: 736
+  height: 416
+  steps: 20
+  # ControlNet 强度。0.8 是既有 Canny 链的实测成功值；depth 模式未证实，别拿它当承重
+  strength: 0.8
+  # 预处理器工作分辨率（长边）。DepthAnythingV2-L 只有 vitl 权重在本地，离线可用
+  depth_res: 1024
+  seed: ""
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（机制关口）
+    hint: 图片口径：分辨率/字面化词/落点；锁脸铁律由 i2i 锚点那条链把守，本流可裸文字
+    auto_gates: [G5, G7, G11]
+    prompt_kind: image
+    characters: none
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    prompt: "{{args.prompt}}"
+    refs: "{{args.src_image}}"
+
+  - task: control
+    id: gen
+    label: 深度锁几何出图（实验性）
+    hint: 未证实——先拿一张已知好用的图做 A/B，再决定要不要进正式流程。产物落批次夹 depth/
+    workflow: "comfy/flux_controlnet_depth_api.json"
+    prompt: "{{args.prompt}}"
+    src_image: "{{args.src_image}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    steps: "{{args.steps}}"
+    strength: "{{args.strength}}"
+    depth_res: "{{args.depth_res}}"
+    seed: "{{args.seed}}"
+    prefix: "depth_{{run_id}}"
+    stage: "depth"
+    timeout: 900

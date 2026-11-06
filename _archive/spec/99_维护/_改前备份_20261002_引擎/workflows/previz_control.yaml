@@ -1,0 +1,41 @@
+name: previz_control
+description: previz 灰模帧 → FLUX ControlNet **lineart** 锁构图出图（P4 通道）。灰模帧拷进 ComfyUI input 当控制图，Canny 提边喂 lineart 模式。产物图片落批次夹 control/。
+args:
+  # 灰模帧（previz 关键帧）。正式出镜按"镜头分级投入"只对动作戏用；静镜走首尾帧直出。
+  src_image: 'E:\图像影音资源池\无音\素材\shot04_v5\shot04_v5_000.png'
+  # ⚠️ 占位提示词（验证用）。正式出镜用逐镜定稿提示词，经 --set prompt="..." 传入。
+  prompt: "沈无音在古风庭院的石凳上垂眸读书：21 岁清冷温婉、及腰黑长直发、头顶半盘发髻插银质步摇、两侧蓝花钗、额间朱砂莲花钿、月白与鸦青渐变交领汉服、腰间淡蓝织带挂着米色小布袋；青石地面、一张石桌一个石凳、旁有古树，竹影与洒落的光斑，背景轻微虚化。电影级写实 CG，浅景深，柔和天光。只采用输入图的构图、人物姿态与机位结构，画风按本描述渲染；不得继承灰色模型材质、不得出现灰色塑料感、不得保留占位方块。8K 细节。"
+  width: 1024
+  height: 576
+  steps: 20
+  strength: 0.8
+  seed: ""
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（机制关口）
+    hint: 图片口径：分辨率/字面化词/落点；锁脸铁律由 i2i 锚点那条链把守，本流可裸文字
+    auto_gates: [G5, G7, G11]
+    prompt_kind: image
+    characters: none
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    prompt: "{{args.prompt}}"
+    refs: "{{args.src_image}}"
+
+  - task: control
+    id: gen
+    label: lineart 锁构图出图
+    hint: 灰模帧 → Canny 提边 → FLUX ControlNet lineart；灰模帧自动拷进 ComfyUI input
+    workflow: "comfy/flux_controlnet_lineart_api.json"
+    prompt: "{{args.prompt}}"
+    src_image: "{{args.src_image}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    steps: "{{args.steps}}"
+    strength: "{{args.strength}}"
+    seed: "{{args.seed}}"
+    prefix: "previzctrl_{{run_id}}"
+    stage: "control"
+    timeout: 900

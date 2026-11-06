@@ -37,7 +37,13 @@ import yaml
 ROOT = Path(__file__).resolve().parent
 CFG = yaml.safe_load((ROOT / "config.yaml").read_text(encoding="utf-8"))
 LOG_DIR = Path(CFG["log_dir"])
-OUT_ROOT = Path(CFG["output_root"])
+# 10-02 批1 GAP-E1：以前这里直接 `Path(CFG["output_root"])` 读 config 里的**字面量**，
+# 而 `run.py` 是按 `pool_root/<project>/批次` 现推的——同一个值两套取法。
+# 后果：切了项目以后 webui 列的还是上一个项目的批次夹（它拿的是写死的那行）。
+# 现在统一走 delivery_root（叶子模块、无依赖，不破本文件"不 import run"的既定边界）。
+from delivery_root import config_literal_is_fresh, delivery_root  # noqa: E402
+
+OUT_ROOT = Path(delivery_root(CFG))
 STATUS_FILE = Path(CFG["status_file"])
 WF_DIR = ROOT / "workflows"
 COMFYUI_CFG = CFG.get("comfyui", {})
@@ -105,10 +111,18 @@ def load_vl_config() -> dict:
 
 
 def score_image(image_path: str) -> dict:
-    """对一张图做云端多模态判分。实现已抽到 tasks.vl_score_image（引擎闭环共用同一份），
-    这里委托以消重；返回 {score, dims, reasons, suggestion, model}。"""
-    from tasks import vl_score_image as _vl
-    return _vl(image_path)
+    """[2026-11-04 已退役] 云端多模态美学判分——审美判定交给人，机器只判可验证缺陷。
+
+    本体 `tasks.vl_score_image` 已随 `@task("auto")` 闭环一起摘除（不是只摘注册）。
+    这里保留函数名是为了**调用点报错报得清楚**：以前直接 `from tasks import vl_score_image`
+    会在运行期抛 ImportError，看起来像这个 UI 坏了，而不是这条判分线被裁掉了。
+    """
+    raise RuntimeError(
+        "[判分已退役] VL 美学判分（0-100 分＋扣分理由）已于 2026-11-04 摘除：\n"
+        "⇒ 原因：用户裁定「所有带美学判定的都交给人来判，机器只负责能实际判定的缺陷」\n"
+        "⇒ 替代：人眼三分类审片（审片站 approved／flagged／rejected ＋ 飞书目审）；"
+        "要事实在场核查走 vl_qc（谁在场／动作／瑕疵）\n"
+        "⇒ 正身：backups/_治理_20261104/归档件/审美判定退役_20261104/tasks_py_退役前.py")
 
 # ---- 参数白名单：common = 默认区（open `高级`折叠区 = only common 之外的 advanced）----
 # 未知参数整体拒绝（422）。值类型由 run.py 的 auto_cast 决定，这里只管字段可改不可改。
@@ -122,14 +136,9 @@ WHITELIST = {
         "common": ["manifest", "pick"],
         "advanced": ["tile", "steps", "upscale_by", "denoise"],
     },
-    "auto_draft": {
-        "common": ["theme", "prompt", "count"],
-        "advanced": ["threshold", "max_tries", "rewrite_mode",
-                     "width", "height", "steps", "loras"],
-    },
     "image_batch_draft": {
         "common": ["theme", "count"],
-        "advanced": ["prompt", "use_llm", "width", "height", "scale_by"],
+        "advanced": ["prompt", "use_llm_polish", "width", "height", "scale_by"],
     },
     "llm_fallback_test": {"common": [], "advanced": []},
     "selftest": {"common": [], "advanced": []},
@@ -140,8 +149,8 @@ DEFAULT_META = {  # 前端渲染用：label / 类型 / 提示（能自动推导�
     "count": {"label": "数量", "type": "number", "min": 1},
     "prompt": {"label": "英文提示词", "type": "textarea",
                "hint": "LLM 润色关闭时直接用作提示词"},
-    "use_llm_polish": {"label": "本地 LLM 润色", "type": "bool"},
-    "use_llm": {"label": "本地 LLM 润色", "type": "bool"},
+    "use_llm_polish": {"label": "LLM 润色", "type": "bool"},
+    "use_llm": {"label": "LLM 润色", "type": "bool"},
     "width": {"label": "宽", "type": "number", "min": 64},
     "height": {"label": "高", "type": "number", "min": 64},
     "scale_by": {"label": "放大倍数", "type": "number", "min": 1,
@@ -169,9 +178,41 @@ DEFAULT_META = {  # 前端渲染用：label / 类型 / 提示（能自动推导�
 }
 FALLBACK_META = {"label": "参数", "type": "text"}
 
+# ---- 运行决定单的槽（10-02 批 5-2／G13）：入口必须在这儿，不然"每批问人"落不了地 ----
+# 清单**不在这里抄一份**：从 channels_registry.run_slots 现推（同 decision_sheet 的取法）。
+# 读不到就如实留着，不硬编三个名字——硬编就是第二份抄本，表改了这里不会跟。
+def _run_level_slot_meta():
+    try:
+        from decision_sheet import slot_defs, TIER_RUN
+        slots, problem = slot_defs()
+        if problem:
+            raise RuntimeError(problem)
+        meta = {}
+        for s in [x for x in slots if x["tier"] == TIER_RUN]:
+            meta[s["slot"]] = {
+                "label": s["label"] or s["slot"],
+                "type": "bool" if s["slot"] in ("use_llm_polish", "enable_audio") else "text",
+                "hint": "G13 必填的运行决定（值归人，机器不代填、不判好坏）",
+            }
+            for a in (s.get("accepts") or []):
+                meta[a] = dict(meta[s["slot"]],
+                               label=(s["label"] or s["slot"]) + "（现役别名）")
+        return meta, None
+    except Exception as e:
+        return {}, "%s: %s" % (type(e).__name__, e)
+
+
+RUN_SLOT_META, RUN_SLOT_LOAD_ERROR = _run_level_slot_meta()
+DEFAULT_META.update(RUN_SLOT_META)
+if RUN_SLOT_LOAD_ERROR:
+    print("[webui] 运行决定单槽清单读不到（%s）⇒ 表单里不会出现这些槽，"
+          "真跑时 G13 会拦；这是读不到，不是没有要求" % RUN_SLOT_LOAD_ERROR,
+          file=sys.stderr)
+
 # 步骤任务类型 -> 中文名（步骤没写 label 时用）—— 对应 tasks.py 的任务注册表
 STEP_TASK_NAMES = {"llm": "润色提示词", "comfyui": "生成图片",
-                   "refine": "精修放大", "files": "整理归档",
+                   "video": "H3 出视频", "h3_movie": "多镜一键成片",
+                   "gate": "关口", "refine": "精修放大", "files": "整理归档",
                    "shell": "执行命令", "auto": "闭环自动出图（AI 判分重试）"}
 
 # 工作流显示名（下拉里的可读名；空 = 用原名）。value 永远用文件名，不改引擎。
@@ -179,7 +220,13 @@ WF_DISPLAY_NAMES = {
     "image_draft_batch": "批量草稿（两段式 · 挑图后精修）",
     "image_batch_draft": "一步出成品（4x 放大）",
     "image_refine": "精修放大（对草稿按编号）",
-    "auto_draft": "闭环自动出图（AI 判分 · 自动重试）",
+    # [2026-11-04 退役] auto_draft（闭环自动出图·AI 判分·自动重试）已从面板撤下：
+    # 那条链的驱动力是云端美学分，用户裁「审美判定交给人」。桩在 workflows/auto_draft.yaml，
+    # 替代＝image_draft_batch 出草稿交人挑 → image_refine 按编号精修。
+    "h3_i2va_video": "H3 首帧视频（人工审）",
+    "h3_i2va_batch": "H3 首帧视频（无人值守）",
+    "h3_ref2va_video": "H3 多参考视频（主力出片）",
+    "h3_one_click_movie": "H3 多镜一键成片",
 }
 
 # ---- 运行中的子进程（同一时刻最多一个） ----
@@ -198,6 +245,11 @@ def workflow_meta(name: str):
     wl = WHITELIST.get(name, {"common": [], "advanced": []})
     common = [a for a in wl["common"] if a in args_defaults]
     advanced = [a for a in wl["advanced"] if a in args_defaults]
+    if not name.startswith("selftest"):
+        # 自测不该依赖人填过的单（否则自测永远红＝没有自测），所以只往真出片的流里加槽
+        for k in list(RUN_SLOT_META):
+            if k not in args_defaults and k not in common and k not in advanced:
+                advanced.append(k)   # YAML 没这个 args 也照样给入口：值永远留空等人填
     # 白名单没列、但 YAML 里有的参数也放进 advanced（兜底：新字段不至于被藏没）
     known = set(wl["common"]) | set(wl["advanced"])
     for k in args_defaults:
@@ -206,7 +258,14 @@ def workflow_meta(name: str):
     fields = {}
     for k in list(common) + list(advanced):
         meta = dict(DEFAULT_META.get(k, FALLBACK_META))
-        meta.setdefault("value", args_defaults.get(k))
+        if k in RUN_SLOT_META:
+            # 运行决定单的槽**一律不预填**：yaml 里那句 `use_llm_polish: false` 是**流级默认**，
+            # 不是这批的人给的值（10-02 实测：预填会让表单提交时把它当"人给过的"回传，
+            # G13 就被绕开了）。留空 + required_decision 标记，让人自己勾。
+            meta["value"] = None
+            meta["required_decision"] = True
+        else:
+            meta.setdefault("value", args_defaults.get(k))
         fields[k] = meta
     return {"name": name,
             "display_name": WF_DISPLAY_NAMES.get(name) or name,
@@ -215,7 +274,9 @@ def workflow_meta(name: str):
                        "label": s.get("label") or STEP_TASK_NAMES.get(
                            s.get("task"), s.get("id") or "")}
                       for s in (w.get("steps") or [])],
-            "common": common, "advanced": advanced, "fields": fields}
+            "common": common, "advanced": advanced, "fields": fields,
+            "decision_slots": sorted(RUN_SLOT_META),
+            "decision_slots_error": RUN_SLOT_LOAD_ERROR}
 
 
 def all_workflows():
@@ -229,7 +290,7 @@ def comfyui_loras():
     覆盖 D 盘优化模型库）。失败（ComfyUI 没起/版本差异）时回退扫描本地目录。
     返回 ["flux\\Hanfu_Elegant_Flux.safetensors", ...]（后端归一为 / 分隔路径）。
     """
-    base = (COMFYUI_CFG.get("base_url") or "http://127.0.0.1:8188").rstrip("/")
+    base = (COMFYUI_CFG.get("base_url") or "http://127.0.0.1:8189").rstrip("/")
     try:
         with urllib.request.urlopen(f"{base}/object_info/LoraLoader", timeout=5) as r:
             oi = json.loads(r.read().decode("utf-8"))
@@ -350,16 +411,13 @@ def start_run(workflow: str, params: dict) -> dict:
                 "w", encoding="utf-8")
     env = dict(os.environ)
     settings = load_settings()
-    # 根据 llm_backend 注入对应的云端 key（cloud / dashscope）
-    llm_backend = str(params.get("llm_backend") or "auto").strip().lower()
-    if llm_backend in ("cloud", "auto"):
-        cloud = settings.get("cloud") or {}
-        if cloud.get("api_key"):
-            env["AW_CLOUD_API_KEY"] = cloud["api_key"]
-    if llm_backend in ("dashscope", "auto"):
-        dashscope = settings.get("dashscope") or {}
-        if dashscope.get("api_key"):
-            env["AW_DASHSCOPE_API_KEY"] = dashscope["api_key"]
+    # 无条件注入云端 key（cloud + dashscope），所有 LLM 步骤走云端兜底链
+    cloud = settings.get("cloud") or {}
+    if cloud.get("api_key"):
+        env["AW_CLOUD_API_KEY"] = cloud["api_key"]
+    dashscope = settings.get("dashscope") or {}
+    if dashscope.get("api_key"):
+        env["AW_DASHSCOPE_API_KEY"] = dashscope["api_key"]
     vl_model = ""
     for pp in ("cloud", "dashscope"):
         vl_model = (settings.get(pp) or {}).get("vl_model") or vl_model
@@ -397,7 +455,14 @@ def current_status() -> dict:
     if STATUS_FILE.exists():
         try:
             j = json.loads(STATUS_FILE.read_text(encoding="utf-8"))
-            data["status"] = j.get("last_run")
+            lr = j.get("last_run")
+            proc_dead = (_proc is None) or (_proc.poll() is not None)
+            if lr and lr.get("status") == "running" and proc_dead:
+                lr["status"] = "error"
+                lr["detail"] = ("工作流进程已退出但未更新状态（可能崩溃），已重置"
+                                if _proc is not None else
+                                "工作流被另一个 webui 实例拉起，当前实例无法跟踪（已重置状态）")
+            data["status"] = lr
             data["history"] = j.get("history") or []
         except Exception:
             pass
@@ -453,7 +518,12 @@ class Handler(BaseHTTPRequestHandler):
                     libs.append({"path": str(p), "exists": False})
             return self._send(200, {"model_lib": libs,
                                     "out_root": str(OUT_ROOT),
-                                    "engine_dir": str(WF_DIR.parent)})
+                                    "engine_dir": str(WF_DIR.parent),
+                                    # 画布入口地址跟着 config 走，别在页面里写死端口
+                                    # （2026-09-22 修：按钮原本硬编码 8188，那是已退役的
+                                    #   旧便携实例，点下去必然"拒绝连接"）
+                                    "comfyui_base": (COMFYUI_CFG.get("base_url")
+                                                     or "http://127.0.0.1:8189")})
         if path == "/api/cloud":
             # 返回已存云端设置（key 脱敏：只显示尾 4 位）；支持两个 profile：cloud / dashscope
             settings = load_settings()
@@ -669,20 +739,6 @@ details .inner label:first-child{margin-top:4px}
 #cloudBox{margin:0 0 16px;background:var(--panel);border:1px solid var(--line);
   border-radius:var(--radius)}
 #cloudBox summary{font-size:13px;color:var(--brand-3)}
-/* AI 后端主开关卡片 */
-.ai-backend{background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--brand);
-  border-radius:var(--radius);padding:12px 16px;margin-bottom:14px}
-.ai-backend .ab-title{font-size:14px;font-weight:600;color:var(--brand);display:flex;align-items:baseline;gap:8px}
-.ab-opts{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
-.ab-opt{flex:1;min-width:150px;text-align:left;display:flex;flex-direction:column;gap:2px;
-  border:1px solid var(--line);border-radius:8px;background:#fff;padding:10px 14px;cursor:pointer;
-  color:var(--brand-2);font-size:14px;transition:.15s}
-.ab-opt .ab-sub{font-size:12px;color:var(--faint);font-weight:400}
-.ab-opt.on{border-color:var(--brand);background:var(--brand);color:#fff}
-.ab-opt.on .ab-sub{color:rgba(255,255,255,.72)}
-.ab-state{margin-top:10px;font-size:12px;color:var(--faint);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.ab-state a{color:var(--llm);cursor:pointer;text-decoration:underline}
-.ab-state .ok{color:var(--ok)} .ab-state .warn{color:var(--warn)}
 /* 进度条 */
 .steps{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
 .step{flex:1;min-width:120px;border:1px solid var(--line);border-left:4px solid var(--skip);
@@ -730,7 +786,7 @@ footer{color:var(--faint);font-size:11px;margin-top:26px;text-align:center}
 <div class="wrap">
 <header>
   <h1>auto-workflow 可视化操作台</h1>
-  <span class="sub">本地生图 / 精修 · 只读操作，不碰配置</span>
+  <span class="sub">云端生图 / 精修 · 只读操作，不碰配置</span>
   <span class="eng">引擎 <b id="engState">—</b> <span class="pill" id="engPill">—</span></span>
 </header>
 
@@ -743,18 +799,8 @@ footer{color:var(--faint);font-size:11px;margin-top:26px;text-align:center}
       <div class="hint" id="wfDesc"></div>
     </div>
     <div class="wfcomfy">
-      <button id="comfyBtn" title="打开 ComfyUI 原生节点画布（http://127.0.0.1:8188）">打开 ComfyUI 原生页 ↗</button>
+      <button id="comfyBtn" title="打开 ComfyUI 原生节点画布（地址取自 config.yaml 的 comfyui.base_url）">打开 ComfyUI 原生页 ↗</button>
     </div>
-  </div>
-  <!-- AI 后端主开关（一处决策：仅本地 / 云端优先 / 自动） -->
-  <div class="ai-backend">
-    <div class="ab-title">AI 后端 <span class="hint2">LLM 步骤（润色 / 改写 / 判分）用哪个后端</span></div>
-    <div class="ab-opts" id="abOpts">
-      <button type="button" data-mode="local" class="ab-opt"><span>仅本地</span><span class="ab-sub">不联网 · 不烧额度</span></button>
-      <button type="button" data-mode="cloud" class="ab-opt"><span>云端优先</span><span class="ab-sub">质量最好 · 需已配云端</span></button>
-      <button type="button" data-mode="auto" class="ab-opt"><span>自动</span><span class="ab-sub">云不可用自动落本地</span></button>
-    </div>
-    <div class="ab-state" id="abState"></div>
   </div>
   <div id="commonFields"></div>
   <details id="advBox">
@@ -859,11 +905,11 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 
 // ---- 错误人话化（映射到中文建议；原始信息另开关显示）----
 const HUMANIZE=[
-  [/显存|out of memory|cuda/i,"显存不够：另一档模型可能还占着卡。引擎会按惯例自动清理冲突服务，稍等几分钟重试；还不行就手动停掉正在跑的模型服务。"],
+  [/显存|out of memory|cuda/i,"显存不够：先关掉别的占卡模型（桌面工具里点「停止所有模型」），或等当前生图跑完再试。"],
   [/命令失败|code=3/i,"该步骤触发了引擎的失败演示或异常命令（见下方原始信息）。若为 selftest 属设计如此。"],
   [/拒绝|refuse|时延|超时|timeout/i,"这一步超时了：单张耗时可能超过了引擎上限，或本机负载过高。可在高级参数里调小步数/数量后重试。"],
   [/找不到|FileNotFound|不存在/i,"文件/配置找不到：多半是批次被移动或手动删过。刷新历史看实际批次号。"],
-  [/端口|拒绝连接|Connection|refused|拉不起|failed to start/i,"本机服务没起来或端口被占：引擎会自动拉起 ComfyUI/LLM，网络不佳时冷启动要几分钟，重试即可。"],
+  [/端口|拒绝连接|Connection|refused|拉不起|failed to start/i,"本机服务没起来或端口被占：引擎会自动拉起 ComfyUI，网络不佳时冷启动要几分钟，重试即可。"],
 ];
 function humanize(detail){
   if(!detail) return "未知错误。打开「显示原始信息」看日志。";
@@ -966,7 +1012,9 @@ function gatherParams(fields){
 async function runWf(workflow){
   const w=WF[workflow]; if(!w) return;
   const params=gatherParams([...w.common,...w.advanced]);
-  params.llm_backend=aiBackendValue();
+  if(Object.prototype.hasOwnProperty.call(w.fields,'llm_backend')){
+    params.llm_backend="cloud,dashscope";
+  }
   $("runBtn").disabled=true; $("runHint").textContent="启动中…";
   try{
     await api("/api/run",{method:"POST",headers:{"Content-Type":"application/json"},
@@ -1181,46 +1229,6 @@ function loadCloudProfile(){
       $("c_keytip").textContent=prof.has_key?`已设置（尾号 ${prof.api_key_tail||"…"}）`:"未设置";
     } })();
 }
-// ---- AI 后端主开关：三档映射（替代原高级参数里的 7 项后端下拉）----
-const AI_MODES=["local","cloud","auto"];
-let AI_MODE=(localStorage.getItem("aw_ai_backend")||"local");
-function aiBackendValue(){
-  if(AI_MODE==="cloud") return "cloud,dashscope";   // 云优先：包月失败再按量；都失败时报错（不落本地）
-  return AI_MODE;                                     // local / auto
-}
-function renderAbOpts(){
-  $("abOpts").querySelectorAll(".ab-opt").forEach(b=>{
-    const on=(b.dataset.mode===AI_MODE);
-    b.classList.toggle("on",on);
-  });
-}
-async function refreshAbState(){
-  const box=$("abState"); if(!box) return;
-  const j=await api("/api/cloud").catch(()=>null);
-  let hasAny=false, tails=[];
-  if(j&&j.profiles){
-    for(const [p,prof] of Object.entries(j.profiles)){
-      if(prof.has_key){ hasAny=true; tails.push(prof.api_key_tail||"…"); }
-    }
-  }
-  let html="";
-  if(AI_MODE==="local"){
-    html=`<span>后端：仅本地 · LLM 步骤不联网，云端配置暂不参与</span>`;
-  }else if(hasAny){
-    html=`<span class="ok">✓ 云端已配置（尾号 ${tails.join(" / ")||"…"}）${AI_MODE==="cloud"?"→ 云端优先生效":"→ 云端不可用时自动落本地"}</span>`;
-  }else{
-    html=`<span class="warn">⚠ ${AI_MODE==="cloud"?"云端优先":"自动模式"}需要云端 API Key（未配置）：<a id="abGoCfg">去配置 →</a></span>`;
-  }
-  box.innerHTML=html;
-  const go=$("abGoCfg"); if(go) go.onclick=()=>{$("cloudBox").open=true;$("cloudBox").scrollIntoView({behavior:"smooth"});};
-}
-$("abOpts").addEventListener("click",e=>{
-  const b=e.target.closest(".ab-opt"); if(!b) return;
-  AI_MODE=b.dataset.mode;
-  localStorage.setItem("aw_ai_backend",AI_MODE);
-  renderAbOpts(); refreshAbState();
-});
-renderAbOpts(); refreshAbState();
 
 $("c_profile").onchange=()=>{updateModelOptions();loadCloudProfile();};
 loadCloudProfile();
@@ -1232,7 +1240,6 @@ $("cloudSave").onclick=async()=>{
     $("c_key").value="";
     const j=await api("/api/cloud"); const prof=j.profiles[$("c_profile").value];
     $("c_keytip").textContent=prof.has_key?"已设置（尾号 "+prof.api_key_tail+"）":"未设置";
-    refreshAbState();
   }catch(e){ $("cloudMsg").textContent="保存失败："+e.message; }
 };
 $("cloudTest").onclick=async()=>{
@@ -1241,12 +1248,14 @@ $("cloudTest").onclick=async()=>{
   $("cloudMsg").textContent="测试中…";
   try{ const j=await api("/api/cloud/test",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
     $("cloudMsg").textContent="✅ 连接成功，回复："+j.reply;
-    refreshAbState();
   }catch(e){ $("cloudMsg").textContent="❌ "+e.message; }
 };
 
 $("wfSel").onchange=switchWf;
-$("comfyBtn").onclick=()=>window.open("http://127.0.0.1:8188","_blank");
+// 画布地址不再写死端口：默认 8189，随后由 /api/info 用 config.yaml 的值覆盖。
+// （2026-09-22 前这里是 8188——已退役的旧便携实例，点下去只会"拒绝连接"）
+var COMFY_BASE="http://127.0.0.1:8189";
+$("comfyBtn").onclick=()=>window.open(COMFY_BASE,"_blank");
 $("runBtn").onclick=()=>runWf(curWf.name);
 $("stopBtn").onclick=async()=>{ await api("/api/stop",{method:"POST"}).catch(()=>{}); $("stopBtn").style.display="none"; };
 $("showRaw").onchange=()=>{$("rawBox").style.display=$("showRaw").checked?"block":"none";};
@@ -1318,6 +1327,8 @@ loadWf(); loadBatches();
     const libs=(i.model_lib||[]).filter(x=>x.exists);
     const lib=libs.length?libs[0].path:"（未找到）";
     $("modelLib").textContent=`实际模型库: ${lib} · 产物: ${i.out_root}`;
+    if(i.comfyui_base){ COMFY_BASE=i.comfyui_base;
+      $("comfyBtn").title="打开 ComfyUI 原生节点画布（"+COMFY_BASE+"）"; }
   } })();
 setInterval(loadBatches,10000);
 </script>
@@ -1346,6 +1357,13 @@ def main():
     url = f"http://{HOST}:{port}"
     print(f"auto-workflow WebUI: {url}")
     print(f"工作流目录: {WF_DIR}   产物: {OUT_ROOT}   状态: {STATUS_FILE}")
+    _ok, _derived, _literal = config_literal_is_fresh(CFG)
+    if not _ok:
+        # config 里那行 output_root 字面量已经跟着 project 漂了。
+        # 本进程不受影响（走 delivery_root），但**任何直接读字面量的代码会拿到上一个项目的落点**。
+        print(f"⚠ config.yaml 的 output_root 字面量（{_literal}）与 project='{CFG.get('project')}' "
+              f"派生值（{_derived}）不一致 —— 本面板已按派生值显示，"
+              f"请把 config 那行改成派生值或清空，别留第二个事实源。")
     if "--no-browser" not in sys.argv:
         threading.Timer(0.8, lambda: webbrowser.open(url)).start()
     try:

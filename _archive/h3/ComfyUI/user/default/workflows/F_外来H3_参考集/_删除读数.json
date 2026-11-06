@@ -1,0 +1,380 @@
+{
+ "criterion": "单一标准：缺的节点全部确认能拿到（Manager注册表可反查 或 字面量在包内自带插件源码中）且 mode=0 生效节点的模型引用全部命中活实例枚举 → 保留；否则删除。",
+ "kept_count": 16,
+ "deleted_count": 23,
+ "kept": [
+  "F101_008-Z-Image-Turbo-文生图.json",
+  "F103_MiniMax H3全能参考工作流.json",
+  "F105_MiniMaxH3-双时钟采样加速Lora.json",
+  "F102_MiniMax H3 Ref2VA - 双采轻量稳定版工作流_本机档.json",
+  "F103_MiniMax H3全能参考工作流_本机档.json",
+  "F104_MiniMax H3多图参考工作流_本机档.json",
+  "F105_MiniMaxH3-双时钟采样加速Lora_本机档.json",
+  "F111_剑斗多参模式workflowREF2VA_本机档.json",
+  "F112_剑斗首尾帧模式workflowFL2VA_本机档.json",
+  "F201_004-RIFE-视频插帧.json",
+  "F202_005-SeedVR2-视频高清放大.json",
+  "F211_H3_HardMode_Chained.json",
+  "F212_H3_Keyframes.json",
+  "F213_H3_Multishot_AIO.json",
+  "F214_H3_Multishot_MEMORY.json",
+  "F215_H3_Seamless_Chain_CORE.json"
+ ],
+ "items": [
+  {
+   "deleted": "F102_MiniMax H3 Ref2VA - 双采轻量稳定版工作流.json",
+   "bucket": "01_就绪_重启后可加载",
+   "sha256": "d9063629f7a9ea051ef53c6f0f7e1adf750797ebdde501ce83209b7eb9724513",
+   "bytes": 55826,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.16-让角色开口唱歌！MiniMax H3 × ComfyUI 双采样，声画同步燃爆全场\\MiniMax H3 ComfyUI 角色唱歌双采样使用手册\\MiniMax H3 Ref2VA - 双采轻量稳定版工作流.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "LoraLoaderBypassModelOnly:minimax_h3_turbo_4步加速_comfyui.safetensors",
+    "UNETLoader:minimax_h3_ref2va_int8_convrot.safetensors",
+    "VAELoader:minimax_h3_audio_vae_fp32.safetensors",
+    "VAELoader:minimax_h3_video_vae_fp16.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F104_MiniMax H3多图参考工作流.json",
+   "bucket": "01_就绪_重启后可加载",
+   "sha256": "d63ada1dd63dfe25e9863d8756de38a6965a3de365f6fda9442241d7e0f92fc0",
+   "bytes": 67814,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\ComfyUIAI漫剧案例工作流方案\\MiniMax H3多图参考工作流.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "LoraLoaderBypassModelOnly:minimax_h3_turbo_4步加速_comfyui.safetensors",
+    "UNETLoader:minimax_h3_fl2va_int8_convrot.safetensors",
+    "VAELoader:minimax_h3_audio_vae_fp32.safetensors",
+    "VAELoader:minimax_h3_video_vae_fp16.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F111_剑斗多参模式workflowREF2VA.json",
+   "bucket": "02_待补依赖",
+   "sha256": "05263960fd2776aaa1712f4c75e6563eca26b11410ad4c78bdca38fc6b9c73d3",
+   "bytes": 191033,
+   "restore_from": "D:\\AIWorkflow\\tmp\\h3_combat_v2\\剑斗多参模式workflowREF2VA.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+    "LoraLoaderModelOnly:Bunny_weapon_combatV1.safetensors",
+    "LoraLoaderModelOnly:minimax_h3_fl2v_lightx2v_turbo_4step_v0.1_comfy.safetensors",
+    "UNETLoader:minimax_h3_hybrid_fl2va_ref2va_b25-49.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F112_剑斗首尾帧模式workflowFL2VA.json",
+   "bucket": "02_待补依赖",
+   "sha256": "ce4363358562e7a993f04986d5ea9916d6761eccc68653870dc6251adfa81021",
+   "bytes": 71645,
+   "restore_from": "D:\\AIWorkflow\\tmp\\h3_combat_v2\\剑斗首尾帧模式workflowFL2VA.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+    "LoraLoaderModelOnly:Bunny_weapon_combatV1.safetensors",
+    "LoraLoaderModelOnly:minimax_h3_fl2v_lightx2v_turbo_4step_v0.1_comfy.safetensors",
+    "LoraLoaderModelOnly:minimax_h3_fl2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors",
+    "UNETLoader:minimax_h3_hybrid_fl2va_ref2va_b25-49.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F205_007-Krea2+Z-Image-Turbo-高质量生图.json",
+   "bucket": "02_待补依赖",
+   "sha256": "010ac65d8e1ba9da02b48b29ad62eff45107c54add4b03bf8f3845ef56eed275",
+   "bytes": 83437,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\007-Krea2+Z-Image-Turbo-高质量生图.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen3VLInstruct4bHeretic_v10(1).safetensors",
+    "CLIPLoader:qwen_3_4b_fp4_mixed.safetensors",
+    "DiffusionModelLoaderKJ:Krea2-MuseByStable_v15Turbo_fp8.safetensors",
+    "DiffusionModelLoaderKJ:Z-Image-Base-8steps-White_Marble-AIO_v2-bf16.safetensors",
+    "LoraLoaderModelOnly:Krea2-realism_engine_v2.safetensors",
+    "LoraLoaderModelOnly:RadianceChromeVoluptuous_z-image_v1.0.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F206_009-Klein-文生图.json",
+   "bucket": "02_待补依赖",
+   "sha256": "170f5d9ef460851fc6e39d61af3495e0c8ad396a3d01e811a2179db1761b64a2",
+   "bytes": 23260,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\009-Klein-文生图.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen_3_4b_fp4_mixed.safetensors",
+    "CLIPLoader:qwen_3_8b_fp8mixed.safetensors",
+    "UNETLoader:flux-2-klein-9b.safetensors",
+    "VAELoader:flux2-vae.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F207_010-Klein-图片编辑.json",
+   "bucket": "02_待补依赖",
+   "sha256": "c5dcd586e0289bb859bd8fe682eb46ea76d6efc0ccb7e1bb4fcc76ca85c761c3",
+   "bytes": 26407,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\010-Klein-图片编辑.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen_3_8b_fp8mixed.safetensors",
+    "UNETLoader:flux-2-klein-9b-fp8.safetensors",
+    "VAELoader:flux2-vae.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F208_011-Klein-双图编辑.json",
+   "bucket": "02_待补依赖",
+   "sha256": "0c6224ae6e0a0915c450363d5735b183f9377aa3124c59356e4c285e6c591a0e",
+   "bytes": 30321,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\011-Klein-双图编辑.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen_3_8b_fp8mixed.safetensors",
+    "UNETLoader:flux-2-klein-9b.safetensors",
+    "VAELoader:flux2-vae.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F209_012-Klein-三图编辑.json",
+   "bucket": "02_待补依赖",
+   "sha256": "4d726c166d74d12da875182f92cf9b2e9d24da3e1d901439ee924077b5ce7c35",
+   "bytes": 36393,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\012-Klein-三图编辑.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen_3_8b_fp8mixed.safetensors",
+    "UNETLoader:flux-2-klein-9b.safetensors",
+    "VAELoader:flux2-vae.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F210_013-Klein-局部重绘.json",
+   "bucket": "02_待补依赖",
+   "sha256": "56dc0b1720895477b2c894424060dcbda9b4e23aa65ab229f27463a0ecc3c782",
+   "bytes": 34920,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\013-Klein-局部重绘.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen_3_8b_fp8mixed.safetensors",
+    "UNETLoader:flux-2-klein-9b.safetensors",
+    "VAELoader:flux2-vae.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F216_MiniMax H3 - fl2va - ref2va.json",
+   "bucket": "02_待补依赖",
+   "sha256": "36712d093ed0fc750ea9db38de62a5f5405562ba4f2c22c74ee31d1e6a364d83",
+   "bytes": 124426,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.18-告别硬续！MiniMaxH3丝滑连贯长视频生成工作流\\资料\\节点包\\ComfyUI-H3-Motion-Context\\example_workflows\\MiniMax H3 - fl2va - ref2va.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:Qwen3vl-32b-minimax-h3_int8_convrot.safetensors",
+    "UNETLoader:MiniMax_H3_fl2va_pruned_int8_convrot.safetensors",
+    "UNETLoader:MiniMax_H3_ref2va_pruned_int8_convrot.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F217_MiniMax H3多图参考.json",
+   "bucket": "02_待补依赖",
+   "sha256": "f3ff768f7d89dfaf14204ec59cbf0d90ef69d9652b415cf1625fde6e548f94e6",
+   "bytes": 186874,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.20-本地部署 AI 视频模型手搓一个属于自己的 AI 女友\\工作流\\MiniMax H3多图参考.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "LoraLoaderBypassModelOnly:minimax_h3_turbo_4步加速_comfyui.safetensors",
+    "UNETLoader:minimax_h3_fl2va_int8_convrot.safetensors",
+    "VAELoader:minimax_h3_audio_vae_fp32.safetensors",
+    "VAELoader:minimax_h3_video_vae_fp16.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F218_MiniMaxH3-MontionContext.json",
+   "bucket": "02_待补依赖",
+   "sha256": "693362548d28f0ed9c5c3cf3fd89a7a7ba9abbdb99e93aa8b84867553d46f5de",
+   "bytes": 72451,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.18-告别硬续！MiniMaxH3丝滑连贯长视频生成工作流\\资料\\MiniMaxH3-MontionContext.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+    "LoraLoaderBypassModelOnly:minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+    "UNETLoader:minimax_h3_fl2va_int8_convrot.safetensors",
+    "VAELoader:minimax_h3_audio_vae_fp32.safetensors",
+    "VAELoader:minimax_h3_video_vae_fp16.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F219_MiniMaxH3-双采超清.json",
+   "bucket": "02_待补依赖",
+   "sha256": "914f138029f1bf296646f4f91d80826f7c0e86a7d965d1a84b2a298eb65b2aca",
+   "bytes": 146496,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.13-MiniMaxH3双采工作流\\工作流\\MiniMaxH3-双采超清.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+    "LoraLoaderBypassModelOnly:minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+    "UNETLoader:minimax_h3_fl2va_int8_convrot.safetensors",
+    "VAELoader:minimax_h3_audio_vae_fp32.safetensors",
+    "VAELoader:minimax_h3_video_vae_fp16.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F220_MiniMaxH3_影视创作工作流集合.json",
+   "bucket": "02_待补依赖",
+   "sha256": "be5071e8a462f154eb1aa86b24b917fc15a5ae3734133fd8dab42ef9b43dd083",
+   "bytes": 214993,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.23-MinimaxH3-影视创作工作流集合\\资料\\工作流\\MiniMaxH3_影视创作工作流集合.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+    "LoraLoaderModelOnly:minimax_h3_fl2v_turbo_4step_v0.1_768p_sla_comfyui_bf16.safetensors",
+    "UNETLoader:minimax_h3_ref2va_int8_convrot.safetensors",
+    "VAELoader:minimax_h3_audio_vae_fp32.safetensors",
+    "VAELoader:minimax_h3_video_vae_fp16.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F221_MiniMax_H3基础时间线规划工作流.json",
+   "bucket": "02_待补依赖",
+   "sha256": "7494e8d87c084d435aef229fd16770ea107e20bff6c86306bb534613cacc2a9e",
+   "bytes": 32952,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.04-MinimaxH3长视频动作迁移人物替换\\工作流+插件\\插件\\ComfyUI-MiniMaxH3-TimelineDirector\\example_workflows\\MiniMax_H3基础时间线规划工作流.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+    "LoraLoaderModelOnly:minimax_h3_fl2v_lightx2v_turbo_4step_v1.0_768p_resized_avg_rank_31_bf16.safetensors",
+    "UNETLoader:minimax_h3_ref2va_int8_convrot.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F222_MiniMax_H3时间线规划拆分节点工作流.json",
+   "bucket": "02_待补依赖",
+   "sha256": "d368b720200306c8452871d0f9229b3f7fd5e2a0e5f402f3ef602d1263065e39",
+   "bytes": 54731,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.04-MinimaxH3长视频动作迁移人物替换\\工作流+插件\\插件\\ComfyUI-MiniMaxH3-TimelineDirector\\example_workflows\\MiniMax_H3时间线规划拆分节点工作流.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+    "LoraLoaderModelOnly:minimax_h3_fl2v_lightx2v_turbo_4step_v1.0_768p_resized_avg_rank_31_bf16.safetensors",
+    "UNETLoader:minimax_h3_ref2va_int8_convrot.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F223_MiniMax_H3时间规划+Prompt提示词生成.json",
+   "bucket": "02_待补依赖",
+   "sha256": "6812a972c895e6f84f10a880382eac64ee9300da192b1b728a62ce7bbb21e933",
+   "bytes": 57288,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.04-MinimaxH3长视频动作迁移人物替换\\工作流+插件\\插件\\ComfyUI-MiniMaxH3-TimelineDirector\\example_workflows\\MiniMax_H3时间规划+Prompt提示词生成.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+    "LoraLoaderModelOnly:minimax_h3_fl2v_lightx2v_turbo_4step_v1.0_768p_resized_avg_rank_31_bf16.safetensors",
+    "UNETLoader:minimax_h3_ref2va_int8_convrot.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F224_Qwen3.8+MiniMaxH3.json",
+   "bucket": "02_待补依赖",
+   "sha256": "77622c755c8419f6b8e9ab0f80cd6899881e4291c03be1569568e7a80f3f6339",
+   "bytes": 122142,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.02-Qwen3.8“越狱”无审核！配合 MiniMax H3，一键放飞自我！\\资料\\工作流\\Qwen3.8+MiniMaxH3.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+    "LoraLoaderModelOnly:MysticXXX_MMH3-V1.safetensors",
+    "LoraLoaderModelOnly:minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+    "UNETLoader:minimax_h3_ref2va_int8_convrot.safetensors",
+    "VAELoader:minimax_h3_audio_vae_fp32.safetensors",
+    "VAELoader:minimax_h3_video_vae_fp16.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F225_minimax_h3_r2v_时间线导演台.json",
+   "bucket": "02_待补依赖",
+   "sha256": "9addb4b6c586d627e2ee1a16d37c3a0be4aab15f6c83ddac4dbbf3ffdc50e6bd",
+   "bytes": 63108,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.04-MinimaxH3长视频动作迁移人物替换\\工作流+插件\\插件\\ComfyUI-MiniMaxH3-TimelineDirector\\example_workflows\\minimax_h3_r2v_时间线导演台.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+    "LoraLoaderModelOnly:minimax_h3_fl2v_lightx2v_turbo_4step_v1.0_768p_resized_avg_rank_31_bf16.safetensors",
+    "UNETLoader:minimax_h3_ref2va_int8_convrot.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F226_海螺H3视频编辑-人物替换V1+.json",
+   "bucket": "02_待补依赖",
+   "sha256": "9ec04eb89ec977517880c12671e75972024f1510679fae216995dffea1f03742",
+   "bytes": 90461,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.23-MinimaxH3-影视创作工作流集合\\海螺H3视频编辑-人物替换V1+.json",
+   "is_variant": false,
+   "node_block": [],
+   "unresolved_models_active": [
+    "CLIPLoader:qwen3vl_32b_minimax_h3_int8_convrot.safetensors"
+   ],
+   "reason": "权重或节点不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F203_006-Krea2-单采+高清放大.json",
+   "sha256": "af057865e2d4371bf8dd0d9c19898ce7dec494d18fb3ddaecab7ed151f0f5fb3",
+   "bytes": 55108,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\006-Krea2-单采+高清放大.json",
+   "restore_from_all": [
+    "E:\\_统一备份\\网络工作流\\工作流大全\\2026.08.06-MiniMax H3终极整合包来了！从生图、改图到视频生成、插帧、高清放大，一套彻底打通AI视频全流程！\\006-Krea2-单采+高清放大.json"
+   ],
+   "evidence": "按 sha256 在课程包内反查到同哈希源件，恢复链独立成立",
+   "reason": "权重不满足本机运行条件（用户 2026-10-30 单一标准）"
+  },
+  {
+   "deleted": "F204_006-Krea2-单采+高清放大.json",
+   "sha256": "b673e4ab7295025cb17002de1e63df23c51fe230f8ae6b46ba02030201ef897d",
+   "bytes": 71415,
+   "restore_from": "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.11-云上天宫复刻教学\\工作流\\006-Krea2-单采+高清放大.json",
+   "restore_from_all": [
+    "E:\\_统一备份\\网络工作流\\工作流大全\\2026.09.11-云上天宫复刻教学\\工作流\\006-Krea2-单采+高清放大.json"
+   ],
+   "evidence": "按 sha256 在课程包内反查到同哈希源件，恢复链独立成立",
+   "reason": "权重不满足本机运行条件（用户 2026-10-30 单一标准）"
+  }
+ ],
+ "guard_note": "首轮有 2 张因台账 installed_as 失配被安全闸拦下；本轮改用 sha256 在课程包内反查同哈希源件独立取证后才删。"
+}

@@ -1,0 +1,7 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description: [Shot 1] 高精度CG半写实，古风武侠：武周少女武君仪一袭劲装、白麻布裹着长杆，洛阳夜行。横屏16:9电影构图，宽画幅纵深调度，电影级体积光与浅景深，湿润黏腻的空气，月夜青砖与灯笼暖光；肤色与织物、木石与织物材质写实，颗粒细腻，无文字水印。 One continuous take, no cut inside this shot; the opening composition, environment, subject positions, clothing, carried objects and lighting are exactly as shown in <Picture 1>, and no identity or location changes mid-shot. 那天下午她吃掉最后一角饼，想着天黑前总能遇见下一处落脚点。 走到黄昏风变了，一股水汽贴上脸，她抬头望了望，路旁的树只剩下模糊的影子。 她又走了几步，鞋底忽然陷进泥里——方才这条路还是干的。 Camera: 从她背后跟拍，抬头时镜头随之上摇，最后落到她陷住的鞋底. The move is continuous and never cuts. Motion: every movement in this shot flows into the next without pause, freeze, hesitation or abrupt jump — the opening, the reaction and the follow-through are one unbroken motion, no gap between moves. Keep unchanged throughout: 她随身那根缠着白麻布的长杆器物，长度与她身高相当、杆身粗细如她手腕，通体同一层白麻布紧贴杆身、从一端到另一端完全覆盖，两端把布层层缠绕收拢、完全封口，封口之外没有任何开口或缝隙、看不到任何内部材质；形态、数量、与人物之间的比例都和首帧一致，全程不拆开、不露本体、不变形、不生分支。 携行布带（P02）是单独一条背长杆用的旧皮带与绳结，短小、绷在杆与她腰侧之间，长度不超过一拃，不垂地、不飘开；与裹着长杆的白麻布是两件东西，各写各的。 画面中不出现任何汉字、字母、数字、招牌可读文字、字幕与水印；远处发光牌面上只有人形轮廓与流动色块。 画面里每一个人都彼此可辨，面容、发型、体型、衣着不重复；同一个人不得同时出现两次，也不得把某人画成与主角同脸同衣。
+
+overall_soundscape: 午后蝉声转弱、风声、脚踩进泥的黏响. Diegetic sound only, synchronised to the picture.
+
+non_diegetic_music: N/A

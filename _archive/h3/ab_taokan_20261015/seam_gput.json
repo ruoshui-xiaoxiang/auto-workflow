@@ -1,0 +1,32 @@
+{
+  "tool": "seam_check.py (R11-02)",
+  "files": {
+    "prev": null,
+    "next": null,
+    "chain_prev": "D:/AIWorkflow/ComfyUI_H3/output/minimax_h3_t8_long_video/ab_taokan_h768/accepted/segment_00000_seg00000_20261015T071802_b84f5ff4.mp4",
+    "cont": "D:/AIWorkflow/ComfyUI_H3/output/AB_taokan_s8_gput_00001_.mp4"
+  },
+  "frame_counts": {
+    "prev": null,
+    "next": null,
+    "chain_prev": 158,
+    "cont_raw": 175,
+    "cont_trimmed": 154
+  },
+  "trim": {
+    "trimmed": 21,
+    "frames": 175,
+    "mode": "auto",
+    "prefix_ncc": 0.9968
+  },
+  "B_continuation": {
+    "seam_ncc": 0.9957,
+    "baseline_ncc_mean": 0.9979,
+    "ncc_ratio": 0.998,
+    "seam_flow": 0.201,
+    "baseline_flow_mean": 0.213,
+    "flow_ratio": 0.946,
+    "win_zero_lag_ncc": 0.956,
+    "seam_mae": 3.14
+  }
+}

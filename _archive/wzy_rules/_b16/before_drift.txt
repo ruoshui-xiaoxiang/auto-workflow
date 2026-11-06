@@ -1,0 +1,26 @@
+
+[2] 判定漂移（改后 − 改前；0 差不列）
+  H3R23｜正文语言｜error                         净 -20（0 份升 / 20 份降） 例：dance_woman_v1.txt
+  H3R23｜正文语言｜ok                            净 +20（20 份升 / 0 份降） 例：dance_woman_v1.txt
+  H3R17｜时长｜info                            净 +16（16 份升 / 0 份降） 例：dance_woman_v1.txt
+  H3R3/11/15｜步数｜info                       净 +16（16 份升 / 0 份降） 例：dance_woman_v1.txt
+  H3R7｜收势｜ok                               净 -16（0 份升 / 16 份降） 例：dance_woman_v1.txt
+  H3R3/11/15｜步数｜ok                         净 -15（0 份升 / 15 份降） 例：dance_woman_v1.txt
+  H3R1｜道具锁｜info                            净 -12（0 份升 / 12 份降） 例：wuzhaojunyi_三阶P1A.txt
+  H3R1｜道具锁｜warn                            净 +12（12 份升 / 0 份降） 例：wuzhaojunyi_三阶P1A.txt
+  §五｜运镜｜info                               净 +12（12 份升 / 0 份降） 例：wuzhaojunyi_三阶P1A.txt
+  §五｜运镜｜ok                                 净 -12（0 份升 / 12 份降） 例：wuzhaojunyi_三阶P1A.txt
+  H3R14｜底线｜info                            净  -8（0 份升 / 8 份降） 例：dance_woman_v1.txt
+  H3R19｜特写质感｜info                          净  -8（0 份升 / 8 份降） 例：dance_woman_v2.txt
+  H3R20｜20a 双向拉扯｜error                     净  +4（5 份升 / 1 份降） 例：wuzhaojunyi_三阶P1A.txt
+  H3R14｜底线｜ok                              净  -8（0 份升 / 8 份降） 例：wuzhaojunyi_三阶P1B.txt
+  H3R17｜超载｜info                            净  -7（0 份升 / 7 份降） 例：wuzhaojunyi_三阶P1A.txt
+  H3R20｜20b 同拍完成｜warn                      净  -1（3 份升 / 4 份降） 例：wuzhaojunyi_三阶P1B.txt
+  H3R20｜一击干脆｜ok                            净  -2（2 份升 / 4 份降） 例：wuzhaojunyi_三阶P1B.txt
+  H3R19｜特写质感｜ok                            净  +6（6 份升 / 0 份降） 例：wuzhaojunyi_三阶P1D.txt
+  H3R17｜时长｜ok                              净  -6（0 份升 / 6 份降） 例：wuzhaojunyi_三阶P2B.txt
+  H3R17｜空转｜info                            净  -3（0 份升 / 3 份降） 例：dance_woman_v1.txt
+  H3R13｜抽象词｜ok                             净  +3（3 份升 / 0 份降） 例：wuzhaojunyi_三阶P1A.txt
+  H3R13｜抽象词｜warn                           净  -3（0 份升 / 3 份降） 例：wuzhaojunyi_三阶P1A.txt
+  H3R19｜特写质感｜warn                          净  +2（2 份升 / 0 份降） 例：dance_woman_v2.txt
+  H3R3/11/15｜步数｜warn                       净  -1（0 份升 / 1 份降） 例：dance_woman_v3_手势舞.txt

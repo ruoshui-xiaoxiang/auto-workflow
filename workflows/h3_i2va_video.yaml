@@ -1,0 +1,146 @@
+name: h3_i2va_video
+description: H3 fl2va模型首帧视频，官方I2VA三字段，T8双时钟与原生音频；中文改写→预检→**首帧目审（H3 人工闸）**→出片→**看片挑号（H4 人工闸）**。2026-10-19 第⑫条(c) 把 human 闸接线从已退役的 Ref2VA 链抄进来，这条是**有人值守的标准链**；要无人值守批次仍走 h3_i2va_batch（09-23 明示授权，但那条不目审首帧，风险自己担）。
+provider: local
+args:
+  theme: ""
+  prompt_file: ""
+  ref_images: []
+  # speak-ui「润色」开关：true=translate 步把中文正文自动改写成 H3 官方骨架英文（默认开）；
+  # false=不做改写，正文含中文会被 G7 拦（仅当用户点名保留中文时才关）。
+  use_llm_polish: true
+  llm_backend: dashscope   # 百炼按量付费 qwen-plus；改写一次约几百字符，费用可忽略
+  # 16GB 显存稳定基线：先用 736x416x124；1344x768 仅手工精品重渲。
+  width: 736
+  height: 416
+  length: 124
+  duration: 5.1667
+  steps: 8
+  seed: 42
+  lora: minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors
+  # 2026-10-14 1.0→0.7：turbo LoRA 满强度有已知 identity drift（首帧是参考图、动起来换人，
+  # RunComfy 官方口径：降 strength 换回中性）。仍漂就转 Ref2VA 路径。
+  lora_strength: 0.7
+  head_chunks: 4
+  # [2026-10-19 D20 摘除] 原有 use_vl_review / aesthetic_brief / aesthetic_reject 三个 args
+  # 与 steps 末尾的 vl_aesthetic 步，已一并摘掉。理由：
+  #   ① VL key 文件 E:\密钥文件\阿里多模态.txt 盘上不存在 ⇒ use_vl_review: true 每跑必 no-op；
+  #      ⚠2026-11-04 更正：这条前提已不成立——文件当天已按期望格式补建，且 _vl_credentials()
+  #      此前也能从 HKCU env 取到 key。但**摘除结论不变**：②③ 仍然成立（no-op 装成已完成、
+  #      判分基准一直是空串），且判分本体按"审美归人"已整块退役。当前堵点换成了账号欠费
+  #      （Arrearage，详见 engine/config.yaml 的 dashscope 注释），充值前任何 VL 调用都拿不到答案。
+  #   ② no-op 的方式是写一行 log 就 return，run 照样 success、报告照样显示这步"已完成"；
+  #   ③ aesthetic_brief / aesthetic_reject 都是空串 ⇒ 即使补上 key 也没有判分基准
+  #      （原注释自己写着"判分基准是你要的东西，不是通用美学"，而这两个字段一直空着）。
+  # 用户裁定：美学判断交给人眼三分类审片（_标准样片 / _待重修 / _判废）。
+  # 全仓已确认无其它地方引用这三个 args。tasks.py 侧：2026-10-19 只摘了注册，函数体留到
+  # **2026-11-04 才连本体一起摘**（用户裁「所有带美学判定的都交给人来判」）；现在注册表里
+  # 那个名字是**路障桩**，误引会直接报"已退役＋替代是什么"，不是能跑的门。
+steps:
+  # ── W2 强制编译（2026-10-23）────────────────────────────────────────────
+  # 旧写法 `write_to: {{args.prompt_file}}` 会把英文稿**回写原稿**（W2 明令禁止）。
+  # 现在：snapshot 按字节保存原稿＋记 sha256 → translate 只写批次目录编译稿 →
+  # compile_check 在 H3 人工目审之前复核「原稿哈希未变＋格式/台词/语言/长度全过」。
+  # H3 目审看的也是编译稿（{{batch_dir}}/prompt_compile/compiled_*.txt），审的就是要提交的那份。
+  - task: shell
+    id: snapshot
+    label: 原稿字节快照（编译前）
+    command: py -3.12 -B "{{wf_root}}/../tools/prompt_compile.py" snapshot --source "{{args.prompt_file}}" --out-dir "{{batch_dir}}/prompt_compile" --run-id "{{run_id}}"
+    timeout: 120
+  - task: llm
+    id: translate
+    label: 中文自动改写（H3 英文合规）
+    hint: 正文含中文时调云端 LLM 改写成官方骨架英文，写入批次目录的独立编译稿（不回写原稿）；已是英文则原样放行，snapshot 已生成 identity 编译稿
+    enabled: "{{args.use_llm_polish}}"
+    read_from: "{{args.prompt_file}}"
+    write_to: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    skip_if_no_cjk: true
+    backend: "{{args.llm_backend}}"
+    system: |-
+      你是 H3 I2VA 提示词合规改写器。输入是一份 H3 官方骨架提示词（其 integrated_multimodal_description 正文中混有中文），把它改写成全英文版本并输出。硬性规则：
+      1) 首行逐字保留：For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+      2) 三个字段名各出现恰一次、顺序不变：integrated_multimodal_description: → overall_soundscape: → non_diegetic_music:；字段之间空一行。
+      3) integrated_multimodal_description: 正文以 [Shot 1] 开头，先写画面风格（如 Live-action, cinematic），人物外貌、服装、构图、场景以 <Picture 1> 首帧为锚保持一致，再沿时间线发展动作；运镜写成自然英文动词（Push In / Pan Right / Zoom Out 等），禁止出现摄影器材名词（tripod、dolly、gimbal、crane 等）。
+      4) <d>…</d> 内的台词逐字保留原语言不翻译；说话人编号 (S1) 等写在 <d> 外。英文双引号内的画内可见文字保留原文。
+      5) overall_soundscape 用 1-4 句英文概括环境声、动作声与非语言人声；non_diegetic_music 用 1-3 句英文写配器、速度、节奏，无配乐写 N/A。
+      6) 除台词与画内文字外不得残留任何中文字符。
+      7) 只输出改写后的完整提示词本身：不要 markdown 代码块，不要解释，不要任何前后缀。
+    max_tokens: 1500
+    temperature: 0.3
+  - task: shell
+    id: compile_check
+    label: 编译稿提交前校验（原稿哈希＋格式/台词/语言/长度）
+    command: py -3.12 -B "{{wf_root}}/../tools/prompt_compile.py" verify --source "{{args.prompt_file}}" --state-dir "{{batch_dir}}/prompt_compile" --run-id "{{run_id}}" --compiled "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    timeout: 120
+  - task: gate
+    id: pre
+    mode: auto
+    label: 首帧视频预检
+    prompt_kind: h3_i2va
+    auto_gates: [G1, G2, G3, G4, G5, G6, G7, G8, G11, G13]
+    prompt_file: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    refs: "{{args.ref_images}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    lora: "{{args.lora}}"
+    workflow_json: "D:/AIWorkflow/engine/comfy/h3_i2v_fl2va_api.json"
+  # ── 人工关口 H3（2026-10-19 第⑫条(c)）────────────────────────────────
+  # 抄的是 h3_ref2va_video.yaml 里 H3 那一步的结构，参数字面换成 i2va 的（单 <Picture 1> 首帧，无四锚）。
+  # 为什么必须落到链上而不是靠纪律：全仓 23 条 yaml 里 `mode: human` 此前只出现在
+  # h3_ref2va_video.yaml（L63/L119）与 selftest_gates.yaml，而 Ref2VA 正是四臂实测否掉的那条
+  # ⇒「首帧必目审」这条规矩一直是**人工撑着，不是代码强制**。
+  # 闸的牙齿在 tasks.py:t_gate：未批 → 推飞书＋记 pending＋抛 GateAwaiting 停住整条链（GPU 不动）；
+  # 批准走 `run.py --approve <run_id> H3` 再 `--resume last`；入向读不到（群历史 230027），所以发完不等回话。
+  - task: gate
+    id: H3
+    mode: human
+    label: 首帧目审＋提示词定稿（人工关口）
+    hint: 一镜 7 分钟、多镜是串行链——错一帧会顺着链往下传，"跑半天可能白费"（2026-10-07 赛博唐刀站位与枪口朝向那次）。要审的是语义与物理：站位、朝向、谁挡谁、道具数量、左右关系——这些我的尺子基本量不到。W2 起看的是**编译稿**（要提交的那份英文），不是原稿
+    prompt_file: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    refs: "{{args.ref_images}}"
+    files: "{{args.ref_images}}"   # i2va 的首帧就是 ref_images ⇒ 附件必须带上。只发文字等于没审图
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    lora: "{{args.lora}}"
+    show_prompt: true
+    numbering:
+      - "过 = 按这份首帧＋这份提示词提交渲染"
+      - "改<说哪一处> = 我改完重新上报"
+      - "否 <理由> = 这条不拍"
+
+  - task: video
+    id: gen
+    label: H3首帧出片
+    workflow: comfy/h3_i2v_fl2va_api.json
+    prompt_kind: h3_i2va
+    prompt_file: "{{batch_dir}}/prompt_compile/compiled_{{run_id}}.txt"
+    ref_images: "{{args.ref_images}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    length: "{{args.length}}"
+    steps: "{{args.steps}}"
+    seed: "{{args.seed}}"
+    lora: "{{args.lora}}"
+    lora_strength: "{{args.lora_strength}}"
+    head_chunks: "{{args.head_chunks}}"
+    prefix: "h3first_{{run_id}}"
+    stage: video
+    timeout: 10800
+  # ── 人工关口 H4（同日抄自 h3_ref2va_video.yaml 的 H4）─────────────────
+  # 粒度按 2026-10-19 裁定的三触点里的「第一镜渲后必推给你看」；⚠ 那条设计里"推送 C 非阻塞"
+  # 要求配一个叫停开关，但 `run.py --abort` **此刻还没实现**（本轮量出来的），DELETE /queue
+  # 在这版核心回 405 撤不掉已提交任务 ⇒ 这道 H4 是**阻塞式**（看完点头才继续），不是非阻塞推送。
+  - task: gate
+    id: H4
+    mode: human
+    label: 看片挑号（人工关口）
+    hint: 成片推给你；废片重跑的圈定别在这儿追问花钱
+    videos: "{{gen.files}}"
+    numbering:
+      - "报编号 = 选定进下一步"
+      - "重做 <编号> = 重跑那一镜"
+
+  # [2026-10-19 D20 摘除] 此处原有第 4 步 `- task: vl_aesthetic`（id: review，
+  # label「VL 美学评审（五维打分+改进句）」，enabled: {{args.use_vl_review}}，n_frames: 3）。
+  # 摘除理由见上方 args 段的说明。美学判断改走人眼三分类审片。

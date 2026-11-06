@@ -1,0 +1,58 @@
+#### dance_woman_v1.txt
+   H3R20        warn   20b 同拍完成 全篇没有"at once／in the same motion／立刻／随即"这类同拍完成词⇒ 收招容易被演成缓慢较力（R20 的另一半：不写拉扯，还要写明"马上"）
+#### dance_woman_v2.txt
+   H3R19        warn   特写质感     镜1 是特写镜（脸／手进框）但只有 1 处皮肤质感词，缺 pores/stubble、sweat/damp、grain、shallow depth of field
+   H3R20        warn   20b 同拍完成 全篇没有"at once／in the same motion／立刻／随即"这类同拍完成词⇒ 收招容易被演成缓慢较力（R20 的另一半：不写拉扯，还要写明"马上"）
+#### dance_woman_v3_手势舞.txt
+   H3R3/11/15   warn   步数       5 步·剧烈（甜点：剧烈 2–4，从容 6+；超出＝糊＋漂，不是硬吞）→ Her feet stand shoulder-width apart, her knees softly bent and her weight sunk low;both arms 
+   H3R19        warn   特写质感     镜1 是特写镜（脸／手进框）但只有 1 处皮肤质感词，缺 pores/stubble、sweat/damp、grain、shallow depth of field
+#### wuzhaojunyi_三阶P1A.txt
+   §五           warn   运镜       中文动词→官方词：无；英文受控词：Push；⚠ 写了"结果"没写"镜头动作"：whole inside frame
+   H3R13        warn   抽象词      抽象词单独成句、同一子句里没有身体部位：standing settled and unh
+   H3R20        warn   20b 同拍完成 全篇没有"at once／in the same motion／立刻／随即"这类同拍完成词⇒ 收招容易被演成缓慢较力（R20 的另一半：不写拉扯，还要写明"马上"）
+#### wuzhaojunyi_三阶P1B.txt
+   §五           warn   运镜       中文动词→官方词：无；英文受控词：Truck；⚠ 写了"结果"没写"镜头动作"：whole inside frame
+   H3R8         warn   光影       光被写成会射出去的东西：Wu-junyi (the woman in the deep-bl
+   H3R20        warn   20b 同拍完成 全篇没有"at once／in the same motion／立刻／随即"这类同拍完成词⇒ 收招容易被演成缓慢较力（R20 的另一半：不写拉扯，还要写明"马上"）
+#### wuzhaojunyi_三阶P1C.txt
+   §五           warn   运镜       中文动词→官方词：无；英文受控词：Push；⚠ 写了"结果"没写"镜头动作"：whole inside frame
+   H3R20        warn   20b 同拍完成 全篇没有"at once／in the same motion／立刻／随即"这类同拍完成词⇒ 收招容易被演成缓慢较力（R20 的另一半：不写拉扯，还要写明"马上"）
+#### wuzhaojunyi_三阶P1D.txt
+   §五           warn   运镜       中文动词→官方词：无；英文受控词：Arc；⚠ 写了"结果"没写"镜头动作"：whole inside frame
+   H3R20        warn   20b 同拍完成 全篇没有"at once／in the same motion／立刻／随即"这类同拍完成词⇒ 收招容易被演成缓慢较力（R20 的另一半：不写拉扯，还要写明"马上"）
+#### wuzhaojunyi_三阶P2A.txt
+   §五           warn   运镜       中文动词→官方词：无；英文受控词：Push；⚠ 写了"结果"没写"镜头动作"：whole inside frame
+#### wuzhaojunyi_三阶P2B.txt
+   §五           warn   运镜       中文动词→官方词：无；英文受控词：Truck；⚠ 写了"结果"没写"镜头动作"：whole inside frame
+   H3R13        warn   抽象词      抽象词单独成句、同一子句里没有身体部位：tracking the sideways mo
+   H3R20        warn   20b 同拍完成 全篇没有"at once／in the same motion／立刻／随即"这类同拍完成词⇒ 收招容易被演成缓慢较力（R20 的另一半：不写拉扯，还要写明"马上"）
+#### wuzhaojunyi_三阶P2C.txt
+   §五           warn   运镜       中文动词→官方词：无；英文受控词：Arc；⚠ 写了"结果"没写"镜头动作"：whole inside frame
+   H3R13        warn   抽象词      抽象词单独成句、同一子句里没有身体部位：her staff technique prac
+   H3R20        warn   20b 同拍完成 全篇没有"at once／in the same motion／立刻／随即"这类同拍完成词⇒ 收招容易被演成缓慢较力（R20 的另一半：不写拉扯，还要写明"马上"）
+#### wuzhaojunyi_三阶P2D.txt
+   §五           warn   运镜       中文动词→官方词：无；英文受控词：Push；⚠ 写了"结果"没写"镜头动作"：whole inside frame
+#### wuzhaojunyi_三阶P3A.txt
+   §五           warn   运镜       中文动词→官方词：无；英文受控词：Arc；⚠ 写了"结果"没写"镜头动作"：whole inside frame
+#### wuzhaojunyi_三阶P3B.txt
+   §五           warn   运镜       中文动词→官方词：无；英文受控词：Push；⚠ 写了"结果"没写"镜头动作"：whole inside frame
+#### wuzhaojunyi_三阶P3C.txt
+   §五           warn   运镜       中文动词→官方词：无；英文受控词：Truck；⚠ 写了"结果"没写"镜头动作"：whole inside frame
+   H3R13        warn   抽象词      抽象词单独成句、同一子句里没有身体部位：tracking the sideways mo
+#### wuzhaojunyi_三阶P3D.txt
+   H3R20        warn   20b 同拍完成 全篇没有"at once／in the same motion／立刻／随即"这类同拍完成词⇒ 收招容易被演成缓慢较力（R20 的另一半：不写拉扯，还要写明"马上"）
+#### wuzhaojunyi_三阶P1B_官方骨架无元信息.txt
+   H3R13        warn   抽象词      抽象词单独成句、同一子句里没有身体部位：the heavy-armed man (the
+   H3R20        warn   20b 同拍完成 全篇没有"at once／in the same motion／立刻／随即"这类同拍完成词⇒ 收招容易被演成缓慢较力（R20 的另一半：不写拉扯，还要写明"马上"）
+#### 提示词_跨两镜两头夹_抡飞+起身_video.txt
+   H3R8         warn   光影       光被写成会射出去的东西：The middle of the shaft sweeps acr
+   H3R1         warn   道具锁      骨架不变量段（Throughout／正文末段） 缺 状态锁（不拆开/不露本体/裹严…） ⇒ 道具会长出分支/换形（H09 长枪变长剑、P2D 长出两根杆都是这一格）
+#### K10v3_抡枪砸飞_video.txt
+   H3R8         warn   光影       光被写成会射出去的东西：The middle of the shaft sweeps acr
+   H3R1         warn   道具锁      骨架不变量段（Throughout／正文末段） 缺 状态锁（不拆开/不露本体/裹严…） ⇒ 道具会长出分支/换形（H09 长枪变长剑、P2D 长出两根杆都是这一格）
+#### K11a_起身转身_video.txt
+   H3R1         warn   道具锁      骨架不变量段（Throughout／正文末段） 缺 状态锁（不拆开/不露本体/裹严…） ⇒ 道具会长出分支/换形（H09 长枪变长剑、P2D 长出两根杆都是这一格）
+#### K11bv3_冲回一拳打飞_video.txt
+   H3R8         warn   光影       光被写成会射出去的东西：He charges straight in to right be
+   H3R1         warn   道具锁      骨架不变量段（Throughout／正文末段） 缺 状态锁（不拆开/不露本体/裹严…） ⇒ 道具会长出分支/换形（H09 长枪变长剑、P2D 长出两根杆都是这一格）
+TOTAL {'warn': 37}

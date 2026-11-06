@@ -1,0 +1,476 @@
+{
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "2": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "type": "minimax",
+      "device": "cpu"
+    }
+  },
+  "3": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    }
+  },
+  "4": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    }
+  },
+  "5": {
+    "class_type": "MiniMaxH3ContinuationConditioningEXPT8",
+    "inputs": {
+      "contexts": [
+        "24",
+        0
+      ],
+      "phase": "low",
+      "clip": [
+        "2",
+        0
+      ],
+      "video_vae": [
+        "3",
+        0
+      ],
+      "audio_vae": [
+        "4",
+        0
+      ],
+      "context_audio": "video_and_audio",
+      "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description:\n[Shot 1] Photorealistic absurd comedy look, cyberpunk lower-city street at night. Neon signs in Chinese and English, steam vents, wet reflective pavement, holographic ads flickering, an elevated maglev train passing in the background haze, noodle shop with glowing sign and steaming window across the street. Woman A — exactly the same face, hair and costume as Picture 1: the same features and hairstyle, wearing an ornate heavy deep-blue robe with silver thread patterns, standing collar and wide sleeves, jade belt, long hair half-tied — ancient-style dress in a cyberpunk street is the visual joke. A small cream-white and warm champagne-gold round-headed robot with a screen face and a head lamp, knee-height, is her companion. They are both SQUATTING ON THE SIDEWALK EDGE, backs against the building wall on the near side of the street — NOT standing in the middle of the road. The road with moving traffic and the noodle shop are in front of them across the asphalt. The humor comes from dead-serious realism: the camera and the physics stay completely straight-faced. No fighting, no flying, no magic glow.\n\n0-6s The shot begins close on Woman A and the small robot squatting on the curb edge, backs against the building wall on the near sidewalk. Then the camera slowly tilts upward along the wall in one continuous move, revealing a large holographic advertisement board mounted on the wall right above their heads, scrolling bright red Chinese text: \"试吃员招聘 时薪500 包吃\". The two keep squatting against the wall and look up at the board in silence for one full second. The small robot's screen face shows a blank dot-dot-dot expression. Then Woman A stands up slowly from the squat, straightens her ornate robe with dignity.\n\noverall_soundscape:\nStreet ambience, neon buzz, steam. One second of silence as they look up.\nThe small robot, childlike electronic voice, flat: \"……刚刚就在。\"\nWoman A, calm serious young female voice, one short line: \"带路。\"\nNatural human speech for Woman A.\nnon_diegetic_music:\nN/A",
+      "length": 166,
+      "task_type": "auto",
+      "audio_mode": "native",
+      "audio_denoise_strength": 0.35,
+      "add_source_as_reference": true,
+      "prompt_primary_audio_ordinal": 0,
+      "strict_prompt_tags": true,
+      "ref_image_size": "match",
+      "reference_video_policy": "official_2_to_15s",
+      "first_frame_reuse": "persistent_identity_reference",
+      "persistent_identity_strategy": "single_reference",
+      "persistent_identity_interval": 1,
+      "first_frame": [
+        "105",
+        0
+      ]
+    }
+  },
+  "6": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": 20282108
+    }
+  },
+  "7": {
+    "class_type": "MiniMaxH3AVDecodeT8",
+    "inputs": {
+      "av_latent": [
+        "27",
+        0
+      ],
+      "video_vae": [
+        "3",
+        0
+      ],
+      "audio_vae": [
+        "4",
+        0
+      ]
+    }
+  },
+  "8": {
+    "class_type": "CreateVideo",
+    "inputs": {
+      "images": [
+        "7",
+        0
+      ],
+      "fps": 24.0,
+      "audio": [
+        "7",
+        1
+      ],
+      "bit_depth": "auto",
+      "color_space": "sRGB",
+      "codec": "none"
+    }
+  },
+  "9": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": [
+        "8",
+        0
+      ],
+      "filename_prefix": "AB_taokan_s8_cont",
+      "format": "mp4",
+      "codec": "h264"
+    }
+  },
+  "10": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "11": {
+    "class_type": "MiniMaxH3LearnedLatentUpscaleT8Advanced",
+    "inputs": {
+      "av_latent": [
+        "19",
+        0
+      ],
+      "model_name": "minimax_h3_latent_upscaler_3d_fp16.safetensors",
+      "size_mode": "target_dimensions",
+      "scale_by": 2.0,
+      "target_megapixels": 0.46,
+      "target_width": [
+        "19",
+        1
+      ],
+      "target_height": [
+        "19",
+        2
+      ],
+      "aspect_policy": "preserve_source",
+      "max_anisotropy": 1.05,
+      "precision": "fp16",
+      "release_policy": "offload_after"
+    }
+  },
+  "12": {
+    "class_type": "MiniMaxH3ContinuationConditioningEXPT8",
+    "inputs": {
+      "contexts": [
+        "24",
+        0
+      ],
+      "phase": "high",
+      "clip": [
+        "2",
+        0
+      ],
+      "video_vae": [
+        "3",
+        0
+      ],
+      "audio_vae": [
+        "4",
+        0
+      ],
+      "context_audio": "video_and_audio",
+      "prompt": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description:\n[Shot 1] Photorealistic absurd comedy look, cyberpunk lower-city street at night. Neon signs in Chinese and English, steam vents, wet reflective pavement, holographic ads flickering, an elevated maglev train passing in the background haze, noodle shop with glowing sign and steaming window across the street. Woman A — exactly the same face, hair and costume as Picture 1: the same features and hairstyle, wearing an ornate heavy deep-blue robe with silver thread patterns, standing collar and wide sleeves, jade belt, long hair half-tied — ancient-style dress in a cyberpunk street is the visual joke. A small cream-white and warm champagne-gold round-headed robot with a screen face and a head lamp, knee-height, is her companion. They are both SQUATTING ON THE SIDEWALK EDGE, backs against the building wall on the near side of the street — NOT standing in the middle of the road. The road with moving traffic and the noodle shop are in front of them across the asphalt. The humor comes from dead-serious realism: the camera and the physics stay completely straight-faced. No fighting, no flying, no magic glow.\n\n0-6s The shot begins close on Woman A and the small robot squatting on the curb edge, backs against the building wall on the near sidewalk. Then the camera slowly tilts upward along the wall in one continuous move, revealing a large holographic advertisement board mounted on the wall right above their heads, scrolling bright red Chinese text: \"试吃员招聘 时薪500 包吃\". The two keep squatting against the wall and look up at the board in silence for one full second. The small robot's screen face shows a blank dot-dot-dot expression. Then Woman A stands up slowly from the squat, straightens her ornate robe with dignity.\n\noverall_soundscape:\nStreet ambience, neon buzz, steam. One second of silence as they look up.\nThe small robot, childlike electronic voice, flat: \"……刚刚就在。\"\nWoman A, calm serious young female voice, one short line: \"带路。\"\nNatural human speech for Woman A.\nnon_diegetic_music:\nN/A",
+      "length": 166,
+      "task_type": "auto",
+      "audio_mode": "native",
+      "audio_denoise_strength": 0.35,
+      "add_source_as_reference": true,
+      "prompt_primary_audio_ordinal": 0,
+      "strict_prompt_tags": true,
+      "ref_image_size": "match",
+      "reference_video_policy": "official_2_to_15s",
+      "first_frame_reuse": "persistent_identity_reference",
+      "persistent_identity_strategy": "single_reference",
+      "persistent_identity_interval": 1,
+      "first_frame": [
+        "105",
+        0
+      ]
+    }
+  },
+  "13": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": 20282108
+    }
+  },
+  "14": {
+    "class_type": "EmptyMiniMaxH3LatentAV",
+    "inputs": {
+      "width": [
+        "23",
+        2
+      ],
+      "height": [
+        "23",
+        3
+      ],
+      "length": 166
+    }
+  },
+  "15": {
+    "class_type": "MiniMaxH3DualClockSamplerT8",
+    "inputs": {
+      "model": [
+        "101",
+        0
+      ],
+      "av_latent": [
+        "14",
+        0
+      ],
+      "steps": 8,
+      "shift_video": 12.0,
+      "shift_audio": 3.0,
+      "sampler_name": "euler",
+      "scheduler": "native_flow"
+    }
+  },
+  "16": {
+    "class_type": "MiniMaxH3DualClockSamplerT8",
+    "inputs": {
+      "model": [
+        "103",
+        0
+      ],
+      "av_latent": [
+        "14",
+        0
+      ],
+      "steps": 8,
+      "shift_video": 12.0,
+      "shift_audio": 3.0,
+      "sampler_name": "euler",
+      "scheduler": "native_flow"
+    }
+  },
+  "17": {
+    "class_type": "MiniMaxH3ContinuationPlanEXPT8",
+    "inputs": {
+      "contexts": [
+        "24",
+        0
+      ],
+      "full_sigmas": [
+        "15",
+        2
+      ],
+      "length": 166,
+      "low_evaluations": 4,
+      "low_scale": 0.5
+    }
+  },
+  "18": {
+    "class_type": "MiniMaxH3ContinuationLowStageEXPT8",
+    "inputs": {
+      "prepared_phase": [
+        "5",
+        0
+      ],
+      "model": [
+        "15",
+        0
+      ],
+      "sampler": [
+        "15",
+        1
+      ],
+      "plan": [
+        "17",
+        0
+      ],
+      "noise": [
+        "6",
+        0
+      ],
+      "positive": [
+        "5",
+        1
+      ],
+      "negative": [
+        "5",
+        2
+      ],
+      "reserve_vram_mib": 512
+    }
+  },
+  "19": {
+    "class_type": "MiniMaxH3ProgressiveLiftInputEXPT8",
+    "inputs": {
+      "low_boundary": [
+        "25",
+        0
+      ],
+      "model": [
+        "16",
+        0
+      ],
+      "sampler": [
+        "16",
+        1
+      ]
+    }
+  },
+  "20": {
+    "class_type": "MiniMaxH3ContinuationHighHandoffEXPT8",
+    "inputs": {
+      "prepared_phase": [
+        "12",
+        0
+      ],
+      "low_boundary": [
+        "25",
+        0
+      ],
+      "model": [
+        "16",
+        0
+      ],
+      "sampler": [
+        "16",
+        1
+      ],
+      "lifted_av": [
+        "11",
+        0
+      ],
+      "video_noise": [
+        "13",
+        0
+      ]
+    }
+  },
+  "21": {
+    "class_type": "MiniMaxH3ContinuationHighStageEXPT8",
+    "inputs": {
+      "prepared_phase": [
+        "12",
+        0
+      ],
+      "high_restart": [
+        "20",
+        0
+      ],
+      "model": [
+        "16",
+        0
+      ],
+      "sampler": [
+        "16",
+        1
+      ],
+      "positive": [
+        "12",
+        1
+      ],
+      "negative": [
+        "12",
+        2
+      ],
+      "seed": 20282108,
+      "reserve_vram_mib": 512
+    }
+  },
+  "22": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "27",
+        4
+      ]
+    }
+  },
+  "23": {
+    "class_type": "MiniMaxH3ContinuationSourceEXPT8",
+    "inputs": {
+      "chain_id": "ab_taokan_h768",
+      "segment_index": 1,
+      "parent_candidate_id": "seg00000_20261015T071802_b84f5ff4",
+      "parent_revision": 1,
+      "previous_job_sha256": "fdb12aed619aa187ba462d143226195f7398599964765be02f334ee2bd7d6616",
+      "context_frames": 22,
+      "width": 768,
+      "height": 448,
+      "low_width": 384,
+      "low_height": 224
+    }
+  },
+  "24": {
+    "class_type": "MiniMaxH3ContinuationContextsEXPT8",
+    "inputs": {
+      "accepted_source": [
+        "23",
+        0
+      ],
+      "video_vae": [
+        "3",
+        0
+      ]
+    }
+  },
+  "25": {
+    "class_type": "MiniMaxH3ProgressiveLowSaveEXPT8",
+    "inputs": {
+      "low_boundary": [
+        "18",
+        0
+      ],
+      "prefix": "Continuation/LOW",
+      "filename_prefix": "AB_taokan/LOW"
+    }
+  },
+  "26": {
+    "class_type": "MiniMaxH3ProgressiveHighSaveEXPT8",
+    "inputs": {
+      "high_result": [
+        "21",
+        2
+      ],
+      "prefix": "Continuation/HIGH",
+      "filename_prefix": "AB_taokan/HIGH"
+    }
+  },
+  "27": {
+    "class_type": "MiniMaxH3ContinuationDeliveryEXPT8",
+    "inputs": {
+      "high_result": [
+        "21",
+        2
+      ],
+      "accepted_source": [
+        "23",
+        0
+      ]
+    }
+  },
+  "101": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+      "strength_model": 1.0
+    }
+  },
+  "103": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "model": [
+        "10",
+        0
+      ],
+      "lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+      "strength_model": 1.0
+    }
+  },
+  "105": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "kf_junyi_costume.png"
+    }
+  }
+}

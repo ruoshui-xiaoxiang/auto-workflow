@@ -1,0 +1,10 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description:
+[Shot 1] High-detail cinematic product-launch stage render, cool teal and deep blue palette, viewed from the rear of the audience hall, a towering LED wall filling the frame edge to edge and extending beyond both sides, glossy dark floor mirroring it, thin haze settling at both sides, a lone presenter standing full body at the lower right third of the stage and small against the wall. Horizontal 16:9, one continuous 5.17-second take, single shot throughout — the wall shows a close view on the wall of an extremely capable hand reaching over a cluttered tabletop toward one very small part.0.0-1.7s: The hand closes slowly around the small part and lifts it clear, the cluttered background stays softly out of focus, the presenter stands unmoved.1.7-3.4s: The hand holds the part steady between finger and thumb, the smallest detail of it catching one cold highlight, and the wall keeps its opening brightness.3.4-5.17s: The hand lifts the part out of frame, the empty tabletop remains in soft focus, the presenter holds his gaze on the audience, and the shot ends on the same wide composition it opened on. Low-amplitude, slow Static Shot: the camera holds a static shot at a fixed distance for the whole take, keeping the full width of the stage and the full height of the presenter inside frame throughout, continuous and smooth the whole way, with no change of framing and no shake. Throughout: the presenter stays at the lower right third of the stage and keeps his full body inside frame; the LED wall keeps its cool teal colour grade and holds its overall brightness at the level it opens with; the camera distance and the horizontal 16:9 composition stay exactly as they opened. the wall content the background clutter never sharpens.
+
+overall_soundscape:
+A hushed hall room tone with a faint low electrical hum from the wall; one precise contact sound against the hum; a distant single reflective ping from the hall rear. The rest of the take is silent.
+
+non_diegetic_music:
+N/A

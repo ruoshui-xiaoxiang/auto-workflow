@@ -1,0 +1,156 @@
+[
+ {
+  "name": "jm_2156原脸锚",
+  "size": [
+   1920,
+   1080
+  ],
+  "all_L_mean": 154.1,
+  "all_bright_gt200_ratio": 0.046,
+  "all_dark_lt80_ratio": 0.1002,
+  "face_box": [
+   855,
+   225,
+   1075,
+   522
+  ],
+  "face_L_mean": 106.6,
+  "face_L_std": 60.1,
+  "face_L_p90_p10_span": 167.0,
+  "face_a_mean": 134.2,
+  "face_b_mean": 133.2,
+  "face_white_ratio": 0.0008
+ },
+ {
+  "name": "jm_face_v2新脸锚",
+  "size": [
+   1728,
+   2304
+  ],
+  "all_L_mean": 121.0,
+  "all_bright_gt200_ratio": 0.0299,
+  "all_dark_lt80_ratio": 0.3417,
+  "face_box": [
+   754,
+   388,
+   1066,
+   821
+  ],
+  "face_L_mean": 103.3,
+  "face_L_std": 61.3,
+  "face_L_p90_p10_span": 170.0,
+  "face_a_mean": 134.2,
+  "face_b_mean": 132.3,
+  "face_white_ratio": 0.0006
+ },
+ {
+  "name": "jm_9862风格锚",
+  "size": [
+   1920,
+   1080
+  ],
+  "all_L_mean": 132.6,
+  "all_bright_gt200_ratio": 0.4412,
+  "all_dark_lt80_ratio": 0.4065,
+  "face_box": [
+   1148,
+   115,
+   1212,
+   195
+  ],
+  "face_L_mean": 103.5,
+  "face_L_std": 54.2,
+  "face_L_p90_p10_span": 144.1,
+  "face_a_mean": 133.9,
+  "face_b_mean": 132.9,
+  "face_white_ratio": 0.0023
+ },
+ {
+  "name": "dz0b_D1漂移版",
+  "size": [
+   1536,
+   2688
+  ],
+  "all_L_mean": 186.7,
+  "all_bright_gt200_ratio": 0.7144,
+  "all_dark_lt80_ratio": 0.1059,
+  "face_box": [
+   780,
+   277,
+   941,
+   483
+  ],
+  "face_L_mean": 115.1,
+  "face_L_std": 63.3,
+  "face_L_p90_p10_span": 178.0,
+  "face_a_mean": 134.8,
+  "face_b_mean": 134.0,
+  "face_white_ratio": 0.0126
+ },
+ {
+  "name": "dz0b2p_D1p",
+  "size": [
+   1536,
+   2688
+  ],
+  "all_L_mean": 196.8,
+  "all_bright_gt200_ratio": 0.6988,
+  "all_dark_lt80_ratio": 0.1862,
+  "face_box": [
+   729,
+   338,
+   903,
+   546
+  ],
+  "face_L_mean": 123.2,
+  "face_L_std": 67.7,
+  "face_L_p90_p10_span": 179.0,
+  "face_a_mean": 130.9,
+  "face_b_mean": 130.7,
+  "face_white_ratio": 0.0772
+ },
+ {
+  "name": "dz0b2p_D2p",
+  "size": [
+   1536,
+   2688
+  ],
+  "all_L_mean": 203.4,
+  "all_bright_gt200_ratio": 0.7572,
+  "all_dark_lt80_ratio": 0.1659,
+  "face_box": [
+   695,
+   460,
+   850,
+   668
+  ],
+  "face_L_mean": 153.6,
+  "face_L_std": 75.1,
+  "face_L_p90_p10_span": 214.0,
+  "face_a_mean": 127.3,
+  "face_b_mean": 126.9,
+  "face_white_ratio": 0.2934
+ },
+ {
+  "name": "dz0b2p_D3p",
+  "size": [
+   1536,
+   2688
+  ],
+  "all_L_mean": 208.9,
+  "all_bright_gt200_ratio": 0.7737,
+  "all_dark_lt80_ratio": 0.1396,
+  "face_box": [
+   726,
+   259,
+   871,
+   459
+  ],
+  "face_L_mean": 145.6,
+  "face_L_std": 74.9,
+  "face_L_p90_p10_span": 212.0,
+  "face_a_mean": 128.3,
+  "face_b_mean": 126.1,
+  "face_white_ratio": 0.2668
+ }
+]

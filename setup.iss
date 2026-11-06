@@ -14,7 +14,6 @@ AppPublisher={#MyAppPublisher}
 DefaultDirName={autopf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
-LicenseFile=
 OutputDir=installer_output
 OutputBaseFilename=auto-workflow-setup
 Compression=lzma
@@ -25,26 +24,25 @@ ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 
 [Languages]
-Name: "chinesesimplified"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"
+Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
 ; 代码文件
-Source: "workflows\webui.py"; DestDir: "{app}"; Flags: ignoreversion
-Source: "workflows\run.py"; DestDir: "{app}"; Flags: ignoreversion
-Source: "workflows\tasks.py"; DestDir: "{app}"; Flags: ignoreversion
-Source: "workflows\config.yaml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "workflows\start-webui.bat"; DestDir: "{app}"; Flags: ignoreversion
-Source: "workflows\README.md"; DestDir: "{app}"; Flags: ignoreversion
-Source: "workflows\workflows\*.yaml"; DestDir: "{app}\workflows"; Flags: ignoreversion
-Source: "workflows\tools\*"; DestDir: "{app}\tools"; Flags: ignoreversion recursesubdirs
-Source: "workflows\tests\*"; DestDir: "{app}\tests"; Flags: ignoreversion recursesubdirs
-Source: "workflows\comfy\*"; DestDir: "{app}\comfy"; Flags: ignoreversion recursesubdirs
+Source: "webui.py"; DestDir: "{app}"; Flags: ignoreversion
+Source: "run.py"; DestDir: "{app}"; Flags: ignoreversion
+Source: "tasks.py"; DestDir: "{app}"; Flags: ignoreversion
+Source: "config.yaml"; DestDir: "{app}"; Flags: ignoreversion
+Source: "start-webui.bat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "workflows\*.yaml"; DestDir: "{app}\workflows"; Flags: ignoreversion
+Source: "tools\*"; DestDir: "{app}\tools"; Flags: ignoreversion recursesubdirs
+Source: "tests\*"; DestDir: "{app}\tests"; Flags: ignoreversion recursesubdirs
+Source: "comfy\*"; DestDir: "{app}\comfy"; Flags: ignoreversion recursesubdirs
 
-; Python 嵌入式环境（需先运行 fetch-python.bat）
-Source: "python-embed\*"; DestDir: "{app}\python"; Flags: ignoreversion recursesubdirs createallsubdirs
+; Python 嵌入式环境由首次配置脚本自动下载
 
 ; 首次运行脚本
 Source: "first-run\*"; DestDir: "{app}\first-run"; Flags: ignoreversion recursesubdirs

@@ -1,0 +1,53 @@
+﻿name: image_batch_draft
+description: 一步式出成品：LLM 润色提示词（默认关） → ComfyUI 出图（基图 640x960 + 4x 放大到成品）。不要挑图时用；产物落进 out\<run_id>\final\
+provider: local
+args:
+  theme: "沈无音 · 套e01（定妆立绘）"
+  prompt: "21岁年轻女子，清冷骨相，眼尾略长，唇色淡，不施脂粉，面无表情，眼下淡青；及腰黑长直发，头顶半盘发髻插银质步摇横穿外露，两侧蓝花钗，额间朱砂莲花钿；身量高挑，站姿与坐姿都极直；月白与鸦青渐变宽袖襦裙，白色交领中衣、交领最低点只到胸上不露肤、胸前交叠处一直合到腰，裙摆整片垂坠无开衩、双脚并立时裙摆合拢盖到脚面，料子旧洗得发白，腰间淡蓝织带末端磨得起毛，挂米色小布袋。写实3D CG渲染，电影感，浅景深，竖幅9:16构图，素净灰白背景，单人立像，皮肤质感真实"
+  count: 2
+  use_llm_polish: false
+  llm_backend: dashscope
+  # 成品尺寸（UNet 先画基图，模板的放大节点 4x 后即此尺寸；引擎按 scale_by 折回基图）
+  # ⚠️ 2560×3840 是 2:3，与定稿提示词里的"竖幅9:16"不一致；要严格 9:16 改 2160×3840
+  width: 2560
+  height: 3840
+  scale_by: 4
+  # 身份锁（11-04）：false＝允许换脸换装，批内身份尺只报不拦（本流同样是纯文生图，
+  # 定妆铁律那条由 i2i 锚点链把守，不靠这把尺）。
+  identity_lock: false
+  # ⚠️ 沈无音定妆铁律：主角定妆一律 i2i 挂脸锚派生（锚＝图\定妆\char_e01.png），禁纯文生图。
+  #    本工作流是纯文生图 → 出无音会漂脸，仅供探索/占位。
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前自审（机制关口）
+    hint: 图片口径：分辨率/字面化词/落点；锁脸铁律由 i2i 锚点那条链把守，本流可裸文字。
+          10-02 批1 补上的这道闸 —— 本流以前**没有任何 gate 步**，
+          提示词从来没经过 G 闸就直接出图（见 system_manifest GAP-E4）。
+    auto_gates: [G5, G7, G11, G13]
+    prompt_kind: image
+    characters: none
+    prompt: "{{args.prompt}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+  - task: llm
+    id: polish
+    enabled: "{{args.use_llm_polish}}"
+    static: "{{args.prompt}}"
+    backend: "{{args.llm_backend}}"
+    system: "你是 FLUX 提示词工程师。把主题扩写成一段 60~120 词的英文照片级提示词，只输出提示词本身，不要解释或引号。"
+    prompt: "主题：{{args.theme}}"
+    max_tokens: 300
+    temperature: 0.8
+  - task: comfyui
+    id: generate
+    workflow: "comfy/z_image_upscale_api.json"
+    prompt: "{{polish.text}}"
+    count: "{{args.count}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    scale_by: "{{args.scale_by}}"
+    identity_lock: "{{args.identity_lock}}"
+    prefix: "auto_{{run_id}}"
+    stage: "final"

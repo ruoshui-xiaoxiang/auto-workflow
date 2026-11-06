@@ -1,0 +1,1642 @@
+{
+  "id": "b641c11e-2721-4c2a-9d83-fb32b522431c",
+  "revision": 1,
+  "last_node_id": 69,
+  "last_link_id": 56,
+  "nodes": [
+    {
+      "id": 9,
+      "type": "BasicScheduler",
+      "pos": [
+        3018.090544776438,
+        -2813.858252585452
+      ],
+      "size": [
+        595.973958333333,
+        106
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 25
+        }
+      ],
+      "outputs": [
+        {
+          "name": "SIGMAS",
+          "type": "SIGMAS",
+          "links": [
+            9
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "BasicScheduler"
+      },
+      "widgets_values": [
+        "simple",
+        8,
+        1
+      ],
+      "widgets_values_named": {
+        "scheduler": "simple",
+        "steps": 8,
+        "denoise": 1
+      }
+    },
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [
+        2462.1714789542966,
+        -2647.201583701066
+      ],
+      "size": [
+        525.9190658221414,
+        106
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            5
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "minimax\\minimax_h3_video_vae_fp16.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "minimax\\minimax_h3_video_vae_fp16.safetensors"
+      }
+    },
+    {
+      "id": 8,
+      "type": "VAELoader",
+      "pos": [
+        2462.1714789542966,
+        -2481.201583701066
+      ],
+      "size": [
+        525.9190658221414,
+        106
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            6
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "minimax\\minimax_h3_audio_vae_fp32.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "minimax\\minimax_h3_audio_vae_fp32.safetensors"
+      }
+    },
+    {
+      "id": 35,
+      "type": "MiniMaxH3SigmaShift",
+      "pos": [
+        3018.090544776438,
+        -2979.858252585452
+      ],
+      "size": [
+        595.973958333333,
+        106
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 29
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            25,
+            26
+          ]
+        }
+      ],
+      "title": "MiniMaxH3SigmaShift",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "MiniMaxH3SigmaShift"
+      },
+      "widgets_values": [
+        12,
+        3
+      ],
+      "widgets_values_named": {
+        "shift_video": 12,
+        "shift_audio": 3
+      }
+    },
+    {
+      "id": 64,
+      "type": "VHS_VideoInfo",
+      "pos": [
+        3319.996540708036,
+        -1373.1190571629497
+      ],
+      "size": [
+        255.8291015625,
+        206
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video_info",
+          "type": "VHS_VIDEOINFO",
+          "link": 50
+        }
+      ],
+      "outputs": [
+        {
+          "name": "source_fps🟨",
+          "type": "FLOAT",
+          "links": [
+            51
+          ]
+        },
+        {
+          "name": "source_frame_count🟨",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "source_duration🟨",
+          "type": "FLOAT",
+          "links": null
+        },
+        {
+          "name": "source_width🟨",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "source_height🟨",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "loaded_fps🟦",
+          "type": "FLOAT",
+          "links": null
+        },
+        {
+          "name": "loaded_frame_count🟦",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "loaded_duration🟦",
+          "type": "FLOAT",
+          "links": null
+        },
+        {
+          "name": "loaded_width🟦",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "loaded_height🟦",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "1.0.0",
+        "Node name for S&R": "VHS_VideoInfo"
+      },
+      "widgets_values": {}
+    },
+    {
+      "id": 59,
+      "type": "VHS_LoadVideo",
+      "pos": [
+        2462.5092360205367,
+        -1583.1190571629497
+      ],
+      "size": [
+        255.8291015625,
+        456.1844645700637
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            44
+          ]
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            49
+          ]
+        },
+        {
+          "name": "video_info",
+          "type": "VHS_VIDEOINFO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "1.0.0",
+        "Node name for S&R": "VHS_LoadVideo"
+      },
+      "widgets_values": {
+        "video": "下载 -去黑边(4).mp4",
+        "force_rate": 0,
+        "custom_width": 0,
+        "custom_height": 0,
+        "frame_load_cap": 0,
+        "skip_first_frames": 0,
+        "select_every_nth": 1,
+        "format": "AnimateDiff",
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "下载 -去黑边(4).mp4",
+            "type": "input",
+            "format": "video/mp4",
+            "force_rate": 0,
+            "custom_width": 0,
+            "custom_height": 0,
+            "frame_load_cap": 0,
+            "skip_first_frames": 0,
+            "select_every_nth": 1
+          }
+        }
+      },
+      "widgets_values_named": {
+        "video": "下载 -去黑边(4).mp4",
+        "force_rate": 0,
+        "custom_width": 0,
+        "custom_height": 0,
+        "frame_load_cap": 0,
+        "skip_first_frames": 0,
+        "select_every_nth": 1,
+        "format": "AnimateDiff",
+        "choose video to upload": null,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "下载 -去黑边(4).mp4",
+            "type": "input",
+            "format": "video/mp4",
+            "force_rate": 0,
+            "custom_width": 0,
+            "custom_height": 0,
+            "frame_load_cap": 0,
+            "skip_first_frames": 0,
+            "select_every_nth": 1
+          }
+        }
+      }
+    },
+    {
+      "id": 60,
+      "type": "VHS_LoadVideo",
+      "pos": [
+        2748.3383375830367,
+        -1583.1190571629497
+      ],
+      "size": [
+        255.8291015625,
+        453.6809709229034
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            45
+          ]
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": null
+        },
+        {
+          "name": "video_info",
+          "type": "VHS_VIDEOINFO",
+          "links": [
+            50
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "1.0.0",
+        "Node name for S&R": "VHS_LoadVideo"
+      },
+      "widgets_values": {
+        "video": "H3_finite_segments_00001_.mp4",
+        "force_rate": 0,
+        "custom_width": 0,
+        "custom_height": 0,
+        "frame_load_cap": 0,
+        "skip_first_frames": 0,
+        "select_every_nth": 1,
+        "format": "AnimateDiff",
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "H3_finite_segments_00001_.mp4",
+            "type": "input",
+            "format": "video/mp4",
+            "force_rate": 0,
+            "custom_width": 0,
+            "custom_height": 0,
+            "frame_load_cap": 0,
+            "skip_first_frames": 0,
+            "select_every_nth": 1
+          }
+        }
+      },
+      "widgets_values_named": {
+        "video": "H3_finite_segments_00001_.mp4",
+        "force_rate": 0,
+        "custom_width": 0,
+        "custom_height": 0,
+        "frame_load_cap": 0,
+        "skip_first_frames": 0,
+        "select_every_nth": 1,
+        "format": "AnimateDiff",
+        "choose video to upload": null,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "H3_finite_segments_00001_.mp4",
+            "type": "input",
+            "format": "video/mp4",
+            "force_rate": 0,
+            "custom_width": 0,
+            "custom_height": 0,
+            "frame_load_cap": 0,
+            "skip_first_frames": 0,
+            "select_every_nth": 1
+          }
+        }
+      }
+    },
+    {
+      "id": 61,
+      "type": "AddLabel",
+      "pos": [
+        3034.167439145536,
+        -1583.1190571629497
+      ],
+      "size": [
+        255.8291015625,
+        270
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 44
+        },
+        {
+          "name": "caption",
+          "shape": 7,
+          "type": "STRING",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            46
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "1.0.0",
+        "Node name for S&R": "AddLabel"
+      },
+      "widgets_values": [
+        10,
+        5,
+        48,
+        32,
+        "black",
+        "white",
+        "FreeMono.ttf",
+        "Input Video",
+        "down"
+      ],
+      "widgets_values_named": {
+        "text_x": 10,
+        "text_y": 5,
+        "height": 48,
+        "font_size": 32,
+        "font_color": "black",
+        "label_color": "white",
+        "font": "FreeMono.ttf",
+        "text": "Input Video",
+        "direction": "down"
+      }
+    },
+    {
+      "id": 62,
+      "type": "AddLabel",
+      "pos": [
+        3034.167439145536,
+        -1253.11905716295
+      ],
+      "size": [
+        255.8291015625,
+        270
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 45
+        },
+        {
+          "name": "caption",
+          "shape": 7,
+          "type": "STRING",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            47
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "1.0.0",
+        "Node name for S&R": "AddLabel"
+      },
+      "widgets_values": [
+        10,
+        5,
+        48,
+        32,
+        "black",
+        "white",
+        "FreeMono.ttf",
+        "MinimaxH3 Ref2VA ",
+        "down"
+      ],
+      "widgets_values_named": {
+        "text_x": 10,
+        "text_y": 5,
+        "height": 48,
+        "font_size": 32,
+        "font_color": "black",
+        "label_color": "white",
+        "font": "FreeMono.ttf",
+        "text": "MinimaxH3 Ref2VA ",
+        "direction": "down"
+      }
+    },
+    {
+      "id": 57,
+      "type": "ImageStitch",
+      "pos": [
+        3319.996540708036,
+        -1583.1190571629497
+      ],
+      "size": [
+        255.8291015625,
+        150
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 46
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 47
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            48
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.3",
+        "Node name for S&R": "ImageStitch"
+      },
+      "widgets_values": [
+        "right",
+        true,
+        0,
+        "white"
+      ],
+      "widgets_values_named": {
+        "direction": "right",
+        "match_image_size": true,
+        "spacing_width": 0,
+        "spacing_color": "white"
+      }
+    },
+    {
+      "id": 29,
+      "type": "SaveVideo",
+      "pos": [
+        3652.968599704927,
+        -2979.815908181217
+      ],
+      "size": [
+        2175.8870810376393,
+        130
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 43
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "SaveVideo"
+      },
+      "widgets_values": [
+        "H3_Finite",
+        "mp4",
+        "h264",
+        "auto",
+        "auto"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "H3_Finite",
+        "format": "mp4",
+        "format.codec": "h264",
+        "format.codec.encoding": "auto",
+        "codec": "auto"
+      }
+    },
+    {
+      "id": 11,
+      "type": "MiniMaxH3TimelinePlanner",
+      "pos": [
+        1336.144782806022,
+        -2983.2363422531057
+      ],
+      "size": [
+        1093.487368382978,
+        807
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "prompt_index",
+          "shape": 7,
+          "type": "INT",
+          "link": null
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 53
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 54
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Material Plan",
+          "type": "MINIMAX_H3_TIMELINE_PLAN",
+          "links": [
+            32
+          ]
+        },
+        {
+          "name": "Omni Media Bundle",
+          "type": "MINIMAX_H3_OMNI_MEDIA_BUNDLE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "bad313e7e1a7eb300a23aac9f094da63fb536430",
+        "Node name for S&R": "MiniMaxH3TimelinePlanner",
+        "aux_id": "Songssx/ComfyUI-MiniMaxH3-TimelineDirector"
+      },
+      "widgets_values": [
+        640,
+        352,
+        7.5,
+        "{\"version\":4,\"fps\":24,\"selection\":{\"start\":0,\"duration\":7.5},\"videoAudioEnabled\":true,\"videoClips\":[{\"id\":\"mtlk112f-c7o5pe\",\"file\":\"minimax_h3_timeline_director/1788441727736_agyjd_下载_(4).mp4\",\"name\":\"下载 (4).mp4\",\"start\":0,\"duration\":15.1,\"trimStart\":0,\"sourceDuration\":15.1,\"hasAudio\":true,\"referenceMode\":\"edit\",\"proxy\":\"minimax_h3_timeline_director/preview_proxies/1788441727736_agyjd_下载_(4)_2072752abb41c26a.mp4\",\"peaks\":[0.5946953892707825,0.6539283990859985,1,0.9682933688163757,0.04957399517297745,1,0.9487262964248657,0.6384490728378296,0.34906211495399475,0.038179948925971985,0.9188579320907593,1,0.6460259556770325,0.5748507380485535,0.08304274082183838,0.07802887260913849,1,1,0.6444485187530518,0.9520737528800964,0.16700775921344757,0.9152314066886902,1,0.6247224807739258,0.8947177529335022,0.5889248847961426,0.023587200790643692,1,0.988078236579895,0.6381323337554932,0.3417092561721802,0.030902821570634842,1,1,0.6548922061920166,1,0.4743802547454834,0.08596859127283096,1,1,0.8764594793319702,0.7126821279525757,0.32614779472351074,1,1,0.6415191888809204,0.879906415939331,0.6098199486732483,0.04773809760808945,1,0.9083743691444397,0.6347554922103882,0.34949803352355957,0.0563998743891716,1,1,0.650797963142395,0.5306284427642822,0.07766348868608475,0.0870850533246994,1,0.8940654993057251,0.6615759134292603,0.8664005994796753,0.1518077850341797,1,0.9274692535400391,0.07556863129138947,0.9741812944412231,0.9270356297492981,0.8449393510818481,0.5727032423019409,0.19649747014045715,0.13553978502750397,1,0.14369092881679535,1,0.8454396724700928,0.18303361535072327,0.18686825037002563,0.9551500082015991,0.949311375617981,0.5993539094924927,0.23135852813720703,0.6015959978103638,1,0.22077298164367676,1,1,0.6758763790130615,1,1,0.4920112192630768,1,0.9274150133132935,0.639703631401062,1,0.7602839469909668,1,1,0.658392608165741,1,0.7996100187301636,0.4310794770717621,1,0.9289226531982422,0.6699097156524658,1,1,1,1,0.6455195546150208,1,0.920089602470398,0.5120609998703003,1,0.9422346353530884,0.6376914978027344,1,0.588377833366394,1,1,0.6441475749015808,1,1,0.38820570707321167,1,0.8461077809333801,0.6067712306976318,1,0.7722418308258057,1,1,0.6231595277786255,1,1,0.3829880356788635,1,0.9093694686889648,0.6063210368156433,1,0.6531345248222351,1,1,0.6413113474845886,1,0.8003573417663574,0.4270646572113037,1,0.9121427536010742,0.6320862770080566,1,1,1,1,0.6248514652252197,1,0.7707209587097168,0.3822125792503357,1,0.8743414878845215,0.7075883150100708,1,0.6351644992828369,1,1,0.6371749639511108,1,1,0.3885536789894104,1,1,1,1,1,1,1,0.6265072226524353,1,1]}],\"images\":[{\"id\":\"mtlk6vyw-g7i2rw\",\"file\":\"minimax_h3_timeline_director/1788442001207_5y6w5_download.png\",\"name\":\"download.png\",\"width\":405,\"height\":720}],\"audios\":[],\"segmentConfig\":{\"count\":0,\"segments\":[]}}",
+        ""
+      ],
+      "widgets_values_named": {
+        "width": 640,
+        "height": 352,
+        "generation_seconds": 7.5,
+        "timeline_data": "{\"version\":4,\"fps\":24,\"selection\":{\"start\":0,\"duration\":7.5},\"videoAudioEnabled\":true,\"videoClips\":[{\"id\":\"mtlk112f-c7o5pe\",\"file\":\"minimax_h3_timeline_director/1788441727736_agyjd_下载_(4).mp4\",\"name\":\"下载 (4).mp4\",\"start\":0,\"duration\":15.1,\"trimStart\":0,\"sourceDuration\":15.1,\"hasAudio\":true,\"referenceMode\":\"edit\",\"proxy\":\"minimax_h3_timeline_director/preview_proxies/1788441727736_agyjd_下载_(4)_2072752abb41c26a.mp4\",\"peaks\":[0.5946953892707825,0.6539283990859985,1,0.9682933688163757,0.04957399517297745,1,0.9487262964248657,0.6384490728378296,0.34906211495399475,0.038179948925971985,0.9188579320907593,1,0.6460259556770325,0.5748507380485535,0.08304274082183838,0.07802887260913849,1,1,0.6444485187530518,0.9520737528800964,0.16700775921344757,0.9152314066886902,1,0.6247224807739258,0.8947177529335022,0.5889248847961426,0.023587200790643692,1,0.988078236579895,0.6381323337554932,0.3417092561721802,0.030902821570634842,1,1,0.6548922061920166,1,0.4743802547454834,0.08596859127283096,1,1,0.8764594793319702,0.7126821279525757,0.32614779472351074,1,1,0.6415191888809204,0.879906415939331,0.6098199486732483,0.04773809760808945,1,0.9083743691444397,0.6347554922103882,0.34949803352355957,0.0563998743891716,1,1,0.650797963142395,0.5306284427642822,0.07766348868608475,0.0870850533246994,1,0.8940654993057251,0.6615759134292603,0.8664005994796753,0.1518077850341797,1,0.9274692535400391,0.07556863129138947,0.9741812944412231,0.9270356297492981,0.8449393510818481,0.5727032423019409,0.19649747014045715,0.13553978502750397,1,0.14369092881679535,1,0.8454396724700928,0.18303361535072327,0.18686825037002563,0.9551500082015991,0.949311375617981,0.5993539094924927,0.23135852813720703,0.6015959978103638,1,0.22077298164367676,1,1,0.6758763790130615,1,1,0.4920112192630768,1,0.9274150133132935,0.639703631401062,1,0.7602839469909668,1,1,0.658392608165741,1,0.7996100187301636,0.4310794770717621,1,0.9289226531982422,0.6699097156524658,1,1,1,1,0.6455195546150208,1,0.920089602470398,0.5120609998703003,1,0.9422346353530884,0.6376914978027344,1,0.588377833366394,1,1,0.6441475749015808,1,1,0.38820570707321167,1,0.8461077809333801,0.6067712306976318,1,0.7722418308258057,1,1,0.6231595277786255,1,1,0.3829880356788635,1,0.9093694686889648,0.6063210368156433,1,0.6531345248222351,1,1,0.6413113474845886,1,0.8003573417663574,0.4270646572113037,1,0.9121427536010742,0.6320862770080566,1,1,1,1,0.6248514652252197,1,0.7707209587097168,0.3822125792503357,1,0.8743414878845215,0.7075883150100708,1,0.6351644992828369,1,1,0.6371749639511108,1,1,0.3885536789894104,1,1,1,1,1,1,1,0.6265072226524353,1,1]}],\"images\":[{\"id\":\"mtlk6vyw-g7i2rw\",\"file\":\"minimax_h3_timeline_director/1788442001207_5y6w5_download.png\",\"name\":\"download.png\",\"width\":405,\"height\":720}],\"audios\":[],\"segmentConfig\":{\"count\":0,\"segments\":[]}}",
+        "minimax_h3_timeline": ""
+      }
+    },
+    {
+      "id": 1,
+      "type": "UNETLoader",
+      "pos": [
+        2462.1714789542966,
+        -2979.858252585452
+      ],
+      "size": [
+        525.9190658221414,
+        106.65666888438636
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            29
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "minimax_h3_fused_refdelta_r1024_turbo8_mystic07_int8_convrot.safetensors",
+        "default"
+      ],
+      "widgets_values_named": {
+        "unet_name": "minimax_h3_fused_refdelta_r1024_turbo8_mystic07_int8_convrot.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    {
+      "id": 2,
+      "type": "CLIPLoader",
+      "pos": [
+        2462.1714789542966,
+        -2813.201583701066
+      ],
+      "size": [
+        525.9190658221414,
+        106
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+        "minimax",
+        "default"
+      ],
+      "widgets_values_named": {
+        "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+        "type": "minimax",
+        "device": "default"
+      }
+    },
+    {
+      "id": 13,
+      "type": "KSamplerSelect",
+      "pos": [
+        3018.090544776438,
+        -2647.858252585452
+      ],
+      "size": [
+        595.973958333333,
+        106
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "SAMPLER",
+          "type": "SAMPLER",
+          "links": [
+            8
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "KSamplerSelect"
+      },
+      "widgets_values": [
+        "euler"
+      ],
+      "widgets_values_named": {
+        "sampler_name": "euler"
+      }
+    },
+    {
+      "id": 23,
+      "type": "CreateVideo",
+      "pos": [
+        3018.090544776438,
+        -2481.858252585452
+      ],
+      "size": [
+        595.973958333333,
+        126
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 10
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            43
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "CreateVideo"
+      },
+      "widgets_values": [
+        24,
+        8,
+        "sRGB"
+      ],
+      "widgets_values_named": {
+        "fps": 24,
+        "bit_depth": 8,
+        "color_space": "sRGB"
+      }
+    },
+    {
+      "id": 30,
+      "type": "MiniMaxH3FiniteSegmentSampler",
+      "pos": [
+        3018.090544776438,
+        -2295.858252585452
+      ],
+      "size": [
+        595.973958333333,
+        361.71353524948904
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 26
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 4
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 5
+        },
+        {
+          "name": "audio_vae",
+          "type": "VAE",
+          "link": 6
+        },
+        {
+          "name": "finite_plan",
+          "type": "MINIMAX_H3_FINITE_SEGMENT_PLAN",
+          "link": 33
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 8
+        },
+        {
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Last Sampled Latent",
+          "type": "LATENT",
+          "links": null
+        },
+        {
+          "name": "Merged Frames",
+          "type": "IMAGE",
+          "links": [
+            10
+          ]
+        },
+        {
+          "name": "Merged Audio",
+          "type": "AUDIO",
+          "links": [
+            11
+          ]
+        },
+        {
+          "name": "Sampling Status",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "bad313e7e1a7eb300a23aac9f094da63fb536430",
+        "Node name for S&R": "MiniMaxH3FiniteSegmentSampler",
+        "aux_id": "Songssx/ComfyUI-MiniMaxH3-TimelineDirector"
+      },
+      "widgets_values": [
+        495088260674453,
+        "randomize",
+        "match",
+        "match"
+      ],
+      "widgets_values_named": {
+        "seed": 495088260674453,
+        "control_after_generate": "randomize",
+        "continue_audio_latent": "match",
+        "ref_image_size": "match"
+      }
+    },
+    {
+      "id": 43,
+      "type": "MiniMaxH3LongReferenceSegmentPlan",
+      "pos": [
+        2462.1714789542966,
+        -2315.201583701066
+      ],
+      "size": [
+        525.9190658221414,
+        664.6490734806823
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "plan",
+          "type": "MINIMAX_H3_TIMELINE_PLAN",
+          "link": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Finite Segment Plan",
+          "type": "MINIMAX_H3_FINITE_SEGMENT_PLAN",
+          "links": [
+            33
+          ]
+        },
+        {
+          "name": "Segment Count",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "name": "Actual Overlap Frames",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "name": "Planning Status",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "bad313e7e1a7eb300a23aac9f094da63fb536430",
+        "Node name for S&R": "MiniMaxH3LongReferenceSegmentPlan",
+        "aux_id": "Songssx/ComfyUI-MiniMaxH3-TimelineDirector"
+      },
+      "widgets_values": [
+        "subject_definitions:\n<Subject 1> is only the character from <Picture 1>, excluding the plain white studio background: a cute upright anthropomorphic baby pig with soft pale-pink fur, a rounded body, large ears, glossy dark eyes, a round pink snout, a cheerful expressive face, a peach-pink rose with green leaves attached beside its left ear, and a white disposable diaper with a pale-blue waistband and a small yellow duck pattern. Preserve its exact facial design, body proportions, fur texture, ears, snout, rose placement, diaper design and polished high-quality 3D character appearance.\n\n<Subject 2> is the complete performance motion from <Video 1>, including every head turn, gaze direction, facial change, mouth movement, arm and hand gesture, torso movement, body sway, step, balance shift, pose transition, movement trajectory, speed, rhythm, pause and final pose performed by the original human character.\n\n<Subject 3> is every non-character visual element from <Video 1>, including the entire original background, sky, distant landscape, ground, lighting, shadows, atmosphere, visible text and watermarks, framing, composition, camera position, camera movement, focus, exposure, motion blur, color grading, image texture and editing rhythm.\n\n<Audio 1> is the complete original audio track from <Video 1>.\n\nsummary:\n[reference generation + video editing + audio reuse] Perform a strict character-only replacement. Completely remove the original human performer from <Video 1> and replace only that performer with <Subject 1>. Transfer the complete performance motion of <Subject 2> onto <Subject 1>, while keeping <Subject 3> and <Audio 1> unchanged.\n\nretention_analysis:\n<Subject 1> (appears in [Shot 1]): fully_preserved - preserve the exact same pig character identity and design from <Picture 1>. Do not redesign, recolor, age, humanize or restyle the pig. Do not transfer the original performer’s face, hairstyle, black headwear, red costume, jewelry or human anatomy onto the pig. The white background from <Picture 1> must not appear in the target video.\n\n<Subject 2> (appears in [Shot 1]): attribute_transfer - transfer the original performer’s complete action sequence, timing, rhythm, direction, spatial path, body orientation, gaze, facial timing and pose transitions onto <Subject 1>. Adapt the motion only to the pig’s shorter limbs and rounded body proportions, without simplifying, replacing, slowing down, speeding up or inventing new choreography.\n\n<Subject 3> (appears in [Shot 1]): fully_preserved - keep the original video background and all non-character pixels unchanged. Do not redesign, regenerate, replace, reframe, crop, zoom, stabilize, relight, recolor, blur or distort the environment. Preserve all original visible text and watermarks in their exact positions.\n\n<Audio 1> (used throughout [Shot 1]): fully_copy - preserve the original audio, synchronization, duration and volume exactly. Do not generate replacement dialogue, music or sound effects.\n\ndetailed_description:\nThe target video uses <Picture 1> only as the replacement character identity reference. <Video 1> remains the complete foundation for the timing, choreography, background, camera, composition, lighting, editing and audio.\n\n[Shot 1] From the first frame, the original human performer is already completely replaced by <Subject 1>; do not show a transformation, morphing process or transition between the human and the pig. Place the pig in the same screen position, depth, orientation and floor-contact location as the original performer, with its overall on-screen height and occupied image area matching the original performer as closely as possible while preserving the pig’s natural proportions.\n\nThe pig performs the exact same visible action sequence as the original performer. Preserve every head movement, gaze change, facial beat, mouth movement, torso sway, body lean, arm direction, hand choreography, step, weight transfer, rhythm, acceleration, pause and final pose. Express the original hand gestures naturally through the pig’s forelegs and small hooves; never generate human hands, human fingers or mixed human-pig anatomy.\n\nKeep the rose firmly attached beside the pig’s left ear and keep the diaper shape, pale-blue waistband and yellow duck pattern consistent throughout all movement. The rose, ears, soft fur and diaper may have subtle secondary movement caused only by the transferred action, but they must not detach, change sides, disappear, deform or flicker.\n\nMatch the original scene lighting, shadow direction, exposure, focus and motion blur on the pig so that it is naturally integrated into the existing footage. Completely remove all traces of the original performer, including the human face, hair, headwear, red robe, sleeves, hands, legs and body silhouette. Reconstruct only the small background regions newly revealed after removing the performer, using the surrounding visual information from <Video 1>, while leaving the rest of the frame untouched.\n\nDo not add new characters, clothing, props, visual effects, particles, flowers, decorations or camera movements. Do not change the original aspect ratio, framing, playback speed, frame rate, shot order, cuts or clip duration. Avoid double bodies, residual human limbs, ghosting, transparent overlays, extra limbs, extra ears, human fingers, anatomy deformation, body-size flicker, character drifting, costume flicker, rose displacement, diaper deformation, background warping or temporal instability. The final frame must follow the original performer’s exact ending timing and pose and remain visually stable.\n\noverall_soundscape:\nFully copy all original voices, ambience, movement sounds and synchronized sound effects from <Video 1>. Do not add, remove, replace or retime any sound.\n\nnon_diegetic_music:\nUse only the original music from <Video 1> exactly as provided. Do not generate or add any new background music.",
+        48,
+        true
+      ],
+      "widgets_values_named": {
+        "prompt": "subject_definitions:\n<Subject 1> is only the character from <Picture 1>, excluding the plain white studio background: a cute upright anthropomorphic baby pig with soft pale-pink fur, a rounded body, large ears, glossy dark eyes, a round pink snout, a cheerful expressive face, a peach-pink rose with green leaves attached beside its left ear, and a white disposable diaper with a pale-blue waistband and a small yellow duck pattern. Preserve its exact facial design, body proportions, fur texture, ears, snout, rose placement, diaper design and polished high-quality 3D character appearance.\n\n<Subject 2> is the complete performance motion from <Video 1>, including every head turn, gaze direction, facial change, mouth movement, arm and hand gesture, torso movement, body sway, step, balance shift, pose transition, movement trajectory, speed, rhythm, pause and final pose performed by the original human character.\n\n<Subject 3> is every non-character visual element from <Video 1>, including the entire original background, sky, distant landscape, ground, lighting, shadows, atmosphere, visible text and watermarks, framing, composition, camera position, camera movement, focus, exposure, motion blur, color grading, image texture and editing rhythm.\n\n<Audio 1> is the complete original audio track from <Video 1>.\n\nsummary:\n[reference generation + video editing + audio reuse] Perform a strict character-only replacement. Completely remove the original human performer from <Video 1> and replace only that performer with <Subject 1>. Transfer the complete performance motion of <Subject 2> onto <Subject 1>, while keeping <Subject 3> and <Audio 1> unchanged.\n\nretention_analysis:\n<Subject 1> (appears in [Shot 1]): fully_preserved - preserve the exact same pig character identity and design from <Picture 1>. Do not redesign, recolor, age, humanize or restyle the pig. Do not transfer the original performer’s face, hairstyle, black headwear, red costume, jewelry or human anatomy onto the pig. The white background from <Picture 1> must not appear in the target video.\n\n<Subject 2> (appears in [Shot 1]): attribute_transfer - transfer the original performer’s complete action sequence, timing, rhythm, direction, spatial path, body orientation, gaze, facial timing and pose transitions onto <Subject 1>. Adapt the motion only to the pig’s shorter limbs and rounded body proportions, without simplifying, replacing, slowing down, speeding up or inventing new choreography.\n\n<Subject 3> (appears in [Shot 1]): fully_preserved - keep the original video background and all non-character pixels unchanged. Do not redesign, regenerate, replace, reframe, crop, zoom, stabilize, relight, recolor, blur or distort the environment. Preserve all original visible text and watermarks in their exact positions.\n\n<Audio 1> (used throughout [Shot 1]): fully_copy - preserve the original audio, synchronization, duration and volume exactly. Do not generate replacement dialogue, music or sound effects.\n\ndetailed_description:\nThe target video uses <Picture 1> only as the replacement character identity reference. <Video 1> remains the complete foundation for the timing, choreography, background, camera, composition, lighting, editing and audio.\n\n[Shot 1] From the first frame, the original human performer is already completely replaced by <Subject 1>; do not show a transformation, morphing process or transition between the human and the pig. Place the pig in the same screen position, depth, orientation and floor-contact location as the original performer, with its overall on-screen height and occupied image area matching the original performer as closely as possible while preserving the pig’s natural proportions.\n\nThe pig performs the exact same visible action sequence as the original performer. Preserve every head movement, gaze change, facial beat, mouth movement, torso sway, body lean, arm direction, hand choreography, step, weight transfer, rhythm, acceleration, pause and final pose. Express the original hand gestures naturally through the pig’s forelegs and small hooves; never generate human hands, human fingers or mixed human-pig anatomy.\n\nKeep the rose firmly attached beside the pig’s left ear and keep the diaper shape, pale-blue waistband and yellow duck pattern consistent throughout all movement. The rose, ears, soft fur and diaper may have subtle secondary movement caused only by the transferred action, but they must not detach, change sides, disappear, deform or flicker.\n\nMatch the original scene lighting, shadow direction, exposure, focus and motion blur on the pig so that it is naturally integrated into the existing footage. Completely remove all traces of the original performer, including the human face, hair, headwear, red robe, sleeves, hands, legs and body silhouette. Reconstruct only the small background regions newly revealed after removing the performer, using the surrounding visual information from <Video 1>, while leaving the rest of the frame untouched.\n\nDo not add new characters, clothing, props, visual effects, particles, flowers, decorations or camera movements. Do not change the original aspect ratio, framing, playback speed, frame rate, shot order, cuts or clip duration. Avoid double bodies, residual human limbs, ghosting, transparent overlays, extra limbs, extra ears, human fingers, anatomy deformation, body-size flicker, character drifting, costume flicker, rose displacement, diaper deformation, background warping or temporal instability. The final frame must follow the original performer’s exact ending timing and pose and remain visually stable.\n\noverall_soundscape:\nFully copy all original voices, ambience, movement sounds and synchronized sound effects from <Video 1>. Do not add, remove, replace or retime any sound.\n\nnon_diegetic_music:\nUse only the original music from <Video 1> exactly as provided. Do not generate or add any new background music.",
+        "overlap_frames": 48,
+        "slice_reference_audio": true
+      }
+    },
+    {
+      "id": 63,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        3651.2125861652066,
+        -1583.3399858170417
+      ],
+      "size": [
+        2181.80406730295,
+        988.5345384601334
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 48
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 49
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        },
+        {
+          "name": "frame_rate",
+          "type": "FLOAT",
+          "widget": {
+            "name": "frame_rate"
+          },
+          "link": 51
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "1.0.0",
+        "Node name for S&R": "VHS_VideoCombine"
+      },
+      "widgets_values": {
+        "frame_rate": 8,
+        "loop_count": 0,
+        "filename_prefix": "AnimateDiff",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "AnimateDiff_00012-audio.mp4",
+            "subfolder": "",
+            "type": "output",
+            "format": "video/h264-mp4",
+            "frame_rate": 30,
+            "workflow": "AnimateDiff_00012.png",
+            "fullpath": "D:\\ComfyUI-BIUL_JX\\ComfyUI\\output\\AnimateDiff_00012-audio.mp4"
+          }
+        }
+      },
+      "widgets_values_named": {
+        "frame_rate": 8,
+        "loop_count": 0,
+        "filename_prefix": "AnimateDiff",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "AnimateDiff_00012-audio.mp4",
+            "subfolder": "",
+            "type": "output",
+            "format": "video/h264-mp4",
+            "frame_rate": 30,
+            "workflow": "AnimateDiff_00012.png",
+            "fullpath": "D:\\ComfyUI-BIUL_JX\\ComfyUI\\output\\AnimateDiff_00012-audio.mp4"
+          }
+        }
+      }
+    },
+    {
+      "id": 66,
+      "type": "ResolutionSelector",
+      "pos": [
+        1336.144782806022,
+        -2116.2363422531057
+      ],
+      "size": [
+        400,
+        126
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            53
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            54
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.3",
+        "Node name for S&R": "ResolutionSelector"
+      },
+      "widgets_values": [
+        "16:9 (Widescreen)",
+        0.6,
+        8
+      ],
+      "widgets_values_named": {
+        "aspect_ratio": "16:9 (Widescreen)",
+        "megapixels": 0.6,
+        "multiple": 8
+      },
+      "color": "#4a5c7b",
+      "bgcolor": "#151a23"
+    },
+    {
+      "id": 67,
+      "type": "ImageScaleToMaxDimension",
+      "pos": [
+        2462.5092360205367,
+        -1066.934592592886
+      ],
+      "size": [
+        255.8291015625,
+        82
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "largest_size",
+          "type": "INT",
+          "widget": {
+            "name": "largest_size"
+          },
+          "link": 55
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.3",
+        "Node name for S&R": "ImageScaleToMaxDimension"
+      },
+      "widgets_values": [
+        "nearest-exact",
+        512
+      ],
+      "widgets_values_named": {
+        "upscale_method": "nearest-exact",
+        "largest_size": 512
+      }
+    },
+    {
+      "id": 68,
+      "type": "ImageScaleToMaxDimension",
+      "pos": [
+        2748.3383375830367,
+        -1069.4380862400462
+      ],
+      "size": [
+        255.8291015625,
+        82
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "largest_size",
+          "type": "INT",
+          "widget": {
+            "name": "largest_size"
+          },
+          "link": 56
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.3",
+        "Node name for S&R": "ImageScaleToMaxDimension"
+      },
+      "widgets_values": [
+        "nearest-exact",
+        512
+      ],
+      "widgets_values_named": {
+        "upscale_method": "nearest-exact",
+        "largest_size": 512
+      }
+    },
+    {
+      "id": 69,
+      "type": "ResolutionSelector",
+      "pos": [
+        3319.996540708036,
+        -1107.1190571629497
+      ],
+      "size": [
+        255.8291015625,
+        126
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            55,
+            56
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.3",
+        "Node name for S&R": "ResolutionSelector"
+      },
+      "widgets_values": [
+        "16:9 (Widescreen)",
+        0.6,
+        8
+      ],
+      "widgets_values_named": {
+        "aspect_ratio": "16:9 (Widescreen)",
+        "megapixels": 0.6,
+        "multiple": 8
+      }
+    }
+  ],
+  "links": [
+    [
+      4,
+      2,
+      0,
+      30,
+      1,
+      "CLIP"
+    ],
+    [
+      5,
+      3,
+      0,
+      30,
+      2,
+      "VAE"
+    ],
+    [
+      6,
+      8,
+      0,
+      30,
+      3,
+      "VAE"
+    ],
+    [
+      8,
+      13,
+      0,
+      30,
+      5,
+      "SAMPLER"
+    ],
+    [
+      9,
+      9,
+      0,
+      30,
+      6,
+      "SIGMAS"
+    ],
+    [
+      10,
+      30,
+      1,
+      23,
+      0,
+      "IMAGE"
+    ],
+    [
+      11,
+      30,
+      2,
+      23,
+      1,
+      "AUDIO"
+    ],
+    [
+      25,
+      35,
+      0,
+      9,
+      0,
+      "MODEL"
+    ],
+    [
+      26,
+      35,
+      0,
+      30,
+      0,
+      "MODEL"
+    ],
+    [
+      29,
+      1,
+      0,
+      35,
+      0,
+      "MODEL"
+    ],
+    [
+      32,
+      11,
+      0,
+      43,
+      0,
+      "MINIMAX_H3_TIMELINE_PLAN"
+    ],
+    [
+      33,
+      43,
+      0,
+      30,
+      4,
+      "MINIMAX_H3_FINITE_SEGMENT_PLAN"
+    ],
+    [
+      43,
+      23,
+      0,
+      29,
+      0,
+      "VIDEO"
+    ],
+    [
+      44,
+      59,
+      0,
+      61,
+      0,
+      "IMAGE"
+    ],
+    [
+      45,
+      60,
+      0,
+      62,
+      0,
+      "IMAGE"
+    ],
+    [
+      46,
+      61,
+      0,
+      57,
+      0,
+      "IMAGE"
+    ],
+    [
+      47,
+      62,
+      0,
+      57,
+      1,
+      "IMAGE"
+    ],
+    [
+      48,
+      57,
+      0,
+      63,
+      0,
+      "IMAGE"
+    ],
+    [
+      49,
+      59,
+      2,
+      63,
+      1,
+      "AUDIO"
+    ],
+    [
+      50,
+      60,
+      3,
+      64,
+      0,
+      "VHS_VIDEOINFO"
+    ],
+    [
+      51,
+      64,
+      0,
+      63,
+      4,
+      "FLOAT"
+    ],
+    [
+      53,
+      66,
+      0,
+      11,
+      1,
+      "INT"
+    ],
+    [
+      54,
+      66,
+      1,
+      11,
+      2,
+      "INT"
+    ],
+    [
+      55,
+      69,
+      0,
+      67,
+      1,
+      "INT"
+    ],
+    [
+      56,
+      69,
+      0,
+      68,
+      1,
+      "INT"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.29325435153865936,
+      "offset": [
+        165.73669653466487,
+        4044.4576426171084
+      ]
+    },
+    "frontendVersion": "1.49.6",
+    "anomalous_hashes": {
+      "3_minimax_h3_video_vae_fp16.safetensors": {
+        "hash": "",
+        "size": 5207808496
+      },
+      "8_minimax_h3_audio_vae_fp32.safetensors": {
+        "hash": "",
+        "size": 605254808
+      },
+      "1_minimax_h3_fused_refdelta_r1024_turbo8_mystic07_int8_convrot.safetensors": {
+        "hash": "",
+        "size": 20980178976
+      }
+    },
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

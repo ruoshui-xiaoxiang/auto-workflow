@@ -1,0 +1,2239 @@
+{
+ "fanxing_sync": {
+  "version": "1793798933345366600",
+  "shot": "A5",
+  "tag": "H3_A5",
+  "source": "h3_run_project"
+ },
+ "workflow": {
+  "id": "e2fb317e-b166-44b4-b976-8575d8d7c4ac",
+  "revision": 0,
+  "last_node_id": 184,
+  "last_link_id": 336,
+  "nodes": [
+   {
+    "id": 127,
+    "type": "BasicGuider",
+    "pos": [
+     -2531.086074317509,
+     5286.420363337709
+    ],
+    "size": [
+     360,
+     60
+    ],
+    "flags": {
+     "collapsed": true
+    },
+    "order": 21,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "model",
+      "type": "MODEL",
+      "link": 259
+     },
+     {
+      "name": "conditioning",
+      "type": "CONDITIONING",
+      "link": 246
+     }
+    ],
+    "outputs": [
+     {
+      "name": "GUIDER",
+      "type": "GUIDER",
+      "links": [
+       242
+      ]
+     }
+    ],
+    "properties": {
+     "Node name for S&R": "BasicGuider",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "color": "#232",
+    "bgcolor": "#353"
+   },
+   {
+    "id": 135,
+    "type": "UNETLoader",
+    "pos": [
+     -3868.1534283466804,
+     5122.465989142534
+    ],
+    "size": [
+     497.8070036358058,
+     83.22890493503837
+    ],
+    "flags": {},
+    "order": 0,
+    "mode": 0,
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "MODEL",
+      "type": "MODEL",
+      "links": [
+       300
+      ]
+     }
+    ],
+    "properties": {
+     "Node name for S&R": "UNETLoader",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     },
+     "models": [
+      {
+       "name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+       "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+       "directory": "diffusion_models"
+      }
+     ]
+    },
+    "widgets_values": [
+     "minimax_h3_hybrid_fl2va_ref2va_b25-49-int8.safetensors",
+     "default"
+    ],
+    "widgets_values_named": {
+     "unet_name": "minimax_h3_hybrid_fl2va_ref2va_b25-49.safetensors",
+     "weight_dtype": "default"
+    },
+    "color": "#223",
+    "bgcolor": "#335"
+   },
+   {
+    "id": 124,
+    "type": "VAELoader",
+    "pos": [
+     -3872.549512077012,
+     5549.603264341557
+    ],
+    "size": [
+     650,
+     70
+    ],
+    "flags": {},
+    "order": 1,
+    "mode": 0,
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "VAE",
+      "type": "VAE",
+      "links": [
+       239
+      ]
+     }
+    ],
+    "properties": {
+     "Node name for S&R": "VAELoader",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     },
+     "models": [
+      {
+       "name": "minimax_h3_audio_vae_fp32.safetensors",
+       "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors",
+       "directory": "vae"
+      }
+     ]
+    },
+    "widgets_values": [
+     "minimax_h3_audio_vae_fp32.safetensors"
+    ],
+    "widgets_values_named": {
+     "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    },
+    "color": "#223",
+    "bgcolor": "#335"
+   },
+   {
+    "id": 125,
+    "type": "VAEDecodeAudio",
+    "pos": [
+     -1850.5113676716826,
+     5204.946004631126
+    ],
+    "size": [
+     230,
+     266
+    ],
+    "flags": {
+     "collapsed": true
+    },
+    "order": 29,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "samples",
+      "type": "LATENT",
+      "link": 293
+     },
+     {
+      "name": "vae",
+      "type": "VAE",
+      "link": 239
+     }
+    ],
+    "outputs": [
+     {
+      "name": "AUDIO",
+      "type": "AUDIO",
+      "links": [
+       247
+      ]
+     }
+    ],
+    "properties": {
+     "Node name for S&R": "VAEDecodeAudio",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    }
+   },
+   {
+    "id": 139,
+    "type": "VAEDecode",
+    "pos": [
+     -1831.402622524081,
+     5289.847505100296
+    ],
+    "size": [
+     230,
+     60
+    ],
+    "flags": {
+     "collapsed": true
+    },
+    "order": 28,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "samples",
+      "type": "LATENT",
+      "link": 292
+     },
+     {
+      "name": "vae",
+      "type": "VAE",
+      "link": 240
+     }
+    ],
+    "outputs": [
+     {
+      "name": "IMAGE",
+      "type": "IMAGE",
+      "links": [
+       261
+      ]
+     }
+    ],
+    "properties": {
+     "Node name for S&R": "VAEDecode",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    }
+   },
+   {
+    "id": 138,
+    "type": "VAELoader",
+    "pos": [
+     -3866.519639823786,
+     5419.450476154414
+    ],
+    "size": [
+     640,
+     70
+    ],
+    "flags": {},
+    "order": 2,
+    "mode": 0,
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "VAE",
+      "type": "VAE",
+      "links": [
+       240,
+       249
+      ]
+     }
+    ],
+    "properties": {
+     "Node name for S&R": "VAELoader",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     },
+     "models": [
+      {
+       "name": "minimax_h3_video_vae_fp16.safetensors",
+       "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors",
+       "directory": "vae"
+      }
+     ]
+    },
+    "widgets_values": [
+     "minimax_h3_video_vae_fp16.safetensors"
+    ],
+    "widgets_values_named": {
+     "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    },
+    "color": "#223",
+    "bgcolor": "#335"
+   },
+   {
+    "id": 149,
+    "type": "MiniMaxH3MemoryEfficientSageAttentionPatch",
+    "pos": [
+     -3168.1664853979587,
+     5132.77335897168
+    ],
+    "size": [
+     320.323828125,
+     26
+    ],
+    "flags": {},
+    "order": 12,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "model",
+      "type": "MODEL",
+      "link": 300
+     }
+    ],
+    "outputs": [
+     {
+      "name": "model",
+      "type": "MODEL",
+      "links": [
+       275,
+       282
+      ]
+     }
+    ],
+    "properties": {
+     "Node name for S&R": "MiniMaxH3MemoryEfficientSageAttentionPatch",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     },
+     "cnr_id": "comfyui-kjnodes",
+     "ver": "35e5956193769d18a13136cdedb73a36a05c73e6"
+    },
+    "color": "#2a363b",
+    "bgcolor": "#3f5159"
+   },
+   {
+    "id": 159,
+    "type": "SplitSigmasDenoise",
+    "pos": [
+     -1895.123380976465,
+     6068.1986799804
+    ],
+    "size": [
+     252.0162037187083,
+     290
+    ],
+    "flags": {
+     "collapsed": false
+    },
+    "order": 25,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "sigmas",
+      "type": "SIGMAS",
+      "link": 280
+     }
+    ],
+    "outputs": [
+     {
+      "name": "high_sigmas",
+      "type": "SIGMAS",
+      "links": [
+       281
+      ]
+     },
+     {
+      "name": "low_sigmas",
+      "type": "SIGMAS",
+      "links": [
+       290
+      ]
+     }
+    ],
+    "title": "BUNNY 二采切分：末段25%",
+    "properties": {
+     "Node name for S&R": "SplitSigmasDenoise",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "widgets_values": [
+     0.25
+    ],
+    "widgets_values_named": {
+     "denoise": 0.25
+    },
+    "color": "#323",
+    "bgcolor": "#535"
+   },
+   {
+    "id": 158,
+    "type": "BasicGuider",
+    "pos": [
+     -2231.1457913845984,
+     6399.5339210722905
+    ],
+    "size": [
+     310,
+     70
+    ],
+    "flags": {
+     "collapsed": true
+    },
+    "order": 23,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "model",
+      "type": "MODEL",
+      "link": 285
+     },
+     {
+      "name": "conditioning",
+      "type": "CONDITIONING",
+      "link": 286
+     }
+    ],
+    "outputs": [
+     {
+      "name": "GUIDER",
+      "type": "GUIDER",
+      "links": [
+       288
+      ]
+     }
+    ],
+    "title": "BUNNY 二采低强度引导",
+    "properties": {
+     "Node name for S&R": "BasicGuider",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "color": "#323",
+    "bgcolor": "#535"
+   },
+   {
+    "id": 161,
+    "type": "DisableNoise",
+    "pos": [
+     -2230.5685951422697,
+     6290.166918533706
+    ],
+    "size": [
+     280,
+     55
+    ],
+    "flags": {
+     "collapsed": true
+    },
+    "order": 3,
+    "mode": 0,
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "NOISE",
+      "type": "NOISE",
+      "links": [
+       287
+      ]
+     }
+    ],
+    "title": "BUNNY 二采：禁止重复加噪",
+    "properties": {
+     "Node name for S&R": "DisableNoise",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "color": "#323",
+    "bgcolor": "#535"
+   },
+   {
+    "id": 126,
+    "type": "KSamplerSelect",
+    "pos": [
+     -2549.080813159237,
+     5347.458120699893
+    ],
+    "size": [
+     370,
+     70
+    ],
+    "flags": {},
+    "order": 4,
+    "mode": 0,
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "SAMPLER",
+      "type": "SAMPLER",
+      "links": [
+       243,
+       289
+      ]
+     }
+    ],
+    "properties": {
+     "Node name for S&R": "KSamplerSelect",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "widgets_values": [
+     "res_multistep"
+    ],
+    "widgets_values_named": {
+     "sampler_name": "res_multistep"
+    },
+    "color": "#232",
+    "bgcolor": "#353"
+   },
+   {
+    "id": 137,
+    "type": "SamplerCustomAdvanced",
+    "pos": [
+     -2180.344237421774,
+     5245.172517838211
+    ],
+    "size": [
+     262.01328125,
+     326
+    ],
+    "flags": {
+     "collapsed": false
+    },
+    "order": 26,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "noise",
+      "type": "NOISE",
+      "link": 241
+     },
+     {
+      "name": "guider",
+      "type": "GUIDER",
+      "link": 242
+     },
+     {
+      "name": "sampler",
+      "type": "SAMPLER",
+      "link": 243
+     },
+     {
+      "name": "sigmas",
+      "type": "SIGMAS",
+      "link": 281
+     },
+     {
+      "name": "latent_image",
+      "type": "LATENT",
+      "link": 245
+     }
+    ],
+    "outputs": [
+     {
+      "name": "output",
+      "type": "LATENT",
+      "links": [
+       291
+      ]
+     },
+     {
+      "name": "denoised_output",
+      "type": "LATENT",
+      "links": []
+     }
+    ],
+    "title": "BUNNY 一采：首尾帧武打动作结构",
+    "properties": {
+     "Node name for S&R": "SamplerCustomAdvanced",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "color": "#232",
+    "bgcolor": "#353"
+   },
+   {
+    "id": 131,
+    "type": "MiniMaxH3ImageToVideo",
+    "pos": [
+     -2532.461064560573,
+     5703.0025802688615
+    ],
+    "size": [
+     384.70820789390746,
+     220
+    ],
+    "flags": {
+     "collapsed": false
+    },
+    "order": 16,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "clip",
+      "type": "CLIP",
+      "link": 248
+     },
+     {
+      "name": "vae",
+      "type": "VAE",
+      "link": 249
+     },
+     {
+      "name": "first_frame",
+      "shape": 7,
+      "type": "IMAGE",
+      "link": 265
+     },
+     {
+      "name": "last_frame",
+      "shape": 7,
+      "type": "IMAGE",
+      "link": 266
+     },
+     {
+      "name": "prompt",
+      "type": "STRING",
+      "widget": {
+       "name": "prompt"
+      },
+      "link": 327
+     },
+     {
+      "name": "width",
+      "type": "INT",
+      "widget": {
+       "name": "width"
+      },
+      "link": 253
+     },
+     {
+      "name": "height",
+      "type": "INT",
+      "widget": {
+       "name": "height"
+      },
+      "link": 254
+     },
+     {
+      "name": "length",
+      "type": "INT",
+      "widget": {
+       "name": "length"
+      },
+      "link": 252
+     }
+    ],
+    "outputs": [
+     {
+      "name": "positive",
+      "type": "CONDITIONING",
+      "links": [
+       246,
+       286
+      ]
+     },
+     {
+      "name": "LATENT",
+      "type": "LATENT",
+      "links": [
+       245
+      ]
+     }
+    ],
+    "properties": {
+     "Node name for S&R": "MiniMaxH3ImageToVideo",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "widgets_values": [
+     "integrated_multimodal_description:\n\n视频时长10秒。\n\n嘉靖年间，夜晚，京师沈阁老府邸的外书房。窗外一直下雨，木格窗纸被雨夜映成灰蓝色。书案左侧两盏油灯发出暖黄灯光，照亮书案和三人的脸与上半身，房间深处较暗。深色木案、账册纸张、白瓷茶盏和官服衣料都有清楚真实的质地，人物脸上的高光窄而克制。\n\n六十岁左右的沈阁老坐在书案后，身材清瘦，肩略窄，长而瘦的脸，窄下颌，颧骨轻微突出，宽额头，发际线后移，灰黑长眉较平直，细长的眼睛上眼睑略松，眼下有浅眼袋，鼻梁直而偏长，鼻翼窄，嘴唇薄，嘴角自然略向下，上唇留整齐的灰白短髭，下巴留约三厘米灰白短须，两颊胡须稀少，偏黄白肤色，额头有横向细纹，眼尾和鼻唇沟有明显年龄纹，穿绯色圆领文官常服，系深色革带，戴黑色乌纱帽。\n\n四十五岁左右的周侍郎站在书案右前方约一米处，身材中等偏高，肩背较宽，体型结实但不肥胖，方圆脸，下颌较宽，黑色发际线轻微后移，浓黑平眉，略窄的眼睛外眼角轻微向下，鼻梁较宽而直，鼻头偏圆，嘴唇厚度中等，上唇略薄，上唇留整齐黑色短髭，下巴有很短的黑色胡须，两颊剃净，肤色中等偏黄，眼下有浅阴影，穿绯色圆领文官常服，系深色革带，戴黑色乌纱帽。\n\n三十二岁左右的赵主事站在周侍郎右后方约半步，身材偏瘦，中等身高，肩明显比周侍郎窄，窄椭圆脸，下颌线清楚但不宽，额头较平，黑色发际线完整，黑眉偏细且较直，眼睛中等大小略圆，鼻梁直，鼻头较窄，嘴唇厚度中等，下唇稍厚，面部剃净没有胡须，肤色偏浅黄，眼下有很轻的暗影，穿青色圆领文官常服，系深色革带，戴黑色乌纱帽。\n\n河工账册重新摊开在书案中央。白瓷茶盏已经放回周侍郎一侧的桌角。沈阁老低头看账，周侍郎垂手站立，赵主事仍站在周侍郎右后方。\n\n0秒到2.7秒，赵主事侧面近景。赵主事先低着头，嘴唇抿住。一次浅呼吸后，他略微抬起脸，但眼睛仍没有完全看向沈阁老，以较轻的青年男性中音说道：“那三万两……”说到这里停约0.5秒，喉结轻轻移动一下，再继续：“没有解往河工。”\n\n2.7秒到4.5秒，切到周侍郎。赵主事说出后半句的同时，周侍郎立即侧过脸看他。头部动作不大，但速度明显快于此前的所有转头。赵主事的声音结束后，周侍郎仍看着他，没有开口。\n\n4.5秒到6.5秒，切到沈阁老近中景。沈阁老低头看着账页，右手缓慢翻过一页，像是在寻找另一处记录。他没有抬头，以老年男性中低音平静问：“那记在了哪一册？”\n\n6.5秒到8.3秒，切到赵主事。赵主事刚要开口，嘴唇已经张开一点。\n\n画面立刻切到周侍郎。\n\n周侍郎向前移动很小半步，身体仍保持端正，以中年男性中音说道：“有一笔支用，没有入河工册。”声音不高，语速稍慢，“没有入河工册”说得清楚而平直。\n\n8.3秒到10秒，切到沈阁老正面近景。\n\n沈阁老这才缓慢抬起头，先看周侍郎，再看了一眼旁边没有说完话的赵主事。\n\n他问：\n\n“没有入？”\n\n停约0.4秒。\n\n“还是不能入？”\n\n“不能”两个字放慢，但音量没有变化。\n\n说完后，他的视线停在周侍郎脸上。\n\n周侍郎没有回答。\n\n画面在雨声中结束。\n\noverall_soundscape:\n\nContinuous steady rain outside wooden lattice windows. Quiet enclosed-room acoustics with little reverberation. Subtle breathing, faint robe movement, soft page turning, and occasional dry paper contact from the open ledger.\n\nZhao speaks in a younger male slightly higher mid voice with a lighter body, neutral-to-slightly bright tone, shallow resonance, clean texture, very little breathiness, and a medium pace. His first phrase trails into a short pause before he finishes the statement more quietly.\n\nShen speaks in an older male low-mid voice with moderate thickness, a dark tone, clear chest resonance, slightly dry texture, almost no breathiness, and a naturally slow pace. His first question is soft and even. In the final question, “cannot” is spoken more slowly without becoming louder.\n\nZhou speaks in a middle-aged male mid voice with medium thickness, a dark tone, moderate chest resonance, smooth texture, minimal breathiness, and a medium-slow pace. His line is level, quiet, and clearly articulated.\n\nThe final silence contains only rain, soft breathing, and faint room tone.\n\nnon_diegetic_music:\n\nNo non-diegetic music.",
+     1344,
+     768,
+     73
+    ],
+    "widgets_values_named": {
+     "prompt": "integrated_multimodal_description:\n\n视频时长10秒。\n\n嘉靖年间，夜晚，京师沈阁老府邸的外书房。窗外一直下雨，木格窗纸被雨夜映成灰蓝色。书案左侧两盏油灯发出暖黄灯光，照亮书案和三人的脸与上半身，房间深处较暗。深色木案、账册纸张、白瓷茶盏和官服衣料都有清楚真实的质地，人物脸上的高光窄而克制。\n\n六十岁左右的沈阁老坐在书案后，身材清瘦，肩略窄，长而瘦的脸，窄下颌，颧骨轻微突出，宽额头，发际线后移，灰黑长眉较平直，细长的眼睛上眼睑略松，眼下有浅眼袋，鼻梁直而偏长，鼻翼窄，嘴唇薄，嘴角自然略向下，上唇留整齐的灰白短髭，下巴留约三厘米灰白短须，两颊胡须稀少，偏黄白肤色，额头有横向细纹，眼尾和鼻唇沟有明显年龄纹，穿绯色圆领文官常服，系深色革带，戴黑色乌纱帽。\n\n四十五岁左右的周侍郎站在书案右前方约一米处，身材中等偏高，肩背较宽，体型结实但不肥胖，方圆脸，下颌较宽，黑色发际线轻微后移，浓黑平眉，略窄的眼睛外眼角轻微向下，鼻梁较宽而直，鼻头偏圆，嘴唇厚度中等，上唇略薄，上唇留整齐黑色短髭，下巴有很短的黑色胡须，两颊剃净，肤色中等偏黄，眼下有浅阴影，穿绯色圆领文官常服，系深色革带，戴黑色乌纱帽。\n\n三十二岁左右的赵主事站在周侍郎右后方约半步，身材偏瘦，中等身高，肩明显比周侍郎窄，窄椭圆脸，下颌线清楚但不宽，额头较平，黑色发际线完整，黑眉偏细且较直，眼睛中等大小略圆，鼻梁直，鼻头较窄，嘴唇厚度中等，下唇稍厚，面部剃净没有胡须，肤色偏浅黄，眼下有很轻的暗影，穿青色圆领文官常服，系深色革带，戴黑色乌纱帽。\n\n河工账册重新摊开在书案中央。白瓷茶盏已经放回周侍郎一侧的桌角。沈阁老低头看账，周侍郎垂手站立，赵主事仍站在周侍郎右后方。\n\n0秒到2.7秒，赵主事侧面近景。赵主事先低着头，嘴唇抿住。一次浅呼吸后，他略微抬起脸，但眼睛仍没有完全看向沈阁老，以较轻的青年男性中音说道：“那三万两……”说到这里停约0.5秒，喉结轻轻移动一下，再继续：“没有解往河工。”\n\n2.7秒到4.5秒，切到周侍郎。赵主事说出后半句的同时，周侍郎立即侧过脸看他。头部动作不大，但速度明显快于此前的所有转头。赵主事的声音结束后，周侍郎仍看着他，没有开口。\n\n4.5秒到6.5秒，切到沈阁老近中景。沈阁老低头看着账页，右手缓慢翻过一页，像是在寻找另一处记录。他没有抬头，以老年男性中低音平静问：“那记在了哪一册？”\n\n6.5秒到8.3秒，切到赵主事。赵主事刚要开口，嘴唇已经张开一点。\n\n画面立刻切到周侍郎。\n\n周侍郎向前移动很小半步，身体仍保持端正，以中年男性中音说道：“有一笔支用，没有入河工册。”声音不高，语速稍慢，“没有入河工册”说得清楚而平直。\n\n8.3秒到10秒，切到沈阁老正面近景。\n\n沈阁老这才缓慢抬起头，先看周侍郎，再看了一眼旁边没有说完话的赵主事。\n\n他问：\n\n“没有入？”\n\n停约0.4秒。\n\n“还是不能入？”\n\n“不能”两个字放慢，但音量没有变化。\n\n说完后，他的视线停在周侍郎脸上。\n\n周侍郎没有回答。\n\n画面在雨声中结束。\n\noverall_soundscape:\n\nContinuous steady rain outside wooden lattice windows. Quiet enclosed-room acoustics with little reverberation. Subtle breathing, faint robe movement, soft page turning, and occasional dry paper contact from the open ledger.\n\nZhao speaks in a younger male slightly higher mid voice with a lighter body, neutral-to-slightly bright tone, shallow resonance, clean texture, very little breathiness, and a medium pace. His first phrase trails into a short pause before he finishes the statement more quietly.\n\nShen speaks in an older male low-mid voice with moderate thickness, a dark tone, clear chest resonance, slightly dry texture, almost no breathiness, and a naturally slow pace. His first question is soft and even. In the final question, “cannot” is spoken more slowly without becoming louder.\n\nZhou speaks in a middle-aged male mid voice with medium thickness, a dark tone, moderate chest resonance, smooth texture, minimal breathiness, and a medium-slow pace. His line is level, quiet, and clearly articulated.\n\nThe final silence contains only rain, soft breathing, and faint room tone.\n\nnon_diegetic_music:\n\nNo non-diegetic music.",
+     "width": 1344,
+     "height": 768,
+     "length": 73
+    },
+    "color": "#232",
+    "bgcolor": "#353"
+   },
+   {
+    "id": 132,
+    "type": "ComfyMathExpression",
+    "pos": [
+     -2747.3060702073235,
+     5966.877643743797
+    ],
+    "size": [
+     360,
+     160
+    ],
+    "flags": {
+     "collapsed": true
+    },
+    "order": 13,
+    "mode": 0,
+    "inputs": [
+     {
+      "label": "a",
+      "name": "values.a",
+      "type": "FLOAT,INT,BOOLEAN",
+      "link": 255
+     },
+     {
+      "name": "values.b",
+      "shape": 7,
+      "type": "FLOAT,INT,BOOLEAN",
+      "link": null
+     }
+    ],
+    "outputs": [
+     {
+      "name": "FLOAT",
+      "type": "FLOAT",
+      "links": []
+     },
+     {
+      "name": "INT",
+      "type": "INT",
+      "links": [
+       252
+      ]
+     },
+     {
+      "name": "BOOL",
+      "type": "BOOLEAN",
+      "links": []
+     }
+    ],
+    "properties": {
+     "Node name for S&R": "ComfyMathExpression",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "widgets_values": [
+     "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17"
+    ],
+    "widgets_values_named": {
+     "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17"
+    }
+   },
+   {
+    "id": 128,
+    "type": "CLIPLoader",
+    "pos": [
+     -3869.3796867179653,
+     5251.420576613448
+    ],
+    "size": [
+     640,
+     120
+    ],
+    "flags": {},
+    "order": 5,
+    "mode": 0,
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "CLIP",
+      "type": "CLIP",
+      "links": [
+       248
+      ]
+     }
+    ],
+    "properties": {
+     "Node name for S&R": "CLIPLoader",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     },
+     "models": [
+      {
+       "name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "directory": "text_encoders"
+      }
+     ]
+    },
+    "widgets_values": [
+     "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+     "minimax",
+     "default"
+    ],
+    "widgets_values_named": {
+     "clip_name": "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+     "type": "minimax",
+     "device": "default"
+    },
+    "color": "#223",
+    "bgcolor": "#335"
+   },
+   {
+    "id": 155,
+    "type": "LoraLoaderModelOnly",
+    "pos": [
+     -2780.1342905212387,
+     6069.028365768608
+    ],
+    "size": [
+     500,
+     82
+    ],
+    "flags": {},
+    "order": 15,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "model",
+      "type": "MODEL",
+      "link": 282
+     }
+    ],
+    "outputs": [
+     {
+      "name": "MODEL",
+      "type": "MODEL",
+      "links": [
+       332
+      ]
+     }
+    ],
+    "title": "BUNNY 二采 / Stage 2：Turbo 0.20",
+    "properties": {
+     "Node name for S&R": "LoraLoaderModelOnly",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "input_ue_unconnectable": {},
+      "version": "7.8"
+     }
+    },
+    "widgets_values": [
+     "minimax_h3_fl2v_lightx2v_turbo_4step_v0.1_comfy.safetensors",
+     0.2
+    ],
+    "widgets_values_named": {
+     "lora_name": "H3\\minimax_h3_fl2v_lightx2v_turbo_4step_v0.1_comfy.safetensors",
+     "strength_model": 0.2
+    },
+    "color": "#323",
+    "bgcolor": "#535"
+   },
+   {
+    "id": 162,
+    "type": "ExtendIntermediateSigmas",
+    "pos": [
+     -2249.417730068954,
+     6070.790594450658
+    ],
+    "size": [
+     330,
+     130
+    ],
+    "flags": {},
+    "order": 24,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "sigmas",
+      "type": "SIGMAS",
+      "link": 279
+     }
+    ],
+    "outputs": [
+     {
+      "name": "SIGMAS",
+      "type": "SIGMAS",
+      "links": [
+       280
+      ]
+     }
+    ],
+    "title": "BUNNY FL2VA 动作 Sigma 扩展",
+    "properties": {
+     "Node name for S&R": "ExtendIntermediateSigmas",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "widgets_values": [
+     4,
+     0.65,
+     0.28,
+     "sine"
+    ],
+    "widgets_values_named": {
+     "steps": 4,
+     "start_at_sigma": 0.65,
+     "end_at_sigma": 0.28,
+     "spacing": "sine"
+    },
+    "color": "#323",
+    "bgcolor": "#535"
+   },
+   {
+    "id": 140,
+    "type": "LoraLoaderModelOnly",
+    "pos": [
+     -3155.3613728517576,
+     5201.525962498719
+    ],
+    "size": [
+     551.961696196114,
+     82
+    ],
+    "flags": {},
+    "order": 14,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "model",
+      "type": "MODEL",
+      "link": 275
+     }
+    ],
+    "outputs": [
+     {
+      "name": "MODEL",
+      "type": "MODEL",
+      "links": [
+       336
+      ]
+     }
+    ],
+    "title": "BUNNY 一采 / Stage 1：Turbo 0.70",
+    "properties": {
+     "Node name for S&R": "LoraLoaderModelOnly",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "widgets_values": [
+     "minimax_h3_fl2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors",
+     0.7
+    ],
+    "widgets_values_named": {
+     "lora_name": "H3\\minimax_h3_fl2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors",
+     "strength_model": 0.7
+    },
+    "color": "#2a363b",
+    "bgcolor": "#3f5159"
+   },
+   {
+    "id": 134,
+    "type": "BasicScheduler",
+    "pos": [
+     -2546.0493902493745,
+     5501.390153807266
+    ],
+    "size": [
+     370,
+     130
+    ],
+    "flags": {},
+    "order": 22,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "model",
+      "type": "MODEL",
+      "link": 260
+     }
+    ],
+    "outputs": [
+     {
+      "name": "SIGMAS",
+      "type": "SIGMAS",
+      "links": [
+       279
+      ]
+     }
+    ],
+    "title": "BUNNY FL2VA 基础调度：8步",
+    "properties": {
+     "Node name for S&R": "BasicScheduler",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "widgets_values": [
+     "simple",
+     10,
+     1
+    ],
+    "widgets_values_named": {
+     "scheduler": "simple",
+     "steps": 10,
+     "denoise": 1
+    },
+    "color": "#232",
+    "bgcolor": "#353"
+   },
+   {
+    "id": 123,
+    "type": "ResolutionSelector",
+    "pos": [
+     -2808.5398954693937,
+     5766.926099991424
+    ],
+    "size": [
+     245.42167623901832,
+     126
+    ],
+    "flags": {},
+    "order": 6,
+    "mode": 0,
+    "showAdvanced": false,
+    "inputs": [
+     {
+      "label": "aspect_ratio",
+      "name": "aspect_ratio",
+      "type": "COMBO",
+      "widget": {
+       "name": "aspect_ratio"
+      },
+      "link": null
+     },
+     {
+      "label": "megapixels",
+      "name": "megapixels",
+      "type": "FLOAT",
+      "widget": {
+       "name": "megapixels"
+      },
+      "link": null
+     },
+     {
+      "label": "multiple",
+      "name": "multiple",
+      "type": "INT",
+      "widget": {
+       "name": "multiple"
+      },
+      "link": null
+     }
+    ],
+    "outputs": [
+     {
+      "label": "width",
+      "name": "width",
+      "type": "INT",
+      "links": [
+       253
+      ]
+     },
+     {
+      "label": "height",
+      "name": "height",
+      "type": "INT",
+      "links": [
+       254
+      ]
+     }
+    ],
+    "title": "Resolution Selector 尺寸设置",
+    "properties": {
+     "Node name for S&R": "ResolutionSelector",
+     "ue_properties": {
+      "version": "7.8",
+      "widget_ue_connectable": {},
+      "input_ue_unconnectable": {}
+     },
+     "cnr_id": "comfy-core",
+     "ver": "0.30.0"
+    },
+    "widgets_values": [
+     "16:9 (Widescreen)",
+     0.52,
+     32
+    ],
+    "widgets_values_named": {
+     "aspect_ratio": "16:9 (Widescreen)",
+     "megapixels": 0.5,
+     "multiple": 32
+    },
+    "color": "#232",
+    "bgcolor": "#353"
+   },
+   {
+    "id": 129,
+    "type": "RandomNoise",
+    "pos": [
+     -2540.196620271832,
+     5132.291977754211
+    ],
+    "size": [
+     360,
+     90
+    ],
+    "flags": {},
+    "order": 7,
+    "mode": 0,
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "NOISE",
+      "type": "NOISE",
+      "links": [
+       241
+      ]
+     }
+    ],
+    "properties": {
+     "Node name for S&R": "RandomNoise",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "widgets_values": [
+     693850599018668,
+     "fixed"
+    ],
+    "widgets_values_named": {
+     "noise_seed": 693850599018668,
+     "control_after_generate": "fixed"
+    },
+    "color": "#232",
+    "bgcolor": "#353"
+   },
+   {
+    "id": 165,
+    "type": "easy cleanGpuUsed",
+    "pos": [
+     -1556.8262230543123,
+     5250.82819197857
+    ],
+    "size": [
+     140,
+     26
+    ],
+    "flags": {},
+    "order": 31,
+    "mode": 4,
+    "inputs": [
+     {
+      "name": "anything",
+      "type": "*",
+      "link": 298
+     }
+    ],
+    "outputs": [
+     {
+      "name": "output",
+      "type": "*",
+      "links": [
+       299
+      ]
+     }
+    ],
+    "properties": {
+     "Node name for S&R": "easy cleanGpuUsed",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "input_ue_unconnectable": {},
+      "version": "7.8"
+     }
+    }
+   },
+   {
+    "id": 130,
+    "type": "CreateVideo",
+    "pos": [
+     -1826.6649227804876,
+     5132.892615251798
+    ],
+    "size": [
+     210,
+     126
+    ],
+    "flags": {},
+    "order": 30,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "images",
+      "type": "IMAGE",
+      "link": 261
+     },
+     {
+      "name": "audio",
+      "shape": 7,
+      "type": "AUDIO",
+      "link": 247
+     }
+    ],
+    "outputs": [
+     {
+      "name": "VIDEO",
+      "type": "VIDEO",
+      "links": [
+       298
+      ]
+     }
+    ],
+    "properties": {
+     "Node name for S&R": "CreateVideo",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "widgets_values": [
+     24,
+     8,
+     "sRGB"
+    ],
+    "widgets_values_named": {
+     "fps": 24,
+     "bit_depth": 8,
+     "color_space": "sRGB"
+    },
+    "color": "#2a363b",
+    "bgcolor": "#3f5159"
+   },
+   {
+    "id": 184,
+    "type": "LoraLoaderModelOnly",
+    "pos": [
+     -3155.046968369528,
+     5393.282306332305
+    ],
+    "size": [
+     551.961696196114,
+     82
+    ],
+    "flags": {},
+    "order": 17,
+    "mode": 4,
+    "inputs": [
+     {
+      "name": "model",
+      "type": "MODEL",
+      "link": 336
+     }
+    ],
+    "outputs": [
+     {
+      "name": "MODEL",
+      "type": "MODEL",
+      "links": [
+       335
+      ]
+     }
+    ],
+    "title": "BUNNY 一采 / Stage 1：动作修复 0.5",
+    "properties": {
+     "Node name for S&R": "LoraLoaderModelOnly",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "widgets_values": [
+     "Motion_Repair.safetensors",
+     0.9
+    ],
+    "widgets_values_named": {
+     "lora_name": "H3\\Motion_Repair.safetensors",
+     "strength_model": 0.9
+    },
+    "color": "#322",
+    "bgcolor": "#533"
+   },
+   {
+    "id": 183,
+    "type": "LoraLoaderModelOnly",
+    "pos": [
+     -2787.290313699419,
+     6231.989855375178
+    ],
+    "size": [
+     502.08349968671564,
+     84.08349968671519
+    ],
+    "flags": {},
+    "order": 18,
+    "mode": 4,
+    "inputs": [
+     {
+      "name": "model",
+      "type": "MODEL",
+      "link": 332
+     }
+    ],
+    "outputs": [
+     {
+      "name": "MODEL",
+      "type": "MODEL",
+      "links": [
+       333
+      ]
+     }
+    ],
+    "title": "BUNNY 二采 / Stage 2：动作修复LORA 0.25-0.3",
+    "properties": {
+     "Node name for S&R": "LoraLoaderModelOnly",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "input_ue_unconnectable": {},
+      "version": "7.8"
+     }
+    },
+    "widgets_values": [
+     "Motion_Repair.safetensors",
+     0.3
+    ],
+    "widgets_values_named": {
+     "lora_name": "H3\\Motion_Repair.safetensors",
+     "strength_model": 0.3
+    },
+    "color": "#323",
+    "bgcolor": "#535"
+   },
+   {
+    "id": 92,
+    "type": "SaveVideo",
+    "pos": [
+     -1318.250336071801,
+     5165.166985419458
+    ],
+    "size": [
+     3266.527217939521,
+     1973.0320901657287
+    ],
+    "flags": {},
+    "order": 32,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "video",
+      "type": "VIDEO",
+      "link": 299
+     }
+    ],
+    "outputs": [
+     {
+      "name": "video",
+      "type": "VIDEO",
+      "links": null
+     }
+    ],
+    "title": "save video",
+    "properties": {
+     "Node name for S&R": "SaveVideo",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "widgets_values": [
+     "video/MiniMax_H3",
+     "mp4",
+     "h264",
+     "auto",
+     "auto"
+    ],
+    "widgets_values_named": {
+     "filename_prefix": "video/MiniMax_H3",
+     "format": "mp4",
+     "format.codec": "h264",
+     "format.codec.encoding": "auto",
+     "codec": "auto"
+    },
+    "color": "#323",
+    "bgcolor": "#535"
+   },
+   {
+    "id": 160,
+    "type": "SamplerCustomAdvanced",
+    "pos": [
+     -1887.7462645475878,
+     6193.330846466223
+    ],
+    "size": [
+     290,
+     326
+    ],
+    "flags": {
+     "collapsed": false
+    },
+    "order": 27,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "noise",
+      "type": "NOISE",
+      "link": 287
+     },
+     {
+      "name": "guider",
+      "type": "GUIDER",
+      "link": 288
+     },
+     {
+      "name": "sampler",
+      "type": "SAMPLER",
+      "link": 289
+     },
+     {
+      "name": "sigmas",
+      "type": "SIGMAS",
+      "link": 290
+     },
+     {
+      "name": "latent_image",
+      "type": "LATENT",
+      "link": 291
+     }
+    ],
+    "outputs": [
+     {
+      "name": "output",
+      "type": "LATENT",
+      "links": [
+       292,
+       293
+      ]
+     },
+     {
+      "name": "denoised_output",
+      "type": "LATENT",
+      "links": []
+     }
+    ],
+    "title": "BUNNY 二采：FL2VA清噪细化",
+    "properties": {
+     "Node name for S&R": "SamplerCustomAdvanced",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "color": "#323",
+    "bgcolor": "#535"
+   },
+   {
+    "id": 133,
+    "type": "PrimitiveFloat",
+    "pos": [
+     -2807.8649376326525,
+     5932.271850001097
+    ],
+    "size": [
+     234.61370766260734,
+     58
+    ],
+    "flags": {},
+    "order": 8,
+    "mode": 0,
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "FLOAT",
+      "type": "FLOAT",
+      "links": [
+       255
+      ]
+     }
+    ],
+    "title": "时长",
+    "properties": {
+     "Node name for S&R": "PrimitiveFloat",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "widgets_values": [
+     12.25
+    ],
+    "widgets_values_named": {
+     "value": 15
+    },
+    "color": "#232",
+    "bgcolor": "#353"
+   },
+   {
+    "id": 141,
+    "type": "LoadImage",
+    "pos": [
+     -3901.789942968833,
+     6420.734548695896
+    ],
+    "size": [
+     445.83887230750474,
+     609.1839440390859
+    ],
+    "flags": {},
+    "order": 9,
+    "mode": 4,
+    "inputs": [
+     {
+      "label": "image",
+      "name": "image",
+      "type": "COMBO",
+      "widget": {
+       "name": "image"
+      },
+      "link": null
+     },
+     {
+      "label": "upload",
+      "name": "upload",
+      "type": "IMAGEUPLOAD",
+      "widget": {
+       "name": "upload"
+      },
+      "link": null
+     }
+    ],
+    "outputs": [
+     {
+      "label": "IMAGE",
+      "name": "IMAGE",
+      "type": "IMAGE",
+      "links": [
+       266
+      ]
+     },
+     {
+      "label": "MASK",
+      "name": "MASK",
+      "type": "MASK"
+     }
+    ],
+    "title": "Load Image 尾帧 last Frame",
+    "properties": {
+     "Node name for S&R": "LoadImage",
+     "ue_properties": {
+      "version": "7.8",
+      "widget_ue_connectable": {},
+      "input_ue_unconnectable": {}
+     },
+     "cnr_id": "comfy-core",
+     "ver": "0.30.0"
+    },
+    "widgets_values": [
+     "F112_guanyu.png",
+     "image"
+    ],
+    "widgets_values_named": {
+     "image": "360截图20260831092845110.jpg",
+     "upload": "image"
+    },
+    "color": "#332922",
+    "bgcolor": "#593930"
+   },
+   {
+    "id": 181,
+    "type": "PrimitiveStringMultiline",
+    "pos": [
+     -3421.0216219336135,
+     5807.576406287141
+    ],
+    "size": [
+     629.3557083380338,
+     511.3202734884753
+    ],
+    "flags": {},
+    "order": 10,
+    "mode": 0,
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "STRING",
+      "type": "STRING",
+      "links": [
+       327
+      ]
+     }
+    ],
+    "properties": {
+     "Node name for S&R": "PrimitiveStringMultiline",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "input_ue_unconnectable": {},
+      "version": "7.8"
+     }
+    },
+    "widgets_values": [
+     "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description:\nPhotographic, flat daylight, crisp focus on the glass, a trace of sensor grain.\n[Shot 1] Begin exactly from Picture 1, a close front-on view of one black smartphone standing upright on the desk, its glass filling most of the frame. One unbranded black smartphone stands upright on a light oak desk, its glass facing the lens squarely and filling most of the frame; a thin dark navigation bar runs across the top of the screen, and below it a white message area holds a single vertical column of eight rounded chat bubbles — five pale grey ones aligned to the left and three mint green ones aligned to the right; a slim pale input bar runs along the bottom of the screen. Soft daylight falls from above and slightly right; a faint cool reflection slides along the upper edge of the glass; the oak desk behind the phone falls away into soft blur. Beyond the phone the desk continues out of focus towards a pale office wall; nothing and nobody enters or leaves the frame at any point. One continuous take, no cut, no transition. The camera holds a Push In with small amplitude at slow speed for the whole take, so the glass view never stands still for more than a moment. From 0.0 to 3.0 seconds the phone stays planted and only the daylight reflection slides a few millimetres along the upper glass, while the bubble column sits completely still. From 3.0 to 6.5 seconds the push begins to creep forward, the printed characters on the screen staying raster-exact in place, each glyph holding its position inside its own bubble. From 6.5 to 9.5 seconds the camera keeps closing in at the same slow rate and the wall of eight identical replies fills more of the frame, the left-aligned grey rows and the right-aligned green rows stacked one under another. From 9.5 to 12.25 seconds the push eases almost to a stop on that same wall of identical replies, a faint daylight pulse travels down the glass and dies out at the bottom edge. Nothing else in the frame moves: no hand enters, no new message appears, the screen is never touched. <Subject 1> (S1) says in an off-screen voiceover: <d>[Chinese] 老板发了条消息.没说发什么,也没说什么时候要.三秒钟,三十七个人回了收到.群里 三十七 个人,没有一个知道要干什么.</d> The on-screen figure's lips remain completely closed. The voice stops with no rise at the end and the screen keeps rolling. The printed characters never change, never melt into new glyphs and never gain extra characters; the phone edges stay clean and the camera holds the same slow Push In to the final frame.\n\noverall_soundscape: A quiet open-plan office room tone sits under everything: a distant keyboard, a low air-conditioning hum, a chair creaking once somewhere off-frame. A soft short message ping lands around the middle of the take and a second, quieter ping answers it half a second later. No music.\n\nnon_diegetic_music: N/A"
+    ],
+    "widgets_values_named": {
+     "value": "subject_definitions:\nUse the provided first frame as the opening image.\n\nSubject 1 is Guan Yu, the famous Shu Han general, portrayed by a real middle-aged East Asian tough male actor. He has a naturally deep red weathered complexion, rough skin texture, visible pores, realistic sweat, long narrow silkworm eyebrows, phoenix eyes with a stern imposing gaze, and a naturally drooping long black beard. He wears a weathered dark-green soft headscarf, worn cold-forged iron beast-face armor with scratches and bloodstains, and a coarse dark-green battle robe.\n\nSubject 1 rides a powerful realistic chestnut warhorse with tense muscles, explosive sprint speed, and strong rearing movement.\n\nSubject 1 wields a heavy long-handled Green Dragon Crescent Blade. The weapon has a lacquered wooden shaft reinforced with iron fittings and a large heavy cold-glinting dragon-headed crescent blade. The full weapon remains clearly visible with stable length, shape, grip, and alignment through every drag, sweep, circular rotation, recovery, and impact. The weapon must feel extremely heavy, destructive, and unstoppable.\n\nThe setting is a large-scale live-action Three Kingdoms battlefield under hard bright daylight, with yellow earth, dust, cavalry movement, infantry soldiers, broken shields, shattered spears, fallen banners, scattered fires, and dense troop motion. The visual style is a realistic historical war film shot on Arri Alexa LF with 35mm film grain, practical stunts, practical debris, practical destruction, and large-scale cinematic battlefield energy. The choreography is exaggerated in a Dynasty-Warriors-style heroic way: huge area-clearing attacks, violent shield destruction, stunt performers flying backward, dust shockwaves, and overwhelming mounted force.\n\n\nsummary:\nBUNNY. A 15-second Dynasty-Warriors-style live-action Guan Yu battlefield showcase based on the provided opening frame. The first frame begins from the overhead battlefield image, then the camera rapidly dives and swings into a side-profile tracking shot locking onto Guan Yu sprinting across the battlefield on horseback. His heavy Green Dragon Crescent Blade drags low behind him, tearing across stone and yellow earth, spraying sparks, dirt chunks, and ripped ground. The action escalates into three huge mounted attacks: a first devastating low horizontal sweep that smashes through multiple wooden lacquered shields, a second enormous 360-degree full-circle long-handle sweep that sends multiple enemy stunt performers flying and snaps spear shafts, and a third crushing downward mounted finisher delivered as the warhorse rears high and Guan Yu slams the heavy blade into the earth, blasting dust and rocks in every direction. The sequence ends in a giant heroic arc-shot finish as Guan Yu plants the heavy blade into the ground and stands like an unstoppable war god while a refined giant gold blockbuster title appears in the center: \"MINIMAX H3 Weapon Combat LORA\".\n\n\nretention_analysis:\nSubject 1 remains Guan Yu throughout: deep red weathered face, long black beard, dark-green headscarf, beast-face armor, dark-green robe, chestnut warhorse, and heavy Green Dragon Crescent Blade.\n\nThe sequence is built as four escalating visual phases:\n1. overhead battlefield opening and rapid cinematic target lock,\n2. side-profile mounted sprint with blade dragging and sparks,\n3. two massive crowd-clearing mounted sweeping attacks with large practical destruction,\n4. low-angle rearing-horse earth-smashing finisher and arc-shot heroic title reveal.\n\nThe weapon must always feel massive and momentum-driven. Each attack produces visible consequences: shattered shields, snapped spear shafts, stunt performers thrown backward, exploding dust, flying debris, and powerful shockwave-like air movement. The camera stays dynamic and readable, emphasizing side-profile tracking, front-side dynamic tracking, low-angle impact framing, and a final cinematic arc-shot ending.\n\n\ndetailed_description:\n[Shot 1 | 00:00-03:50]\n\nThe sequence begins exactly from the provided first frame: a high overhead battlefield image of the battlefield chaos on yellow earth.\n\nThe camera rapidly dives, swings, and resolves into a side profile tracking shot.\n\nNow Guan Yu is framed in full-speed lateral motion on a galloping chestnut warhorse. Dust erupts beneath the hooves.\n\nGuan Yu holds the heavy Green Dragon Crescent Blade low behind him in one hand, the lacquered shaft angled diagonally backward. The huge crescent blade drags violently across yellow earth and scattered stones, carving through the ground and throwing bright sparks, dirt clods, torn soil, and flying pebbles in a long trail.\n\nThe camera runs perfectly parallel with the horse, keeping Guan Yu’s full-body mounted silhouette, the full horse stride, and the full length of the weapon readable from the side. The energy is fast, aggressive, and unstoppable.\n\n\n[Shot 2 | 00:03:50-07:50]\n\nThe camera cuts to a fast front-side dynamic tracking shot as Guan Yu bursts directly into the enemy front line.\n\nUsing the horse’s speed and his one-handed grip on the long shaft, Guan Yu unleashes the first massive low horizontal sweep.\n\nThe huge blade smashes through several real wooden lacquered shields in the front rank. Wood splinters, shield fragments, dust, and bodies explode outward across the attack line.\n\nWithout slowing or resetting, Guan Yu continues the same motion into a second gigantic full 360-degree long-handle circular sweep.\n\nThe entire shaft carves a huge circle through the air. Multiple enemy stunt performers are violently launched backward by wires, and several spear shafts snap sharply apart as the blade and shaft crash through the packed formation. The sweep clears a broad circular space around the charging horse.\n\nThe camera stays dynamic and close enough to feel the size of the circular motion, but wide enough to keep the entire destructive arc readable. Dust blasts outward in a ring while the warhorse continues driving forward through the broken formation.\n\n\n[Shot 3 | 00:07:50-11:50]\n\nThe shot transitions into a low frontal angle close to the charging horse.\n\nThe chestnut warhorse lets out a powerful high neigh and rises dramatically into a full rear, front legs lifted high off the ground.\n\nUsing the upward horse motion and full-body momentum, Guan Yu raises the heavy Green Dragon Crescent Blade in one hand and then drives it down into a third devastating crushing strike.\n\nThe massive blade slams into the yellow earth with extreme force.\n\nThe impact explodes the ground. Yellow dust, broken rocks, soil chunks, and debris blast violently outward in all directions. Nearby enemy soldiers are thrown back by the shock of the strike. The moment must feel larger-than-life, like a final musou finishing blow.\n\nThe horse remains huge in the frame, still elevated and powerful, then begins to descend as the dust cloud expands.\n\n\n[Shot 4 | 00:11:50-15:00]\n\nThe camera dynamically flows into a heroic arc shot circling around Guan Yu and the warhorse.\n\nThe horse lands heavily through the settling dust.\n\nGuan Yu drives the long-handled Green Dragon Crescent Blade down and plants it hard into the yellow earth beside him. The heavy weapon stands embedded in the ground.\n\nHe stands tall and unmoving, one hand resting on or stroking his long black beard, his expression stern, imposing, and warlike. Dust rolls past his boots. Broken shields, shattered spear shafts, fallen enemies, and whipping banners fill the battlefield behind him.\n\nAs the camera completes the arc and settles into a giant blockbuster-style final composition, a large refined gold cinematic title appears in the center of the frame:\n\n\"MINIMAX H3 Weapon Combat LORA\"\n\nThe title should feel premium, elegant, and massive, like the final title card of a high-budget epic action trailer. Guan Yu and the battlefield remain visible behind the title as an overwhelming heroic finishing tableau.\n\n\noverall_soundscape:\nLarge-scale battlefield shouting, cavalry motion, galloping hoof impacts, armor movement, distant metal clashes, whipping banners, and wind-blown dust.\n\nIn Shot 1, the sound focus is the horse sprint and the brutal dragging scrape of the heavy Green Dragon Crescent Blade across rock and earth: intense metallic scraping, continuous sparks, dirt tearing, and stone fragments skittering.\n\nIn Shot 2, the first mounted low horizontal sweep carries a huge air-rush followed by violent shield-smashing impacts, splintering wood, flying debris, and bodies crashing away. The second full 360-degree circular sweep creates a massive circular whoosh, stunt-body impacts, spear shafts snapping sharply, and an expanding ring of dust and battlefield chaos.\n\nIn Shot 3, the warhorse gives a powerful neigh while rearing high. The heavy blade then falls with a huge downward rush and lands in one enormous earth-breaking impact, blasting dirt, rocks, and debris outward.\n\nIn Shot 4, the horse lands hard, the heavy blade is driven into the ground with authority, armor and fabric settle, battlefield dust continues drifting, and the scene resolves into a grand final heroic ending with an epic trailer-title atmosphere.\n\nnon_diegetic_music:\nN/A"
+    },
+    "color": "#232",
+    "bgcolor": "#353"
+   },
+   {
+    "id": 136,
+    "type": "LoraLoaderModelOnly",
+    "pos": [
+     -3154.7032503584223,
+     5566.001207832982
+    ],
+    "size": [
+     551.961696196114,
+     82
+    ],
+    "flags": {},
+    "order": 19,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "model",
+      "type": "MODEL",
+      "link": 335
+     }
+    ],
+    "outputs": [
+     {
+      "name": "MODEL",
+      "type": "MODEL",
+      "links": [
+       259,
+       260
+      ]
+     }
+    ],
+    "title": "BUNNY 一采 / Stage 1：Combat 1.00",
+    "properties": {
+     "Node name for S&R": "LoraLoaderModelOnly",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "version": "7.8",
+      "input_ue_unconnectable": {}
+     }
+    },
+    "widgets_values": [
+     "Bunny_weapon_combatV1.safetensors",
+     0.9
+    ],
+    "widgets_values_named": {
+     "lora_name": "H3\\Bunny_weapon_combatV1.safetensors",
+     "strength_model": 0.9
+    },
+    "color": "#322",
+    "bgcolor": "#533"
+   },
+   {
+    "id": 157,
+    "type": "LoraLoaderModelOnly",
+    "pos": [
+     -2787.0320223796734,
+     6385.725225565986
+    ],
+    "size": [
+     502.08349968671564,
+     84.08349968671519
+    ],
+    "flags": {},
+    "order": 20,
+    "mode": 0,
+    "inputs": [
+     {
+      "name": "model",
+      "type": "MODEL",
+      "link": 333
+     }
+    ],
+    "outputs": [
+     {
+      "name": "MODEL",
+      "type": "MODEL",
+      "links": [
+       285
+      ]
+     }
+    ],
+    "title": "BUNNY 二采 / Stage 2：Combat 0.65",
+    "properties": {
+     "Node name for S&R": "LoraLoaderModelOnly",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "input_ue_unconnectable": {},
+      "version": "7.8"
+     }
+    },
+    "widgets_values": [
+     "Bunny_weapon_combatV1.safetensors",
+     0.65
+    ],
+    "widgets_values_named": {
+     "lora_name": "H3\\Bunny_weapon_combatV1.safetensors",
+     "strength_model": 0.65
+    },
+    "color": "#323",
+    "bgcolor": "#535"
+   },
+   {
+    "id": 122,
+    "type": "LoadImage",
+    "pos": [
+     -3895.6261027320897,
+     5758.641377295154
+    ],
+    "size": [
+     443.3585631717915,
+     612.9787309075027
+    ],
+    "flags": {},
+    "order": 11,
+    "mode": 4,
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "IMAGE",
+      "type": "IMAGE",
+      "links": [
+       265
+      ]
+     },
+     {
+      "name": "MASK",
+      "type": "MASK",
+      "links": null
+     }
+    ],
+    "title": "Load Image",
+    "properties": {
+     "Node name for S&R": "LoadImage",
+     "ue_properties": {
+      "widget_ue_connectable": {},
+      "input_ue_unconnectable": {},
+      "version": "7.8"
+     }
+    },
+    "widgets_values": [
+     "A5_frame.png",
+     "image"
+    ],
+    "widgets_values_named": {
+     "image": "pasted/image (62).png",
+     "upload": "image"
+    },
+    "color": "#332922",
+    "bgcolor": "#593930"
+   }
+  ],
+  "links": [
+   [
+    239,
+    124,
+    0,
+    125,
+    1,
+    "VAE"
+   ],
+   [
+    240,
+    138,
+    0,
+    139,
+    1,
+    "VAE"
+   ],
+   [
+    241,
+    129,
+    0,
+    137,
+    0,
+    "NOISE"
+   ],
+   [
+    242,
+    127,
+    0,
+    137,
+    1,
+    "GUIDER"
+   ],
+   [
+    243,
+    126,
+    0,
+    137,
+    2,
+    "SAMPLER"
+   ],
+   [
+    245,
+    131,
+    1,
+    137,
+    4,
+    "LATENT"
+   ],
+   [
+    246,
+    131,
+    0,
+    127,
+    1,
+    "CONDITIONING"
+   ],
+   [
+    247,
+    125,
+    0,
+    130,
+    1,
+    "AUDIO"
+   ],
+   [
+    248,
+    128,
+    0,
+    131,
+    0,
+    "CLIP"
+   ],
+   [
+    249,
+    138,
+    0,
+    131,
+    1,
+    "VAE"
+   ],
+   [
+    252,
+    132,
+    1,
+    131,
+    7,
+    "INT"
+   ],
+   [
+    253,
+    123,
+    0,
+    131,
+    5,
+    "INT"
+   ],
+   [
+    254,
+    123,
+    1,
+    131,
+    6,
+    "INT"
+   ],
+   [
+    255,
+    133,
+    0,
+    132,
+    0,
+    "FLOAT"
+   ],
+   [
+    259,
+    136,
+    0,
+    127,
+    0,
+    "MODEL"
+   ],
+   [
+    260,
+    136,
+    0,
+    134,
+    0,
+    "MODEL"
+   ],
+   [
+    261,
+    139,
+    0,
+    130,
+    0,
+    "IMAGE"
+   ],
+   [
+    265,
+    122,
+    0,
+    131,
+    2,
+    "IMAGE"
+   ],
+   [
+    266,
+    141,
+    0,
+    131,
+    3,
+    "IMAGE"
+   ],
+   [
+    275,
+    149,
+    0,
+    140,
+    0,
+    "MODEL"
+   ],
+   [
+    279,
+    134,
+    0,
+    162,
+    0,
+    "SIGMAS"
+   ],
+   [
+    280,
+    162,
+    0,
+    159,
+    0,
+    "SIGMAS"
+   ],
+   [
+    281,
+    159,
+    0,
+    137,
+    3,
+    "SIGMAS"
+   ],
+   [
+    282,
+    149,
+    0,
+    155,
+    0,
+    "MODEL"
+   ],
+   [
+    285,
+    157,
+    0,
+    158,
+    0,
+    "MODEL"
+   ],
+   [
+    286,
+    131,
+    0,
+    158,
+    1,
+    "CONDITIONING"
+   ],
+   [
+    287,
+    161,
+    0,
+    160,
+    0,
+    "NOISE"
+   ],
+   [
+    288,
+    158,
+    0,
+    160,
+    1,
+    "GUIDER"
+   ],
+   [
+    289,
+    126,
+    0,
+    160,
+    2,
+    "SAMPLER"
+   ],
+   [
+    290,
+    159,
+    1,
+    160,
+    3,
+    "SIGMAS"
+   ],
+   [
+    291,
+    137,
+    0,
+    160,
+    4,
+    "LATENT"
+   ],
+   [
+    292,
+    160,
+    0,
+    139,
+    0,
+    "LATENT"
+   ],
+   [
+    293,
+    160,
+    0,
+    125,
+    0,
+    "LATENT"
+   ],
+   [
+    298,
+    130,
+    0,
+    165,
+    0,
+    "VIDEO"
+   ],
+   [
+    299,
+    165,
+    0,
+    92,
+    0,
+    "VIDEO"
+   ],
+   [
+    300,
+    135,
+    0,
+    149,
+    0,
+    "MODEL"
+   ],
+   [
+    327,
+    181,
+    0,
+    131,
+    4,
+    "STRING"
+   ],
+   [
+    332,
+    155,
+    0,
+    183,
+    0,
+    "MODEL"
+   ],
+   [
+    333,
+    183,
+    0,
+    157,
+    0,
+    "MODEL"
+   ],
+   [
+    335,
+    184,
+    0,
+    136,
+    0,
+    "MODEL"
+   ],
+   [
+    336,
+    140,
+    0,
+    184,
+    0,
+    "MODEL"
+   ]
+  ],
+  "groups": [
+   {
+    "id": 2,
+    "title": "BUNNY 一采 Stage 1：武打动作结构",
+    "bounding": [
+     -2552.1278241608666,
+     5055.589358951728,
+     690,
+     919.984532493685
+    ],
+    "color": "#8A8",
+    "flags": {}
+   },
+   {
+    "id": 4,
+    "title": "Decoding and create video",
+    "bounding": [
+     -1848.031593969501,
+     5051.98782139327,
+     263.98485326526156,
+     242.17412224232066
+    ],
+    "color": "#3f789e",
+    "flags": {}
+   },
+   {
+    "id": 20,
+    "title": "BUNNY FL2VA 二采：动作 → 清噪细化",
+    "bounding": [
+     -2795.170881791142,
+     6000.091377912145,
+     1207.1782588948474,
+     560.5609318266825
+    ],
+    "color": "#7d3e87",
+    "flags": {}
+   },
+   {
+    "id": 22,
+    "title": "模型加载/Model Loading",
+    "bounding": [
+     -3894.0087603539473,
+     5052.465989142534,
+     704.574616457463,
+     656.3102632942164
+    ],
+    "color": "#88A",
+    "flags": {}
+   },
+   {
+    "id": 23,
+    "title": "sage+加速lora",
+    "bounding": [
+     -3177.175781296932,
+     5054.630969191108,
+     598.374924186915,
+     238.3476665817825
+    ],
+    "color": "#3f789e",
+    "flags": {}
+   },
+   {
+    "id": 24,
+    "title": "lora",
+    "bounding": [
+     -3175.7788712853353,
+     5301.331186966032,
+     595.7098065137534,
+     419.661058525453
+    ],
+    "color": "#A88",
+    "flags": {}
+   }
+  ],
+  "config": {},
+  "extra": {
+   "frontendVersion": "1.51.9",
+   "VHS_latentpreview": false,
+   "VHS_latentpreviewrate": 0,
+   "VHS_MetadataImage": true,
+   "VHS_KeepIntermediate": true,
+   "ue_links": [],
+   "links_added_by_ue": [],
+   "ds": {
+    "scale": 0.7933250830429538,
+    "offset": [
+     3845.1849235208115,
+     -4993.4946064495825
+    ]
+   },
+   "qgn_navigation_groups": [],
+   "qgn_locked": false,
+   "bunny_workflow": {
+    "name": "BUNNY FL2VA Combat",
+    "version": "1.0",
+    "mode": "FL2VA first-frame and last-frame conditioning",
+    "motion_stage": {
+     "base_steps": 8,
+     "sigma_extension": [
+      3,
+      0.65,
+      0.28,
+      "sine"
+     ],
+     "turbo": 0.7,
+     "character_lora": 0.99,
+     "combat": 1
+    },
+    "cleanup_stage": {
+     "fraction": 0.25,
+     "disable_noise": true,
+     "turbo": 0.2,
+     "character_lora": 0.95,
+     "combat": 0.65
+    },
+    "documentation_title": "BUNNY的工作流 | BUNNY Workflow",
+    "mode_title": "FL2VA 首尾帧模式 | FL2VA First/Last-Frame Mode"
+   }
+  },
+  "version": 0.4
+ }
+}

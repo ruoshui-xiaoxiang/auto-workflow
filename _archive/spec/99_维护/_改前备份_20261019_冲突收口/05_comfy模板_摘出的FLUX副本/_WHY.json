@@ -1,0 +1,36 @@
+{
+ "why": "这 6 份是 05_引擎与工作流参数/comfy模板 里的**派生副本**（手册不是真源，真源在 engine/comfy）。⑫(b) 把 FLUX 6 份模板退役并从 build_manual 的 canonical 清单摘出后，这些副本没人再维护，留在手册里就等于教一条跑不动的线 ⇒ move 出来（不 rm，随时可 mv 回去）。",
+ "moved": [
+  {
+   "name": "draft_flux_api.json",
+   "state": "是桩",
+   "bytes": 2201
+  },
+  {
+   "name": "draft_upscale_api.json",
+   "state": "是桩",
+   "bytes": 2225
+  },
+  {
+   "name": "flux_cn_redux_api.json",
+   "state": "是桩",
+   "bytes": 2228
+  },
+  {
+   "name": "flux_controlnet_lineart_api.json",
+   "state": "是桩",
+   "bytes": 2184
+  },
+  {
+   "name": "flux_redux_ref_api.json",
+   "state": "是桩",
+   "bytes": 2215
+  },
+  {
+   "name": "refine_usdu_api.json",
+   "state": "是桩",
+   "bytes": 2245
+  }
+ ],
+ "note": "⚠ 这一轮暴露的真问题：`刷新副本.bat` 调的是 99_维护\build_manual.py，而 ⑫(b) 那轮我先改了 D:\\AIWorkflow\tools\build_manual.py（同名第二份），所以手册照旧复制了一遍 FLUX。两份现在都已摘除；两份清单必须一起改——已登记。"
+}

@@ -20,9 +20,15 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 CFG = yaml.safe_load((ROOT / "config.yaml").read_text(encoding="utf-8"))
 
+# 10-02 批1 GAP-E1：交付根统一走 delivery_root()，别直接读 config 里那行字面量。
+# （本脚本是一次性迁移件、已经跑过；但直接读字面量＝留一个"切项目后重跑会搬错地方"的雷，
+#   顺手拆掉。行为今天不变，因为字面量当前仍是新鲜的，有 tests/test_delivery_root.py 钉着。）
+sys.path.insert(0, str(ROOT))
+from delivery_root import delivery_root  # noqa: E402
+
 STAGING = Path(CFG["comfyui"]["output_dir"])   # ComfyUI_output（暂存）
 LOGS = Path(CFG["log_dir"])                    # logs\workflows
-OUT = Path(CFG["output_root"])                 # out（交付根）
+OUT = Path(delivery_root(CFG))                 # out（交付根，按 project 派生）
 AUTO_OUT = STAGING.parent / "auto_out"         # 一步式老归档点，一并收
 
 IMG = re.compile(r"^(draft|refine|auto)_(\d{8}_\d{6})_")      # 产物文件名 -> (kind, run_id)

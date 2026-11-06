@@ -1,0 +1,17 @@
+name: feishu_send
+description: 手动把成片/图片发到飞书接收群（bot 身份两步上传；视频强制要封面，由 tasks 侧自动抽）。只发，不做任何生成。
+provider: local
+args:
+  videos: []
+  files: []
+  caption: ""
+  retries: 3
+steps:
+  - task: feishu
+    id: send
+    label: 发飞书
+    hint: 图走 files，视频走 videos；单文件上限 30MB
+    videos: "{{args.videos}}"
+    files: "{{args.files}}"
+    caption: "{{args.caption}}"
+    retries: "{{args.retries}}"

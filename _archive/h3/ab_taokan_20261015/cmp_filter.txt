@@ -1,0 +1,16 @@
+[0:v]trim=start_frame=110:end_frame=158,setpts=PTS-STARTPTS,scale=640:360:force_original_aspect_ratio=decrease,pad=640:360:(ow-iw)/2:(oh-ih)/2[s1a];
+[1:v]trim=start_frame=0:end_frame=48,setpts=PTS-STARTPTS,scale=640:360:force_original_aspect_ratio=decrease,pad=640:360:(ow-iw)/2:(oh-ih)/2[s1b];
+[s1a][s1b]concat=n=2:v=1:a=0[c1];
+[c1]drawtext=fontfile='C\:/Windows/Fonts/msyh.ttc':text='① 现役硬切':fontsize=22:fontcolor=white:box=1:boxcolor=black@0.55:boxborderw=8:x=12:y=12,drawtext=fontfile='C\:/Windows/Fonts/msyh.ttc':text='▼接缝':fontsize=26:fontcolor=yellow:box=1:boxcolor=black@0.65:boxborderw=8:x=(w-tw)/2:y=h-48:enable='between(t,1.85,2.2)'[r1];
+[2:v]trim=start_frame=110:end_frame=158,setpts=PTS-STARTPTS,scale=640:360:force_original_aspect_ratio=decrease,pad=640:360:(ow-iw)/2:(oh-ih)/2[s2a];
+[3:v]trim=start_frame=21:end_frame=69,setpts=PTS-STARTPTS,scale=640:360:force_original_aspect_ratio=decrease,pad=640:360:(ow-iw)/2:(oh-ih)/2[s2b];
+[s2a][s2b]concat=n=2:v=1:a=0[c2];
+[c2]drawtext=fontfile='C\:/Windows/Fonts/msyh.ttc':text='② 链式接力':fontsize=22:fontcolor=white:box=1:boxcolor=black@0.55:boxborderw=8:x=12:y=12,drawtext=fontfile='C\:/Windows/Fonts/msyh.ttc':text='▼接缝':fontsize=26:fontcolor=yellow:box=1:boxcolor=black@0.65:boxborderw=8:x=(w-tw)/2:y=h-48:enable='between(t,1.85,2.2)'[r2];
+[2:v]trim=start_frame=110:end_frame=158,setpts=PTS-STARTPTS,scale=640:360:force_original_aspect_ratio=decrease,pad=640:360:(ow-iw)/2:(oh-ih)/2[s3a];
+[1:v]trim=start_frame=0:end_frame=48,setpts=PTS-STARTPTS,scale=640:360:force_original_aspect_ratio=decrease,pad=640:360:(ow-iw)/2:(oh-ih)/2[s3b];
+[s3a][s3b]concat=n=2:v=1:a=0[c3];
+[c3]drawtext=fontfile='C\:/Windows/Fonts/msyh.ttc':text='③ 诊断 链s7尾↔现役s8头':fontsize=22:fontcolor=white:box=1:boxcolor=black@0.55:boxborderw=8:x=12:y=12,drawtext=fontfile='C\:/Windows/Fonts/msyh.ttc':text='▼接缝':fontsize=26:fontcolor=yellow:box=1:boxcolor=black@0.65:boxborderw=8:x=(w-tw)/2:y=h-48:enable='between(t,1.85,2.2)'[r3];
+[r1][r2][r3]vstack=inputs=3[outv];
+[0:a]atrim=start=4.583333:end=6.583333,asetpts=PTS-STARTPTS[aa];
+[1:a]atrim=start=0:end=2,asetpts=PTS-STARTPTS[ab];
+[aa][ab]concat=n=2:v=0:a=1[outa]

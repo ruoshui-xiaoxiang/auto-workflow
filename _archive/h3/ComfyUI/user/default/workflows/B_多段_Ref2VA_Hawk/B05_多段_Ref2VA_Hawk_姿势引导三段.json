@@ -1,0 +1,888 @@
+{
+ "id": "901dfa67-0f95-5e73-95b2-c7648471c3b8",
+ "revision": 0,
+ "last_node_id": 12,
+ "last_link_id": 10,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "MarkdownNote",
+   "pos": [
+    -520,
+    0
+   ],
+   "size": [
+    470,
+    1080
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "Node name for S&R": "MarkdownNote"
+   },
+   "title": "画布说明",
+   "widgets_values": [
+    "## 05 · 姿势引导三连拍\n\n一个舞者跨三个连续段走过三个关键姿势。每段结束在它点名的姿势上,下一段从这个姿势起步。\n\n**怎么跑**\n1. 「图片1」:舞者本人(脸+服装)。\n2. 「姿势1–3」:每个关键姿势一张。用 OpenPose / DWPose 骨架图,或任何摆出该姿势的照片——只有姿势会被采用。\n3. 入队。\n\n**姿势机制**\n- 姿势图接「参考打包」的 **poses** 输入;编号为 `<Pose 1>`、`<Pose 2>`…,与图片分开计号。\n- 段只发送其提示词提到的姿势;也可以在段里写 `poses: 1, 2` 显式指定。\n- 写清姿势**何时**发生:\"…and ends in the pose from `<Pose 2>`\"。\n- 每段自动附带「只拷贝姿势,不拷贝脸/衣/画风」的指令;可在参考节点的 `pose_instruction`(advanced)里修改。\n- 图片+姿势合计计入 H3 每段 9 张图的上限。\n\n**技巧**:把姿势落在段**末尾**——开着连续性时,下一段会从这个姿势精确起步。\n\n**模型**([Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3))\n- `diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors`\n- `text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors`\n- `vae/minimax_h3_video_vae_fp16.safetensors`\n- `vae/minimax_h3_audio_vae_fp32.safetensors`\n- `loras/minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors`\n\n**LoRA**:在「LoRA 堆叠」里最多挑 4 只;不够就在它和 Director 之间再加一个 LoRA Stack 节点(pipe → pipe 串联)。不挂 turbo LoRA 的话,把 Director 的 `steps` 提到 ~30。\n\n没装 Sol / Sage?会自动跳过,或者把 `attention` 设成 `comfy default`。\n\n文档:https://github.com/Srioff-ashish/Hawk-Minimax-H3-Directory/tree/main/docs"
+   ],
+   "color": "#222",
+   "bgcolor": "#000"
+  },
+  {
+   "id": 2,
+   "type": "HawkH3ModelLoader",
+   "pos": [
+    0,
+    0
+   ],
+   "size": [
+    430,
+    470
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "pipe",
+     "name": "pipe",
+     "type": "HAWK_H3_PIPE",
+     "links": [
+      1
+     ]
+    },
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "links": null
+    },
+    {
+     "localized_name": "clip",
+     "name": "clip",
+     "type": "CLIP",
+     "links": null
+    },
+    {
+     "localized_name": "vae",
+     "name": "vae",
+     "type": "VAE",
+     "links": null
+    },
+    {
+     "localized_name": "audio_vae",
+     "name": "audio_vae",
+     "type": "VAE",
+     "links": null
+    }
+   ],
+   "properties": {
+    "aux_id": "Srioff-ashish/Hawk-Minimax-H3-Directory",
+    "Node name for S&R": "HawkH3ModelLoader"
+   },
+   "widgets_values": [
+    "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+    "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+    "minimax_h3_video_vae_fp16.safetensors",
+    "minimax_h3_audio_vae_fp32.safetensors",
+    "",
+    12.0,
+    3.0,
+    "sage",
+    "default",
+    "default",
+    1.25,
+    0.8
+   ],
+   "widgets_values_named": {
+    "unet_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+    "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+    "video_vae": "minimax_h3_video_vae_fp16.safetensors",
+    "audio_vae": "minimax_h3_audio_vae_fp32.safetensors",
+    "lora_stack": "",
+    "shift_video": 12.0,
+    "shift_audio": 3.0,
+    "attention": "sol scheduled + sage",
+    "weight_dtype": "default",
+    "clip_device": "default",
+    "sol_tau_start": 1.25,
+    "sol_tau_end": 0.8
+   },
+   "title": "H3 模型加载(权重+文本编码器+双VAE)"
+  },
+  {
+   "id": 3,
+   "type": "HawkH3LoraStack",
+   "pos": [
+    460,
+    0
+   ],
+   "size": [
+    410,
+    330
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "pipe",
+     "name": "pipe",
+     "type": "HAWK_H3_PIPE",
+     "link": 1
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "pipe",
+     "name": "pipe",
+     "type": "HAWK_H3_PIPE",
+     "links": [
+      2
+     ]
+    },
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "links": null
+    },
+    {
+     "localized_name": "clip",
+     "name": "clip",
+     "type": "CLIP",
+     "links": null
+    }
+   ],
+   "properties": {
+    "aux_id": "Srioff-ashish/Hawk-Minimax-H3-Directory",
+    "Node name for S&R": "HawkH3LoraStack"
+   },
+   "widgets_values": [
+    "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+    1.0,
+    "None",
+    1.0,
+    "None",
+    1.0,
+    "None",
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "widgets_values_named": {
+    "lora_1": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+    "strength_1": 1.0,
+    "lora_2": "None",
+    "strength_2": 1.0,
+    "lora_3": "None",
+    "strength_3": 1.0,
+    "lora_4": "None",
+    "strength_4": 1.0,
+    "video_1": 1.0,
+    "audio_1": 1.0,
+    "text_1": 1.0,
+    "video_2": 1.0,
+    "audio_2": 1.0,
+    "text_2": 1.0,
+    "video_3": 1.0,
+    "audio_3": 1.0,
+    "text_3": 1.0,
+    "video_4": 1.0,
+    "audio_4": 1.0,
+    "text_4": 1.0
+   },
+   "title": "LoRA 堆叠(最多4只,可串联)"
+  },
+  {
+   "id": 4,
+   "type": "LoadImage",
+   "pos": [
+    0,
+    580
+   ],
+   "size": [
+    300,
+    330
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      3
+     ]
+    },
+    {
+     "localized_name": "MASK",
+     "name": "MASK",
+     "type": "MASK",
+     "links": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "Node name for S&R": "LoadImage"
+   },
+   "title": "图片1·舞者",
+   "widgets_values": [
+    "dancer.png",
+    "image"
+   ],
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 5,
+   "type": "LoadImage",
+   "pos": [
+    0,
+    950
+   ],
+   "size": [
+    300,
+    330
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      4
+     ]
+    },
+    {
+     "localized_name": "MASK",
+     "name": "MASK",
+     "type": "MASK",
+     "links": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "Node name for S&R": "LoadImage"
+   },
+   "title": "姿势图1",
+   "widgets_values": [
+    "pose_1.png",
+    "image"
+   ],
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 6,
+   "type": "LoadImage",
+   "pos": [
+    0,
+    1320
+   ],
+   "size": [
+    300,
+    330
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      5
+     ]
+    },
+    {
+     "localized_name": "MASK",
+     "name": "MASK",
+     "type": "MASK",
+     "links": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "Node name for S&R": "LoadImage"
+   },
+   "title": "姿势图2",
+   "widgets_values": [
+    "pose_2.png",
+    "image"
+   ],
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 7,
+   "type": "LoadImage",
+   "pos": [
+    0,
+    1690
+   ],
+   "size": [
+    300,
+    330
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      6
+     ]
+    },
+    {
+     "localized_name": "MASK",
+     "name": "MASK",
+     "type": "MASK",
+     "links": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "Node name for S&R": "LoadImage"
+   },
+   "title": "姿势图3",
+   "widgets_values": [
+    "pose_3.png",
+    "image"
+   ],
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 8,
+   "type": "HawkH3References",
+   "pos": [
+    340,
+    580
+   ],
+   "size": [
+    380,
+    380
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "refs_in",
+     "name": "refs_in",
+     "type": "HAWK_H3_REFS",
+     "shape": 7,
+     "link": null
+    },
+    {
+     "localized_name": "pictures.picture_0",
+     "name": "pictures.picture_0",
+     "type": "IMAGE",
+     "label": "picture_0",
+     "shape": 7,
+     "link": 3
+    },
+    {
+     "localized_name": "pictures.picture_1",
+     "name": "pictures.picture_1",
+     "type": "IMAGE",
+     "label": "picture_1",
+     "shape": 7,
+     "link": null
+    },
+    {
+     "localized_name": "poses.pose_0",
+     "name": "poses.pose_0",
+     "type": "IMAGE",
+     "label": "pose_0",
+     "shape": 7,
+     "link": 4
+    },
+    {
+     "localized_name": "poses.pose_1",
+     "name": "poses.pose_1",
+     "type": "IMAGE",
+     "label": "pose_1",
+     "shape": 7,
+     "link": 5
+    },
+    {
+     "localized_name": "poses.pose_2",
+     "name": "poses.pose_2",
+     "type": "IMAGE",
+     "label": "pose_2",
+     "shape": 7,
+     "link": 6
+    },
+    {
+     "localized_name": "poses.pose_3",
+     "name": "poses.pose_3",
+     "type": "IMAGE",
+     "label": "pose_3",
+     "shape": 7,
+     "link": null
+    },
+    {
+     "localized_name": "videos.video_0",
+     "name": "videos.video_0",
+     "type": "IMAGE",
+     "label": "video_0",
+     "shape": 7,
+     "link": null
+    },
+    {
+     "localized_name": "video_soundtracks.video_soundtrack_0",
+     "name": "video_soundtracks.video_soundtrack_0",
+     "type": "AUDIO",
+     "label": "video_soundtrack_0",
+     "shape": 7,
+     "link": null
+    },
+    {
+     "localized_name": "audios.audio_0",
+     "name": "audios.audio_0",
+     "type": "AUDIO",
+     "label": "audio_0",
+     "shape": 7,
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "refs",
+     "name": "refs",
+     "type": "HAWK_H3_REFS",
+     "links": [
+      7
+     ]
+    },
+    {
+     "localized_name": "tag_map",
+     "name": "tag_map",
+     "type": "STRING",
+     "links": null
+    }
+   ],
+   "properties": {
+    "aux_id": "Srioff-ashish/Hawk-Minimax-H3-Directory",
+    "Node name for S&R": "HawkH3References"
+   },
+   "widgets_values": [
+    "Picture 1: the dancer's face, hair and black leotard\nPose 1: standing, both arms stretched overhead\nPose 2: deep lunge, one arm reaching forward\nPose 3: a low bow, one hand on the chest",
+    "Pose reference {tags}: a body-pose guide only, never a frame to reproduce. Take only the body pose, limb and hand positions and head angle. Do not take identity, face, hair, clothing, colours, lighting, style, background or camera framing from any pose reference, and never show the pose image itself in any frame; the scene, people and framing stay as described.",
+    24.0
+   ],
+   "widgets_values_named": {
+    "labels": "Picture 1: the dancer's face, hair and black leotard\nPose 1: standing, both arms stretched overhead\nPose 2: deep lunge, one arm reaching forward\nPose 3: a low bow, one hand on the chest",
+    "pose_instruction": "Pose reference {tags}: a body-pose guide only, never a frame to reproduce. Take only the body pose, limb and hand positions and head angle. Do not take identity, face, hair, clothing, colours, lighting, style, background or camera framing from any pose reference, and never show the pose image itself in any frame; the scene, people and framing stay as described.",
+    "video_fps": 24.0
+   },
+   "title": "参考打包(图/姿势/视频/音频→标签)"
+  },
+  {
+   "id": 9,
+   "type": "HawkH3Director",
+   "pos": [
+    940,
+    0
+   ],
+   "size": [
+    520,
+    900
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "pipe",
+     "name": "pipe",
+     "type": "HAWK_H3_PIPE",
+     "link": 2
+    },
+    {
+     "localized_name": "refs",
+     "name": "refs",
+     "type": "HAWK_H3_REFS",
+     "shape": 7,
+     "link": 7
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "VIDEO",
+     "links": [
+      8
+     ]
+    },
+    {
+     "localized_name": "frames",
+     "name": "frames",
+     "type": "IMAGE",
+     "links": null
+    },
+    {
+     "localized_name": "audio",
+     "name": "audio",
+     "type": "AUDIO",
+     "links": null
+    },
+    {
+     "localized_name": "prompts",
+     "name": "prompts",
+     "type": "STRING",
+     "links": [
+      9
+     ]
+    },
+    {
+     "localized_name": "info",
+     "name": "info",
+     "type": "STRING",
+     "links": [
+      10
+     ]
+    }
+   ],
+   "properties": {
+    "aux_id": "Srioff-ashish/Hawk-Minimax-H3-Directory",
+    "Node name for S&R": "HawkH3Director"
+   },
+   "widgets_values": [
+    "style: Contemporary dance film, empty white studio, soft top light, slow elegant camera. Native audio. Music: sparse solo piano. No subtitles.\n---\ntitle: Rise\nduration: 6\n<Picture 1> defines the dancer's face, hair and black leotard.\nShe stands still in the centre of the studio, then slowly lifts both arms and ends in the pose from <Pose 1>. Slow push-in from a full shot.\nSound: soft footfalls, fabric movement, piano.\n---\ntitle: Lunge\nduration: 6\n<Picture 1> defines the dancer's face and leotard.\nShe flows down out of the stretch into the pose from <Pose 2> and holds it for a beat. The camera arcs slowly to her side.\nSound: a slow breath, bare feet sliding on the floor, piano.\n---\ntitle: Bow\nduration: 6\n<Picture 1> defines the dancer's face and leotard.\nShe rises out of the lunge, steps back and finishes in the bow from <Pose 3>. The camera settles into a static wide shot.\nSound: the piano holds a final chord, then silence.",
+    "16:9",
+    0.98,
+    6.0,
+    8,
+    "res_multistep",
+    "simple",
+    0,
+    "fixed",
+    "tail_22",
+    true,
+    "match",
+    "example_pose_sequence",
+    true,
+    "increment per segment",
+    60,
+    "off",
+    true,
+    false,
+    -3.0,
+    0.0,
+    2.0,
+    true
+   ],
+   "widgets_values_named": {
+    "script": "style: Contemporary dance film, empty white studio, soft top light, slow elegant camera. Native audio. Music: sparse solo piano. No subtitles.\n---\ntitle: Rise\nduration: 6\n<Picture 1> defines the dancer's face, hair and black leotard.\nShe stands still in the centre of the studio, then slowly lifts both arms and ends in the pose from <Pose 1>. Slow push-in from a full shot.\nSound: soft footfalls, fabric movement, piano.\n---\ntitle: Lunge\nduration: 6\n<Picture 1> defines the dancer's face and leotard.\nShe flows down out of the stretch into the pose from <Pose 2> and holds it for a beat. The camera arcs slowly to her side.\nSound: a slow breath, bare feet sliding on the floor, piano.\n---\ntitle: Bow\nduration: 6\n<Picture 1> defines the dancer's face and leotard.\nShe rises out of the lunge, steps back and finishes in the bow from <Pose 3>. The camera settles into a static wide shot.\nSound: the piano holds a final chord, then silence.",
+    "aspect_ratio": "16:9",
+    "megapixels": 0.98,
+    "default_seconds": 6.0,
+    "steps": 8,
+    "sampler_name": "res_multistep",
+    "scheduler": "simple",
+    "seed": 0,
+    "control_after_generate": "fixed",
+    "continuity": "tail_22",
+    "carry_audio": true,
+    "ref_image_size": "match",
+    "run_name": "example_pose_sequence",
+    "resume": true,
+    "seed_mode": "increment per segment",
+    "audio_crossfade_ms": 60,
+    "interpolation": "off",
+    "encode_all_first": true,
+    "output_frames": false,
+    "music_volume_db": -3.0,
+    "scene_volume_db": 0.0,
+    "music_fade_seconds": 2.0,
+    "mute_generated_music": true
+   },
+   "title": "导演(按脚本分段渲染)"
+  },
+  {
+   "id": 10,
+   "type": "SaveVideo",
+   "pos": [
+    1520,
+    0
+   ],
+   "size": [
+    620,
+    520
+   ],
+   "flags": {},
+   "order": 9,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "VIDEO",
+     "link": 8
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "VIDEO",
+     "links": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "Node name for S&R": "SaveVideo"
+   },
+   "widgets_values": [
+    "video/hawk_h3_pose_sequence",
+    "auto",
+    "auto"
+   ],
+   "title": "保存视频"
+  },
+  {
+   "id": 11,
+   "type": "PreviewAny",
+   "pos": [
+    1520,
+    560
+   ],
+   "size": [
+    620,
+    360
+   ],
+   "flags": {},
+   "order": 10,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "source",
+     "name": "source",
+     "type": "*",
+     "link": 9
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "Node name for S&R": "PreviewAny"
+   },
+   "title": "装配后提示词(姿势已转成图片)",
+   "widgets_values": [
+    null,
+    null,
+    null
+   ]
+  },
+  {
+   "id": 12,
+   "type": "PreviewAny",
+   "pos": [
+    1520,
+    960
+   ],
+   "size": [
+    620,
+    360
+   ],
+   "flags": {},
+   "order": 11,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "source",
+     "name": "source",
+     "type": "*",
+     "link": 10
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "Node name for S&R": "PreviewAny"
+   },
+   "title": "渲染报告",
+   "widgets_values": [
+    null,
+    null,
+    null
+   ]
+  }
+ ],
+ "links": [
+  [
+   1,
+   2,
+   0,
+   3,
+   0,
+   "HAWK_H3_PIPE"
+  ],
+  [
+   2,
+   3,
+   0,
+   9,
+   0,
+   "HAWK_H3_PIPE"
+  ],
+  [
+   3,
+   4,
+   0,
+   8,
+   1,
+   "IMAGE"
+  ],
+  [
+   4,
+   5,
+   0,
+   8,
+   3,
+   "IMAGE"
+  ],
+  [
+   5,
+   6,
+   0,
+   8,
+   4,
+   "IMAGE"
+  ],
+  [
+   6,
+   7,
+   0,
+   8,
+   5,
+   "IMAGE"
+  ],
+  [
+   7,
+   8,
+   0,
+   9,
+   1,
+   "HAWK_H3_REFS"
+  ],
+  [
+   8,
+   9,
+   0,
+   10,
+   0,
+   "VIDEO"
+  ],
+  [
+   9,
+   9,
+   3,
+   11,
+   0,
+   "STRING"
+  ],
+  [
+   10,
+   9,
+   4,
+   12,
+   0,
+   "STRING"
+  ]
+ ],
+ "groups": [
+  {
+   "id": 1,
+   "title": "1·模型与 LoRA",
+   "bounding": [
+    -20,
+    -60,
+    910,
+    560
+   ],
+   "color": "#3f789e",
+   "flags": {}
+  },
+  {
+   "id": 2,
+   "title": "2·参考图与姿势图",
+   "bounding": [
+    -20,
+    520,
+    780,
+    1560
+   ],
+   "color": "#3f789e",
+   "flags": {}
+  },
+  {
+   "id": 3,
+   "title": "3·导演与渲染",
+   "bounding": [
+    920,
+    -60,
+    1240,
+    1420
+   ],
+   "color": "#3f789e",
+   "flags": {}
+  }
+ ],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.7,
+   "offset": [
+    620,
+    80
+   ]
+  }
+ },
+ "version": 0.4
+}

@@ -1,0 +1,17 @@
+改前中文 20 份（当前判据）：warn 53／error 23
+   H3R23|正文语言|error                         20
+   §五|运镜|warn                               17
+   H3R8|光影|warn                             17
+   H3R20|20b 同拍完成|warn                      11
+   H3R1|道具锁|warn                            4
+   H3R13|抽象词|warn                           3
+   H3R20|20a 双向拉扯|error                     3
+   H3R3/11/15|步数|warn                       1
+
+改后英文 20 份（当前判据）：warn 43／error 0
+   H3R8|光影|warn                             17
+   §五|运镜|warn                               11
+   H3R20|20b 同拍完成|warn                      10
+   H3R19|特写质感|warn                          2
+   H3R13|抽象词|warn                           2
+   H3R3/11/15|步数|warn                       1

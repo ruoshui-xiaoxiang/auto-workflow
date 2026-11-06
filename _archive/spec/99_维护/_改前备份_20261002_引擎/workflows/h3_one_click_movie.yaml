@@ -1,0 +1,26 @@
+name: h3_one_click_movie
+description: MiniMax H3 多镜一键成片：逐镜串行生成、资源错误自动降级、断点续跑、机械质检、1080p标准化、响度归一与硬切拼接。默认使用16GB显存稳定T8档。
+args:
+  manifest: ""
+  profile: stable_t8
+  dry_run: false
+  output_width: 1920
+  output_height: 1080
+  fps: 24
+  loudness: -16
+  true_peak: -1.5
+  timeout: 10800
+steps:
+  - task: h3_movie
+    id: movie
+    label: H3多镜一键成片
+    hint: 逐镜落盘；失败不会重跑已经完成的镜头。默认硬切，避免生成式转场破坏连续性。
+    manifest: "{{args.manifest}}"
+    profile: "{{args.profile}}"
+    dry_run: "{{args.dry_run}}"
+    output_width: "{{args.output_width}}"
+    output_height: "{{args.output_height}}"
+    fps: "{{args.fps}}"
+    loudness: "{{args.loudness}}"
+    true_peak: "{{args.true_peak}}"
+    timeout: "{{args.timeout}}"

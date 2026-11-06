@@ -60,3 +60,43 @@ python-embed/
 
 # Test cache
 .pytest_cache/
+
+# ---- 存档镜像 _archive：只排除二进制/媒体/缓存/日志（撑体积，不是敏感）----
+*.log
+*.exe
+*.dll
+*.pyd
+*.so
+*.dylib
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.avi
+*.wav
+*.mp3
+*.flac
+*.m4a
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.bin
+*.gguf
+*.db
+*.sqlite
+*.sqlite3
+*.pyc
+*.pyo
+node_modules/
+
+# 引擎运行期临时产物
+tmp/
+installer_output/
+_backup_*/

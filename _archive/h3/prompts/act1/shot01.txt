@@ -1,0 +1,18 @@
+subject_definitions:
+<Subject 1> is the flagship observation corridor in <Picture 1> and <Picture 2>, a vast interior passage with a floor-to-ceiling inclined glass window running along its left side, dark metal support columns along the right, a polished metal floor, and a deep vanishing point at the far end.
+
+summary:
+[reference generation] The target video is one continuous establishing shot of <Subject 1>. The corridor stands empty while a dying planet outside the glass provides the only warm light in the frame, and the camera pushes forward slowly along the corridor axis.
+
+retention_analysis:
+<Subject 1> (appears in [Shot 1]): fully_preserved - the inclined glass window, the dark metal columns, the polished floor, and the deep vanishing corridor are retained.
+
+detailed_description:
+The target video is shot in a large-scale realistic science-fiction film style, with cinematic wide-screen composition, deep blacks, controlled saturation, and physically credible metal and glass materials.
+[Shot 1] An extreme wide shot inside <Subject 1>. The corridor stretches across the frame, and the inclined glass window on the left fills a third of the image. Outside the glass a dying planet is coming apart: several enormous fissures run across its surface, molten energy pours upward from them in slow glowing columns, and continent-sized slabs have already peeled away to orbit the planet as a slowly turning debris ring. The ceiling strip lights run in an even row and repeat on the polished floor as parallel bands of white. The planet's orange light spills through the glass and lies along the floor as one long warm reflection, while the corridor's own light stays cold and steady. Fine dust drifts almost motionlessly in the cold light, and the passage stays completely empty from foreground to vanishing point. The camera begins at eye level near the right-hand columns and pushes forward along the corridor axis at an extremely slow constant speed, advancing about one tenth of the frame depth across the shot, with no pan and no shake.
+
+overall_soundscape:
+A low continuous hull hum runs through the entire shot, joined by occasional faint creaks of metal structure under thermal stress and the quiet stir of air inside the large enclosed volume.
+
+non_diegetic_music:
+N/A

@@ -1,0 +1,91 @@
+[0] 词表清单（AST 穷尽，模块级＋函数级全大写表）｜52 张
+模块                 表                    行     条目 形态
+h3_rule_gate.py    ABSTRACT            91   29/0    中英双形
+h3_rule_gate.py    AXIS_SIDE          507   16/0    纯英文
+h3_rule_gate.py    BACK               521   12/0    中英双形
+h3_rule_gate.py    BODY               101   32/0    中英双形
+h3_rule_gate.py    CAM_EN              51   14/0    纯英文
+h3_rule_gate.py    CAM_RESULT_ONLY     60   14/0    中英双形
+h3_rule_gate.py    CAM_ZH              53   17/0    纯中文
+h3_rule_gate.py    CLOSEUP            665    9/0    中英双形
+h3_rule_gate.py    DOMAIN_WORDS       849   20/0    纯中文
+h3_rule_gate.py    EVAL_ONLY          680    7/0    纯英文
+h3_rule_gate.py    FACE               106   10/0    中英双形
+h3_rule_gate.py    FACING             516   13/0    中英双形
+h3_rule_gate.py    FIGHT_V            105   14/0    纯中文
+h3_rule_gate.py    FLY                537   15/0    中英双形
+h3_rule_gate.py    FX_BAD              85   10/0    中英双形
+h3_rule_gate.py    FX_POS              87   18/0    中英双形
+h3_rule_gate.py    INSTANT            733   16/0    中英双形
+h3_rule_gate.py    LIGHT_BAD_V         76   19/0    中英双形
+h3_rule_gate.py    LIGHT_NOUN          74   14/0    中英双形
+h3_rule_gate.py    LINEAXIS           544   10/0    中英双形
+h3_rule_gate.py    LOCK_SHAPE         428   23/0    中英双形
+h3_rule_gate.py    LOCK_STATE         439   40/0    中英双形
+h3_rule_gate.py    MOVE               530   16/0    中英双形
+h3_rule_gate.py    MUSIC_WORDS         68    2/0    中英双形
+h3_rule_gate.py    PARTY_CAND         504   11/0    纯英文
+h3_rule_gate.py    PROJECTILE         533   15/0    中英双形
+h3_rule_gate.py    R7_TAIL_RISK        70   15/0    中英双形
+h3_rule_gate.py    ROTATE_AWAY        525   12/0    中英双形
+h3_rule_gate.py    SCENE_FAMILY       129    4/0    纯中文
+h3_rule_gate.py    SKIN_SUBJECT       669   21/0    中英双形
+h3_rule_gate.py    SKIN_TEXTURE       673   29/0    中英双形
+h3_rule_gate.py    TOWARD             540   10/0    中英双形
+h3_rule_gate.py    TUG                719   19/0    中英双形
+h3_rule_gate.py    UNWRAP             152   27/0    中英双形
+h3_rule_gate.py    VIEW               596   12/0    纯英文
+h3_rule_gate.py    VIOLENCE           145   25/0    中英双形
+h3_rule_gate.py    VL_QUESTIONS       136    4/0    纯中文
+h3_rule_gate.py    底线_MARK            113   17/0    中英双形
+prompt_lint.py     ARMOR_TOXIC        116   13/0    纯中文
+prompt_lint.py     AXES               132    6/0    纯中文
+prompt_lint.py     COLOR_WORDS        123   16/0    纯中文
+prompt_lint.py     DECOR_WORDS        125   15/0    纯中文
+prompt_lint.py     DELEGATE           128    7/0    纯中文
+prompt_lint.py     DOLL_TOXIC         118    4/0    中英双形
+prompt_lint.py     EXCLUDE             79    2/0    纯中文
+prompt_lint.py     MAKEUP_TOXIC       122   10/0    纯中文
+prompt_lint.py     NEG                 58   37/0    中英双形
+prompt_lint.py     RENDER_TOXIC_BY_PROFILE    40    2/0    纯英文
+prompt_lint.py     REQUIRED_BY_PROFILE    48    3/0    纯英文
+prompt_lint.py     SKIN_TOXIC         114   11/0    纯中文
+prompt_lint.py     STRUCT_ONLY        127    4/0    纯中文
+prompt_lint.py     WEAPON_TOXIC       117    9/0    纯中文
+  形态合计：中英双形 30／纯中文 15／纯英文 7
+
+[1] 判据消费点｜31 个（对跑 20 份）
+模块                  行 词表             扫的区                      区源   条目    改前    改后 形态       结论
+prompt_lint.py    155 NEG            (未见显式取用)                 未定   37   199   272 中英双形     取用处未定位（探针盲区，需人工判）
+prompt_lint.py    272 NEG            (未见显式取用)                 未定   37   199   272 中英双形     取用处未定位（探针盲区，需人工判）
+h3_rule_gate.py   689 SKIN_SUBJECT   blk                      稿面   21   157   252 中英双形     英文形仍在命中
+h3_rule_gate.py   632 PROJECTILE     blk                      稿面   15   113    90 中英双形     英文形仍在命中
+h3_rule_gate.py   857 DOMAIN_WORDS   (未见显式取用)                 未定   20    90     0 纯中文      取用处未定位（探针盲区，需人工判）
+h3_rule_gate.py   633 FLY            blk                      稿面   15    66    26 中英双形     英文形仍在命中
+h3_rule_gate.py   603 FLY            blk                      稿面   15    66    26 中英双形     英文形仍在命中
+prompt_lint.py    208 DECOR_WORDS    txt                      稿面   15    41     1 纯中文      ⚠ 被英译拿走（仅剩残留中文蹭到 1）
+h3_rule_gate.py   635 TOWARD         blk                      稿面   10    37    18 中英双形     英文形仍在命中
+h3_rule_gate.py   607 单词判据           blk                      稿面    1    24    24 纯英文      英文形仍在命中
+h3_rule_gate.py   356 CAM_EN         cam                      稿面   14    19   125 纯英文      英文形仍在命中
+h3_rule_gate.py   769 INSTANT        body                     稿面   16    12    13 中英双形     英文形仍在命中
+h3_rule_gate.py   764 TUG            snd                      稿面   19    10     0 中英双形     待判（有英文形但改后 0：正文没写 or 词形不全）
+h3_rule_gate.py   601 ROTATE_AWAY    blk                      稿面   12    10    14 中英双形     英文形仍在命中
+h3_rule_gate.py   758 TUG            blk                      稿面   19    10     0 中英双形     待判（有英文形但改后 0：正文没写 or 词形不全）
+h3_rule_gate.py   636 LINEAXIS       blk                      稿面   10    10    32 中英双形     英文形仍在命中
+h3_rule_gate.py   599 VIEW           sen                      稿面   12     9    52 纯英文      英文形仍在命中
+h3_rule_gate.py   592 FACING         blk                      稿面   13     5    18 中英双形     英文形仍在命中
+h3_rule_gate.py   593 BACK           blk                      稿面   12     4    32 中英双形     英文形仍在命中
+h3_rule_gate.py   599 BACK           sen                      稿面   12     4    32 中英双形     英文形仍在命中
+h3_rule_gate.py   602 AXIS_SIDE      blk                      稿面   16     3    49 纯英文      英文形仍在命中
+h3_rule_gate.py   568 PARTY_CAND     (未见显式取用)                 未定   11     0   153 纯英文      取用处未定位（探针盲区，需人工判）
+h3_rule_gate.py   977 单词判据           sys.argv                 未定    1     0     0 纯英文      取用处未定位（探针盲区，需人工判）
+h3_rule_gate.py   932 单词判据           sys.argv                 未定    1     0     0 纯英文      取用处未定位（探针盲区，需人工判）
+h3_rule_gate.py   689 CLOSEUP        blk                      稿面    9     0     8 中英双形     英文形仍在命中
+prompt_lint.py    199 DELEGATE       txt                      稿面    7     0     0 纯中文      本来 0
+prompt_lint.py    207 单词判据           txt                      稿面    1     0     0 纯中文      本来 0
+prompt_lint.py    207 单词判据           txt                      稿面    1     0     0 纯中文      本来 0
+prompt_lint.py    207 STRUCT_ONLY    txt                      稿面    4     0     0 纯中文      本来 0
+prompt_lint.py    200 COLOR_WORDS    txt                      稿面   16     0     0 纯中文      本来 0
+prompt_lint.py    213 行内字面表          txt                      稿面    4     0     0 纯中文      本来 0
+
+被英译拿走的稿面判据 1 个，合计改前命中 41

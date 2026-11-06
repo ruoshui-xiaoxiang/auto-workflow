@@ -1,0 +1,467 @@
+{
+ "why": "维护规则 7：想做 diff 基线必须在刷新之前另存快照（先刷后改名＝基线归零）",
+ "taken_at": "2026-10-19 16:35:22",
+ "count": 92,
+ "files": [
+  {
+   "name": "MEMORY.md",
+   "bytes": 26262,
+   "sha256": "f890a2498543b71fef80942da955958e866da24ced4cd29e4e111a19eb0cff6c"
+  },
+  {
+   "name": "feedback-animation-action-decomposition.md",
+   "bytes": 1973,
+   "sha256": "a0c90f3b71d087c33be256e8fda3e3840123ac33942509fa0f8d9300faf1277f"
+  },
+  {
+   "name": "feedback-animation-decomposition.md",
+   "bytes": 8409,
+   "sha256": "4599df236ea929fb2f1a6ffa26ba61a15ad3cdce6cc72b4a2498e3dfa07dbfe5"
+  },
+  {
+   "name": "feedback-bgm-mixing.md",
+   "bytes": 4633,
+   "sha256": "235ad7e2d6d287dfc80a60a25fa47f5d0551b55eb6bc959b6e53ebaf6c3d5013"
+  },
+  {
+   "name": "feedback-character-prompt-card-first.md",
+   "bytes": 5270,
+   "sha256": "6853e9583efc985bba1f700370b7e55367a98489fb491ea387528d5a97b8e8d8"
+  },
+  {
+   "name": "feedback-character-reference-image.md",
+   "bytes": 45374,
+   "sha256": "a9ccaeee7375cde9aeebde6e45755e5d72d63f0af2dbacf965e1e4295ec1a041"
+  },
+  {
+   "name": "feedback-cloud-video-refinement-limitation.md",
+   "bytes": 1005,
+   "sha256": "8cd5ff51c9a4e09d3a3fbb95d9cf23c4067e8908abb04f459c8bd4bdbaa27c3f"
+  },
+  {
+   "name": "feedback-collaboration-style.md",
+   "bytes": 59662,
+   "sha256": "60205ddc682e2e0875859055fe082d90cf656e09745a23ca548697923b478279"
+  },
+  {
+   "name": "feedback-combat-shot-grammar.md",
+   "bytes": 49035,
+   "sha256": "36869f42b4069020deea578faabf734a47700a92f53fcfc83e53d2562318c7d2"
+  },
+  {
+   "name": "feedback-content-boundary.md",
+   "bytes": 942,
+   "sha256": "9d89f32352eb2f55a84e1fa8debecf2670a6c1eaf3aab00feaaaaf2edf4acc4b"
+  },
+  {
+   "name": "feedback-copy-not-move.md",
+   "bytes": 11882,
+   "sha256": "d0a0d2cc6e1b41a1c6f989e3db4aaf6b99655410754d41186128cfb27877a03f"
+  },
+  {
+   "name": "feedback-cost-consciousness.md",
+   "bytes": 4624,
+   "sha256": "5b5a82c32a598b5913ef94b5632e8f86c57e97813a1f707f88fb5f9e29379851"
+  },
+  {
+   "name": "feedback-credential-no-echo.md",
+   "bytes": 2899,
+   "sha256": "66aa8bc558b236b8113b92587896ca9d60eac431098285507dd0926b875769b4"
+  },
+  {
+   "name": "feedback-cross-shot-continuity.md",
+   "bytes": 13107,
+   "sha256": "0368b509c97492da2bdfb6d32676e96d42d1d91a4d0f838d340ffe8a772ef6df"
+  },
+  {
+   "name": "feedback-destructive-edit-boundaries.md",
+   "bytes": 10995,
+   "sha256": "443581e9659cf7154a4e2f655f8ec4b7b88f84ddcd390e38be8124e6974fe6a6"
+  },
+  {
+   "name": "feedback-disk-organization-rules.md",
+   "bytes": 6048,
+   "sha256": "86fc1168aea5f9619aac034ca1447cfb68788896a86705ed48e1934e1da299e3"
+  },
+  {
+   "name": "feedback-evidence-loop-trap.md",
+   "bytes": 63565,
+   "sha256": "ad5d9f0f820b7c6c0404e5fc81ba99729607aa80ea66d530250d151ffa1e6ed5"
+  },
+  {
+   "name": "feedback-file-link-format.md",
+   "bytes": 2244,
+   "sha256": "98b336952378401a1c852d081dca8bf3362256b847705fc122b2c35843adbb13"
+  },
+  {
+   "name": "feedback-generation-vs-post-layer.md",
+   "bytes": 2497,
+   "sha256": "1a6068f78bed5d0a34105c56a526eae7a46cb87a4f523fb7a6fb1a81f6ced502"
+  },
+  {
+   "name": "feedback-human-decides-values-not-rules.md",
+   "bytes": 3604,
+   "sha256": "729d6493594fba7d92ded8e827a418b5a5d8ad13c39b20fbf106be414c66b1a9"
+  },
+  {
+   "name": "feedback-i-am-not-the-beauty-judge.md",
+   "bytes": 2357,
+   "sha256": "2494e4c3d363bc36776dcad52377da2bed17ad3d9e8f55ef70f10253e8553a58"
+  },
+  {
+   "name": "feedback-local-first-generation.md",
+   "bytes": 15428,
+   "sha256": "57c513de006ea73f789580baecaaad1bf77cac3899d3729024af7cd76eda0963"
+  },
+  {
+   "name": "feedback-low-expectation-external-capability.md",
+   "bytes": 8092,
+   "sha256": "2792108ece3f47d9238b9048658768e2bef6b767c56876601d6cd0ffaa70437c"
+  },
+  {
+   "name": "feedback-material-richness-diagnosis.md",
+   "bytes": 4248,
+   "sha256": "9c6ce5db075e705a40c330652d662a84e1d70d259cae0ad256910a25f5f7fc9a"
+  },
+  {
+   "name": "feedback-per-channel-rules.md",
+   "bytes": 13259,
+   "sha256": "f0145fb65f46f774030975634c9070f59ee5a683cc528fd59a60118d3f8d8e7a"
+  },
+  {
+   "name": "feedback-prefer-stable-api-channel.md",
+   "bytes": 1370,
+   "sha256": "71d55acc8e61a724558570f514db3f0ed5cbc58e4550962a426e0ca94373da55"
+  },
+  {
+   "name": "feedback-previz-camera-rhythm.md",
+   "bytes": 1352,
+   "sha256": "2cd95cf0fa570df58598eb1b63d61ec846fe13be05e300adf6c82013f0b14286"
+  },
+  {
+   "name": "feedback-previz-closeup-limitation.md",
+   "bytes": 1189,
+   "sha256": "03e21a8219133025fe412f272634293ca50afedb1749e66b1c7c3e9a7bccaece"
+  },
+  {
+   "name": "feedback-prompt-iteration-priors.md",
+   "bytes": 73906,
+   "sha256": "d5add61d95b3fd072568afaedd7a5a5b3dc9748e5978083c1bed7a663e05e0d7"
+  },
+  {
+   "name": "feedback-r2v-prompt-camera.md",
+   "bytes": 10982,
+   "sha256": "9f0b3936c02f4970c35f510e6dd15d27571a192baedc2c56a6148906eaacda0e"
+  },
+  {
+   "name": "feedback-review-production-prompts.md",
+   "bytes": 6592,
+   "sha256": "88979a52e72b9204eae01cc005b695d8d27209b0c4d56bcb4da663ad81b894ba"
+  },
+  {
+   "name": "feedback-script-writing-approach.md",
+   "bytes": 11306,
+   "sha256": "c81fd0dbbc88ea2d86d741f0319dbcd715bec50d0c6e023a4127ef331ab0fa62"
+  },
+  {
+   "name": "feedback-split-long-shots.md",
+   "bytes": 5351,
+   "sha256": "6b9c46260d0100dbb95e6a8d47e4c7c5ffa390997a34854cb5a3e00a469fd60c"
+  },
+  {
+   "name": "feedback-test-with-manual-prompts.md",
+   "bytes": 1924,
+   "sha256": "0d39cc0933427e0af8ea07aa3f7aa2fea70ae713151dc3731d23935a41be270b"
+  },
+  {
+   "name": "feedback-third-party-skill-install.md",
+   "bytes": 4813,
+   "sha256": "6b5ba09d02803e9cfa78146ae19fc4f8c34c5d393c61274bb5cf17e6f2293d92"
+  },
+  {
+   "name": "feedback-video-quality-standards.md",
+   "bytes": 61354,
+   "sha256": "41a8c82f720278bf416308a4974d08ad3e579c2c10c1602de1a827e6964cad69"
+  },
+  {
+   "name": "feedback-workspace-hygiene.md",
+   "bytes": 2558,
+   "sha256": "d319bc9245b5159046cc83374f1220394b79029c56e10326ba2ab303f43dac73"
+  },
+  {
+   "name": "reference-ai-content-publishing-douyin.md",
+   "bytes": 4785,
+   "sha256": "60eb0b5278f1fd5ba1acfcaaece044c1210e9cbb627f4f53714664e3cc078c7d"
+  },
+  {
+   "name": "reference-ai-pricing.md",
+   "bytes": 37725,
+   "sha256": "4643228611765512542000fbd39b71036acfb54e306e80ce2a66384e7185985f"
+  },
+  {
+   "name": "reference-ark-account.md",
+   "bytes": 44230,
+   "sha256": "bcef1a3c7569a4e4f6480372fb451983f9ce4ca93a6eb5554e949af3f750ec39"
+  },
+  {
+   "name": "reference-audio-visualizer-waveform.md",
+   "bytes": 4328,
+   "sha256": "75b339c1c7aab78095baeb86c32a540af04b815c1d422839ec621236bc02cc69"
+  },
+  {
+   "name": "reference-baidu-character-library.md",
+   "bytes": 21590,
+   "sha256": "7f31bc3a41df4bbeaa3d579725513bdd6e9b1f78d9d28f927f093a1ee2430ae2"
+  },
+  {
+   "name": "reference-bailian-tts.md",
+   "bytes": 5805,
+   "sha256": "8d6d17884c39b81b091a990d9de128354e4410db3e0dd36141901309db94896c"
+  },
+  {
+   "name": "reference-character-scene-asset-pipeline.md",
+   "bytes": 7568,
+   "sha256": "146bf964fc36f6168f56a926149367d50473a3a77243d447ab6449f1a44279ad"
+  },
+  {
+   "name": "reference-cinematic-skill.md",
+   "bytes": 4176,
+   "sha256": "161134f1d5c6076c74537f0e01e8ba90cc0a0a625734178f040444fc90737b84"
+  },
+  {
+   "name": "reference-civitai-access.md",
+   "bytes": 6084,
+   "sha256": "7880e23629dffa1f9bbc06361be5394d2992f8e6b66af53ba7f8b929b5acacbf"
+  },
+  {
+   "name": "reference-cn-download-mirrors.md",
+   "bytes": 8080,
+   "sha256": "34bd1df937408bf09fbeb758026935493f0c7be572181e63750d8e6702517a41"
+  },
+  {
+   "name": "reference-color-lighting-standards.md",
+   "bytes": 20835,
+   "sha256": "af94890c2e9353c56133fddd0039ce06763e5a2c95af313c9aad7cff5666d9b3"
+  },
+  {
+   "name": "reference-commons-asset-refs.md",
+   "bytes": 3531,
+   "sha256": "3ba35f02bbd96a9bf930756a1e31e964896503643031a627d9b780689d2b81d1"
+  },
+  {
+   "name": "reference-cross-instance-session-visibility.md",
+   "bytes": 4922,
+   "sha256": "5577b9c92bc9e0ae5998d2c159b3ce35a3cde4c3d5b57b848071b1ac29901be8"
+  },
+  {
+   "name": "reference-cuf-assets-and-vault.md",
+   "bytes": 6475,
+   "sha256": "ccc22e3cf16ef682fd5063452c3154b75e37443479ba866b6021a01d7f675391"
+  },
+  {
+   "name": "reference-deepseek-codex-integration.md",
+   "bytes": 3458,
+   "sha256": "8620b06b41dff5daecb370f56408fa75f1dbbe0a403f2e9d195bd56c15b62009"
+  },
+  {
+   "name": "reference-dreamina-canvas-cli.md",
+   "bytes": 27414,
+   "sha256": "0318736049c3b508189a0c1841892bfdcc17eb80074ad17ad0cd226ee232eb2b"
+  },
+  {
+   "name": "reference-dreamina-cli.md",
+   "bytes": 8834,
+   "sha256": "dbb8a764ca5a0bd7853bdf2d6bdce7cc09593e2bd45c5b49486a01b5f1d9188f"
+  },
+  {
+   "name": "reference-e-drive-asset-libraries.md",
+   "bytes": 6787,
+   "sha256": "278b224ad19c577cdd20070f6e6a207f83e42fe96a8c657d0fa7f05512308636"
+  },
+  {
+   "name": "reference-feishu-communication.md",
+   "bytes": 11598,
+   "sha256": "6bb8c40472662e2b9da3539902828d973208baa5c6d4a329e5b8657a5d233a13"
+  },
+  {
+   "name": "reference-ffmpeg-location.md",
+   "bytes": 15619,
+   "sha256": "3b5115430667f3a8003100e30ccd94c2aa7e163a8e87d3194ad9ea47178b943a"
+  },
+  {
+   "name": "reference-film-pacing-craft.md",
+   "bytes": 9330,
+   "sha256": "a20f252447705846bb7f1d8e30409f158aa51d3df1df957b81e5b6a942ea0db1"
+  },
+  {
+   "name": "reference-fx-light-overlay.md",
+   "bytes": 29246,
+   "sha256": "d1015190d2bd2a7e8381774c6ef10205915b61ddf74f697e00b374baec1afa08"
+  },
+  {
+   "name": "reference-gpu-monitor-trafficmonitor.md",
+   "bytes": 2293,
+   "sha256": "47706b5b63d0d29ce1cfbcbcdfaa072b6f138adfce63f60f55b7ec940908a6c7"
+  },
+  {
+   "name": "reference-h3-prompt-rules.md",
+   "bytes": 42164,
+   "sha256": "7b24cd8fcdf35e18a375aee5890ee03838c5d75b9944a4bddba97c0ba4b75536"
+  },
+  {
+   "name": "reference-hailuo-design-tool.md",
+   "bytes": 5743,
+   "sha256": "814911c5d3a2dfc7e1bd5024c7059f68928735d4696fb9ac64bc0aee2fb0ecea"
+  },
+  {
+   "name": "reference-image-consistency-qc.md",
+   "bytes": 25892,
+   "sha256": "0fdfcdda753b086dea67e2262f1462d81f68f53f7c1164121b4719ccd663257b"
+  },
+  {
+   "name": "reference-image-prompt-specs.md",
+   "bytes": 10259,
+   "sha256": "edf10cb211552c3244e0dca42762396219d153312e9f38ff12051f17234e027f"
+  },
+  {
+   "name": "reference-installed-skill-packs.md",
+   "bytes": 11676,
+   "sha256": "ddb1b18c7a78d522ba506e8d53ce2836af299cfb36c54ada02f58814006feaed"
+  },
+  {
+   "name": "reference-kling-api.md",
+   "bytes": 3954,
+   "sha256": "3f817376ad55139b58030d12d43b378e786399aaa0a145411b0d84100365af4e"
+  },
+  {
+   "name": "reference-kling-cli.md",
+   "bytes": 13311,
+   "sha256": "15d78d26136e4649f5528f88e23d60ff85225da60a4532539133bff0e4deef91"
+  },
+  {
+   "name": "reference-local-browser-rendering.md",
+   "bytes": 5309,
+   "sha256": "0416ac6013ffff79181053640a7b4d1afe1ee97e72876dd89362f0eb986e7c71"
+  },
+  {
+   "name": "reference-local-face-identity-transfer.md",
+   "bytes": 11106,
+   "sha256": "6ca065b53d2ee148499b4b18baf94f75f16b1674286964f91aae826be49d5646"
+  },
+  {
+   "name": "reference-local-image-chain.md",
+   "bytes": 25928,
+   "sha256": "ffd8a4ba35db0f823b74b6b906f791c3bfee3cfa7f3a6fb0e340f4fa9f313e48"
+  },
+  {
+   "name": "reference-local-network-baseline.md",
+   "bytes": 8162,
+   "sha256": "8a2feb3bfeb0def983b72bc59d7d024b37bba739fd5b5a120ba2f2fde1820043"
+  },
+  {
+   "name": "reference-local-tts-f5.md",
+   "bytes": 3586,
+   "sha256": "46485fb8b01cca9576e2cb528b149f8236d5c6bcae08ef65b9ec0d014bbf3e23"
+  },
+  {
+   "name": "reference-local-workflow-manual.md",
+   "bytes": 22096,
+   "sha256": "274a62196e4ed4b7d6e4aab5bac2883b9491b323cfbd338a42cdd769229d7dbd"
+  },
+  {
+   "name": "reference-localai-console-engine.md",
+   "bytes": 1045,
+   "sha256": "d6638117252321c481bd19d7e06f9bdb2ffa952fbf0c23d22be10849ddb3a5f9"
+  },
+  {
+   "name": "reference-mimo-config-and-encoding.md",
+   "bytes": 9384,
+   "sha256": "7ae5df9fbbc75589cd5e115cde49705b178e66e7f4de9674e6229b20d156cbef"
+  },
+  {
+   "name": "reference-minimax-api.md",
+   "bytes": 6612,
+   "sha256": "9c4aa712739ccdd1532d718e755c5579be6110ad075099c5e7b771883eee67da"
+  },
+  {
+   "name": "reference-minimax-h3-local.md",
+   "bytes": 124920,
+   "sha256": "43375d9f2d74cd65a2e30329a0d57db44474ce2f608ff83c0d8eee67bd14c13a"
+  },
+  {
+   "name": "reference-minimax-h3-official-prompt-spec.md",
+   "bytes": 26182,
+   "sha256": "6e2538cd8945934939bc7ac8fede61230ae92c8f9e36291a83d378924a0ffd52"
+  },
+  {
+   "name": "reference-nvidia-dlss-local.md",
+   "bytes": 5727,
+   "sha256": "58e523d6f3e3399069d8188c3f9a1a416053cb7c70468ec4d24cf1916e4532d3"
+  },
+  {
+   "name": "reference-pixabay-assets.md",
+   "bytes": 2019,
+   "sha256": "9178ef75a173c11a58e8187d37e1bd1df0d2aa2b41d91d99eca2b1df99f85a15"
+  },
+  {
+   "name": "reference-public-memory.md",
+   "bytes": 5849,
+   "sha256": "46668888bc481ee7bfc6963a50d7419c32297137567a27fe9685cedc53836b0d"
+  },
+  {
+   "name": "reference-qianwen-cli.md",
+   "bytes": 7344,
+   "sha256": "6a8a857535b99b062f3b0f076dbeec757c12020a2475ec37d1a29475c009d6b4"
+  },
+  {
+   "name": "reference-qoder-agent-skill-hooks.md",
+   "bytes": 10805,
+   "sha256": "6849d787c0cc8cf6d0dedbd455aebe8898e313343243f1a719766176eab628d0"
+  },
+  {
+   "name": "reference-ruoshui-ai-film-architecture.md",
+   "bytes": 88080,
+   "sha256": "53895800204c822360cb67a0b7a40abaa06c109103c6c088f944f213c40e8eef"
+  },
+  {
+   "name": "reference-script-storyboard-animation-tools.md",
+   "bytes": 22745,
+   "sha256": "5526b125f62d157f850ebe16d45b81fa60c6b6ab80e113a1fc686f602ca33eaa"
+  },
+  {
+   "name": "reference-seedance-official-prompt-skill.md",
+   "bytes": 9335,
+   "sha256": "52138101d840928bb00852b49d2fba9dcd5b877fcabb7c1a8e9c551dc154c7b3"
+  },
+  {
+   "name": "reference-storyboard-reference-sources.md",
+   "bytes": 12230,
+   "sha256": "d0be490228df63527efe18c2e2c95c439a6cd8ac0e4f5a2de4ead99dec71dcd4"
+  },
+  {
+   "name": "reference-workbuddy-tencent.md",
+   "bytes": 3179,
+   "sha256": "9e5f86033ddcfc8b1a3e29e762e8de2b6c2f6bac794d4e4e60db34fe21914dff"
+  },
+  {
+   "name": "reference-wuwang-screenshot-path.md",
+   "bytes": 911,
+   "sha256": "3dadfd70b8ac64e7e4590044595acd0336088f0d20ef2f007d5f92f757ba3712"
+  },
+  {
+   "name": "reference-xianlu-project.md",
+   "bytes": 19286,
+   "sha256": "4bc2e741abc7e72a45f21b38b9bd2eac07437b2048e6ea54d42887b00c9f9ae8"
+  },
+  {
+   "name": "user-research-ai-profile.md",
+   "bytes": 17425,
+   "sha256": "6ec2ca656c762f025010d8ce738a034a95fc0957a302e8aa08a366273eaa3e59"
+  },
+  {
+   "name": "user-visual-taste.md",
+   "bytes": 26970,
+   "sha256": "f674bcda8a4672eb3d6ddaa0db9fbbb3a7517a14947f50be4664d7d5862298d8"
+  }
+ ]
+}

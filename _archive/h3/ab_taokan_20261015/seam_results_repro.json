@@ -1,0 +1,52 @@
+{
+  "tool": "seam_check.py (R11-02)",
+  "files": {
+    "prev": "D:/AIWorkflow/ComfyUI_H3/output/ep1v2_s7.mp4",
+    "next": "D:/AIWorkflow/ComfyUI_H3/output/ep1v2_s8.mp4",
+    "chain_prev": "D:/AIWorkflow/ComfyUI_H3/output/minimax_h3_t8_long_video/ab_taokan_h768/accepted/segment_00000_seg00000_20261015T071802_b84f5ff4.mp4",
+    "cont": "D:/AIWorkflow/ComfyUI_H3/output/AB_taokan_s8_cont_00001_.mp4"
+  },
+  "frame_counts": {
+    "prev": 158,
+    "next": 158,
+    "chain_prev": 158,
+    "cont_raw": 175,
+    "cont_trimmed": 154
+  },
+  "A_hardcut": {
+    "seam_ncc": 0.1484,
+    "baseline_ncc_mean": 0.9812,
+    "ncc_ratio": 0.151,
+    "seam_flow": 10.834,
+    "baseline_flow_mean": 0.46,
+    "flow_ratio": 23.57,
+    "win_zero_lag_ncc": 0.119,
+    "seam_mae": 43.98
+  },
+  "trim": {
+    "trimmed": 21,
+    "frames": 175,
+    "mode": "auto",
+    "prefix_ncc": 0.9969
+  },
+  "B_continuation": {
+    "seam_ncc": 0.9963,
+    "baseline_ncc_mean": 0.997,
+    "ncc_ratio": 0.999,
+    "seam_flow": 0.193,
+    "baseline_flow_mean": 0.242,
+    "flow_ratio": 0.797,
+    "win_zero_lag_ncc": 0.9476,
+    "seam_mae": 2.98
+  },
+  "C_diag": {
+    "seam_ncc": 0.0109,
+    "baseline_ncc_mean": 0.9806,
+    "ncc_ratio": 0.011,
+    "seam_flow": 11.844,
+    "baseline_flow_mean": 0.512,
+    "flow_ratio": 23.152,
+    "win_zero_lag_ncc": -0.0008,
+    "seam_mae": 50.98
+  }
+}

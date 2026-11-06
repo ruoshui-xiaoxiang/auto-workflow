@@ -1,0 +1,35 @@
+name: image_refine
+description: 两段式·精修 —— 按编号取草稿，USDU 生成式放大 2x（保留原构图）。2026-10-08 底模由退役 FLUX 换成 Z-Image-Turbo（refine_usdu_zimage_api.json）
+provider: local
+prompt_kind: image
+args:
+  manifest: ""
+  pick: ""
+  tile: 512
+  steps: 12
+  upscale_by: 2.0
+  denoise: 0.35
+  template: "comfy/refine_usdu_zimage_api.json"
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前落点核对（机制关口）
+    hint: 本流是 manifest 驱动，提示词在批次 manifest 里、不在 args ⇒ G7/G5 套不上
+          （硬塞只会报「没有提示词可校验」，等于把流打死）。
+          10-02 批1 补的这道闸只跑 G11：产物往哪个项目夹落，这件事与提示词无关，
+          恰恰是 9-18 仙戮四条串进无音批次夹那一类事故的正面拦截。
+          ⚠ G5 刻意不补：h3_one_click_movie 的 1080p 输出容器不是 32 倍数（实测 1080/32=33.75），
+          而 G5 管的是模型输入尺寸，拿它量输出会当场拦停现役流。
+    auto_gates: [G11, G13]
+  - task: refine
+    id: refine
+    label: 生成式精修
+    hint: 保留选中草稿的构图，分块重绘放大 2 倍到 1664x2432
+    files: "{{args.picked_files}}"
+    prompt: "{{args.picked_prompt}}"
+    tile: "{{args.tile}}"
+    steps: "{{args.steps}}"
+    upscale_by: "{{args.upscale_by}}"
+    denoise: "{{args.denoise}}"
+    prefix: "refine_{{run_id}}"

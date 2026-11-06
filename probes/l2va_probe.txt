@@ -1,0 +1,7 @@
+How the reference pictures align with the target video — <Picture 1> (from [Shot 1]) aligns with the 5.00-second mark of the target video.
+
+integrated_multimodal_description: [Shot 1] Live-action, 576x1024 vertical. A stone gate stands at the end of a wet courtyard; thin mist drifts across the flagstones. A woman in a dark robe walks into frame from the left, stops before the gate, and lifts her head, settling into the pose of the final frame. The camera Push In slowly toward the gate, then holds. No on-screen text, no logos, no watermarks.
+
+overall_soundscape: Wind through a narrow passage, distant water drops on stone, the soft rustle of wet fabric.
+
+non_diegetic_music: N/A

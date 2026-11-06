@@ -1,0 +1,720 @@
+{
+  "_readme": [
+    "官方路径.json —— 本机 AI 出片流水线的**唯一机器可读真源清单**（2026-10-19 建）。",
+    "",
+    "为什么要有这份文件：盘上曾有 11 份 agent 契约文件散在 8 处，其中 1 份是混合编码乱码、",
+    "3 份互相矛盾（CHANNELS.md 与 AGENTS.md 的通道编号错位，『走通道3』在两份里指两个不同东西）、",
+    "1 份是 25KB 的 ComfyUI 上游贡献者指南（会静默污染任何以 ComfyUI 目录为工作目录的 agent）。",
+    "结果就是「每个 agent 软件用法都不太一样」——不是 agent 不听话，是它们各自读到的契约残缺程度不同，",
+    "于是各自用自己的默认值补空。",
+    "",
+    "纪律（与 thresholds_registry.json 的 _readme 同一条哲学）：",
+    "  · 本文件**不抄内容**，只登记「谁是真源、住在哪、还活不活」。",
+    "  · 任何其它文档/脚本里出现端口号、路径清单、阈值数字的**副本**，都是第二份抄本，早晚漂移。",
+    "    只许写指针指向本文件登记的地址。本项目已为此翻过多次车。",
+    "  · 废弃的东西**不许静默消失**：归档后原处要留路障桩（打印确切替代命令 + exit 78）。",
+    "    静默归档比留着更糟——调用方拿到 FileNotFoundError 会自己去猜替代方案，那就是用法分叉的起点。",
+    "",
+    "自检：py D:/AIWorkflow/tools/check_official_path.py",
+    "（它会把本文件登记的每个真源逐个 stat，并检查有没有真源住在 tmp/ 下）"
+  ],
+  "schema_version": 1,
+  "updated": "2026-10-19",
+
+  "entries": {
+    "_note": "只有两个入口。ComfyUI 8189 是**唯一后端进程**，它自己不是入口——两个门面都经它。",
+    "agent": {
+      "谁用": "所有 agent 软件（Qoder / Trae / MiMo / Codex / Claude Code …），以及人工命令行",
+      "命令": "cd D:/AIWorkflow/engine && python run.py <workflow> [--set k=v ...] [--tier play|draft|final]",
+      "说明": "唯一执行核。即梦出图与 H3 渲染都在这条链里，agent 不需要知道即梦 CLI 怎么调。",
+      "常用开关": "--list（列工作流） / --gates（列待批关口） / --approve RUN_ID GATE / --approve-and-resume / --resume RUN_ID|last / --porcelain",
+      "状态": "现役"
+    },
+    "娱乐流": {
+      "谁用": "用户本人（玩、试参数、快速出图出片）",
+      "入口": "桌面「娱乐流」图标 → 起 8189 → 开 http://127.0.0.1:8189/extensions/comfyui-entertainment-panel/index.html",
+      "说明": "极简 HTML 面板，四个控件（模式/选图/提示词/出片）。参数写死在模板里不暴露。",
+      "档位": "tier=play：闸门 warn 不拦、产物落 ComfyUI_H3/output/娱乐流/<批次>/、不进资源池、不做 QC、不交付",
+      "捞回来": "批次夹里两份记录承担这件事：`<workflow>_<run_id>.manifest.json`（args 全量，机器读）与 `怎么捞回来.md`（可直接复制、把 --tier play 换成 draft 的整条 run.py 命令）。⚠ 2026-10-19 端到端验证更正：本字段原先写的是「batch.json 里存了…」，**那个文件从未被任何代码写过**（设计阶段起的名字漏进了实现与文案）⇒ 已按盘上实际产物改正。",
+      "状态": "✅ 已实现**并已加载**：2026-10-19 11:29 重启 ComfyUI 后 `GET /extensions/comfyui-entertainment-panel/index.html` 从 404 变 **200（5708 字节）**，`/entertainment/meta` 返回 4 个模式＋tier=play；节点类 2287→2287 一个没丢。⚠ 但**面板本身只验到「路由通＋meta 通」**，四个控件点到底出片那条（POST /entertainment/run → spawn run.py --tier play）还没点过——同一条链的 CLI 版已实跑通（见 e2e_verification_20261019）。",
+      "2026-10-19落地": [
+        "`engine/run.py` 新增 `--tier play|draft|final`（draft＝默认＝现役行为，一字未变）。",
+        "tier 的展开只在 run.py 入口做一次，tasks 只看到具体能力旗标 `args.allow_degrade` —— 守设计不变式 I12（tasks 里不许出现 `if tier ==`）。",
+        "`engine/tasks.py:preflight_or_die` 加了降级分支：error 逐条进日志 ＋ 在 approvals 台账留字据，**不是静默放行**。",
+        "预览批次里自动写 `怎么捞回来.md`（含同参数、--tier draft 的整条命令）。",
+        "`ComfyUI_H3/ComfyUI/custom_nodes/comfyui-entertainment-panel/`：`__init__.py`（WEB_DIRECTORY ＋ 5 条 /entertainment/* 路由，NODE_CLASS_MAPPINGS 故意留空）＋ `web/index.html`（四控件）。**不新占端口**，走 8189 同源。"
+      ],
+      "已验到的": [
+        "`--tier play` 的降级分支：单测三条全对——不给旗标拦停、给旗标放行、再跑一次仍拦停（可重复）；放行时日志里 error 逐条记到（2/2）。",
+        "`--tier draft` 实跑：闸门硬拦停 rc=1，G4/G7/G13 各报各的，**ComfyUI 队列 running=0 pending=0 ⇒ 一次都没提交、GPU 没烧**。",
+        "面板包：静态自检 8 项全过（前端 4 条路由后端都有、WEB_DIRECTORY 有、NODE_CLASS_MAPPINGS 是空的、无直连 /prompt、JS 的 7 个元素 id 都存在、AST 可解析、脱离 ComfyUI 也能 import）。",
+        "撞名摊开：盘上早有 `h3_fl2va_*_play` 那批**参数预设**工作流，与 `--tier play`（落点＋降级）是两件事共用一个词。没改名（改名牵 4 份 yaml 与全部历史台账），但 run.py 会显式提示一次，免得以为产物在预览区其实进了资源池正身。"
+      ],
+      "还差什么才叫完": "🔴 只剩**重启 ComfyUI 加载本包**这一步，而重启会打断可能在跑的活、且用户此前明令不启动 ComfyUI ⇒ 没做。重启后验：GET /extensions/comfyui-entertainment-panel/index.html 返 200；GET /entertainment/meta 返 json。404 ＝ 没加载，看启动日志里本包有没有 import 失败。"
+    }
+  },
+
+  "truth_sources": {
+    "_note": [
+      "每类信息只有一个真源。runtime_loaded_from 记的是**代码实际从哪加载**，",
+      "与 declared 不一致就是漂移；declared 或 runtime 落在 tmp/ 下都是违规（tmp 不是落点）。"
+    ],
+    "通道与端口": {
+      "declared": "E:/LocalAI/CHANNELS.md",
+      "runtime_loaded_from": null,
+      "说明": "四通道编号、端口、非交互入口、退出码、显存互斥口径的唯一真源。D:/AIWorkflow/AGENTS.md 与 E:/LocalAI/AGENT_DEFAULT.md 里那两张四通道表**必须删掉改成指向这里**——它们编号与本文错位且漏了 8790。"
+    },
+    "提示词格式（官方契约）": {
+      "declared": "D:/AIWorkflow/tools/h3_official_spec.py",
+      "runtime_loaded_from": "D:/AIWorkflow/tools/h3_official_spec.py",
+      "说明": "官方写稿规则固化成的可执行 spec，同时是第 4 道闸。改格式改这份，别在装配脚本里再抄一份。"
+    },
+    "规则底座（prompt_format / prompt_lint / prompt_rules / h3_shots / qc）": {
+      "declared": "D:/AIWorkflow/tools/",
+      "runtime_loaded_from": "D:/AIWorkflow/tools/（prompt_format 与否定词表自 2026-10-19 Phase 4 起）",
+      "✅2026-10-19修": "check_preflight.py 的 PF_SEARCH_DIRS 原来**只查 tmp\\wzy**（env 变量 H3_PROMPT_FORMAT_DIR 之后就是它），现已把 tools/ 提到 tmp 之前。实测 A/B：PF_ERR/BAN_ERR 都是 None、_ALL_BAN 37 条逐字同序（26 中 + 11 英）、BAN_LEADS/BAN_LEADS_EN 全等；PF 的 __file__ 从 tmp\\wzy\\prompt_format.py 变成 tools\\prompt_format.py（两份 md5 全等 b66ae6ac ⇒ 行为等价）。",
+      "🔴顺带查实的既有地雷（本次已断开一条）": "prompt_lint.py 是**武昭君仪（wzy）项目脚本**不是通用底座：:18 D 写死 tmp/wzy、**:19 import 时就 os.chdir(D)**、:33 import 时就 open(D/style_baseline.txt)、:31 环境变量名叫 WZY_STYLE。实测从 C:\\ 起进程 import check_preflight，之后 os.getcwd() 变成 D:\\AIWorkflow\\tmp\\wzy ⇒ 所有 import 了它的进程，之后的相对路径全按 tmp\\wzy 解析。现已新建 tools/ban_words.py（NEG 的纯数据副本，实测 37 条逐字同序、import 它不动 CWD），check_preflight 改成**先试 ban_words 再退回 prompt_lint**，通用闸对 tmp 的依赖就此断开。⚠ 但**直接 import prompt_lint 的调用方仍会被 chdir**（h3_rule_gate / other_lines_check）。",
+      "⚠仍未解决": "tools/ 下那 5 份『md5 全等副本』**不是自洽的**：prompt_lint.py(:18,19,33)、prompt_rules.py(:23,135,144 读 run_dz0b2ppp.py / run_qiang.py)、h3_shots.py(:20,21,39,40,729)、h3_rule_gate.py(:36,180,994)、qc.py(:27) 全都硬编码 tmp/wzy 下的**数据文件**（c12_source.txt、style_baseline.txt、anchors/、h3/），而这些数据**只存在于 tmp/wzy**（tools/ 下都没有）⇒ 副本能跑只是因为路径是绝对的。所以『真源已上移到 tools/』这句话只对 prompt_format 与 ban_words 成立，对其余四份**不成立**。",
+      "处置": "剩下的要把项目数据路径参数化（或随武昭君仪项目整体迁出 tmp），那是另一件事，需要用户裁定落点 ⇒ 见 known_broken 的『tmp/wzy/anchors 49MB 锁脸资产』条。",
+      "旧记录（保留供追溯）": "原 🔴违规：runtime 落在 tmp/ 下；清 tmp 会让 preflight 闸静默落到兜底词表 _BAN_MIRROR。⚠ 这句话当时说得**比事实重**：2026-10-19 实测 _BAN_MIRROR+_BAN_EN_MIRROR 与 NEG **集合完全相同**（各 37 条、双向差集为空），唯一差别是顺序（index 27 处 does not vs don't），而消费点 check_preflight.py:572 是 any(b in seg for b in BAN_LEADS) 纯成员判定、与顺序无关 ⇒ 降级**当时不会改判据**。风险是潜伏的：将来给 NEG 补词忘了同步镜像才会漂。ban_words.py 与 [P9] 就是为此立的。"
+    },
+    "否定引导词表": {
+      "declared": "D:/AIWorkflow/tools/ban_words.py",
+      "runtime_loaded_from": "D:/AIWorkflow/tools/ban_words.py（check_preflight._load_ban_words() 先试它）",
+      "说明": "2026-10-19 Phase 4 新建。NEG 37 条（26 中 + 11 英）的**纯数据**副本：无 I/O、无 chdir、无项目依赖、不看环境变量 ⇒ 依赖被搬走也能导入。出处 prompt_lint.py:58-74（md5 前 8 位 1cb65bab），连同 09-28／10-03 三批标定注释一起逐字复制（那些注释是人审判据的来历，不能悄悄毁掉）。",
+      "🔴两份不许漂": "prompt_lint.py 里写着『本表升为唯一词源』。现在这句话由**机器**守着不由记性守着：check_official_path.py [P9] 会同时加载 ban_words 与 tmp/wzy/prompt_lint，逐个比对 NEG，集合不等就报 error。改词表必须两边一起改。"
+    },
+    "H3 房内规则闸": {
+      "declared": "D:/AIWorkflow/tools/h3_rule_gate.py",
+      "runtime_loaded_from": "D:/AIWorkflow/tools/h3_rule_gate.py（1035 行，10-13，含 CAM_INFLECT_RE 屈折形修复）",
+      "✅2026-10-19修": "check_official_contract.py:338（现行 345）原来读的是 tmp/wzy 版（998 行，10-04）⇒ 同一批稿，契约对账读旧词表、oneshot 跑新闸。已改指 tools 版。**行为中性已实测**：两版 CAM_EN 逐字相同（各 14 项 Zoom/Push/Pull/Pan/Tilt/Truck/Pedestal/Arc/Orbital/Tracking/Static/Shake/Roll/POV），而那里只做正则文本抽取、不执行文件；改前改后跑 check_official_contract.py 输出**逐字相同**（官方固定值 45 项｜问题 1 处｜rc 0，那 1 处是既存的 [6] fl2va 命名注释未落地）。",
+      "🔴纠正一处旧记录的措辞": "原写『两份都在役』不够准：tmp/wzy 版是被 check_official_contract **当文本正则读**，tools 版才是被**执行**的那份。机制不同，后果同类（两条链读的规矩可能不一样）。",
+      "⚠仍未解决": "tools 版**依然是武昭君仪项目绑定**的：:36 D=tmp/wzy、:180 从 D 加载 h3_shots.py（调 H.load_ch1() 读第一章正文）、:994 读 D/h3/<id>_video.txt。⇒ 它不是通用闸，别拿它去判别的项目。合一要先把项目数据路径参数化。",
+      "处置": "tmp/wzy 那份 998 行留作 10-04 的历史快照，Phase 5 随 tmp/wzy 一起归档（不删）。"
+    },
+    "阈值与尺子": {
+      "declared": "D:/AIWorkflow/engine/thresholds_registry.json",
+      "runtime_loaded_from": "值由 D:/AIWorkflow/tools/check_thresholds.py 现读",
+      "说明": "本表不抄值。scope 三档：通用 / 通道 / 项目标定（换个项目的画风就失效——10-02 实测绝对带跨项目 3/3 全 FAIL）。",
+      "2026-10-19修": "motion_dead_speed_max / motion_dead_amplitude_max 两条原带 value 字段（违反不抄值纪律，tests 红了三条），且 authority 写成 'FROZEN/判定'（那不是常量名是句描述，读不到）。已删 value、authority 改指 tools/motion_qc.py 的 MOTION_DEAD_SPEED_MAX / MOTION_DEAD_AMPLITUDE_MAX。",
+      "2026-10-19修Phase4": "qc_absolute_bands_faceWhite 的 authority 从 tmp/wzy/qc.py 改指 tools/qc.py（:481）。两份 md5 全等 be900502 ⇒ 值不变（fail_hi 两边都是 0.050）；check_thresholds.py 改前改后都是『阈值 27 条｜不一致 0｜读不到 0｜挂着没生效 2』、rc 0。🔴 **另外两条（:438 dino_min_fail、:463 dino_mean_warn）故意不动**：它们是 role=reference_only 的**独立对账**，本表 note 自己写着『权威从 tmp 搬进了 tools，标定原稿留 tmp/wzy/qc.py 改当 reference_only，两边数值必须相等，不等＝error』。把它们也改指 tools 就等于拿一份文件跟它自己比 ⇒ 对账作废。原实施方案说『三条一起改』是**错的**，已在 RESTORE.md 记明。等 tmp/wzy 归档时把原稿一起搬到稳定落点，再改这两条指针。",
+      "⚠未裁": "channels_registry.json:276 的 config_switches 有一条 knobs.on 指 tmp/wzy/h3/knobs.json。写它的是 tools/h3_shots.py:849（OUT 写死在 :21 = tmp/wzy/h3），读它的是 tools/scan_system.py:98。channels_registry 自己的 authority 字段已标『⚠ 住在项目临时目录里…是不是该升成全局配置＝未裁』⇒ 2026-10-19 已裁为「派生账本，不升全局配置」（见 accepted_red 同条：例外保留，残留的是搬 OUT 的活，不是裁定）。"
+    },
+    "运动量测工具": {
+      "declared": "D:/AIWorkflow/tools/motion_qc.py",
+      "runtime_loaded_from": "D:/AIWorkflow/tools/motion_qc.py",
+      "原处桩": "D:/AIWorkflow/tmp/scene_20261004/motion_qc.py",
+      "说明": "2026-10-19 从 tmp/scene_20261004/ 上移。原处已留路障桩（OFFICIAL-PATH-TOMBSTONE v1，exit 78）。『原处桩』这个字段由 tools/check_official_path.py 的 [P3] 校验：桩必须在、必须带签名、退出码必须是 78。⚠ 桩住在 tmp 下是**合法的**——[P5] 的 tmp 禁令只管 declared/runtime_loaded_from，不管桩（桩本来就该立在旧位置）。"
+    },
+    "运行决定单": {
+      "declared": "D:/AIWorkflow/tools/decision_sheet.py",
+      "runtime_loaded_from": "不确定：tasks.py:676/822 先 sys.path.insert(0, tools_dir)，:793-795 又有条件地 insert(0, eng_dir) ⇒ 加载哪份取决于调用顺序",
+      "🔴违规": "engine/ 与 tools/ 各一份，diff --strip-trailing-cr 后实质只差 1 行（ENGINE 路径解析），功能等价但加载不确定。",
+      "处置": "用户 2026-10-19 裁定以 tools/ 为正身（D21）。Phase 4 改 tasks.py:793-795 的 eng_dir→tools_dir、engine/ 版归档立桩。"
+    },
+    "系统扫描器": {
+      "declared": "✅ **正身已定：`E:/若水AI电影/99_维护/scan_system.py`**（2026-10-19 第⑪条(c)，用户先选 tools\\、看到证据后改判『改按证据：E: 当正身』）。`D:/AIWorkflow/tools/scan_system.py` 那份副本已归档并在原位立了路障桩。",
+      "runtime_loaded_from": "E:/若水AI电影/99_维护/scan_system.py（唯一一份真代码）。⚠ 残留：`tmp/_h3g.py:136` 与 `tmp/_h3g_run.py:163` 用**相对路径** `python scan_system.py`（⇒ 取决于 CWD）；若 CWD 落在 D:/AIWorkflow/tools，现在会撞到那根桩并 `exit 78`（这是桩的设计行为：告诉你走哪，不静默）。这两份是 tmp 里的历史脚本，tmp 清理时一并处理。",
+      "定正身的四条依据": "① 它扫的是 `E:/若水AI电影` 那棵树，产物 `system_manifest.json` 也落那儿（现存 170640 字节，Oct 4 生成）；② 引用它的是**那项目自己的两份文档**（`00_架构总纲.md`、`99_维护/README.md`）；③ `tools/build_manual.py:468/472`、`tools/check_registry.py:7`、`engine/channels_registry.json:7` 三处文字指的也都是 E: 那份；④ **没有任何代码 import 它，也没有生产代码按绝对路径调 tools\\ 那份**（grep 零命中）。",
+      "搬动与校验": "搬前两份 md5 相同（091f6357…，knobs 那次补丁两边同步打过）⇒ 才允许归档（若已不同，脚本会拒绝，避免把正身没有的东西搬走）。副本 move 到 `backups/_治理_20261019/归档件/scan_system_tools副本_20261019.py`（229,619 字节，搬后 md5 一致），原路径桩实测 `rc=78`、签名行 `OFFICIAL-PATH-TOMBSTONE v1` 在、无控制字符。",
+      "⚠先前那条撤回记录保留": "原写『以 tools/ 为正身，改 channels_registry.json:7』——证据不足，凌晨已撤回；本次是**带着新证据（④ 零 importer）重裁**，不是把撤回的结论捡回来。附带一条仍然成立：`channels_registry.json` 里那处不是机读指针、是 `_readme` 的散文。"
+    },
+    "项目与交付落点": {
+      "declared": "D:/AIWorkflow/engine/projects_registry.json",
+      "runtime_loaded_from": "D:/AIWorkflow/engine/projects_registry.json",
+      "说明": "projects[].id 对应 pool_root(E:/图像影音资源池) 下的目录名；projects[].asset_dir 对应 creation_root(E:/创作) 下的目录名。**这是两个维度，别混。**",
+      "2026-10-19修": "用户点名补 5 个项目（仙女星系/仙女星系v2/太空战/机械战星/抖音人物）+ 3 个 reserved_names（无音_镜1镜2_对照/娱乐流/自建启动器），并删掉 projects_not_declared 里 武昭君仪 那条自相矛盾（projects[] 第4条早在 10-15 已声明它）。projects 7→12，reserved 6→9，not_declared 9→5。",
+      "⚠未决": "新声明的 5 个项目 + 圣女 都还没有运行决定单 ⇒ 下次出片会被 G13 拦。G13 项目级 6 槽只能人落单（--set 被拒），agent 不能代填。"
+    },
+    "通道注册表": {
+      "declared": "D:/AIWorkflow/engine/channels_registry.json",
+      "runtime_loaded_from": "D:/AIWorkflow/engine/channels_registry.json",
+      "说明": "check_registry.py:9 明文『engine 版是唯一声明源』。tools/ 下那份 md5 全等（4eec65170590da05a30af905e4765b3c）且**零读者**——2026-10-19 全仓 grep 复核：check_official_contract.py:37、check_preflight.py:638、check_official_path.py:65、check_registry.py 指的**全是 engine 版** ⇒ 已于 Phase 5 归档到 backups/_治理_20261019/归档件/channels_registry.json。"
+    },
+    "资产台账": {
+      "declared": "<项目>/assets/ledger.csv（每项目一份，资产默认不跨项目复用 —— 用户 2026-10-19 裁定 D13）",
+      "runtime_loaded_from": "D:/AIWorkflow/tools/asset_ledger.py（读写与校验都走它）",
+      "说明": "扩 E:/创作/人物角色库/_meta/characters.csv 的既有 schema（编号,名称,主题,画幅,通道,模型,分辨率,提示词,文件路径,日期），加三列：状态（⏳待生成/🔄沿用已有/✅已生成/❌待确认，禁止自造）、交叉索引、首次出现。编号前缀 C=角色 P=道具 S=场景 G=机位格 B=站位。",
+      "状态": "✅ 已实现（2026-10-19 新功能②）：tools/asset_ledger.py，子命令 --list-projects / --init / --scan / --check / --xlsx",
+      "已验到的": [
+        "武昭君仪实跑：扫 assets 目录树登记 21 个资产（B 站位 14／C 角色 5／P 道具 1／S 场景 1），全部标 ❌待确认 —— 文件在盘上 ≠ 它是被选定的那张，定妆要人眼过，机器不代判 ✅。",
+        "阴性对照 5/5 全抓到：坏编号前缀／自造状态／虚报✅已生成（状态说已生成但文件不在）／编号前缀与所在目录不符／编号重复。还原后 error 0。",
+        "校验器 rc 正确：正常 0、注入坏数据 1。写文件是原子（.tmp + os.replace），改前留 .bak-<日期>。",
+        "xlsx 导出可用（主表 21 行 ＋ 标签反查表），需 openpyxl ⇒ 用 py -3.12 跑。"
+      ],
+      "🔴 查实的两个缺口": "① **12 个项目里只有 1 个（武昭君仪）有 `assets\\` 目录** ⇒ 其余 11 个没有资产分层结构，台账无处可落。② `机位格\\`（G 类）盘上从来没建过 —— 这是与漫剧老李三清单对账后核实的两块真缺口之一（另一块是道具没被当资产登记，现在 props\\ 有了但只有 1 件）。建不建、哪起新项目按什么模板建，待用户定。"
+    },
+    "题材标定": {
+      "declared": "D:/AIWorkflow/engine/genres_registry.json",
+      "runtime_loaded_from": "D:/AIWorkflow/engine/genres_registry.json（由 check_official_path.py [P10] 校自洽）",
+      "说明": "题材/项目两层键。只管键与元数据（哪个题材、哪一层、值住在哪、标定过没有、样本几张），**不抄标定值**。三层需要题材维度：风格基准(图)/QC绝对带/提示词词汇与画风公式(文)；运动与运镜判据是通用的，不进题材维度。",
+      "状态": "✅ 已实现（2026-10-19 新功能①）",
+      "已验到的": [
+        "[P10] 四项自洽校验：11→8 个落点全部在盘上；项目键与 projects_registry **逐字相等**（12/12）；画风档与 prompt_lint 的 RENDER_TOXIC_BY_PROFILE **实读**相等（guoman_3d / realistic_cyber）；**抄值 0 处**（不抄值纪律由机器守）。",
+        "阴性对照：注入一个不存在的落点 ⇒ [P10] 立刻报 error（0→1），还原后回 0。这把尺不是装饰性绿勾。",
+        "[P2] 侧效应：该真源从『缺件 1』转成『命中』。"
+      ],
+      "🔴 查实的缺口": "12 个项目里**只有武昭君仪**标定过 QC 绝对带（12 样本，且 enforced=false），其余 11 个在这一维**等于没有判据**——不是判据松，是根本没有。另外所有项目的 `genre` 字段都是 null：哪个项目属哪个题材档从来没登记过，填它需要人判（武昭君仪 10-04 前后画风档被改判过，改判前后产物混在同一批里）。画风库**只覆盖角色批**，场景批 54 张未入库 ⇒ 场景画风目前无基准可对齐。"
+    },
+    "出片终审三分类": {
+      "declared": "D:/AIWorkflow/tools/review_triage.py",
+      "runtime_loaded_from": "D:/AIWorkflow/tools/review_triage.py",
+      "落点": "E:/图像影音资源池/<项目>/审片/台账.csv ＋ <批次目录>/审片单.json",
+      "说明": "通过（可当标准样片）／瑕疵（还要重修）／废片（问题重大、修复价值不大）。审片先发飞书（走 feishu_send.py 的三件套），审片站不做终审。超过 30 分钟没回复就先继续流程直到批次完成 ⇒ 不阻塞、不轮询，只如实标『到期未裁』。",
+      "状态": "✅ 已实现（2026-10-19 新功能③）",
+      "🔴为什么裁定只能从CLI进": "飞书**出向可用、入向被拒**：应用只有 im:message.p2p_msg:readonly，读群历史返回 230027（feishu_send.py 自己的 docstring 就记着）。⇒ 本工具**不去轮询飞书拿回复**，因为拿不到；假装能拿＝制造一个永远静默失败的环节。入口只有 CLI 的 --verdict 或 Qoder 会话。",
+      "已验到的": [
+        "端到端 dry-run：自动找到 final\\relay_e2e_ep1v2_final.mp4（12.4MB，在 30MB 限内）与同名 _封面.jpg，feishu_send 两条均「已受理」，审片单与台账都落盘。",
+        "阴性对照：--verdict 还行 被拒（rc=1），三个分类之外的值一律不进台账。",
+        "超 30MB 直接拒发并提示改走审片区链接，不压到失真硬塞。",
+        "成片与封面都缺时**停下报原因**，不猜、不拿别的文件顶替。"
+      ],
+      "🔴修掉的两个自己的 bug": "① dry-run 也把 `飞书已发` 记成 True ⇒ 在台账里**记一件没发生的事**，下次 --pending 会以为发过而不再提醒，用户永远收不到那条审片。已改成只有 --yes 才记 True。② `find_film` 原先只取最大 mp4，在测试批次上是**碰巧**选对了 final 那条；已改成优先认 final\\ 目录、再认文件名含 final/成片/concat、最后才退回最大尺寸。",
+      "为什么不拷成片进三个分类目录": "一条 H3 成片几百 MB，而三分类是**对批次的裁定**不是三份新资产。拷一遍＝三份会漂的副本＋白占几十 GB。台账存指向批次的路径，标准样片靠 `分类=通过` 筛。",
+      "⚠测试数据已清": "验证时在真资源池建过测试台账与测试审片单，已删除并只留一份 13 列空表头；测试批次目录 20261019_085445 已删。"
+    },
+    "跨 agent 交接": {      "declared": "E:/公共记忆/",
+      "runtime_loaded_from": null,
+      "说明": "README.md + build_index.py + index.json + projects/ + skills/。⚠ index.json 是 build_index.py 派生的，**不能手改**（2026-10-18 11:41 跑过 --check，rc=0 一致）。CHANNELS.md 与 AGENTS.md 都没指向它 ⇒ 待加指针。"
+    }
+  },
+
+  "frozen": [
+    {
+      "名": "Ref2VA 线",
+      "范围": "engine/workflows/h3_ref2va_play.yaml、h3_ref2va_video.yaml、engine/comfy/h3_i2v_ref2va_api.json、h3_i2v_ref2va_dual_lora.json、nl_ui/server.py:94-97 的 refstd 菜单项",
+      "理由": "用户四臂实测已否：FL2VA 首末吻合 2.8~7.9 且站位稳 / Ref2VA 飘 51~164 还掉站位换衣服、且慢一倍。",
+      "冻而不删": "minimax_h3_ref2va_pruned_int8_convrot.safetensors（21.0GB 十进制 = 19,999MiB）**保留不动**。待上游修 MiniMax-AI/MiniMax-H3 issue #17（多主体声音互串，2026-08-09 开、仍 open）后重评。",
+      "⚠归档前必做": "全仓 mode:human 的人工闸只挂在 h3_ref2va_video.yaml（H3 提示词定稿 / H4 看片挑号）与 selftest_gates.yaml 上 ⇒ 必须先把 human 闸的接线方式抄进新标准链，否则归档后无活样本可参照。tests/test_gates_phase3.py::test_h3_i2va_graph_matches_existing_t8_builder 现在红着，正是在断言 h3_i2va_video 也该有 H3/H4 两道人工闸。"
+    },
+    {
+      "名": "FLUX 线",
+      "范围": "10 个模板 + clip_l / t5xxl_fp8_e4m3fn / flux-vae-bf16 / FLUX.1-dev-ControlNet-Union-Pro-fp8 / flux1-redux-dev（合计 8739MB）+ custom_nodes/flux_union_mode.py",
+      "理由": "主模型 flux1-dev-fp8.safetensors 盘上已缺失 ⇒ 10 个模板现在就是坏的。用户 2026-10-19 裁定整条裁掉。",
+      "⚠必须留": "4x-UltraSharp.pth（在 upscale_models/，被 refine_usdu_zimage_api 与 z_image_upscale_api 现役引用）、sd_xl_base_1.0.safetensors（image_draft_batch_sdxl 现役）。SDXL 线不是 FLUX 线，别一起扫。",
+      "⚠归档前必做": "先改 tools/gen_faceA_local.py:27（WORKFLOW 常量指 flux_redux_ref_api.json）与 tools/build_manual.py:214 的 canonical 清单，否则 build_manual 跑起来指空文件。"
+    },
+    {
+      "名": "GPT-SoVITS",
+      "范围": "D:/AIWorkflow/GPT-SoVITS/（14GB）+ tmp/gptsovits_dl/（4.9GB 下载缓存）",
+      "理由": "主工作流零引用（engine/tools/AGENTS/LocalAI 全 grep 无命中），但 10-10 还下载过配套包、models/tts 有 1.3G ⇒ 是『装了在实验』不是纯死重量。用户 2026-10-19 裁定：留着，登记为实验通道。",
+      "处置": "本体不动；tmp/gptsovits_dl/ 的 4.9GB 下载缓存可归档（可再生）。"
+    },
+    {
+      "名": "画布 B 组（Hawk 多段）与 C 组（MSB 逐镜）",
+      "范围": "B01~B05、C01、C02 共 7 张；连带 Hawk-Minimax-H3-Directory(2.8M)、MinimaxStoryBuilder(324M)、zd_msb_bridge(12K)",
+      "理由": "都是 Ref2VA 路线（目录名里就写着），随 Ref2VA 一起冻结。",
+      "用户裁定": "D24：画布**全留只立声明牌**，不归档。所以三个节点包也留。",
+      "⚠注意": "MinimaxStoryBuilder 的 324MB 里约 300MB 是 projects/ 用户工程数据，任何将来要动它的操作都必须先迁出。用户记忆里另有一条『Hawk/MSB 不能删』。"
+    },
+    {
+      "名": "screenplay（小说转剧本 Go 项目）",
+      "范围": "原 E:/LocalAI/tools/screenplay/　⇒　✅ 2026-10-19 已整目录 move 到 backups/_治理_20261019/归档件/LocalAI_tools_screenplay_20261019/",
+      "理由": "10-16 刚落地，LocalAI.ps1/bat/CHANNELS.md 对它零引用，未接线。",
+      "🔴端口硬冲突": "config.yaml:2 的 port: 8080 与 docker-compose:26 的 8080:8080，和 LocalAI gateway 的 8080（agent 必走通道）**同号** ⇒ 两边同时起必撞。",
+      "⚠另有": "config.yaml 里有明文 db 密码 screenplay123（本地库）。搬动不改变这个事实——要真用它，先把密码换成环境变量。",
+      "✅本轮查实（12:55–13:10）": "冲突是**潜在的、不是现在的**：没有编译产物（`cmd/server` 只是源码目录）、没有 `screenplay.exe` 进程、它要的 MySQL `localhost:3307` 没在听、`llm.api_key` 为空、E:\\LocalAI 内零引用；当前 8080 归网关（pid 45940）。⇒ 用户裁『整目录归档移出 LocalAI』，移出而不是改端口：它不在四个通道里，留在 `E:\\LocalAI\\tools\\` 只会让下一个 agent 以为这是本引擎的一部分。",
+      "搬动校验": "60 个文件 / 392,671 字节，搬前搬后逐数相符，原位已空（`shutil.move`，不是删）。空掉的 `E:\\LocalAI\\tools\\` 目录一并移除。回滚＝把该目录整个移回原位。"
+    }
+  ],
+
+  "deprecated": {
+    "_note": "归档后原处留路障桩：打印确切替代命令 + sys.exit(78)（EX_CONFIG，与『脚本自己跑失败』可区分，tripwire 能专门统计）。桩模板见 tools/_路障桩模板.py。",
+    "FLUX 线（10 份 API 模板）": {
+      "path": "D:/AIWorkflow/engine/comfy/draft_flux_api.json D:/AIWorkflow/engine/comfy/draft_upscale_api.json D:/AIWorkflow/engine/comfy/flux_cn_redux_api.json D:/AIWorkflow/engine/comfy/flux_controlnet_depth_api.json D:/AIWorkflow/engine/comfy/flux_controlnet_lineart_api.json D:/AIWorkflow/engine/comfy/flux_i2i_api.json D:/AIWorkflow/engine/comfy/flux_inpaint_api.json D:/AIWorkflow/engine/comfy/flux_outpaint_api.json D:/AIWorkflow/engine/comfy/flux_redux_ref_api.json D:/AIWorkflow/engine/comfy/refine_usdu_api.json",
+      "⚠path 为什么用空格分隔": "不是排版选择。`check_official_path.py:extract_paths` 的正则是 `[A-Za-z]:[\\/][^\\s]*`——**贪婪吃到空白为止**，再逐字符截到第一个终止符。所以用『、』连十条只会刮出**第一条**（实测：空格分隔＝10 条，顿号分隔＝1 条），后面九条等于没登记。这是这把尺的一个真实边界，改判留档：一个字段里堆多条路径必须用空白分开。",
+      "reason": "FLUX.1 底模从没挂进 ComfyUI 模型树 ⇒ /object_info 的 UNETLoader 枚举里取不到值，这 10 份模板一提交就红；且 22 条现役工作流**零可达**（只有 image_depth.yaml 提到 FLUX，而那一行是它自己写的退役注释『旧 FLUX 版模板…随 FLUX.1 底模退役一起停用』）。⚠ 注意：这**不是**『权重丢了』——整套 FLUX 件约 27GB 在 `E:/Models/ComfyUI`（flux1-dev-fp8 11350MB／unet/flux1-fill-dev-fp8 11351MB／controlnet union 3149MB／redux 123MB／vae 160MB／5 个 LoRA），只是本机模型树是 junction 指 `D:/AIWorkflow/models/comfyui/*`，没认 E: 那棵树，且 `extra_model_paths.yaml` 不在位。",
+      "use_instead": "出图走 Z-Image 线（engine/comfy/z_style_*_api.json 等 31 份现役模板）；要人脸一致性走即梦参考图（run.py 的 image 任务 ＋ engine/jimeng_client.py）。",
+      "since": "2026-10-19",
+      "用户裁定": "第⑫条(b)：三个选项（改判＋退役／挂 junction 救活／只改判不动）里选『**改判＋退役处理**』。选『不救活』的代价说清了的：FLUX 线要复活得从归档取回模板并重启 8189（实测 200~300 秒），且会新增一条『FLUX 画风与 Z-Image 不同源，同批不许混』的边界。",
+      "搬动与校验": "执行器 `backups/_治理_20261019/retire_flux_templates_20261019.py`（--dry 先看）：cp -p 保 mtime → **逐个 md5 复核**（10/10 全等）→ 才清原处 → 原地写桩。归档正身 `backups/_治理_20261019/归档件/FLUX线退役_20261019/`。10 份 md5：draft_flux 2e06800e／draft_upscale 2e07e307／flux_cn_redux ffca8398／flux_cn_depth 72d3af1a／flux_cn_lineart 58a38c51／flux_i2i 860a4d97／flux_inpaint c4833a37／flux_outpaint 3f166358／flux_redux_ref 55d5e4f0／refine_usdu 04ae1469。",
+      "状态": "✅ 已归档并立桩（桩为 `.json`，按 `_stub_needs_exit_code` 口径属『文档路标』档，签名 `OFFICIAL-PATH-TOMBSTONE v1-json` 在位；真正拦住的是代码，见下条）。模板目录计数不变：**41 份 json＝31 现役＋10 桩**。",
+      "拦住调用方的三层": "① `engine/tasks.py` 新增 `load_template()` 做模板加载唯一入口，四处原 `json.loads(...)` 全收进来（含 t_comfyui／t_video／两处 refine 路径），读到桩抛 RuntimeError 并打印原因／替代／恢复六步——阳性对照实测 `comfy/flux_i2i_api.json` 被拦住，阴性对照 `comfy/refine_usdu_zimage_api.json` 正常读出 11 个节点；② 三处真调用者加停料守卫并**实跑到 rc=78**：`tools/gen_faceA_local.py`、`training/tools/gen_faceA_train_local.py`、`engine/comfy/mk_cn_redux.py`（这最后一个原本会把桩当底座再 dump 回 `flux_cn_redux_api.json`，**等于把路障桩覆盖成一个坏模板**，是本轮查到最危险的一处）；③ 门面文本同步：`tools/comfy_run.py` 两条示例改指现役模板，`tools/build_manual.py` 从 canonical 清单摘掉 6 份 FLUX（否则手册会教一条跑不动的线）。",
+      "声明牌": "D:/AIWorkflow/engine/comfy/_已退役_FLUX_20261019.md",
+      "⚠本轮新摸出的缺口（已处理，见下条）": "FLUX 线还有 **6 个内联建图脚本**此前所有尺都看不见：`tools/annotate_shot.py`、`tools/best_of_n.py`、`tools/compare_epochs_realistic.py`、`tools/controlnet_smoke.py`、`tools/final_lora_validation.py`、`tools/test_lora_checkpoints.py`。它们不读模板，直接在代码里拼 `UNETLoader{unet_name: flux1-dev-fp8.safetensors}` ＋ `DualCLIPLoader(clip_l, t5xxl_fp8_e4m3fn, type=flux)` ⇒ 『按模板名扫引用』对它们**全瞎**（本轮第一版就漏了，是反查权重名才抓到的）。现状：这 6 个今天已经跑不通（枚举位取不到值），既不在 28 个孤儿包里、也不在留存 9 个里。",
+      "尾巴处置（2026-10-19 15:45，用户裁『打包归档移出 tools\\』后逐条量）": "选项自己写着**达标才 move**，所以按孤儿那批的五条判据重量（尺＝`backups/_治理_20261019/_audit_flux_orphan_six_20261019.py`，语料直接 import `check_official_path._corpus_files()`，不另造口径；并把『本轮治理自产』的路径剔出引用计数——登记≠调用，与原批排除 `_` 前缀路标同一口径）。**4 个达标已 move**：best_of_n／compare_epochs_realistic／final_lora_validation／test_lora_checkpoints → `backups/_治理_20261019/孤儿脚本_FLUX散件_20261019/`（cp -p 保 mtime、搬前搬后 md5 逐个复核 4/4 全等、原处已确认清空、`_MANIFEST.json` 逐条记原名/md5/字节/天龄/只剩哪些弱引用，路标 `tools/_FLUX散件已打包_20261019.md`）。它们的引用全是弱引用：会话导出里的 `ls -l` 粘贴、`scan_system.py:3007` 的描述性字符串、`E:/LocalAI/_迁移MANIFEST_20260911.md:48` 的点名登记。",
+      "🔴 两个不达标、留在原位": "`annotate_shot.py` ← `E:/公共记忆/skills/cinematic-video-production/references/previz-control-referee.md` 第 24/35 行把它写进技能步骤、还带命令示例 `py -3.12 annotate_shot.py`（`04b_…脱敏可分发版` 同文一份）；`controlnet_smoke.py` ← `E:/本地工作流规范手册/08_Qoder记忆_现行约定/reference-minimax-h3-local.md:179` 拿它当『出图侧 ControlNet 已打通（canny 48s / pose 68s）』的证据在引用。⇒ 按原判据**不许 move**，改为原位加停料守卫，两者**实跑 rc=78**。守卫判据是**活的**：它去问 `/object_info/UNETLoader`，枚举里有 `flux1-dev-fp8.safetensors` 就自动放行 ⇒ 哪天按六步挂上 E: 不用回来改代码；三面对照实测（该拦／该放行／服务不在时怎么报）见 `logs/_治理执行_20261019/端到端验证_20261019.md` §十七。**技能文档与公共记忆一个字没改**（默认只读、点名才写）。",
+      "⚠留给你的一条口径": "那条现行约定记忆写的『出图侧 ControlNet 已打通』，打通的是 **FLUX 腿**；本机另一条腿是 Z-Image×ControlNet（结论不同，见记忆 `reference-zimage-lora-cn`）。要不要把那句改成『FLUX 腿已停、ControlNet 能力改由 Z-Image 腿承载』——**等你点头再动公共记忆**。",
+      "顺带查实（防下次误伤）": "31 份现役模板的加载位去重后只有 15 个名字（minimax_h3_*／minimax_music3_*／z_image_turbo_int8_convrot／sd_xl_base_1.0／majicmix_realistic_v7／ae／ip-adapter-faceid-plusv2_sdxl_lora ＋ 3 个 `__LORA*__` 占位符），**没有一个带 flux／t5xxl／clip_l** ⇒ `frozen` 段那条 FLUX 范围（含 ⚠必须留 已单独 carve 出 4x-UltraSharp 与 sd_xl）站得住，`clip_l`/`t5xxl_fp8_e4m3fn` 确实只服务 FLUX 线。"
+    },
+    "_FLUX_线退役的配套登记": "同时把 known_broken 里『10 份模板因 flux1-dev-fp8 缺失』那条**改判**为『在位未挂路径』——原判把『ComfyUI 看不见』当成了『不存在』。尺（runtime_model_audit.py）没错，错的是由枚举为空推到文件缺失。侦查脚本：`backups/_治理_20261019/_probe_flux_reach_20261019.py`、`_probe_flux_weight_20261019.py`。",
+    "8790 说话出片 UI": {
+      "path": "D:/AIWorkflow/engine/nl_ui/server.py",
+      "reason": "用户 2026-10-19 裁定门面只留两个（娱乐流 HTML + agent CLI），8790 不在其中。它 967 行、10-14 还在改，是现役代码 ⇒ 归档而非删除。",
+      "use_instead": "cd D:/AIWorkflow/engine && python run.py <workflow>",
+      "since": "2026-10-19",
+      "状态": "待归档"
+    },
+    "8787 engine WebUI": {
+      "path": "D:/AIWorkflow/engine/webui.py + start-webui.bat",
+      "reason": "logs 里最后一个 webui_*.log 是 09-22，start-nl-pipeline.ps1 第5步也只是 Read-Host 问要不要开。",
+      "use_instead": "cd D:/AIWorkflow/engine && python run.py <workflow>",
+      "since": "2026-10-19",
+      "⚠连带": "auto_draft / h3_one_click_movie / image_batch_draft 三条 yaml 的**唯一引用者就是 webui** ⇒ 裁 webui 与裁这三条是同一个决定。但 h3_one_click_movie 是能力最全的端到端编排器（逐镜串行+自动降级+断点续跑+机械质检+1080p标准化+响度归一+硬切拼接+G11拦截），用户已裁定 D22 以它为骨架扩标准链 ⇒ **必须保留并接进新门面，不能随 webui 一起归档**。",
+      "状态": "待归档"
+    },
+    "oneshot.py 独立编排链": {
+      "path": "D:/AIWorkflow/tools/oneshot.py",
+      "reason": "1134 行，自己 urllib 直连 8080 与 8189、自己轮询 /history、自己记 ledger，完全绕开 engine ⇒ 同一张卡两套提交方、两套闸门口径（gaze 规则在 5 处各写一遍，engine 闸与 oneshot 闸在 gaze 上零重合）。",
+      "use_instead": "run.py（归一后）",
+      "since": "2026-10-19",
+      "用户裁定": "D4：归一进 engine，保留它两个好设计——目审闸代码强制（无 --approve 直接 rc=2）、--stage 分段可停。",
+      "⚠动之前先读": "D:/AIWorkflow/logs/oneshot_通道冲突登记_20261012.md",
+      "状态": "待归一"
+    },
+    "scan_system.py 的第二份副本": {
+      "path": "D:/AIWorkflow/tools/scan_system.py",
+      "reason": "与正身 `E:/若水AI电影/99_维护/scan_system.py` 字节全等的抄本，且**没有任何代码 import 它、没有生产代码按绝对路径调它**。两份同字节＝早晚漂——2026-10-19 为 knobs 改报法打补丁时就得**同步改两边**才不产生新漂移，那正是漂移的前兆。",
+      "use_instead": "python E:/若水AI电影/99_维护/scan_system.py",
+      "since": "2026-10-19",
+      "用户裁定": "第⑪条(c)：用户先选『定 tools\\ 为正身』，看到四条证据（扫 E: 树／产物落 E:／E: 自己两份文档引用它／tools 那份零 importer）后改判『改按证据：E: 当正身』。",
+      "搬动校验": "搬前两份 md5 相同（091f6357…）才允许归档；副本 move 到 `backups/_治理_20261019/归档件/scan_system_tools副本_20261019.py`（229,619 字节，搬后 md5 一致），**没删**。",
+      "状态": "✅ 已归档并立桩（桩实测 rc=78、签名行在）"
+    },
+    "ComfyUI 上游贡献者指南占用契约文件名": {
+      "path": "D:/AIWorkflow/ComfyUI_H3/ComfyUI/AGENTS.md",
+      "reason": "25,260 字节，章节是 Engineering Style / Architecture Boundaries / Autograd and Model Freezing / Commit and Review Habits —— 是 ComfyUI **上游项目自己的贡献者指南**，与出片流水线无关。但它住在 ComfyUI/AGENTS.md 这个位置 ⇒ 任何以该目录为工作目录打开的 agent 会自动加载它，然后以为本次任务的规矩是『不许发网络请求、注意 autograd 与模型冻结』。",
+      "use_instead": "改名为 UPSTREAM_CONTRIBUTOR_GUIDE.md；本项目契约见 D:/AIWorkflow/官方路径.json",
+      "since": "2026-10-19",
+      "状态": "✅ 已改名（2026-10-19 Phase 5 第 0 步）。原件逐字节未动：UPSTREAM_CONTRIBUTOR_GUIDE.md，25260 字节，md5 b63e9662d71c3e89b1ed30564211e2a9，mtime 保留 Oct 6 21:41。",
+      "⚠为什么原位还留了一份 AGENTS.md": "**不是没改干净，是故意的。** 光改名会让以 ComfyUI/ 为 cwd 的 agent 什么契约都读不到——那比读到错的更糟（它会用自己的默认值补空，这正是「每个 agent 用法都不一样」的成因）。所以新 AGENTS.md 是一份 ~2KB 的**路标**：第一句就是「你现在的 cwd 是 ComfyUI 运行时本体，这里没有本项目契约」，然后指回 D:/AIWorkflow/官方路径.json 与 D:/AIWorkflow/AGENTS.md，并只留三条与本目录直接相关的硬规矩（不是入口／custom_nodes 不许放归档／画布与 API 模板改一边不同步另一边）。"
+    }
+  },
+
+  "archived": {
+    "_note": [
+      "已归档但**不需要路障桩**的东西。与 deprecated 的区别：",
+      "  · deprecated ＝ agent／人**会去调用**的入口或脚本 ⇒ 原处必须留桩（否则调用方拿到 FileNotFoundError 会自己猜替代方案）。",
+      "  · archived   ＝ 没有任何调用方的死件（0 字节、下载失败残骸、零读者的重复数据）⇒ 留桩反而是噪音。",
+      "全部落在 backups/_治理_20261019/归档件/，cp -p 保 mtime，搬前搬后 md5 逐个复核，原处已确认清空。",
+      "🔴 一律 mv/cp+确认，**绝不 rm**。回滚见 backups/_治理_20261019/RESTORE.md。"
+    ],
+    "items": [
+      {
+        "path": "ComfyUI_H3/ComfyUI/custom_nodes/civitai-helper.zip",
+        "why": "9 字节，内容逐字就是 `Not Found` —— 一次失败的下载残骸（Aug 22 17:56）。⚠ 它住在 custom_nodes/ 下，正是禁令 8 说的那种位置；好在 .zip 不会被当节点包导入。",
+        "md5": "9d1ead73e678fa2f51a70a933b0bf017"
+      },
+      {
+        "path": "ComfyUI_H3/test_t2v_civ.py",
+        "why": "0 字节（md5 d41d8cd98f00b204e9800998ecf8427e ＝ 空内容的 md5），Sep 22 13:57 建了就没写过东西。",
+        "md5": "d41d8cd98f00b204e9800998ecf8427e"
+      },
+      {
+        "path": "tools/channels_registry.json",
+        "why": "与 engine/channels_registry.json **md5 全等**（4eec65170590da05a30af905e4765b3c，23062 字节）且**零读者**：全仓 grep 到的 4 处引用（check_official_contract.py:37 / check_preflight.py:638 / check_official_path.py:65 / check_registry.py）指的全是 engine 版，而 check_registry.py:9 明文『engine 版是唯一声明源』。两份同字节 ＝ 早晚漂的第二真源。",
+        "md5": "4eec65170590da05a30af905e4765b3c"
+      }
+    ],
+    "桌面快捷方式_20261019": {
+      "_为什么记在这里": "门面层不只包括 .bat／.ps1，**桌面图标也是入口**。用户 2026-10-19 指令『这几个快捷方式也要对应修改，用不上的就删掉』⇒ 按『一律 move 不 rm』的口径处理，撤的图标进本清单，不物理删除。",
+      "补_菜单收敛_20261019上午": {
+        "用户裁定": "『收成 2 项，最狠』（原话选项：1 起模型服务／2 停服务腾卡，状态不占按键）。",
+        "改前四项": "1 模型服务(网关+后端+tkinter 工作台) / 2 腾卡出片 / 3 服务状态 / 4 卸载本地 LLM ⇒ 3↔-Action status、4↔-Action stop，四项其实是四个 -Action 动作的皮；**4 是 2 的第一步**，2 的『拉起 8189』那半又是娱乐流.bat 已经做的事。",
+        "改后": [
+          "只剩 1/2/0。状态并进 `Get-StatusPanel`，每次画菜单自动打屏上（显存＋端口＋进程名＋在服模型）。",
+          "原 4 并入原 2：`Start-AgentPipeline` 现在直接调 `Stop-LocalLLM` 再保证 8189 ⇒ **菜单 2 与 -Action pipeline 完全等价**（人与 agent 同一条实现）。`-Action stop` 仍单独可用（脚本要用）。",
+          "菜单 1 不再前台阻塞弹 tkinter 工作台（`gateway\\desktop.py` 是第三个 GUI），改为转 `agent_engine.py up --model qwen3-14b`（带显存闸门，不够就拒绝并给选项），工作台改成屏末给两条路：`gateway\\start-desktop.bat` 手动开，或 `-Action chat -Text \"...\"` 验一句。",
+          "标题从『agent出片引擎 ·【强制】agent 一律从本入口启动』改成『agent出片引擎 · 本地模型服务』＋一行『出片不走这里：人用=桌面娱乐流，agent=engine\\run.py』——原那句对 agent 是误导（菜单对 agent 会死锁，真入口是 -Action）。"
+        ],
+        "顺手修掉的两个既有 bug": [
+          "🔴 `Get-NetTCPConnection` 的 `LocalPort` 是 **[uint16]**，而端口表键是 **[int]** ⇒ `.Contains($c.LocalPort)` **恒 False**（装箱类型不同，Equals 不认）。第一版实测：8189 明明在听，整张表全报 idle。⇒ 一律 `[int]` 归一。**这条是靠自造的探针查出来的**：我先问『Where-Object 过滤后有几行』，答 0，而单独按端口查是 1 行 ⇒ 才去看类型。",
+          "查询失败原来被 `catch {}` 静默吞掉 ⇒ 会把『在跑的服务』报成『全空闲』。现在 `queryFailed` 随面板返回，Show-Menu 红字提示『这张表不可信』。"
+        ],
+        "残留 llama-server 的判据也收紧了": "原写法 `Get-Process llama-server | Stop-Process -Force` **不分青红皂白按名字杀**，而 LM Studio 的服务进程可能同名（那是通道 1）。改成只杀命令行含 `--port 808[1-4]`、或含 `LocalAI`、或 `ExecutablePath` 在 `E:\\LocalAI\\` 下的。四例单测（我们/LM Studio/ollama/LM 抢 8082）全过：`_test_llama_sweep_matcher.ps1`。",
+        "验到的": [
+          "`LocalAI.ps1` 全文件 ParseFile OK；BOM＋CRLF 未破（267 行全 CRLF、裸 LF 0）。",
+          "非交互三条实跑：`-Action pipeline` rc=0（腾卡＋复用 8189，没起 8787）、`-Action stop` rc=0（后端全 idle ⇒ 只报『没有在跑』，无副作用）、`-Action status` 正常。",
+          "菜单渲染用夹具跑通（点源 + Clear-Host 垫片，非交互不阻塞）：`8189 LISTEN pid=40412 (python)` 正确显示，其余 idle。",
+          "check_official_path error 0／warn 8／rc 0；check_registry error 0／warn 9；engine 测试 1 failed, 302 passed（基线不变）。"
+        ],
+        "没验到的（诚实）": "菜单 1 的实际执行**没跑**——它会真的起 8080 网关＋9.8GB 的 14B 后端，而此刻 ComfyUI 占着 8.3GB、净空 7.7GB 不够，跑它等于拿用户的显存做实验。转发目标 `agent_engine.py up` 本身是既有已验证路径，菜单只是改成调它。要验就等你真要写稿时按 1，看它是不是『拒绝起＋给两个选项』。",
+        "踩到的新坑（写进长期记忆）": "**LF-only 的 .ps1 在 PowerShell 5.1 下 `-File` 会解析失败**：`$cases = @( [pscustomobject]@{...;}, ... )` 这种多行 hashtable-in-array 构造报 `UnexpectedToken ')'`，而 `[Parser]::ParseInput`（读文本）说没错——只有 `-File`（按字节读）暴露；**同一份内容改成 CRLF 立刻通过**。⇒ 本机 .ps1 一律写 CRLF（现役 `LocalAI.ps1`/`start-nl-pipeline.ps1` 本来就是），我已把自己新写的 7 个 .ps1 全转成 CRLF。",
+        "另一个方法教训": "我第一版语法探针是『往文件头插 `exit 0` 再 -File 跑』——**这会让脚本真的执行**（`exit 0` 和后一行黏成 `0$ErrorActionPreference` 这种废命令，PS 报完继续往下跑）。当场复查五个桌面 .lnk 的字节与 md5：与登记值逐字节相同 ⇒ 确认没被探针改动（`_desktop_shortcuts_20261019.ps1` 存在即跳过、没重写图标）。正解是 `[Parser]::ParseFile(path)`，零执行、且和 `-File` 同一套字节级解析。"
+      },
+      "move": {
+        "本地脚本化出片流水线.lnk": "C:/Users/若水/Desktop → backups/_治理_20261019/桌面快捷方式_20261019/（716 字节，md5 f1e76139f567855257b5d2defeb8d67e，mtime Oct 12 17:38 用 cp -p 保住）。它指向 E:\\LocalAI\\本地脚本化出片流水线.bat ⇒ 起的是 8790/8787 两个已废门面。回滚＝把该 .lnk 复制回桌面。"
+      },
+      "新建": {
+        "娱乐流.lnk": "C:/Users/若水/Desktop（792 字节，md5 97518178d2c9d6c3db2921a05db9088e）→ E:\\LocalAI\\娱乐流.bat → launchers\\start-entertainment.ps1（只起 ComfyUI 8189 ＋ 面板页，不新占端口）。"
+      },
+      "保留并改悬浮说明": {
+        "agent出片引擎.lnk": "1101 字节 md5 ce05cf523d25c5cea3d2a7f5fb51608c —— 通道3 现役，目标 `E:\\LocalAI\\LocalAI.bat` 未动；**悬浮说明改了两遍**：第一遍（949 字节 md5 9eb3a66aca74b326f6dd85fca744a45b）里写着『菜单里若还写 8787 属陈旧』，第二轮把 LocalAI.ps1 的菜单真改了之后，那条说明就成了过期的告诫 ⇒ 换成现在这句（起 8080/8081/8082 ＋ agent 用 -Action ＋ 提交只走 run.py ＋ 8787/8790 已废）。",
+        "本地工作流规范手册.lnk": "654 字节 md5 ec9fc65b68ef86f642c3d99cc3787828。",
+        "成片与素材资源池.lnk": "658 字节 md5 81700a3c2f95a08c9fdb88fe796e97b6。",
+        "项目工作区（创作）.lnk": "634 字节 md5 d06cc25590411fe52ee16d4c4b57b289。",
+        "_说明": "四个的目标都还在盘上且有效，只更新了描述文字，没碰 .lnk 二进制。"
+      },
+      "连带改的文本（图标背后的东西也得说同一套话）": [
+        "E:/LocalAI/LocalAI.ps1：端口总表与菜单文案去掉 8787；**行为也改了** —— Start-AgentPipeline 不再调 engine\\start-webui.bat，改为「停 8081-8084 腾卡 → 保证 8189 在跑 → 打印 run.py 与娱乐流两条替代命令」；端口表加 8790 并把 8787/8790 标为「已废」（只读显示，不会去起）。⚠ 这条描述的是 09:40 那一轮；**10:20 那轮菜单收敛后 `Show-Status` 这个函数已经不存在了**，端口表并进 `Get-StatusPanel`（见下面的『菜单收敛』）。",
+        "E:/LocalAI/AGENT_DEFAULT.md：删掉「脚本化出片（非 agent）→ 8787/8189」这行，换成两条现役入口 ＋ 已废登记 ＋ 「agent 不要调交互菜单」的非交互入口说明。",
+        "E:/LocalAI/gateway/README.md：四通道行去掉 8787/8189 的旧分工，改成 8080 后端 / 8189 出片后端，并点名两个已废门面。",
+        "D:/AIWorkflow/tools/agent_engine.py：docstring 与 PORTS 表里 8787/8790 打上「已废：仅显示占用，不起不调」。**键保留**（status 表形状不变、残留进程还能一眼看见）。",
+        "D:/AIWorkflow/engine/README.md：『网页操作（webui）』那节标题打上 ⚠ 已废，段首写清两个现役入口与『本节只说明这堆代码干什么，不是入口』；正文一字未删（webui.py／start-webui.bat 状态仍是待归档，行为照旧成立）。",
+        "E:/LocalAI/本地脚本化出片流水线.bat：整份 ASCII 重写（中文 .bat 会被 cmd 的 ANSI 行解析打坏，实测报『'登记在' is not recognized』），并在调用 launcher 前加 choice Y/N（10 秒默认 N ⇒ exit 78）。launchers\\start-nl-pipeline.ps1 一字未动，只在头部加了 9 行废弃说明。改动前内容存 backups/_治理_20261019/原样保存_本地脚本化出片流水线_改前.bat（267 字节逐字等长）。"
+      ],
+      "本轮验到的": [
+        "check_official_path.py：error 0（降级前 3）／warn 8／十项全过，rc=0。",
+        "check_registry.py：error 0／warn 9，rc=0。",
+        "engine 测试：1 failed, 302 passed —— 仍只有 test_h3_i2va_graph_matches_existing_t8_builder（未实现的意图，故意不改期望）。",
+        "三份脚本语法：LocalAI.ps1 / start-entertainment.ps1 / start-nl-pipeline.ps1 全部 Parser OK；LocalAI.ps1 与 start-nl-pipeline.ps1 的 BOM 与 CRLF 逐文件复核未破（crlf==lf、bare LF 0）。",
+        "agent_engine.py 实测 status：**8790 正在监听（pid 37940）**、8189 在跑（pid 40412）、网关与后端 idle ⇒ 旧门面确实还有人开着。**没有动那个进程**。",
+        "🔴 12 分钟后（09:57）复测：**8790 已经不听了，PID 37940 不存在**。事后追问「那是哪个程序」只能靠推断——因为 status 表当时只记了号没记名字。全仓唯一绑 8790 的代码是 `engine\\nl_ui\\server.py`（argparse 默认 8790，由 `launchers\\start-nl-pipeline.ps1` 起），它的运行期目录 `engine\\tmp\\nl_ui\\logs\\` 最后一条日志是 **10-15 04:40** ⇒ 今天它没跑过任何活；`server.py` 也没有空闲自杀逻辑（grep 无 timer/shutdown）。⇒ 结论：大概率是那个 UI 进程（自 10-15 一直没关、刚才被关或崩），但**无法百分百证实**。已给 `agent_engine.py` 的 status 补上**进程名＋启动时间＋命令行**三列，下次一眼可查。",
+        "不是本轮动作杀的：`-Action pipeline` 只对 8081-8084 下 `Stop-Process`，而实测那几个端口当时全 idle（输出里没有任何「停掉占卡后端」行）；`engine\\tests` 里也没有 kill/taskkill/Stop-Process；废弃 .bat 的干跑在 `choice` 那步就 N 取消退出（rc=78），根本没走到调用 launcher。",
+        "桌面 .lnk 逐个解析（`backups/_治理_20261019/_verify_lnk_targets_20261019.ps1` → `_lnk_check.txt`）：桌面共 33 个 .lnk；本轮相关的 5 个**目标全部存在**（LocalAI.bat / 娱乐流.bat / E:\\图像影音资源池 / E:\\本地工作流规范手册 / E:\\创作），**0 个**仍指向 start-webui／start-nl-pipeline／8787／8790。",
+        "🔴 顺带查出一条**契约层自己在说谎**：`D:\\AIWorkflow\\AGENTS.md` 那句「已废的入口（原处留了路障桩，撞上去会打印确切替代命令并以 exit 78 退出）」**不成立**——8790/8787/oneshot 三项状态是「待归档」，原脚本仍在盘上仍能跑，桩一个都没立（[P3] 报的『已立桩 2』是 ComfyUI/AGENTS.md 路标与 tmp/scene 那条标记，不是这三项）。这比『没写』更糟：agent 读到它会以为撞上去有兜底，于是真去撞。已把这段改成现状口径。",
+        "`LocalAI.bat -Action pipeline` 与 `-Action status` 实跑（8189 在跑、后端 idle 的安全前提下）：pipeline rc=0、不再生成 8787 进程、输出只剩腾卡＋两条替代命令；status 表里 8790 仍如实显示 LISTEN pid=37940 并带「已废」标签。"
+      ]
+    },
+    "⚠看过但**决定不动**的": [
+      "lp.zip（38,469,098 字节，Sep 17）—— 大概是 LivePortrait 的下载档，而根目录已有 LivePortrait-main/。但『大概是』不够：认不出名字的当有人在用，38MB 也不是非清不可 ⇒ 不动。",
+      "ComfyUI_H3/ComfyUI/custom_nodes/websocket_image_save.py（1348 字节，Jul 31）—— 上游 ComfyUI 里这是个**核心文件**（正常住在仓库根），但本机根目录**没有**它、只有 custom_nodes 里这一份。也就是说它可能在**供货**而不是在闲置。不启动 ComfyUI 就无法验证 ⇒ 不动。（这正是 10-06『升级后节点还在，其实是备份在供货』那个坑的形状。）✅ **2026-10-19 11:35 重启后查实，两个方向都确认了**：① 它**确实在供货**——`/object_info` 里有 `SaveImageWebsocket`，而全仓 grep 只有这个文件与上游 `script_examples/websockets_api_example_ws_images.py` 提到它，核心 `comfy/`、`comfy_extras/`、`nodes.py` **都不定义** ⇒ 归档它就会少一个节点类；② 但**我们的 41 份模板＋全部画布里 0 处使用**（逐文件 grep `SaveImageWebsocket` 零命中）⇒ 拆了不影响我们的流，只影响「用 websocket 收图」那种客户端。⇒ 从『不知道、所以不动』升级成『知道是活的、我们不消费』，**归不归你裁**（列在待裁第 ⑫ 组）。",
+      "娱乐流/API格式_非画布_先看这个说明/ 下 6 份 JSON —— 与 engine/comfy/ 同名模板 **md5 6/6 全等**（fl2va_api 6e725884 / fl2va_dual_api aab9d5a5 / fl2va_nolora_api 6fa968e8 / fl2va_dual_nolora_api 7342f26a / fl2va_dual_lora e5d7f058 / ref2va_api 3bd9571e）。原计划归档，但同目录 README.txt 写明它们是**排障用**（『想知道某条流到底把哪张图接到了哪个节点、首帧/尾帧怎么接，看这里』）⇒ 有正当用途，不归档。⚠ 但『现在全等』过去是靠运气不是靠机制，没人拦着改一边不改另一边 ⇒ 见 known_broken。**✅ 2026-10-19 已补机制**：`check_official_path.py [P11]` 对这 6 对逐个 md5 比对，不等＝error（阳性对照做过：故意加一个换行立刻被抓，随后逐字节恢复）。",
+      "tools/gen_faceA_local.py 与 build_manual.py:210-215 的 FLUX 引用 —— 原计划『归档 FLUX 线前先改这两处』。复核发现**5 个 FLUX 模板盘上全在**（draft_flux_api / flux_controlnet_lineart_api / flux_cn_redux_api / flux_redux_ref_api / draft_upscale_api），所以 build_manual 现在**并不指空文件**；而 gen_faceA_local.py 整个脚本就是 FLUX+Redux 线（不是改一个常量的事，且 FLUX 主模型缺失 ⇒ 它本来就已不可跑）。FLUX 线整条归档属大批动作，本次未做 ⇒ 这两处也就不用改。",
+      "37 个孤儿候选脚本 —— 本清单 [P4] 自己就写着『**需人判**是死码还是漏登记』。绝大多数是 9 月 LoRA 训练批与 5 个版本的 celebrity_scraper*。批量归档 37 个脚本一旦误判，代价是用户真实的实验记录 ⇒ agent 不代裁，名单在 --print-json 的 data.orphans 里。"
+    ]
+  },
+
+  "audit_tools": {
+    "_note": [
+      "2026-10-19 治理批造的五把一次性审计尺（凌晨三把＋白天补 runtime_node／runtime_model＋⑫(a) 节点包体检），放在 backups\\_治理_20261019\\ 下（不是 tools\\——",
+      "它们是**盘点用**的，不在跑批链路上，混进 tools\\ 会被当成日常闸门）。全部只读。",
+      "⚠ 五把尺第一版**都报过假阳**（⑫(a) 那把最狠：静态刮整版作废，改走 /object_info 的 python_module），都已修或作废并在脚本里写明假阳长什么样、为什么。",
+      "  这不是丢人的事，是必须留下的事：一把会说谎的尺比没有尺更坏，而修好之后的尺",
+      "  只有把当年那次假阳写在注释里，下个人才知道它的边界在哪。"
+    ],
+    "tools": [
+      {
+        "path": "D:/AIWorkflow/backups/_治理_20261019/node_pack_supply_audit.py",
+        "问的是": "custom_nodes 里每个包，有没有在给我们的 41 份模板 + 16 张画布供货",
+        "怎么判": "收集模板的 class_type 与画布的 nodes[].type（递归含子图）＝在用节点类集合；剔掉核心 nodes.py/comfy_extras 能解释的；剩下的逐个包 grep。再补一轮跨包 import 检查",
+        "第一版的假阳": "没排除 tools/ tests/ 等非运行时目录 ⇒ 把离线构图脚本里出现的类名当成供货",
+        "结论": "对我们的工作流**零供货且无跨包 import** 的有 5 个：ComfyUI-Impact-Subpack、ComfyUI-Manager、ComfyUI-SAM、facerestore_cf、websocket_image_save.py"
+      },
+      {
+        "path": "D:/AIWorkflow/backups/_治理_20261019/node_class_collision_audit.py",
+        "问的是": "有没有两个包注册**同一个**节点类名（后加载的赢、且不报错）",
+        "怎么判": "花括号配平扫 NODE_CLASS_MAPPINGS 字面量 ＋ 下标写法 ＋ 模块级 NODES/*_NODE_CLASSES 候选字典；带 5 案例探测器自检",
+        "第一版的假阳": "① 非贪婪正则跨进构图代码，把 T8 的 {\"class_type\": \"LoadImage\"} 当成注册；② 没排 tools/tests；③ 刮到 0 键时打「✔ 可信」——那其实是全瞎",
+        "结论": "🔴 **判不了**。16 个条目里 6 个是盲区，且正好是三个主力包（T8 走 Extension API、KJNodes、MinimaxStoryBuilder）。已确认的重名 0 个，但这个 0 只是**下界**"
+      },
+      {
+        "path": "D:/AIWorkflow/backups/_治理_20261019/runtime_node_audit.py",
+        "问的是": "我们在用的节点类，8189 运行时到底有没有",
+        "怎么判": "GET /object_info（需 ComfyUI 已在跑且空闲；running/pending 非 0 就退出，不打扰出片），与在用类集合求差；前端节点按「上游出厂 blueprints 也在用但服务端注册表没有」这一**数据驱动**判据剔除",
+        "第一版的假阳": "① 把纯前端便利贴 MarkdownNote 报成 8 张画布缺件；② 只刮顶层 nodes[]，对子图画布全瞎",
+        "结论": "✅ **0 缺失**（运行时 2287 种，我们用 102 种）⇒ 41 份模板与 16 张画布在节点层面全是活的"
+      },
+      {
+        "path": "D:/AIWorkflow/backups/_治理_20261019/runtime_model_audit.py",
+        "问的是": "模板引用的每个权重/枚举位，ComfyUI 现在看不看得见；以及占位符谁来填",
+        "怎么判": "/object_info 里每个加载类节点的**枚举位**就是 ComfyUI 实际扫到的文件清单（含 extra_model_paths 与 junction）⇒ 用同一把尺量，不猜路径。另刮 tasks.py 的替换表（字面 ＋ f-string 动态族）与模板里的占位符对账",
+        "第一版的假阳": "① 把 __REF1__ 这类**占位符**当缺件（35/41 份误报）；② 只刮字面替换表，漏了 tasks.py:909 的 f\"__REF{i}__\" 动态拼名（15 份误报）；③ 把「tasks.py 里没有」当成「没人替换」，漏了 comfy_run.py 那套**通用**替换（4 份误报）",
+        "结论": "🔴 10 份模板因 flux1-dev-fp8.safetensors 缺失现在就是坏的（**阳性对照**：这 10 份本来就是已知坏件，尺抓到了 ⇒ 尺有效）；✅ 其余 31 份枚举位全在位；⚠ 4 份对 run.py 不可达（见 known_broken）"
+      },
+      {
+        "path": "D:/AIWorkflow/backups/_治理_20261019/node_pack_health_runtime_audit.py",
+        "问的是": "第⑫条(a)：custom_nodes 这 19 个条目哪些真在供货、哪些零供货、要拆该怎么验。用户裁『不拆，只出体检清单』⇒ 本尺只读，什么都没动",
+        "怎么判": "**不刮包源码**，全走运行时 `/object_info` 的 `python_module` 字段（谁注册了这个类；实测 VRAM_Debug→custom_nodes.ComfyUI-KJNodes、SaveImageWebsocket→custom_nodes.websocket_image_save），再与 `used_classes()` 的 102 个在用类求交集。产物表：`logs/_治理执行_20261019/节点包体检_20261019.md`",
+        "第一版的假阳": "先写的静态刮 `NODE_CLASS_MAPPINGS` 键名那版**已作废**（表留在 `节点包体检_20261019_静态刮废弃版.md`）：Manager 与 StoryBuilder 都报『声明 207 类没注册上』（把包内 JSON 配置键当类名）、GetVideoComponents 被判给两个包（运行时归 comfy_extras.nodes_video）、SAM 报 1 类实际 5 类。⚠ 但它给 KJNodes 的 MiniMaxChunkFeedForward／MiniMaxLowVRAMAttention **事后被运行时证实是对的** ⇒ 静态刮不是全错，是分不清『包里有这个名字』与『包注册了这个名字』，**不能当拆包依据**",
+        "结论": "运行时 2287＝custom_nodes 1318＋核心 669＋上游云 API 节点 300。我们引用 102 类**0 缺失**（48 个来自 custom、54 个来自核心；唯一进不了 /object_info 的 MarkdownNote 是前端便利贴，实测 Note／Reroute／PrimitiveNode／GetSetNode／Subgraph 同样不在，不算坏）。19 条目＝在用 9／有节点但零供货 6（Impact-Pack 197类、Impact-Subpack 1、SAM 5、facerestore_cf 3、h3-attention 3、websocket_image_save.py 1）／注册 0 类 3（Manager、comfyui-entertainment-panel、example_node.py.example）。custom 注册里我们没用的 1270 类＝运行时 56%。11:29 那次重启**无导入失败行**；17 条有计时合计 5.00 秒（最大 h3-attention 1.70s、T8 1.60s），重启 200~300 秒的大头在 Manager 拉 github 超时。对照：正例 grep MiniMaxH3AVDecodeT8／DepthAnythingV2Preprocessor／HawkH3Director 命中 A01／B01~B05／D01／D02；反例 grep H3AttentionController／FaceRestoreCFWithModel／UltralyticsDetectorProvider 在 41 模板＋16 画布里 **0 命中**",
+        "⚠与上面那条不矛盾": "凌晨 `node_pack_supply_audit.py` 说的是『零供货**且无跨包 import**』5 个；本表**没做跨包 import 检查**，所以 Impact-Pack 与 h3-attention 也进了零供货列。⇒ 本表不构成『这 6 个可以搬走』的授权：它只证明我们的流没用到这些类名，证明不了别的包／面板／引擎脚本在运行时 import 它，也证明不了你手建的流用没用它（画布只扫 user/default/workflows）",
+        "顺带量到": "H3 的注意力／FFN 补丁打在 ComfyUI-KJNodes 里（这两个类的 python_module 就是它），T8 一个包注册 735 类＝custom 注册量的 56% ⇒ 已知三处版本耦合点（核心／KJNodes／T8）里后两个都是**带本地改动的上游包**，升级前要比对的不只是版本号。",
+        "⚠表是活测量": "14:22 那次记的『在用 9／零供货 6／引用类 102』已在 15:30 复跑变为 **在用 8／零供货 7／引用类 93**——⑫(b) 把 10 份 FLUX 模板换成桩之后，`flux_union_mode.py` 掉进零供货、`comfyui_controlnet_aux` 供货 2→1（CannyEdgePreprocessor 原本只被 FLUX 模板用）。⇒ 引用本表数字要带时间戳，重跑一条命令：`python backups/_治理_20261019/node_pack_health_runtime_audit.py`（8189 得在跑）。"
+      }
+    ],
+    "🔴顺带查实": "8189 当前的实际启动参数是 `--windows-standalone-build --use-ck-attention --port 8189 --output-directory D:\\AIWorkflow\\ComfyUI_H3\\output --reserve-vram 6.0`。⚠ **来源更正（2026-10-19 11:35 实测）**：这句原先写『读自 /system_stats 的 argv』——**/system_stats 根本没有 argv 字段**（它只有 `system` 与 `devices` 两个键），当时其实是读进程命令行。⇒ 以后核启动参数一律读 `Win32_Process.CommandLine`（或 psutil 的 cmdline），别再去 /system_stats 找。与 D_接力_R11\\读我_R11跑通配置.md 要求的「不带 --use-sage-attention；带 --reserve-vram 6.0 --use-ck-attention」**逐项吻合** ⇒ 那份 readme 的人工保证项此刻满足。ComfyUI 0.39.0／Python 3.13.14／torch 2.13.0+cu130／embedded_python=true。"
+  },
+
+  "e2e_verification_20261019": {
+    "_是什么": "用户 2026-10-19 指令「做一下端到端，全量验证」的产出。逐环结论、原始数字、复跑清单都在 **`logs/_治理执行_20261019/端到端验证_20261019.md`**（23 个环节）。本节只记『验的过程中查出并修掉的真问题』与『仍然没验到的』，别把整份报告抄第二遍。",
+    "实跑证据": {
+      "play 出一张": "run_id `20261019_104414`·`image_draft_batch --tier play --project 无音 --set count=1`：832×1216／8 步／seed 357640888／prompt_id 26743d4f-371f-488b-b5c9-4d71ceaab37c／整步 23.8s，产物落 `ComfyUI_H3/output/娱乐流/无音/20261019_104414/draft/`。⚠ 这是**链路验证件**：该流是纯文生图，违反『主角定妆必须 i2i 挂脸锚』铁律 ⇒ 会漂脸，不是交付件。",
+      "draft 拦在提交前": "同一份参数换 `--tier draft` ⇒ rc=1，**8189 队列 running 0→0、pending 0→0**（一次都没提交、GPU 零烧）；`娱乐流` 批次夹数不变（draft 不往里写）。",
+      "绕过留痕": "`logs/workflows/gate_approvals.json` 新增 1 条 `无音|image_draft_batch|2026-10-19 10:44:14`，gates=[G13]，reason 写明是 `args.allow_degrade=true`（由 --tier play 展开）。",
+      "基线复跑": "check_official_path error 0／warn 8；check_registry error 0／warn 9；check_thresholds 阈值 27／不一致 0／读不到 0／挂着没生效 2；check_official_contract 45 项／问题 1；pytest 1 failed, 302 passed。"
+    },
+    "查出并修掉的": [
+      "🔴 **`batch.json` 是个从来没被写过的文件名**。它散在四处：本文件 `entries.娱乐流.捞回来`、`engine/run.py:646` 注释、`_make_plates_20261019.py`（两处），并经生成器落到**两张在用的牌**（资源池牌＋娱乐流画布牌）。设计阶段起的名字漏进实现与文案 ⇒ agent 照它找文件会撞空，然后自己猜一个（＝『每个 agent 用法不一样』的起点）。四处全改为盘上实际产物：`<workflow>_<run_id>.manifest.json` ＋ `怎么捞回来.md`（实跑确认两份都会写出）。",
+      "🔴 **声明牌正文里有控制字符**：生成器若干条夹 Windows 路径的中文字符串漏了 `r\"\"` ⇒ `\\b` 被当退格、`\\f` 被当换页**吃掉下一个字母**。实测 `tmp\\wzy` 那张牌写的是 `tools␈an_words.py`（b 没了）与 `素材␌ace_anchors`（f 没了）——肉眼读出来是 'toolsan_words.py / ace_anchors'，照着做必撞空。⇒ 牌已修字、生成器补原始串、生成器落盘前加控制字符闸、`check_official_path.py [P8]` 加同一把尺（**两端都验**：`_test_p8_ctrl_guard.py` 人为坏例检出 0x8/0xc，修好的牌 0 命中；`_verify_plates_dryrun.py` 干跑 11 张牌 0 命中）。",
+      "⚠ `tools/feishu_send.py` 在 `--dry-run` 下也打『送达服务端 N 条』『服务端接了单』＝**把没发的说成发了**。⇒ 改为 dry-run 专属文案『N 条请求已生成，一条都没发』。实测：`--review --sheet <png> --dry-run` rc=0 且 lark CLI 带的是它自己的 `--dry-run`（不发）；不带 `--yes/--dry-run` 时只打印计划就退出（fail-closed 正确）。"
+    ],
+    "没改等你裁的": [
+      "`gate_approvals.json` 里 `\"by\": \"human\"` 是**硬编码**，而这次放行是 tier 自动展开、不是人批（reason 字段写清了，所以不算撒谎，但字段本身会骗未来读台账的人）。要不要改成 `by: tier:play` 你定。",
+      "`check_official_contract` 报的那 1 处：10-03 批 13 裁定「graph 文件名 `fl2va` ≠ 官方 FL2VA，不改名、只在注册表加注释」——grep 注册表**确实没有这条注释**，补一行即改到真源，等你点头。",
+      "`run.py --gates` 里挂着 **3 条 2026-10-13 的待批关口**（无音 H3×2／H4×1，6 天前）。批还是清，你定。"
+    ],
+    "重启8189_20261019": {
+      "用户批准": "第①条待裁项，用户选『现在重启，我全程看守并复验』。",
+      "过程": "11:16 第一次尝试**失败**：用 `DETACHED_PROCESS|NO_WINDOW` 跑 `cmd /c run_H3_ComfyUI.bat`，进程秒退且没有控制台输出可看，脚本等 300 秒报 [FAIL]（这期间 8189 是**停的**，显存从 9187 掉到 1027 MiB）。11:29 改成**直起 python_embeded＋stdout 落日志**，一次成功：`/system_stats` 有响应、队列 0/0、**节点类 2287 → 2287 一个没丢**、面板路由 **404 → HTTP 200（5708 字节）**、`/entertainment/meta` 返回 4 个模式＋tier=play＋project=武昭君仪。日志 `logs/comfyui_8189_restart_20261019_1125.log`。",
+      "两条实测事实（都写回了门面）": [
+        "🔴 **启动要 200~300 秒**，不是几十秒：ComfyUI-Manager 开机去拉 github 的 5 个 json 全部超时（本机不出网）。⇒ `start-entertainment.ps1` 与 `LocalAI.ps1` 里那个『等 180 秒就报没起来』的轮询都改成 **420 秒＋每 60 秒报进度**，否则人会在它其实正常的时候反复点图标。",
+        "🔴 **/system_stats 里没有 argv**（只有 `system`/`devices`）⇒ 核对启动参数必须读进程命令行；本文件里那条『读自 /system_stats 的 argv』已更正。"
+      ],
+      "顺带查实": "启动日志里唯一的 ERROR 全是 ComfyUI-Manager 拉 github 超时，**没有任何节点导入失败** ⇒ 新装的面板包 import 干净（它的 NODE_CLASS_MAPPINGS 是故意空的，所以节点类数不变＝预期）。",
+      "脚本": "backups/_治理_20261019/_restart_8189_20261019.py（跑前必查队列，非空直接放弃；前后各抓一次 /object_info 求差集；argv 逐项比对 R11 要求；对账日志落盘）"
+    },
+    "关口闭环自测_20261019": {
+      "用户批准": "第②条：『跑，推到飞书我就在会话里回「过」』。",
+      "闭环结果": "auto 闸过（1 条 G3 warn 照记）→ human 闸 H3 停住 rc=3 → `--approve last H3` 记『来源 人工』→ `--resume last` 跳过已完成步、放行、跑完 rc=0 → 内容不变再跑**不重复上报**（key 是内容哈希）。",
+      "🔴 没推飞书的原因": "不是失败，是**根本没接**：`tasks.py:2723` 注释「通知面＝本地三件套：待批清单＋报告 awaiting_human＋桌面气泡」——09-20 那轮『纯本地不走飞书』把关口推送整段删了，D18 要求重新接回来（只用出向）**至今没做**。⇒ 设计里『首帧必须发飞书目审』目前在引擎内没有牙齿，这条属待建第③组，不是回归。",
+      "顺带修掉的真 bug": "`--approve-and-resume` 分支 10-15 就加了『改写 a.workflow 后必须重算 is_selftest』，**plain `--resume` 漏了** ⇒ 自测续跑时 `selftest_output_root` 覆盖不生效，产物直接落进交付根（实测 `E:\\图像影音资源池\\无音\\批次\\20261019_114435\\` 的 html＋manifest 就是这么冒出来的）。已在 `run.py:589` 之后补重算；误落两份 move 到 `backups/_治理_20261019/归档件/误落交付根_selftest_gates_20261019_114435/`（没删）。**修复证据**：再走一遍停闸→批准→续跑，报告落 `tmp\\selftest_批次\\20261019_114903\\`，交付根里 0 个自测夹。",
+      "待查一项（别当已定）": "yaml 的 `auto_gates` 写了 `[G1..G7, G11]`，实跑打印的是 `gates:[G1..G7]` —— G11 被谁吃掉没查（可能无 refs/无项目时自动跳过，也可能清单被过滤）。",
+      "台账": "gate_approvals.json 的 pending 累计 **36 条**（`--gates` 只打印最近几条 ⇒ 先前看到的『3 条』是截断，别再报成 3）。"
+    },
+    "飞书出向接线_20261019": {
+      "用户批准": "第③条：『接，两处一起』。",
+      "改了什么": [
+        "`engine/tasks.py` 新增 `send_media_to_feishu(cfg, files, videos, caption, log, retries)`＝图＋视频的唯一发送实现；`t_feishu` 改成薄壳调它（从「只能发图」变成「图＋视频」），人工关口 `push_gate_review` 也调**同一份** ⇒ 不会再长出两套发送口径。",
+        "新增 `lark_run_tolerant`：视频那条 CLI 会在 JSON 前后夹进度行，老 `lark_run` 的 `json.loads` 失败 ⇒ 会把**已发成功**误判成『lark 返回非 ok』。容错解码第一个完整 JSON 对象，拿不到才按未确认处理。",
+        "新增 `_feishu_cover`：ffmpeg（`tools\\ffmpeg.exe`）抽首帧当封面，**封面与成片同目录**（lark-cli 只收 cwd 相对路径）。超 30MB 直接拒并提示改走审片链接，不压画质硬塞。",
+        "`t_gate` 的 human 分支接回**出向**推送：只发不等回话（入向读不到，批准仍走会话或 `--approve`）。开关＝config 的 `feishu.push_gates`（on 缺省／off／dry），或环境变量 `FEISHU_PUSH_GATES` 临时切。**推送失败不升级成引擎错误**（关口本来就要停，再抛会把『等你批』伪装成『跑挂了』），但留痕进 pending 的 `feishu_push`/`push_error`。"
+      ],
+      "验收": "实发两条：① 图——`selftest_gates` 停在 H3 时推预览批那张 png＋220 字配文，日志 `[gate] 已推飞书：图 1／视频 0＋配文`（run_id 20261019_115907）；② 视频——直调 `t_feishu` 发 `output\\hawk_h3\\smoke04\\smoke04_final.mp4`（5.1MB），自动抽封面 31746 字节后发出，返回 `videos_sent=1`。dry 模式也验过（打『一条都没发』）。防重复上报复现：同内容再 resume 报『已在 0.9 分钟前上报过，不重复推送』。",
+      "还没做的": "🔴 发送结果**只写日志与台账，没有回执校验**——`ok:true` 只代表服务端接单，不代表你在手机上看到了（入向读不到，无法自动证实）。所以第③条的**最终验收在你手上**：群里应看到 12:00 前后一条图＋一条视频。没看到就说，我按 `push_error` 查。",
+      "影响面": "`tasks.py` 这次动了 4 处（新增 3 个函数＋改 t_feishu/t_gate），`engine` 测试仍 1 failed／302 passed；标准链 I8 的『首帧目审闸／第一镜必发／终审三分类』从此**有地方可接**（此前 human 闸完全不推、t_feishu 发不了片，那三条在引擎内是纸面约定）。"
+    },
+    "写稿链_20261019": {
+      "用户批准": "第④条：『起，端到端验写稿链』。因为 11:29 重启清了 H3 懒加载（净空 14742 MiB），起 14B 不必停 ComfyUI。",
+      "验到的": "8081 `llama-server` 载 `Qwen3-14B-Instruct-Q4_K_M.gguf`（LISTEN，显存 10916/16311）；网关 `/health`={status:ok,default_model:qwen3-14b}；`/v1/models` 列 4 个（**配置清单≠存活**，口径不变）；`-Action chat` 两条路径都出真字（默认 12.2s 出「雪掩苍城，静锁寒宵。」；`--no-think` 0.3s 出「雪落无声，古城静谧。」）。**冷加载实测 12 分 44 秒**（llama 日志时间戳），不是文档说的『几分钟』。",
+      "修掉的静默失败": "🔴 qwen3-14b 是**思考模型**：先吐 `reasoning_content`，`content` 要想完才有字。默认 `max_tokens=512` 时实测这条提示词光思考吃掉 848 token ⇒ content 空、finish_reason=length，旧 chat 打一行空串 rc=3，看着像网关坏了。三条出路都实测：抬 1024（20.3s 出字）／`chat_template_kwargs.enable_thinking=false`（2.1s）／`reasoning_effort=none`（0.3s）。⇒ `tools/agent_engine.py` 的 chat 改成**空回答绝不当成功**：报清原因＋附思考片段＋自动 3× 重试（`--no-retry` 可关），并新增 `--no-think` 快路。",
+      "🔴 结构性缺口（这条链其实没验通，因为引擎里没有它）": "`engine/config.yaml:23` 的 `fallback_chain: [dashscope]` ⇒ **引擎内只有云端 LLM 后端**；全仓唯一跟 8080 说话的是 `tools/oneshot.py`（登记『待归一』）。`t_llm` 虽有 `base_url` 形参，但工作流的 llm 步只从 `args.llm_backend` 取名字，`--set` 传不进 base_url ⇒ 「一句话→本地 14B 写稿→过闸」在 engine 内**根本不存在**。所以第④条只结到『网关＋14B＋chat 通』，**不算**验到 engine 内本地写稿。与 I1（单一执行核）、I9（不许自动回落）同病：能力散在 wrapper 里，engine 不知道。",
+      "操作教训": "我那条 `up` 的外层 timeout 设 560 秒被自己的超时打断（RC=124），随后网关也没了 ⇒ 起服务这类长动作要么后台跑，要么超时 ≥900 秒（工具 `--timeout` 默认就是 900）。网关随后单独用 `up --model none` 拉起即可（几乎不占显存）。"
+    },
+    "即梦接线_20261019": {
+      "用户批准": "第⑤条：『接，先做最小可用版』＋收尾选『接着做 t_image，把⑤做完』。",
+      "新增文件": [
+        "`engine/jimeng_client.py` —— 即梦 CLI 的唯一客户端：`probe()`（只读问可用性＋档位允许域）与 `generate()`（提交＋下载）刻意分开；错误码 JM_CLI/JM_AUTH/JM_MODEL/JM_SPEC/JM_CREDIT/JM_EMPTY_ID/JM_DL/JM_NET。",
+        "`engine/tasks_image_gen.py` —— `@task(\"image\")`：`source=jimeng|local`、`kind`、有序 `refs`、`anchor` 身份比对。**没动 tasks.py 一行**，由 `run.py:29` 加一行 import 挂上。"
+      ],
+      "三条写进代码的硬规矩": "① **不许自动回落**：即梦不行就抛，报原因码＋两条出路（修即梦／整批 `--set source=local --set local_approved=yes`，批级授权）；② **槽位↔`--ref` 顺序逐位绑定由代码保证**，`refs_bound` 进返回/manifest ⇒「参考图传反」事后可查；③ `kind` 只决定 QC 口径（cast/first_frame 查身份，set/grid/prop 不查），没 anchor 时报「未测量（不是通过）」。",
+      "CLI 契约的四个实测纠正": [
+        "🔴 `--ref` **只收 `node:`/`res:`/`uri:`/`vid:`，没有 `file:`** ⇒ 17 份 wrapper 里写的 `--ref file:{绝对路径}` 是不成立的形态，本地素材必须先 `resource upload`。",
+        "🔴 产物号在 `data.submission.resources[].resourceId`，**不在 `data.node.resources`**（node.status 恒为 `empty`）。第一版只找 node 那层 ⇒ 明明出图了却报 JM_EMPTY_ID。",
+        "🔴 project-id 与 resource-id **都必须是规范 UUID**（自造 `res-<hex>` 报 `cli.invalid_command`）⇒ resource-id 改 `uuid5(md5(文件))`，同图重复上传不堆副本（实测三次拿到同一个 id）。",
+        "🔴 `--run --wait` 还要带 **`--yes`**，否则只存草稿不提交。"
+      ],
+      "实跑数字": "登录到期 2026-10-19T18:35；`seedream_5.0_lite` 允许域 i2i 参考 1~6／t2i 0、ratio 必填、resolution 只收 2K/4K、count≤8；`quote.maxCredits=0`（对上「lite 档免费」）；t2i 两张 16:9/2K（5.64MB、6.08MB）；i2i 挂 `junyi_face_bust.png` 出图 2.68MB，**ArcFace 0.850**（`tools/qc.py` 那把尺，det_size=1024）。⚠ 先前手测的 0.755 用的是 det_size=640，**以 0.850 为准**。测试画布单独新建 `engine接线验证_20261019`（20d60ba5-38e0-49d6-a19a-6827bc576cf0），没往现有 22 张里写东西。",
+      "被测试抓到的一件事": "新增 task 后 `test_every_task_kind_is_classified` 立刻变红 ⇒ 必须声明 `image` 算不算产媒体，否则用它的流会悄悄不跑 G13（假阴比假阳坏）。已归进 `PRODUCING` 并写明理由。测试回到 1 failed／302 passed。",
+      "还差的": "`source=local` 现在**只负责拒绝**（本地兜底仍走现役图片链工作流）；`derive_from`（末帧从本镜首帧 i2i 派生）未做；还没有一条 YAML 工作流真的用 `task: image`（能力在链上、没人走）；17 份老 wrapper 未收敛。",
+      "顺带修的一处共享工具": "`tools/qc.py` 的 `lazy()` 原先把 insightface／transformers／**lpips** 捆在一起，本机没装 lpips ⇒ 只想量身份也会被拖死报 `No module named 'lpips'`。已把 lpips 改成可选（装不上只让 `lpips_d` 报错，不连累身份/肤色/DINO），并加 `lpips_available()`。"
+    },
+    "human闸进标准链_20261019": {
+      "用户批准": "第⑫条(c)：选『先抄 human 闸接线进新标准链』（D23 那条『归档前必做』的前置）。",
+      "动了哪里": "`engine/workflows/h3_i2va_video.yaml` 加两步 `task: gate / mode: human`——H3『首帧目审＋提示词定稿』插在 pre(auto) 与 gen 之间，H4『看片挑号』接在 gen 之后；结构照抄 `h3_ref2va_video.yaml` L60-78／L116-126，参数字面换成 i2va 的（单 `<Picture 1>`，无四锚）。⚠ 与抄本有一处**故意不同**：H3 加了 `files: {{args.ref_images}}`——原 Ref2VA 那份 H3 只给了 `refs`（进内容指纹）而 t_gate 的附件只取 `files`/`videos` ⇒ 它其实**只发了文字没发图**，等于让『目审首帧』审不到首帧。",
+      "顺序为什么是 translate→pre→H3→gen→H4": "H3 排在中文改写之后：目审要审**将要提交的那一份**英文，而不是审改写前的中文。",
+      "实跑验证（GPU 零烧）": "`FEISHU_PUSH_GATES=dry python run.py h3_i2va_video --tier play --project 无音 --set prompt_file=…dance_woman_v1.txt --set ref_images=…draft_20261019_150723_00001_.png --set width=832 --set height=1216` ⇒ translate 按 skip_if_no_cjk 不调模型（正文 0 个中文字）→ pre 在 play 档把 G13 两条 error **照记放行** → **H3 停住**：待批清单落 `logs/workflows/待批关口.txt`（含『待审素材 1. draft_…png』与 gate_key=`无音|h3_i2va_video|H3|80ab1565fe960f30`）、`status.json` 写 `awaiting_human`、批准命令原样打出来。dry 档一条飞书都没发（发飞书这件事 §十四 已单独验过并被他确认收到）。",
+      "🔴 顺手查出两处『闸没有牙齿』": [
+        "**`run.py --abort` 根本没实现**：2026-10-19 三触点设计里『推送 C 非阻塞』的前提是配一个叫停开关，实测 `grep abort run.py` 零命中 ⇒ 所以本轮把 H4 落成**阻塞式**（看完点头才继续），不是非阻塞推送。要上非阻塞推送，先补 `--abort`（写 state 文件、每镜提交前查一次），否则『看到不对』唯一的办法是杀 ComfyUI（`DELETE /queue` 在这版核心回 405）。",
+        "**娱乐流面板会把『等你点头』显示成『失败』**：面板 `MODES` 里 `图生视频·锁首帧 → h3_i2va_video`（`__init__.py:60`），而它 `JOBS[rid]['status'] = 'done' if rc == 0 else 'failed'`（原 :127）——`run.py` 对人工关口用的是 **rc=3**（`run.py:894`）⇒ 我这一改会让面板上那颗按钮报🔴而实际只是没批。已修：rc=3 单列 `awaiting_human`，`_jobs` 带出 `approve_cmd`，前端加 `.wait` 蓝档与『⏸ 卡在人工关口，回一句「过」才继续（GPU 还没动）』。⚠ 面板 .py 改动**要重启 8189 才生效**（custom_nodes 只在启动时扫一次），HTML 是静态目录、刷新即可。"
+      ],
+      "🔴 基线变了（重要）": "自 2026-10-19 16:00 起，`engine` 测试基线是 **0 failed／303 passed**（此前全天记的是 1 failed／302 passed）。红的那条 `test_gates_phase3.py::test_h3_i2va_graph_matches_existing_t8_builder` 的**实质断言 `actual == expected`（i2va 建图 == T8 builder 出图）本轮之前就已经在通过**，红一直红在它下面那句步骤顺序断言（期望 `[pre,H3,gen,H4]`，实际文件里是 `[translate,pre,gen]`——10-11 写下这句时 H3/H4 还在，后来被删空了没人管）。本轮把 H3/H4 抄回来后，那句只差 `translate`，于是按**明写的理由**更新期望并加了两条新断言（gate 模式序列 `auto→human→human`、H3 必须带 `files` 与 `show_prompt`）。⇒ 不是为了让测试变绿而改测试：变绿的根因是真把缺的闸装回去了。历史各轮记的『1 failed／302 passed』是当时的事实，不回头改。",
+      "面板那颗按钮的落点（用户随后裁『改指 h3_i2va_batch』）": "MODES 里 `图生视频·锁首帧` 从 `h3_i2va_video` 改成 **`h3_i2va_batch`**（无闸、同模板 comfy/h3_i2v_fl2va_api.json、auto_gates 逐字相同）。验法零 GPU：importlib 载入面板包断言 MODES，并把 `subprocess.Popen` 换成假对象只看它拼出的命令行 ⇒ 实测 `run.py h3_i2va_batch --tier play --project 武昭君仪 --set prompt_file=… --set src_image=… --set ref_images=…`（`src_image` 是面板老参数，batch 链 args 里没这个槽，落进 args 字典不影响执行）。",
+      "⚠ 这次改指连带变的两件事（实测差异，不是推测）": "① **`lora_strength` 0.7 → 1.0**：1.0 是你验收过的基准 v9 强度（h3_i2va_batch 一直是 1.0），0.7 是 10-14 为压 turbo LoRA 的 identity drift 在 h3_i2va_video 上降的 ⇒ 两条链其实**不同参**（batch 的 description 自称『与 h3_i2va_video 同图同参』这句**不准确**，已在此登记，等裁要不要把 0.7 同步过去或把那句改掉）。② **batch 没有 `translate` 那一步** ⇒ 中文正文不再自动改写成官方骨架英文，而 G7 在 `--tier play` 档是『照记放行』⇒ 中文会直接进模型（实测会被当台词念出来）。娱乐流界面里给英文官方骨架或让 Qoder 会话走带改写的 h3_i2va_video 才安全；**要不要在面板上挡一道中文输入，等你点头**（那属于改娱乐流的控件语义，不自作主张）。",
+      "仍然没动的": "Ref2VA 那两条链（`h3_ref2va_video.yaml`／`B_多段_Ref2VA_Hawk`／`C_逐镜_Ref2VA_MSB` 画布）**一个字没动**——D23 定的『冻而不删』。本轮只做了它的前置。`h3_i2va_batch.yaml` 也**没加闸**（09-23 你明示授权无人值守批次不人审）；娱乐流那颗按钮要不要改指 batch 链，等你裁。"
+    },
+    "仍然没验到的（含原因）": [
+      "娱乐流面板路由实测 **HTTP 404**：custom_nodes 只在启动时扫一次，当前 8189 是 10-18 22:58 起的 ⇒ 只差重启 ComfyUI（你定的边界，我没动）。⚠ 本条已于 11:29 重启后**作废**：现在是 200，见上面『重启8189_20261019』。",
+      "`selftest_gates` 没跑：它的 human 步会**真推飞书**并停住，未经你点头不发。",
+      "引擎内发视频：`t_feishu`(tasks.py:2841) 仍只有 `im images create` 图路径，没接 `files create --file_type mp4 + --video --video-cover` ⇒ 设计里的『推送 C／终审 D』在链内发不出视频（`tools/feishu_send.py` 会发但不在链上）。属标准链 I8 待建，不是本轮回归。",
+      "通道 3 的 8080＋14B 没起：14B 要 9800 MiB 净空，而 ComfyUI 已占 8326/16311（净空 7730）⇒ 起它就挤掉出片实例，`t_llm`／`-Action chat` 未验。",
+      "即梦那一半未验：`t_image` 未建（即梦不在 engine 里，散落 ≥14 份 wrapper），OAuth 6 小时要本人点。",
+      "资产侧：`asset_ledger --check 武昭君仪` 21 行**全是 ❌待确认**（扫出来的＝盘上有文件，不等于选中的图）；9/12 项目还没有 `assets\\` 目录；`review_triage` 待裁 0（台账是空的，功能通但没内容）。",
+      "FLUX 10 份坏模板／5 个死节点包／Ref2VA 线：要重启或要动权重才能验，按你『权重先不动』跳过。"
+    ],
+    "复跑脚本（backups/_治理_20261019/）": [
+      "_test_p8_ctrl_guard.py（[P8] 控制字符尺两端自验）",
+      "_verify_plates_dryrun.py（11 张牌干跑＋反向坏例自验，不写盘）",
+      "_test_llama_sweep_matcher.ps1（残留 llama-server 判据四例）",
+      "_harness_menu_20261019.ps1（菜单渲染夹具：点源＋Clear-Host 垫片，非交互不阻塞）",
+      "_who_is_on_8790_now.ps1（端口→进程名/命令行/启动时间）"
+    ]
+  },
+
+  "new_feature_tools": {
+    "_note": "2026-10-19 新功能批产出的四个工具。**都在 tools\\ 下＝日常闸门级**，不是 backups 里那四把一次性盘点尺。",
+    "items": [
+      {
+        "path": "D:/AIWorkflow/engine/genres_registry.json",
+        "功能": "① 题材标定注册表",
+        "谁校它": "check_official_path.py [P10]（落点存在性／项目键与 projects_registry 逐字相等／画风档与 prompt_lint 实读相等／有没有抄标定值）",
+        "用法": "读；新题材或新标定项目时加键，不写值"
+      },
+      {
+        "path": "D:/AIWorkflow/tools/asset_ledger.py",
+        "功能": "② 资产台账（每项目一份，不跨项目复用 D13）",
+        "用法": "--list-projects / --init / --scan / --check / --xlsx；落在 <项目>/assets/ledger.csv",
+        "纪律": "扫出来的资产一律标 ❌待确认 —— 文件在盘上 ≠ 它是被选定的那张，定妆要人眼过，机器不代判 ✅。状态只许四个值，自造即 error。",
+        "阴性对照": "5/5 全抓到（坏前缀／自造状态／虚报已生成／前缀与目录不符／编号重复）"
+      },
+      {
+        "path": "D:/AIWorkflow/tools/review_triage.py",
+        "功能": "③ 出片终审三分类（通过/瑕疵/废片）",
+        "用法": "--send（发飞书三件套）/ --verdict 通过|瑕疵|废片 / --pending / --list；落 <项目>/审片/台账.csv ＋ 批次内 审片单.json",
+        "硬约束": "裁定只能从 CLI 或 Qoder 会话进 —— 飞书入向被拒 230027，工具**不去轮询飞书**。不拷成片进分类目录（台账存指向批次的路径）。30 分钟未回即继续，不阻塞。"
+      },
+      {
+        "path": "D:/AIWorkflow/engine/run.py --tier",
+        "功能": "④ 娱乐流的档位机制（play/draft/final）",
+        "纪律": "tier 的展开只在 run.py 入口做一次，tasks 只读具体能力旗标 args.allow_degrade（设计不变式 I12）。draft＝默认＝现役行为一字未变（实跑验证：闸门仍硬拦停 rc=1，ComfyUI 队列空 ⇒ 没烧 GPU）。play 的降级分支单测三条全对（不给旗标拦停／给旗标放行／再跑仍拦停），放行时 error 逐条进日志并在 approvals 台账留字据。",
+        "包": "D:/AIWorkflow/ComfyUI_H3/ComfyUI/custom_nodes/comfyui-entertainment-panel/（WEB_DIRECTORY ＋ 5 条 /entertainment/* 路由；NODE_CLASS_MAPPINGS 故意留空＝它只是 HTTP 壳，不是第二个提交方，守 forbidden 第 2 条）",
+        "谁校它": "backups/_治理_20261019/check_entertainment_panel.py（前后端路由一致性等 8 项，全过）",
+        "🔴还差一步": "重启 ComfyUI 才会加载本包（custom_nodes 只在启动时扫一次）。重启后 GET /extensions/comfyui-entertainment-panel/index.html 返 200 即生效。",
+        "⚠撞名": "`--tier play` 与盘上已有的 `h3_fl2va_*_play` 是两件事共用一个词（后者是参数预设，前者是落点＋降级）。没改名（牵 4 份 yaml 与全部历史台账），但 run.py 会在用 *_play 工作流而档位不是 play 时显式提示一次。"
+      }
+    ]
+  },
+
+  "plates": {
+    "_note": [
+      "声明牌：铺在目录里的 _官方路径声明.md，让任何 agent 一 cd 进来就知道『这里不是什么、该走哪』。",
+      "格式由 backups/_治理_20261019/_make_plates_20261019.py 统一定义（幂等，可重跑）。",
+      "⚠ 别手改单份牌子——改生成器再重跑，否则 11 份会写出 11 种口径（那正是本次治理要治的病）。",
+      "本节由 tools/check_official_path.py [P8] 校验：目录在不在、牌子在不在。"
+    ],
+    "generator": "D:/AIWorkflow/backups/_治理_20261019/_make_plates_20261019.py",
+    "dirs": [
+      "D:/AIWorkflow/tmp",
+      "D:/AIWorkflow/tmp/wzy",
+      "D:/AIWorkflow/ComfyUI_H3/ComfyUI",
+      "D:/AIWorkflow/ComfyUI_H3/ComfyUI/custom_nodes",
+      "D:/AIWorkflow/backups",
+      "E:/图像影音资源池",
+      "D:/AIWorkflow/ComfyUI_H3/ComfyUI/user/default/workflows",
+      "D:/AIWorkflow/ComfyUI_H3/ComfyUI/user/default/workflows/B_多段_Ref2VA_Hawk",
+      "D:/AIWorkflow/ComfyUI_H3/ComfyUI/user/default/workflows/C_逐镜_Ref2VA_MSB",
+      "D:/AIWorkflow/ComfyUI_H3/ComfyUI/user/default/workflows/D_接力_R11",
+      "D:/AIWorkflow/ComfyUI_H3/ComfyUI/user/default/workflows/娱乐流"
+    ]
+  },
+
+  "accepted_red": {
+    "_note": [
+      "「已登记例外」——允许某几条自检 error 暂时降级成 warn。",
+      "为什么要有这个机制：一把**恒红**的尺子等于没有尺子。人看到红就跳过，真出问题时也一起被跳过。",
+      "但降级必须有代价，否则这里会变成垃圾场。四重约束（由 tools/check_official_path.py 强制）：",
+      "  ① 必须写 `reason`（为什么可以暂时红着）——缺 reason 不予降级；",
+      "  ② 必须写 `review_by`（YYYY-MM-DD）——过期自动升回 error，并额外报一条『例外已过期』；",
+      "  ③ `expect_count` 与实际命中数不符就报 error——修好了该删登记、又长新的该重新裁，别挂着；",
+      "  ④ 一条都没命中的登记会被点名要求删掉——防止僵尸条目永久豁免将来同类的问题。",
+      "⚠ match 用**稳定子串**别用行号：行号会随文件编辑漂。"
+    ],
+    "items": [
+      {
+        "check": "P5",
+        "match": "tmp/wzy/qc.py",
+        "expect_count": 2,
+        "review_by": "2026-11-02",
+        "owner": "Phase 5 归档 tmp/wzy 时一并处理",
+        "reason": "thresholds_registry.json 里 role=reference_only 的两条（qc_batch_dino_min_fail / qc_batch_dino_mean_warn）**故意**指向 tmp/wzy/qc.py：那是标定原稿，用来与 tools/qc_batch_consistency.py 做独立对账（本表 note 自己写着『两边数值必须相等，不等＝error』）。把它们也改指 tools 就等于拿一份文件跟它自己比 ⇒ 对账作废。等 tmp/wzy 归档时把原稿一起搬到稳定落点，再改这两条指针。⚠ 同一条 purpose 的第三条（qc_absolute_bands_faceWhite，role=authority）已于 2026-10-19 改指 tools/qc.py，所以这里 expect_count 是 2 不是 3。"
+      },
+      {
+        "check": "P5",
+        "match": "channels_registry.json",
+        "expect_count": 1,
+        "review_by": "2026-11-02",
+        "owner": "🟡 已裁（2026-10-19），残留一项待办",
+        "reason": "channels_registry.json 的 config_switches 有一条 knobs.on 指 tmp/wzy/h3/knobs.json。✅ **已裁：它不是配置，是派生账本**（用户原话『改成派生账本嘛』）⇒ 注册表那条加 `derived: true`、kind 与 authority 重写；`tools/scan_system.py` 对 derived 项改报**文件年龄＋该去哪问真状态**，不再把 21 天前的批次快照当『现在的开关状态』报。写它的是 tools/h3_shots.py:847（OUT 写死在 :21 = tmp/wzy/h3），正确消费者是 tmp/wzy/run_batch.py:85-90（拿不到时返回『生效配方未知』并写进每批 manifest 当溯源）。⇒ 本条例外**仍然保留**，但残留的不是裁定而是搬运：真要把这文件挪出 tmp，得连 h3_shots 的 OUT 一起裁，那是武昭君仪项目的工作目录问题，另案。"
+      }
+    ]
+  },
+
+  "forbidden": [
+    "另开端口。agent 一律走 8080 网关（8081=qwen3-14b），ComfyUI 只有 8189 一个实例。",
+    "绕过 run.py 直连 8189 提交 /prompt。",
+    "手改派生件：E:/公共记忆/index.json（build_index.py 派生）、E:/创作/_资产总索引/（build_asset_registry.py 派生）。手改＝制造第二个漂移真源。",
+    "把任何真源放进 tmp/。tmp 是实验区，随时会被清。",
+    "在同一批里混用两个出图源（即梦 + 本地 Z-Image）。理由不是『出不出得来』而是**画风不能混**——两个源的画风有差异，混在一条片子里就是画风跳变。切换本地出图必须用户先同意，且授权是**批级**。",
+    "让娱乐流产物直接进资源池正身。它是预览；捞回来靠参数重跑，不靠文件提升。",
+    "自动回落。即梦走不通必须停下报明确原因（登录失效/模型被关停/积分不足/网络），等用户修复，不许自己想办法。",
+    "把归档目录放在 custom_nodes/ 下。会被当第二个节点包导入 —— 10-06 踩过：『升级后节点还在』其实是备份在供货，判读全错。",
+    "删素材。授权删除≠可以直接删：先盘构成，认不出名字的当有人在用，一律 move 归档不 rm。"
+  ],
+
+  "known_broken": [
+    {
+      "项": "E:/密钥文件/阿里多模态.txt 不存在",
+      "影响": "_vl_credentials() 恒返回 None ⇒ 所有云端 VL 判据空转。config.yaml:13 与 tasks.py 的 VL_KEY_FILE(:1820) 都指它。",
+      "2026-10-19处置": "vl_aesthetic 步已从 h3_i2va_video.yaml 摘除、@task 注册已摘（用户裁定 D20：美学判断交人眼三分类审片）。vl_content_check **保留**——它是 opt-in（只在设了 vl_question 时跑）、且无 key 时会把 {enabled:False,reason:...} 写进 rec['vl'] 落批次记录，诚实可追。",
+      "遗留": "tests/test_gates_phase3.py::test_h3_i2va_graph_matches_existing_t8_builder 仍红：它断言 h3_i2va_video.yaml 的 steps id 应为 ['pre','H3','gen','H4']，实际是 ['translate','pre','gen']。**这不是陈旧测试，是未实现的意图**——i2va 线从来就没有 H3/H4 两道人工闸。与 D22（以 h3_one_click_movie 为骨架扩标准链并加目审闸）是同一件事，等标准链建好后这条应自然转绿。**不要改测试期望值去迁就现状。**"
+    },
+    {
+      "项": "FLUX 主模型 flux1-dev-fp8.safetensors 缺失",
+      "影响": "10 个 FLUX 模板不可跑。其中 tasks.py:327 曾把 draft_upscale_api.json 写成**默认值** ⇒ 调用方不显式传 workflow 就静默落到坏模板。",
+      "2026-10-19处置": "默认值已改指 z_image_upscale_api.json；t_control docstring 里 8 处 flux_* 已改指对应 z_image_*（并注明那些 denoise/掩膜实测数字是 **FLUX 时代**口径，Z-Image 档未重标，别当 Z-Image 判据用）。"
+    },
+    {
+      "项": "C01『主用』画布缺件",
+      "影响": "ModelPreviewOverrideKJ 节点引用 taeh3.safetensors，盘上不存在 ⇒ 每次跑 C01 都撞缺件错。",
+      "2026-10-19处置": "该节点 id=20 已改 mode=4（bypass）。⚠ 不能 mute（mode=2）——它接在模型链上（MiniMaxChunkFeedForward → node20 → MinimaxStoryDirector，两端都是 MODEL 类型），mute 会让下游拿不到 MODEL；bypass 是输入直通输出，链路不断。改后节点数 19、连线数 23、字节数 29764 全部不变。"
+    },
+    {
+      "项": "config.yaml 的行号锚已失效",
+      "影响": "文件末尾勘误段说『:71 这个被规则层按行号引用的锚』，实测 preflight: 现在在第 85 行（另有一处缩进的在 116）。代码里 grep 不到任何按行号引用 config.yaml 的地方 ⇒ 那个锚是**文档层**的（手册/登记表 C8），已经漂了。",
+      "纪律": "改 config.yaml 只在末尾追加，或改完立即全仓搜行号引用。2026-10-19 的两处注释修正用等行数替换，改完复验 preflight: 仍在 85。"
+    },
+    {
+      "项": "🔴 tmp\\wzy\\anchors\\ 里躺着 49MB／58 个文件的**锁脸资产**，而所有文档都说 tmp「用完即清」",
+      "证据": "2026-10-19 实测：`find tmp/wzy/anchors -type f` ⇒ 58 个文件、49MB。含 junyi_face_real.png / junyi_face_ancient.png / jm_2156_yuebai_bust.png / jm_2313_huafu_bust.png / jm_4492_two_suits_turnaround.png 等定妆与三视图，且每张都配了 `.anchor.json` sidecar。引用它们的代码：h3_shots.py:39/40（A['FACE'] / A['FACE_ANCIENT'] 写死绝对路径）、qc.py:27（FACE_ANCH）。",
+      "为什么算坏件": "旧版 AGENTS.md 的保存规范铁律明写 `D:\\AIWorkflow\\tmp\\` =「用完即清，不留垃圾」，tmp\\_官方路径声明.md 也这么写。**照它执行就会毁掉武昭君仪的锁脸参考图**——那批图是即梦免费档一张张掷出来人挑过的，不可再生。这是「授权删除≠可以直接删／认不出名字的当有人在用」那条纪律要防的正是这种事故。",
+      "2026-10-19处置": "✅ **已迁移完成**（用户 2026-10-19 裁定「49Mb资产放入资源池」）。正身＝`E:/图像影音资源池/武昭君仪/素材/face_anchors/`，58 个文件 / 50,367,388 字节，说明见同层 `README_face_anchors_这批是什么.md`。过程：cp -p 复制 → 三重校验（文件数 58/58、总字节相等、**逐个 md5** 58/58）→ 原目录改名让位 → 原处建 **junction** 指向资源池 → 穿 junction 再读一遍 md5 仍全等 → 改 7 处硬编码 → 删源前做**三方逐 md5 比对**（迁移前记录/资源池/待删源）0 差异 0 多余才删。",
+      "改动的 7 处": "tools/h3_shots.py:39/40、tools/qc.py:21/27、tmp/wzy/h3_shots.py:39/40、tmp/wzy/asset_pack_scan.py:15、tmp/wzy/faceswap_fight.py:13、tmp/wzy/faceswap_h01.py:10、tmp/wzy/face_match.py:12。⚠ 7 个文件的行尾逐个复核**未被改动**（CRLF 864/0/864/88/0/0/32 与改前一致，本批在 config.yaml 上踩过一次 CRLF 被抹平）；AST 全部可解析；9 处引用路径逐个 stat 存在。替换脚本 backups/_治理_20261019/_move_anchor_refs_20261019.py，各文件留了 .bak-20261019-anchor。",
+      "验收": "check_thresholds 阈值 27·不一致 0·读不到 0；check_official_path error 0·九项全过；pytest `1 failed, 302 passed`（与迁移前基线相同）。face_anchors 与迁移前**逐文件一致**（0 多 0 缺）。",
+      "⚠遗留（待裁定）": "`tmp/wzy/anchors` 现在是 junction（跨盘目录联接，与 models/comfyui → D:/Models/ComfyUI 同一套做法），任何漏改的旧脚本或历史批次 manifest 里写死的旧绝对路径**仍能读到**。但 junction 本身住在 tmp 里 ⇒ 清 tmp 会让它消失（数据不受影响，资源池才是正身）。✅ **2026-10-19 已裁并执行：删掉**（用户『现在就删』）。删前先扫『谁还在往这个路径写』——7 处只是注释，但 `tmp/wzy/make_anchor.py:12` 与 `tmp/wzy/make_face_anchor.py:9` 的 `OUTD` **真的往里写** ⇒ 先把两处改指资源池正身再删链接（否则下次一跑会在 tmp 建真目录、资产库分叉两处）。删法 `cmd /c rmdir <链接>` 只摘 reparse point；删前后资源池逐数校验 58 个文件 / 50,367,388 字节**未变**，`tools/qc.py` 那张锚点仍可读（2,587,124 字节）。回滚＝`mklink /J`（命令见 RESTORE.md）。",
+      "🔴顺带纠正一条纪律": "`.anchor.json` 是**身份卡不是附属品**：check_preflight.py:313 按 `<图片路径>.anchor.json` **就地找**（不含硬编码目录），所以 sidecar 跟着图走就不会坏；但**图与 sidecar 一分开，G3 锚点身份校验就静默失去判据**。命名空间纪律见 scan_system.py:1754 起的 R4-06-v2：`.anchor.json` 只装身份卡，镜位绑定记录写 `.shots.json`；sidecar 里出现旧字段名 `anchor_kind` ＝ 未迁移完。"
+    },
+    {
+      "项": "`prompt_lint.py` 在 import 时就 `os.chdir()` 到 tmp\\wzy",
+      "证据": "prompt_lint.py:18 `D = r'D:/AIWorkflow/tmp/wzy'`（写死）、:19 `os.chdir(D)`、:33 `BASELINE = open(os.path.join(D,'style_baseline.txt'))`。实测：从 `C:\\` 起进程 `import check_preflight`，之后 `os.getcwd()` == `D:\\AIWorkflow\\tmp\\wzy`。",
+      "影响": "① 所有 import 了 check_preflight 的进程，之后的**相对路径全按 tmp\\wzy 解析**；② tmp\\wzy 一没，chdir 与那个 open 都抛 ⇒ `_load_ban_words()` 捕获后落到兜底镜像 `_BAN_MIRROR`，G7 只 warn、闸还是绿的。",
+      "2026-10-19处置": "已断开**通用闸这条路**：新建 tools/ban_words.py（NEG 的纯数据副本，实测 37 条逐字同序、import 它不动 CWD），check_preflight._load_ban_words() 改成先试 ban_words。A/B 实测：PF_ERR/BAN_ERR 仍为 None、_ALL_BAN/BAN_LEADS/BAN_LEADS_EN 全等、CWD 不再被搬走。[P9] 守着两份不许漂。",
+      "遗留": "**直接 import prompt_lint 的调用方仍会被 chdir**——h3_rule_gate.py:44、other_lines_check.py:26。要根治得把 :19 那行 chdir 删掉（它本来就不该在一个被 import 的模块里）＋ 把 :33 的 BASELINE 改成惰性读取。这两处都会改到武昭君仪项目代码的行为，本次没动。"
+    },
+    {
+      "项": "tools\\ 下那 5 份「md5 全等副本」**不是自洽的**，别当已上移的真源用",
+      "证据": "prompt_lint.py(:18,19,33 需 style_baseline.txt)、prompt_rules.py(:23,135 需 run_dz0b2ppp.py,:144 需 run_qiang.py)、h3_shots.py(:20 需 c12_source.txt,:21 OUT,:39/:40 需 anchors,:729)、h3_rule_gate.py(:36,:180,:994 需 h3\\<id>_video.txt)、qc.py(:27 需 anchors) —— 这些**数据文件只存在于 tmp\\wzy**，tools\\ 下一个都没有（2026-10-19 逐个 ls 确认：style_baseline.txt / run_dz0b2ppp.py / run_qiang.py / c12_source.txt 在 tools\\ 均为 no）。",
+      "影响": "副本能跑，只是因为路径写的是**绝对**的 tmp\\wzy。所以「真源已上移到 tools\\」这句话只对 `prompt_format.py`（实测干净导入、不改 CWD、无任何 tmp 引用）与新建的 `ban_words.py` 成立，对其余四份**不成立**。把它们当通用底座接到别的项目上会读到武昭君仪的数据。",
+      "2026-10-19处置": "登记，未改代码。原实施方案里「5 份一起上移」的说法**不准确**，已在 truth_sources.规则底座 的 ⚠仍未解决 字段里写清。"
+    },
+    {
+      "项": "`_load_prompt_format()` 用普通 `import`，PF_SEARCH_DIRS 的顺序可能被 sys.modules 缓存架空",
+      "证据": "check_preflight.py:91 是 `import prompt_format`（不是 `importlib.util.spec_from_file_location`）。若别的模块（如 h3_rule_gate.py:44）已经先从 tmp\\wzy 把它 import 过，sys.modules 里的缓存会赢，:79-83 那个搜索顺序就**不起作用**。",
+      "影响": "今天**无害**——两份 prompt_format.py md5 全等（b66ae6ac），加载哪份行为都一样。但这是「改了不生效」或「生效的是哪份说不准」的定时炸弹：只要有人改其中一份就会发作，而且不报错。",
+      "2026-10-19处置": "只在 check_preflight.py:76-82 的注释里写明，未改实现（改成 spec_from_file_location 会同时改掉 h3_rule_gate 的共用假设，需要单独一批做 A/B）。"
+    },
+    {
+      "项": "娱乐流\\API格式_非画布_先看这个说明\\ 下 6 份 JSON 与 engine\\comfy\\ 同名模板是**逐字节副本**，而没有任何机制拦着它们漂",
+      "证据": "2026-10-19 逐个 md5 复验，6/6 全等：fl2va_api 6e725884 / fl2va_dual_api aab9d5a5 / fl2va_nolora_api 6fa968e8 / fl2va_dual_nolora_api 7342f26a / fl2va_dual_lora e5d7f058 / ref2va_api 3bd9571e。",
+      "影响": "今天无害（全等）。但改了 engine 版不改画布版（或反过来），出片结果就会不同而**没人知道为什么**——这正是用户痛点 #3「一致性很难保证，一换题材就又要重新测试」的一个具体形状。✅ **2026-10-19 已加机制**（用户裁『加 md5 对账尺』）：`check_official_path.py` 新增第 11 项 [P11]，对这 6 对逐个 md5 比对，不等＝error，并给两种处置（把画布侧重拷成 engine 版／或删掉画布侧改 README 指向 engine 版）。**阳性对照做过**：故意给 `h3_i2v_ref2va_api.json` 末尾加一个换行 ⇒ 立刻报『副本已漂 md5=7de70f58 ≠ 3bd9571e』且 error 计数 0→1；随后逐字节恢复并复验 md5 回到 3bd9571e。⚠ 退出码口径：本检查器**默认只报不拦**，要 error 时返回 1 得加 `--strict`（我一开始误以为 rc 该非 0，查了 :1015/:1115 才确认是设计）。",
+      "为什么不直接归档": "同目录 README.txt 写明这 6 份是**排障用**（『想知道某条流到底把哪张图接到了哪个节点、首帧/尾帧怎么接，看这里』）⇒ 有正当用途。",
+      "🔴顺带查到一条断指针": "README.txt 末尾让人『照上一级目录里 H3_首帧视频_T8_完整工作流.json 那种格式（UI 格式，带 nodes/links）另存一份』——**那个文件盘上不存在**（2026-10-19 全仓 find 零命中）。照它做会卡住。UI 格式画布实际是 workflows\\A01_单镜_FL2VA_首帧_T8标准.json。已在该目录声明牌里写明。",
+      "建议处置": "要么加一条 md5 对账检查（6 对，很便宜），要么把画布那份改成指向 engine 版的说明而不是副本。**本次未做**（需用户裁定用哪种）。"
+    },
+    {
+      "项": "🔴 本机有**两套**占位符替换引擎，规则不同 ⇒ 4 份模板对 agent 不可达",
+      "证据": "① `engine/tasks.py` 走**显式映射表**（静态刮到字面 34 个 ＋ 动态拼名族 1 个 `f\"__REF{i}__\"`，在 :909）—— 这是 `run.py` 的路径。② `tools/comfy_run.py:120-123` 走**通用替换**（`ph = \"__%s__\" % k` 然后 `out.replace(ph, str(v))`，:108 还自动发现占位符）⇒ 任意 `--set KEY=` 都能填 `__KEY__`。",
+      "后果": "41 份模板里有 **4 份**含 run.py 填不了的占位符：`flux_cn_redux_api.json` 与 `flux_redux_ref_api.json`（`__REDUX_STRENGTH__`）、`z_style_S9_i2i_d45_api.json` 与 `z_style_S9_i2i_d65_api.json`（`__SRC_IMAGE__`）。它们**不是坏件**（comfy_run.py 能跑，`engine/comfy/README_风格预设_20261004.md:104` 就是这么教的：「i2i 两档把 CTRL_IMAGE= 换成 SRC_IMAGE=」），但在「门面只留两个」的设计下，**agent 走官方入口 run.py 跑不动它们**。",
+      "⚠为什么这条要紧": "后两份是**画风库的 i2i 档**（README 里有实测数：IRE 62.5±0.2 / 61.5±0.4、Lab 相关 0.99/0.98、5.2s）。而既有结论是「套画风**只能** i2i」⇒ 想套画风的那条路，恰好是 agent 走不通的那条。",
+      "建议处置": "给 tasks.py 补这两个占位符，或把这类模板在清单里标成「仅人工」。**待用户裁定**——补 tasks.py 会动跑批主路径。"
+    },
+    {
+      "项": "「节点类名跨包重名」这个问题**静态判不了**，别拿静态结论当答案",
+      "证据": "backups/_治理_20261019/node_class_collision_audit.py 实测：16 个 custom_nodes 条目里有 **6 个是盲区**，且正好包含三个主力包——`comfyui-minimax-h3-audio-T8`（走 ComfyUI 的 **Extension API**：__init__.py 里 MiniMaxH3AudioT8Extension ＋ 约 50 个模块各自的 `NODES = {...}` 在运行时聚合；它那 10 次 NODE_CLASS_MAPPINGS 出现**全是读**：.keys()/.get()/in，没有一次写）、`ComfyUI-KJNodes`、`MinimaxStoryBuilder`。",
+      "为什么记这条": "第一版尺子对这三个包打出「✔ 可信／0 重名」，那是**假绿**——不是没有重名，是尺子对它们全瞎。已改成：刮到 0 键但 MAP 出现 N 次 ⇒ 打「🔴 尺子对它全瞎」，绝不打勾。另外第一版还把 T8 的 `tools/build_formal_speed_multimodal_workflows.py:117`（离线构图脚本读核心 LoadImage 再 update 回自己进程）当成了「T8 覆盖核心 LoadImage」，报出一条运行时根本不存在的重名 ⇒ 已排除 tools/tests/scripts/examples 等非运行时目录。",
+      "真判据": "重名问题目前**无解**：/object_info 是扁平的最终表，看得出「某个类在不在」，看不出「谁注册了它、有没有被覆盖」。要判只能读 ComfyUI 启动日志的 import 段。"
+    },
+    {
+      "项": "✅ 实测好消息：41 份 API 模板 + 16 张画布在**节点层面 0 缺失**",
+      "证据": "backups/_治理_20261019/runtime_node_audit.py 对着 8189 的 /object_info（运行时注册 **2287** 种类）逐个比对我们在用的 **102** 种 ⇒ **0 缺失**。唯一先被报出来的 `MarkdownNote`（8 张画布在用）是**假阳**：它是纯前端便利贴节点——全树无任何 .py 定义、properties 为空、widgets_values 就是一段 markdown，且 ComfyUI **自己出厂的 116 份 blueprints 里也在用它** ⇒ 按定义是浏览器端渲染，本来就不该出现在服务端注册表。已改成**数据驱动**剔除（拿上游 blueprints 当判据，不硬编码类名）。⚠ 另需注意画布的**子图**格式：blueprints 顶层 nodes[].type 是 UUID、真类名在 definitions.subgraphs[].nodes[] 里，只刮顶层会全瞎（第一版就是这样漏的）。",
+      "为什么记这条": "它把「工作流太多分不清」里最坏的一种可能（有些图现在根本打不开）**排除掉了**：节点层面全是活的。坏的只在**权重**层面（下面那条）。"
+    },
+    {
+      "项": "🔴 运行时确认：10 份模板因 `flux1-dev-fp8.safetensors` 缺失**现在就是跑不了的**（⚠ 本条「缺失」二字已于同日 15:00 改判，见下面『改判』）",
+      "证据": "backups/_治理_20261019/runtime_model_audit.py 拿 /object_info 里 UNETLoader 的枚举（ComfyUI 实际只扫到 **4** 项）逐个比对 41 份模板的枚举位（命中 318 个、跳过占位符 56 个）⇒ 10 份缺件：draft_flux_api、draft_upscale_api、flux_cn_redux_api、flux_controlnet_depth_api、flux_controlnet_lineart_api、flux_i2i_api、flux_inpaint_api、flux_outpaint_api、flux_redux_ref_api、**refine_usdu_api**。",
+      "🔴改判（2026-10-19 15:00 第⑫条(b)）": "**权重根本没丢**，是『从没挂进 ComfyUI 模型树』。实测整套 FLUX 件在 `E:/Models/ComfyUI`：diffusion_models/flux1-dev-fp8.safetensors **11350MB**（改于 2026-08-21）、unet/flux1-fill-dev-fp8.safetensors 11351MB、controlnet/FLUX.1-dev-ControlNet-Union-Pro-fp8.safetensors 3149MB、style_models/flux1-redux-dev.safetensors 123MB、vae/flux-vae-bf16.safetensors 160MB、5 个 FLUX LoRA（East_Face 1169MB 等）。而本机模型树是 junction 指 `D:/AIWorkflow/models/comfyui/*`（实测 diffusion_models 与 clip 两处 reparse=True），**E: 那棵树没有任何挂载**，且 `extra_model_paths.yaml` 两处都不在位 ⇒ ComfyUI 扫不到。⇒ 原判『盘上没有』是**把『ComfyUI 看不见』当成『不存在』**，尺没错（枚举位确实取不到值），错的是我由枚举空推到了文件缺失。侦查脚本：`backups/_治理_20261019/_probe_flux_weight_20261019.py`。",
+      "意义": "① 这把尺的**阳性对照**就是它自己抓到的这 10 份（FLUX 主模型确认缺失），所以尺是好的；② `draft_upscale_api.json` 在列 ⇒ **反过来验证了 Phase 2 把 tasks.py:327 默认值改指 z_image_upscale_api.json 是对的**（原来那个默认值指向的就是这 10 份之一）；③ `refine_usdu_api.json`（FLUX 版）与 `refine_usdu_zimage_api.json`（Z-Image 版，现役）是两份不同文件，别混。",
+      "⚠判据边界": "只判 /object_info 里声明为**枚举**的输入位，自由文本/数值位一律跳过不猜。UI 画布那一路因为 widgets_values 是**位置序无键名**，结论只能是疑似级（实测只报出 C02 的 Krea2/Qwen 两个权重，与它文件名自陈的「Krea2缺件」一致）。",
+      "处置（2026-10-19 15:10，用户裁『改判＋退役处理』）": "10 份模板 cp -p 进 `backups/_治理_20261019/归档件/FLUX线退役_20261019/` 并逐个 md5 复核（正身 10/10 全等）后才清原处，原地各留**路障桩**；引擎侧由新增的 `engine/tasks.py:load_template()` 拦住（读到桩抛错并打印原因／替代／恢复六步）；三处真调用者 `tools/gen_faceA_local.py`、`training/tools/gen_faceA_train_local.py`、`engine/comfy/mk_cn_redux.py` 加停料守卫，实测各自 **rc=78** 且无副作用（后两者原本会在 ComfyUI 那边炸，`mk_cn_redux.py` 原本还会**把桩覆盖成一个坏模板**）。手册生成器 `tools/build_manual.py` 摘掉 6 个 FLUX canonical 条目，`tools/comfy_run.py` 的两条示例改成现役模板。⇒ 模板目录仍是 41 份 json，其中 **31 现役＋10 桩**。详见 deprecated 的『FLUX 线（10 份模板）』与 `logs/_治理执行_20261019/端到端验证_20261019.md` §十六。"
+    }
+  ]
+}

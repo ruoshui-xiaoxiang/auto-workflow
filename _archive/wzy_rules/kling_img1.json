@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "status": 200,
+  "body": {
+    "generationId": "AbH5OHjsio2HR9yyUKLHw4InFScxDAZtthFNnd9Gl1u8kPnw0Ykx7RrZPbGTmM17rJTF7qoI",
+    "status": "COMPLETED",
+    "createTime": 1790438176372,
+    "finishTime": 1790438194907,
+    "works": [
+      {
+        "status": "COMPLETED",
+        "contentType": "image",
+        "url": "https://p4-fdl.klingai.com/ksc2/zD8Pcs6AwOvtpgfA9I-sD5nyYYpv2w_AEjB6tnSPVYz0JJ8FgJeG8wnY7gKS3PmNAi1jS6Tu13vY7SVIsFc3QdnKBlqzFin8J7Wf2QZoGVzTIJVyobbMUp7pT2QtpcbD.png?x-kcdn-pid=112344&pkey=AAUe-AgUcFTYfWCgJPr3GX1A3Qpe3JXS_DA89q26lZyuSuODQd4zyJZ9bFJ_17PlKNFOajEicKZorTf5T36BSAgNSjjVLdRYBugR1jHlCBb3JqNZqd2ShUAJiqSksNsbuTs&cacheKey=CiJzaW5nbGUuc2VjdXJpdHkua2xpbmcubWV0YV9lbmNyeXB0ElCo5bcLqm5hc4LTbnmm1AmjOr6OYQsjXuU6/RsYhpAClBPeZDglhHKd1ExpeGp7dOSidr4qsvr4mL750YhudBq1unSyPmqOiX8XpmUM0VHxeBoSM3fb7wMl2Fj3O+srsempz23IIiDpr7qtgolw5YT3+BbOxS6x1Jf7UJ5iFmuk67vgsKkf1ygFMAE=",
+        "urlWithoutWatermark": "https://p4-fdl.klingai.com/ksc2/qX_M4h_GbDgwLYdJpwKTz2-iqSJ1pWdev_mQ-U1mIQ5M98hpTzxZCucqO8iVUvWL2glJJZYcRIEHABYdzLN5Of8tUI9XeOwfnXTBV79u66Y.png?x-kcdn-pid=112344&pkey=AAWGuo29GbIxrQqtX7lMhqaa-zNYFdeQwlsIK5A7W9BlPgQlwMBVlgh24RqpK0vTDr6bsAPXBBq8Pcg5ZxPtqng-onhm-4vAq2BQSPy4FGINu6fRkFafhl7oOI6AYjTb-Lg&cacheKey=CiJzaW5nbGUuc2VjdXJpdHkua2xpbmcubWV0YV9lbmNyeXB0ElCo5bcLqm5hc4LTbnmm1AmjOr6OYQsjXuU6/RsYhpAClBPeZDglhHKd1ExpeGp7dOSidr4qsvr4mL750YhudBq1T6ZyrkBYYf0kHfTGtgUzmxoSM3fb7wMl2Fj3O+srsempz23IIiDv2AIwYOJHtFyTGSf2/wlNS72yHbBlRI6J+krlkXKeDygFMAE=",
+        "url_without_watermark": "https://p4-fdl.klingai.com/ksc2/qX_M4h_GbDgwLYdJpwKTz2-iqSJ1pWdev_mQ-U1mIQ5M98hpTzxZCucqO8iVUvWL2glJJZYcRIEHABYdzLN5Of8tUI9XeOwfnXTBV79u66Y.png?x-kcdn-pid=112344&pkey=AAWGuo29GbIxrQqtX7lMhqaa-zNYFdeQwlsIK5A7W9BlPgQlwMBVlgh24RqpK0vTDr6bsAPXBBq8Pcg5ZxPtqng-onhm-4vAq2BQSPy4FGINu6fRkFafhl7oOI6AYjTb-Lg&cacheKey=CiJzaW5nbGUuc2VjdXJpdHkua2xpbmcubWV0YV9lbmNyeXB0ElCo5bcLqm5hc4LTbnmm1AmjOr6OYQsjXuU6/RsYhpAClBPeZDglhHKd1ExpeGp7dOSidr4qsvr4mL750YhudBq1T6ZyrkBYYf0kHfTGtgUzmxoSM3fb7wMl2Fj3O+srsempz23IIiDv2AIwYOJHtFyTGSf2/wlNS72yHbBlRI6J+krlkXKeDygFMAE=",
+        "content_type": "image"
+      }
+    ],
+    "generation_id": "AbH5OHjsio2HR9yyUKLHw4InFScxDAZtthFNnd9Gl1u8kPnw0Ykx7RrZPbGTmM17rJTF7qoI",
+    "create_time": 1790438176372,
+    "finish_time": 1790438194907
+  }
+}

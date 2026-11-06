@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>说话出片 · 自然语言出图/出片</title>
+<style>
+  :root {
+    --bg: #0f1419;
+    --panel: #1a222c;
+    --ink: #e7eef7;
+    --muted: #8b9bb0;
+    --accent: #3d8bfd;
+    --ok: #3ecf8e;
+    --warn: #f0b429;
+    --err: #f07178;
+    --line: #2a3542;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font: 15px/1.55 "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 28px 20px 60px; }
+  h1 { font-size: 22px; font-weight: 650; margin: 0 0 6px; letter-spacing: 0.02em; }
+  .sub { color: var(--muted); margin: 0 0 22px; font-size: 13px; }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 18px 16px;
+    margin-bottom: 16px;
+  }
+  label { display: block; font-size: 13px; color: var(--muted); margin: 12px 0 6px; }
+  textarea, select, input[type="number"], input[type="text"] {
+    width: 100%;
+    background: #0d1218;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font: inherit;
+  }
+  textarea { min-height: 110px; resize: vertical; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .row > * { flex: 1; min-width: 140px; }
+  .modes { display: flex; gap: 10px; flex-wrap: wrap; }
+  .mode {
+    flex: 1 1 160px;
+    border: 1px solid var(--line);
+    background: #121a23;
+    border-radius: 12px;
+    padding: 12px 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .mode.active { border-color: var(--accent); background: #152233; }
+  .mode b { display: block; margin-bottom: 2px; }
+  .mode span { color: var(--muted); font-size: 12px; }
+  .drop {
+    border: 1.5px dashed var(--line);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .drop:hover { border-color: var(--accent); color: var(--ink); }
+  .thumbs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .thumbs img {
+    width: 72px; height: 72px; object-fit: cover;
+    border-radius: 8px; border: 1px solid var(--line);
+  }
+  .thumbs .rm {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #000a; color: #fff; font-size: 12px; cursor: pointer;
+    margin: -8px 0 0 -12px;
+  }
+  button.primary {
+    width: 100%;
+    margin-top: 16px;
+    border: 0;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 16px;
+    font-weight: 650;
+    background: linear-gradient(135deg, #2f7cf6, #3d8bfd);
+    color: white;
+    cursor: pointer;
+  }
+  button.primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  button.ghost {
+    margin-top: 10px;
+    width: 100%;
+    border: 1px solid var(--accent);
+    background: #152233;
+    color: var(--accent);
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-size: 14px;
+    font-weight: 650;
+    cursor: pointer;
+  }
+  button.ghost:disabled { opacity: 0.5; cursor: progress; }
+  button.ghost:hover { background: #1b2c44; }
+  .warns { margin-top: 10px; }
+  .warns div {
+    background: #3a2f12;
+    color: var(--warn);
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-top: 6px;
+    font-size: 13px;
+  }
+  .log {
+    background: #0b1016;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px;
+    height: 220px;
+    overflow: auto;
+    font: 12px/1.5 Consolas, "Cascadia Mono", monospace;
+    white-space: pre-wrap;
+    color: #b7c5d6;
+  }
+  .status { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+  .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--muted);
+  }
+  .dot.run { background: var(--warn); box-shadow: 0 0 8px var(--warn); }
+  .dot.ok { background: var(--ok); }
+  .dot.err { background: var(--err); }
+  .files { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .files a {
+    display: block;
+    background: #121a23;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 12px;
+  }
+  .files img, .files video {
+    width: 100%; height: 120px; object-fit: cover; background: #000;
+  }
+  .files .name { padding: 8px; word-break: break-all; color: var(--muted); }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 8px; }
+  .chip {
+    display: inline-block; padding: 2px 8px; border-radius: 999px;
+    background: #1c2a3a; color: var(--accent); font-size: 12px; margin-right: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>说话出片</h1>
+  <p class="sub">
+    <span class="chip">通道 4 · 本地脚本化出片</span>
+    用自然语言 + 参考图，自动走引擎出图 / H3 出片。跑前自审（G 闸）照走，不绕闸；本入口不出人工关口、不发飞书。
+  </p>
+
+  <div class="card">
+    <div class="modes" id="modes">
+      <div class="mode active" data-mode="image">
+        <b>出图</b>
+        <span>文生图草稿 · 适合想法探索 / 快速出多张</span>
+      </div>
+      <div class="mode" data-mode="video">
+        <b>出片</b>
+        <span>H3 本地出片 · 需参考图（首帧锁 / 四图全参考）</span>
+      </div>
+    </div>
+
+    <div class="row" id="shotRow" hidden>
+      <div>
+        <label>出片模式（决定几张图进模型）</label>
+        <select id="shotSel"></select>
+      </div>
+      <div>
+        <label>画幅（预置，全为 32 的倍数）</label>
+        <select id="ratioSel"></select>
+      </div>
+      <div>
+        <label>时长（帧数走 17n+5 网格）</label>
+        <select id="durSel"></select>
+      </div>
+      <div>
+        <label>档位（步数与 LoRA 成对预置）</label>
+        <select id="tierSel"></select>
+      </div>
+    </div>
+    <div class="hint" id="shotHint" hidden></div>
+    <label class="hint" id="vlWrap" hidden style="display:block;margin-top:6px">
+      <input type="checkbox" id="vlChk" checked /> 翻译前先看图：让 qwen-vl 抄一份"图里客观有什么"的外观清单，
+      喂给改写器，使正文描述与参考图同向（只抄外观，不判质量；约多花几分钱）
+    </label>
+
+    <label>你要什么（说人话即可）</label>
+    <textarea id="prompt" placeholder="例：出一张月白襦裙少女立绘，素净背景，半身，写实 CG&#10;例：她抬眼看向左侧，轻声说「就是这里了」，镜头缓慢推近，室内暖光"></textarea>
+
+    <button type="button" class="ghost" id="transBtn" hidden>中文 → 英文合规稿并填入</button>
+    <div class="hint" id="transHint" hidden>
+      翻译走云端 qwen-plus（按量，一次几百字符、几分钱），只把稿子填回上面的框，不会自动开跑。
+      填完可以自己改再点开始生成。出片的运行期润色已取消——中文稿不翻译会被 G7 当场拦下（0 秒失败、不占卡）。
+    </div>
+
+    <div class="row">
+      <div id="countWrap">
+        <label>出图张数（仅出图）</label>
+        <input type="number" id="count" value="2" min="1" max="8" />
+      </div>
+      <div id="widthWrap">
+        <label>宽度</label>
+        <input type="number" id="width" value="832" />
+      </div>
+      <div id="heightWrap">
+        <label>高度</label>
+        <input type="number" id="height" value="1216" />
+      </div>
+      <div id="lengthWrap">
+        <label>视频帧数（仅出片 · 124≈5.2s）</label>
+        <input type="number" id="length" value="124" min="124" max="362" />
+      </div>
+    </div>
+
+    <label>参考图 / 首帧 / 定妆（<span id="refCount">0</span> 张）</label>
+    <div class="drop" id="drop">点击选择，或拖拽图片到此处</div>
+    <input type="file" id="file" accept="image/*" multiple hidden />
+    <div class="thumbs" id="thumbs"></div>
+
+    <div class="row">
+      <div id="polishWrap">
+        <label>要不要 LLM 润色提示词（必选 · 仅出图）</label>
+        <select id="polishSel">
+          <option value="false">否 · 直接用我说的话</option>
+          <option value="true">是 · 扩写（可能云端计费）</option>
+        </select>
+      </div>
+      <div>
+        <label>要不要音频（必选 · 出片）</label>
+        <select id="audioSel">
+          <option value="true">要 · 原生音频</option>
+          <option value="false">不要</option>
+        </select>
+      </div>
+      <div>
+        <label>分辨率档位（必选 · 留痕）</label>
+        <select id="tierSel">
+          <option value="std">std · 720p 档</option>
+          <option value="pro">pro · 1080p 档</option>
+          <option value="draft">draft · 本地草稿</option>
+        </select>
+      </div>
+    </div>
+    <div class="hint">
+      G13 要求这几项每次由你显式选定（空槽会拦）。出片的润色已固定关闭，中文请先点翻译按钮。<br>
+      画幅：竖幅真 9:16 用 576×1024 或 864×1536（两边都得是 32 的倍数）；横幅 16:9 用 1024×576 或 1536×864；
+      1344×768 是 7:4、768×1344 是 4:7，G5 会 warn「会被裁或变形」。
+    </div>
+
+    <button class="primary" id="go">开始生成</button>
+    <div class="warns" id="warns"></div>
+    <div class="hint">
+      出片请遵守 H3 总则：纯正向、无运镜器材词、台词用 (Sx)+&lt;d&gt; 格式。提交后仍过 G7 / 人工关口。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="status">
+      <div class="dot" id="dot"></div>
+      <div id="statusText">空闲</div>
+    </div>
+    <div class="log" id="log">就绪。填写需求后点「开始生成」。</div>
+  </div>
+
+  <div class="card">
+    <label id="filesLabel">最近产物</label>
+    <div class="files" id="files"></div>
+  </div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let mode = "image";
+let refs = []; // {name, data_b64, url}
+let PRESETS = { modes: [], ratios: [], lengths: [] };
+
+const MODE_DROP = {
+  first: "点这里放 1 张＝首帧（锁机位与构图）",
+  first_last: "点这里放 2 张＝第 1 张首帧、第 2 张尾帧（两头夹）",
+  refs: "点这里放 4 张＝① 主角身份 ② 第二主体 ③ 场景道具 ④ 画风光影",
+};
+const MODE_NOTE = {
+  first: "锁首帧：只有这 1 张进模型，且它是几何锚——H3 会把第 0 帧重画一遍再往下走，动起来后的脸是模型自己补的。要锁身份请用「多参考图」。",
+  first_last: "锁首尾帧：两端钉死、中间由模型走（飞行方向与动作次序仍是抽签，建议同参多跑两条挑一条）。尾帧本身要接近出片比例，它是居中裁切。",
+  refs: "多参考图：4 张分别管身份/第二主体/场景道具/画风光影，锁身份但**不锁机位与站位**（模板没有 first_frame）。",
+};
+
+const shotKey = () => (mode === "video" && $("shotSel").value ? $("shotSel").value : "first");
+const slotsOf = () => {
+  const m = PRESETS.modes.find((x) => x.key === shotKey());
+  return m ? m.slots : 0;
+};
+const curMode = () => PRESETS.modes.find((x) => x.key === shotKey());
+const curTier = () => {
+  const m = curMode();
+  if (!m || !m.tiers || !m.tiers.length) return null;
+  return m.tiers.find((t) => t.key === $("tierSel").value) || m.tiers[0];
+};
+
+function fillTiers() {
+  const m = curMode();
+  const list = (m && m.tiers) || [];
+  const keep = $("tierSel").value;          // 换画幅/时长不该把已选档位重置回第一档
+  $("tierSel").innerHTML = list
+    .map((t) => `<option value="${t.key}">${t.label}</option>`).join("");
+  if (list.some((t) => t.key === keep)) $("tierSel").value = keep;
+}
+
+function showNotes() {
+  const m = curMode(), t = curTier();
+  if (!m) return;
+  const parts = [MODE_NOTE[m.key] || ""];
+  if (t && t.note) parts.push("档位「" + t.label + "」：" + t.note);
+  if (t && t.workflow) parts.push("工作流 " + t.workflow);
+  $("shotHint").textContent = parts.filter(Boolean).join("　｜　");
+}
+
+async function loadPresets() {
+  try {
+    PRESETS = await (await fetch("/api/presets")).json();
+  } catch (e) {
+    PRESETS = { modes: [], ratios: [], lengths: [] };
+  }
+  const fill = (sel, items, lab) => {
+    sel.innerHTML = items.map((it) => `<option value="${it.key}">${lab(it)}</option>`).join("");
+  };
+  fill($("shotSel"), PRESETS.modes, (m) => `${m.label} · ${m.slots} 张图`);
+  fill($("ratioSel"), PRESETS.ratios, (r) => `${r.h > r.w ? "竖" : "横"} ${r.w}×${r.h}`);
+  fill($("durSel"), PRESETS.lengths, (l) => `${l.key} 秒 · ${l.frames} 帧`);
+  fillTiers();
+  syncUI();
+}
+
+function syncUI() {
+  const video = mode === "video";
+  $("shotRow").hidden = !video;
+  $("shotHint").hidden = !video;
+  $("vlWrap").hidden = !video;
+  $("transBtn").hidden = !video;
+  $("transHint").hidden = !video;
+  $("countWrap").hidden = video;
+  $("widthWrap").hidden = video;
+  $("heightWrap").hidden = video;
+  $("lengthWrap").hidden = video;
+  $("polishWrap").hidden = video;   // 出片不走运行期润色，改稿只留翻译按钮
+  if (video) {
+    $("polishSel").value = "false";
+    fillTiers();
+    showNotes();
+  }
+  const k = shotKey();
+  $("drop").textContent = video
+    ? (MODE_DROP[k] || "点击选择图片")
+    : "点击选择，或拖拽图片到此处";
+  renderThumbs();
+}
+
+$("modes").addEventListener("click", (e) => {
+  const el = e.target.closest(".mode");
+  if (!el) return;
+  document.querySelectorAll(".mode").forEach((n) => n.classList.remove("active"));
+  el.classList.add("active");
+  mode = el.dataset.mode;
+  syncUI();
+});
+
+["shotSel", "ratioSel", "durSel"].forEach((id) => $(id).addEventListener("change", syncUI));
+$("tierSel").addEventListener("change", showNotes);
+
+const drop = $("drop");
+const file = $("file");
+drop.onclick = () => file.click();
+file.onchange = () => addFiles(file.files);
+drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.style.borderColor = "#3d8bfd"; });
+drop.addEventListener("dragleave", () => { drop.style.borderColor = ""; });
+drop.addEventListener("drop", (e) => {
+  e.preventDefault();
+  drop.style.borderColor = "";
+  addFiles(e.dataTransfer.files);
+});
+
+function addFiles(list) {
+  [...list].forEach((f) => {
+    const r = new FileReader();
+    r.onload = () => {
+      const b64 = String(r.result).split(",")[1] || "";
+      refs.push({ name: f.name, data_b64: b64, url: URL.createObjectURL(f) });
+      renderThumbs();
+    };
+    r.readAsDataURL(f);
+  });
+}
+
+function renderThumbs() {
+  const box = $("thumbs");
+  box.innerHTML = "";
+  const n = $("refCount");
+  if (n) {
+    if (mode !== "video") {
+      n.textContent = String(refs.length);
+    } else {
+      const s = slotsOf();
+      n.textContent = refs.length === s ? `${refs.length} · 数量对` : `${refs.length} / 需 ${s}`;
+    }
+  }
+  refs.forEach((r, i) => {
+    const w = document.createElement("div");
+    w.style.position = "relative";
+    w.innerHTML = `<img src="${r.url}" /><div class="rm" data-i="${i}">×</div>`;
+    box.appendChild(w);
+  });
+  box.querySelectorAll(".rm").forEach((el) => {
+    el.onclick = () => {
+      refs.splice(Number(el.dataset.i), 1);
+      renderThumbs();
+    };
+  });
+}
+
+async function poll() {
+  try {
+    const st = await (await fetch("/api/status")).json();
+    const dot = $("dot");
+    const t = $("statusText");
+    if (st.running) {
+      dot.className = "dot run";
+      t.textContent = `运行中 · ${st.mode || ""} ${st.workflow || ""} ${st.run_id || ""}`;
+    } else if (st.error) {
+      dot.className = "dot err";
+      t.textContent = "失败：" + st.error;
+    } else if (st.exit_code === 0) {
+      dot.className = "dot ok";
+      t.textContent = `完成 · ${st.run_id || ""}`;
+    } else {
+      dot.className = "dot";
+      t.textContent = "空闲";
+    }
+    $("log").textContent = (st.log || []).join("\n")
+      || (st.files_source === "disk"
+        ? "这个服务进程没跑过任务（被重启过）。下面是从盘上捞出来的最近产物。"
+        : "（暂无日志）");
+    $("log").scrollTop = $("log").scrollHeight;
+    const lbl = $("filesLabel");
+    if (lbl) {
+      lbl.textContent = st.files_source === "disk"
+        ? "最近产物 · 从盘上捞的（归档与输出目录），不是本进程这次跑的"
+        : "最近产物";
+    }
+    const box = $("files");
+    box.innerHTML = "";
+    (st.files || []).forEach((p) => {
+      const name = p.split(/[\\/]/).pop();
+      const url = "/file/" + p.replace(/\\/g, "/");
+      const isVideo = /\.(mp4|webm)$/i.test(name);
+      const a = document.createElement("a");
+      a.href = url;
+      a.target = "_blank";
+      a.innerHTML = (isVideo
+        ? `<video src="${url}" muted></video>`
+        : `<img src="${url}" />`) + `<div class="name">${name}</div>`;
+      box.appendChild(a);
+    });
+    if ((st.warnings || []).length) {
+      $("warns").innerHTML = st.warnings.map((w) => `<div>⚠ ${w}</div>`).join("");
+    }
+  } catch (e) { /* ignore */ }
+}
+
+$("transBtn").onclick = async () => {
+  const text = $("prompt").value.trim();
+  if (!text) { alert("先写中文需求"); return; }
+  const shot = shotKey();
+  if (refs.length !== slotsOf()) {
+    alert(`这个模式要正好 ${slotsOf()} 张参考图（当前 ${refs.length} 张）`);
+    return;
+  }
+  const btn = $("transBtn");
+  btn.disabled = true;
+  btn.textContent = "翻译中…（云端 qwen-plus）";
+  try {
+    const res = await fetch("/api/translate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        text, mode: shot, n_refs: refs.length,
+        use_vl: $("vlChk").checked,
+        refs: refs.map((r) => ({ name: r.name, data_b64: r.data_b64 })),
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok) { alert(data.error || "翻译失败"); return; }
+    $("prompt").value = data.prompt;
+    $("polishSel").value = "false";   // 已经是英文合规稿，别让运行期再改写一遍
+    const lines = [
+      `已填入英文稿 · ${data.chars} 字符 · 后端 ${data.backend} · ${data.elapsed}s`,
+      ...(data.warns || []).map((w) => "⚠ " + w),
+    ];
+    $("log").textContent = lines.join("\n");
+    $("warns").innerHTML = (data.warns || []).map((w) => `<div>⚠ ${w}</div>`).join("");
+  } catch (e) {
+    alert(String(e));
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "中文 → 英文合规稿并填入";
+  }
+};
+
+$("go").onclick = async () => {
+  const prompt = $("prompt").value.trim();
+  if (!prompt) {
+    alert("请先写需求");
+    return;
+  }
+  if (mode === "video" && refs.length !== slotsOf()) {
+    alert(`这个模式要正好 ${slotsOf()} 张参考图（当前 ${refs.length} 张）`);
+    return;
+  }
+  $("go").disabled = true;
+  $("warns").innerHTML = "";
+  try {
+    const body = {
+      mode,
+      prompt,
+      shot: shotKey(),
+      tier: $("tierSel").value,
+      ratio: $("ratioSel").value || "v916",
+      duration: $("durSel").value || "5.2",
+      refs: refs.map((r) => ({ name: r.name, data_b64: r.data_b64 })),
+      count: Number($("count").value || 1),
+      width: Number($("width").value || 0),
+      height: Number($("height").value || 0),
+      length: Number($("length").value || 124),
+      polish: mode === "image" && $("polishSel").value === "true",
+      enable_audio: $("audioSel").value === "true",
+      resolution_tier: $("tierSel").value,
+    };
+    const res = await fetch("/api/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data.error || "启动失败");
+    } else if (data.warnings && data.warnings.length) {
+      $("warns").innerHTML = data.warnings.map((w) => `<div>⚠ ${w}</div>`).join("");
+    }
+  } catch (e) {
+    alert(String(e));
+  } finally {
+    $("go").disabled = false;
+    poll();
+  }
+};
+
+loadPresets();
+setInterval(poll, 1500);
+poll();
+</script>
+</body>
+</html>

@@ -1,0 +1,437 @@
+{
+  "_readme": [
+    "若水AI电影 · 通道与配置注册表（**声明表，不是测量表**）。",
+    "本文件回答两个以前没人能一次回答的问题：① 系统现在有几条通道、每条的权威真源在哪份文件、",
+    "它允许写进 prompt_kind 的词是哪些、它归不归机器管；② 全局配置开关有几个、各住在哪个文件。",
+    "★ 纪律：这里**只写决定**（id／真源位置／kind 词／是否已裁／谁该带 provider）。",
+    "字节数、条数、覆盖率、mtime 一律**不写**——那些由 `E:\\若水AI电影\\99_维护\\scan_system.py` 现扫，",
+    "抄进来就是第二个会漂的真源（同 GAP-A1『两份清单自相矛盾』、同索引 §5 手抄计数那两处）。",
+    "★ 权威关系：通道的**规则**权威仍是 `20_通用规范层\\` ＋ 各通道真源 md；本表只是**机读身份登记**。",
+    "本表与 `channel_of()` 代码不一致时，判据是『报出差异、由人裁』，不是自动改任何一边。",
+    "改本文件前先跑 `D:\\AIWorkflow\\tools\\check_registry.py` 看清当前差异，改完再跑一次。"
+  ],
+  "schema_version": 1,
+  "updated": "2026-10-02",
+  "authority_note": "规则权威＝E:\\本地工作流规范手册\\20_通用规范层；本表＝通道身份与配置位置的机读登记",
+  "channels": [
+    {
+      "id": "h3_local",
+      "name": "本地 MiniMax H3",
+      "adjudicated": true,
+      "machine_gated": true,
+      "rule_source": "D:\\AIWorkflow\\ComfyUI_H3\\H3提示词工程规则方案.md",
+      "extra_sources": [
+        "D:\\AIWorkflow\\ComfyUI_H3\\H3提示词规则_现行合并版.md",
+        "D:\\AIWorkflow\\ComfyUI_H3\\规则对比_官方写法_vs_项目规则.md"
+      ],
+      "declared_kind": [
+        "h3",
+        "h3_i2va",
+        "h3_ref2va",
+        "h3_skeleton"
+      ],
+      "prompt_format": "官方 I2VA 骨架（首行指令＋空行＋三字段各恰一次）",
+      "engine_yaml_glob": "h3_*.yaml",
+      "providers_allowed": [
+        "local"
+      ],
+      "provider_required_in_yaml": false,
+      "needs_channel_of_branch": true
+    },
+    {
+      "id": "cloud_sd",
+      "name": "云端 SD / Seedream（ark）",
+      "adjudicated": true,
+      "machine_gated": true,
+      "rule_source": "D:\\AIWorkflow\\ComfyUI_H3\\云端SD提示词模板_十块.md",
+      "extra_sources": [],
+      "declared_kind": [
+        "cloud",
+        "sd",
+        "ark"
+      ],
+      "prompt_format": "中文十块（必填核心五块保留）",
+      "engine_yaml_glob": null,
+      "providers_allowed": [
+        "ark",
+        "cloud"
+      ],
+      "provider_required_in_yaml": true,
+      "needs_channel_of_branch": true
+    },
+    {
+      "id": "image_chain",
+      "name": "本地图片链（i2i/inpaint/outpaint/depth）",
+      "adjudicated": true,
+      "machine_gated": true,
+      "rule_source": "D:\\AIWorkflow\\ComfyUI_H3\\图片链_工作流规则.md",
+      "extra_sources": [],
+      "declared_kind": [
+        "image",
+        "i2i",
+        "img"
+      ],
+      "prompt_format": "无格式要求，只查共性坑",
+      "engine_yaml_glob": "image_*.yaml",
+      "providers_allowed": [
+        "local"
+      ],
+      "provider_required_in_yaml": false,
+      "needs_channel_of_branch": true
+    },
+    {
+      "id": "qianwen",
+      "name": "千问云端",
+      "adjudicated": false,
+      "machine_gated": false,
+      "rule_source": "D:\\AIWorkflow\\ComfyUI_H3\\千问云端_工作流规则.md",
+      "extra_sources": [],
+      "declared_kind": [
+        "qianwen",
+        "qwen",
+        "bailian"
+      ],
+      "prompt_format": "自成一套：不吃 H3 骨架、不吃中文十块、不吃 _g7_* 分支",
+      "engine_yaml_glob": null,
+      "providers_allowed": [
+        "qianwen"
+      ],
+      "provider_required_in_yaml": true,
+      "adjudication_pending": "D7 已裁『暂时不改』（风险 28／冲突表 C79）⇒ 未裁的处置是显式记一条交人工关口，不是替它定",
+      "needs_channel_of_branch": true,
+      "branch_ruling_note": "未裁（风险 28／D7 暂时不改）⇒ 它的稿子走 `未裁` 分支，只有人工一条路，这条**才是**待裁。"
+    },
+    {
+      "id": "jimeng",
+      "name": "即梦云端",
+      "adjudicated": false,
+      "machine_gated": false,
+      "rule_source": "D:\\AIWorkflow\\ComfyUI_H3\\即梦云端_工作流规则.md",
+      "extra_sources": [],
+      "declared_kind": [
+        "jimeng",
+        "dreamina",
+        "seedance"
+      ],
+      "prompt_format": "官方自然语言三段式；图片 prompt 硬上限 2000 字",
+      "engine_yaml_glob": null,
+      "providers_allowed": [
+        "jimeng"
+      ],
+      "provider_required_in_yaml": false,
+      "adjudication_pending": "人工执行通道、无引擎调用 ⇒ 设计上**不进机检**（与千问不同，不需要 channel_of 分支）；D7 已裁『暂时不改』",
+      "needs_channel_of_branch": false,
+      "branch_ruling_note": "已裁：即梦稿**不进任何机检**（人工执行通道、无引擎调用，不需要 channel_of 分支）——出处 `即梦云端_工作流规则.md` §「不进任何机检——这不一定是缺陷」，09-28 用户指示／冲突表 C82。所以「机器不认即梦的词」**不是缺口**，别把它重新列成待裁事项。"
+    },
+    {
+      "id": "kling_cloud",
+      "name": "可灵云端",
+      "rule_source": "D:/AIWorkflow/ComfyUI_H3/可灵云端_工作流规则.md",
+      "extra_sources": [],
+      "declared_kind": [],
+      "adjudicated": true,
+      "machine_gated": false,
+      "prompt_format": "待实测：本通道自己的契约，**不得**借用 H3 骨架／云端SD 十块／即梦三段式",
+      "engine_yaml_glob": null,
+      "providers_allowed": [],
+      "provider_required_in_yaml": false,
+      "needs_channel_of_branch": false,
+      "gating_status": "判据未立（declared_kind 为空＝没有可路由的词，不是词不被认）",
+      "branch_ruling_note": "2026-10-02 用户裁「三个都立独立通道」⇒ 身份已立、真源已建档；**路由与判据未落地**（词表现仍走 cloud_sd 别名）。落地属改现役判据链，见批 4·5。"
+    },
+    {
+      "id": "vidu_cloud",
+      "name": "Vidu 云端",
+      "rule_source": "D:/AIWorkflow/ComfyUI_H3/Vidu云端_工作流规则.md",
+      "extra_sources": [],
+      "declared_kind": [],
+      "adjudicated": true,
+      "machine_gated": false,
+      "prompt_format": "待实测：本通道自己的契约，**不得**借用 H3 骨架／云端SD 十块／即梦三段式",
+      "engine_yaml_glob": null,
+      "providers_allowed": [],
+      "provider_required_in_yaml": false,
+      "needs_channel_of_branch": false,
+      "gating_status": "判据未立（declared_kind 为空＝没有可路由的词，不是词不被认）",
+      "branch_ruling_note": "同上；⚠ 本机实测为零（唯一硬证据是千问模型清单里出现过它），真源通篇标 [未实测]。"
+    },
+    {
+      "id": "hailuo_cloud",
+      "name": "海螺／MiniMax 云端",
+      "rule_source": "D:/AIWorkflow/ComfyUI_H3/海螺云端_工作流规则.md",
+      "extra_sources": [],
+      "declared_kind": [],
+      "adjudicated": true,
+      "machine_gated": false,
+      "prompt_format": "待实测：本通道自己的契约，**不得**借用 H3 骨架／云端SD 十块／即梦三段式",
+      "engine_yaml_glob": null,
+      "providers_allowed": [],
+      "provider_required_in_yaml": false,
+      "needs_channel_of_branch": false,
+      "gating_status": "判据未立（declared_kind 为空＝没有可路由的词，不是词不被认）",
+      "branch_ruling_note": "同上；🔴 与本地 H3 同源不同契约，是最容易被误路由的一条。"
+    }
+  ],
+  "kind_conflicts": [
+    {
+      "kind": "seedance",
+      "claimed_by": [
+        "cloud_sd",
+        "jimeng"
+      ],
+      "channel_of_puts_it_in": "cloud",
+      "disputed": true,
+      "conflict_id": "C84",
+      "note": "同一个模型名挂两套契约（云端SD 与 即梦共用 `seedance_2.5`）。这条**未裁**，登记在此是为了让校验器报得出，而不是在本表里替用户裁。裁之前 `seedance` 一律按 cloud 判——**这是现状，不是结论**。"
+    }
+  ],
+  "code_alias_words": [
+    {
+      "word": "picture",
+      "channel": "image_chain",
+      "adjudicated": true,
+      "note": "图片通道的同义词，判据一致，登记为别名。"
+    },
+    {
+      "word": "first_frame",
+      "channel": "image_chain",
+      "adjudicated": true,
+      "note": "首帧＝一张图，吃图片判据；`一·七_H3适配.md` 已这么用。"
+    },
+    {
+      "word": "t2i",
+      "channel": "image_chain",
+      "adjudicated": true,
+      "note": "文生图别名。"
+    },
+    {
+      "word": "i2va",
+      "channel": "h3_local",
+      "adjudicated": true,
+      "note": "H3 的图生视频泛称。"
+    },
+    {
+      "word": "fl2va",
+      "channel": "h3_local",
+      "adjudicated": true,
+      "note": "H3 首尾帧生视频。"
+    },
+    {
+      "word": "ref2va",
+      "channel": "h3_local",
+      "adjudicated": true,
+      "note": "⚠ **可疑但现状如此**：`ref2va` 不带 `h3_` 前缀，代码把它判给 h3；云端参考生视频（Seedance r2v）写 `ref2va` 会**被按 H3 骨架审**。本轮只登记，不顺手改（改路由属动现役判据链）。"
+    },
+    {
+      "word": "kling",
+      "channel": "cloud_sd",
+      "adjudicated": false,
+      "note": "🔴 **从没裁过**：可灵的稿子现在吃的是**云端SD 的中文十块判据**。本机有可灵凭证与官方 CLI（`reference-kling-cli.md`：motion_control 等能力与 Seedance 不同构）。⇒ 要么给可灵立独立通道＋自己的判据，要么明确裁「共用十块」。登记在此＝承认这是洞，不是承认它对。",
+      "pending_migration": "批 4·5：升为 kling_cloud 的 declared_kind 并把路由从 cloud 改判给它（先钉基线再动）"
+    },
+    {
+      "word": "vidu",
+      "channel": "cloud_sd",
+      "adjudicated": false,
+      "note": "🔴 同 kling：Vidu 从没被裁过通道归属，现按云端SD 审。",
+      "pending_migration": "批 4·5：先有最小闭环实测，再升为 vidu_cloud 的 declared_kind"
+    },
+    {
+      "word": "hailuo",
+      "channel": "cloud_sd",
+      "adjudicated": false,
+      "note": "🔴 同 kling：海螺（MiniMax 云端）被折进 `cloud_sd`，而它与**本地 H3 同源不同契约**——这最容易读错的一条。本机另有海螺设计工具与 API（`reference-minimax-api.md`）。",
+      "pending_migration": "批 4·5：建议先做本地 H3 vs 云端同题对照，再把路由改判给 hailuo_cloud"
+    },
+    {
+      "word": "seedance",
+      "channel": "cloud_sd",
+      "adjudicated": false,
+      "conflict_id": "C84",
+      "note": "🔴 路由事实与通道声明**对不上**的那个词：`channel_of()` 把 seedance 归 cloud，而声明 seedance 的是即梦（jimeng）——同一个模型名挂两套契约（冲突表 C84，未裁）。这里按**现状**登记成 cloud_sd 的别名，是为了让『注册表＝代码』这条相等断言成立；**不是**裁定它归云端SD。批 4·2b 首跑就是因为没登记它而拒启用注册表（相等闸门在干活）。"
+    }
+  ],
+  "config_switches": [
+    {
+      "name": "preflight",
+      "kind": "跑前自审总开关",
+      "file": "D:\\AIWorkflow\\engine\\config.yaml",
+      "key": "preflight",
+      "single_source": true,
+      "authority": "本表登记位置，值仍以文件为准（本表不抄值）",
+      "reader": "yaml"
+    },
+    {
+      "name": "preflight_strict",
+      "kind": "warn 是否升级为拦",
+      "file": "D:\\AIWorkflow\\engine\\config.yaml",
+      "key": "preflight_strict",
+      "single_source": true,
+      "authority": "同上",
+      "reader": "yaml"
+    },
+    {
+      "name": "knobs.on",
+      "kind": "H3 法条临时开关",
+      "file": "D:\\AIWorkflow\\tmp\\wzy\\h3\\knobs.json",
+      "key": "on",
+      "single_source": false,
+      "authority": "⚠ 住在**项目临时目录**里，与 preflight 互不知道对方状态；它是不是该升成全局配置＝**未裁**，登记在此不代表已归位",
+      "reader": "json"
+    },
+    {
+      "name": "prompt_kind",
+      "kind": "每条 workflow 自己的格式声明",
+      "file": "D:\\AIWorkflow\\engine\\workflows",
+      "key": "prompt_kind",
+      "single_source": false,
+      "authority": "逐 yaml 各写各的；本表 `channels[].declared_kind` 是它的**取值域**。⚠ 实测 3／17 份没声明、17／17 份没写 provider（GAP-E2 仍挂）。",
+      "reader": "dir"
+    },
+    {
+      "name": "channel_of() 兜底",
+      "kind": "通道路由规则的裁决处（批 4·2b 起：规则在表，代码只留相等的兜底字面量）",
+      "file": "D:\\AIWorkflow\\tools\\check_preflight.py",
+      "key": "channel_of",
+      "single_source": true,
+      "authority": "★批 4·2b 已迁移：`channel_of()` 的词表**来自本表**，代码里的 `_KIND_*` 三元组降级为兜底，且启用前做**集合相等断言**——不等就退回字面量（判定逐字不变）＋报告显式 warn，绝不静默换轨。三重预验已跑：pytest 153 项通过、`verify_g7_dispatch` 与 `prompt_gate` 输出与基线逐字相同；反向验证：藏起本表 ⇒ 报告每条检查多一记降级 warn。⚠ 剩下的不是权威问题：本开关的**值**（on/off 之类）仍不在这里，路由规则的权威已迁入。",
+      "reader": "code"
+    }
+  ],
+  "invariants": [
+    "每条通道恰一个 id；id 不重复。",
+    "declared_kind 的词不得跨通道重复，除非在 kind_conflicts 里显式登记 disputed。",
+    "rule_source 指向的文件必须存在（缺文件＝该通道没有真源＝high）。",
+    "adjudicated=false 的通道不得标 machine_gated=true（没裁的通道没有判据，假装有机检＝虚报）。",
+    "channel_of() 代码认识的 kind 词集合与本表 declared_kind 的并集，差集必须逐条有解释。"
+  ],
+  "config_switches_note": "reader 字段告诉扫描器**怎么读这个开关的值**（yaml 标量／json 键／逐 yaml／代码行）。扫描器原来把这五处的读法写死在自己源码里，那是第四份抄本；现在读表，读不到才退回兜底并如实报 GAP-S2。",
+  "needs_branch_note": "needs_channel_of_branch 是「该不该有分支」的**裁定**，与「机器认不认」（实测）分开记。两者不等才叫缺口：该有却不认＝待裁／待修；不该有也不认＝设计如此，不算漏。",
+  "run_slots": {
+    "_readme": [
+      "10-02 用户口径：审美、画风、主观意图、创作取舍这类**机器不擅长或本就该人决定的东西，一律先问人再定**。",
+      "本段只声明**有哪些槽必须由人显式决定并留痕**，不写任何默认取值。",
+      "★ 铁律：空槽＝报错，**不许由脚本或 agent 填默认值**——否则机器又在替你决定，只是换了个形式（同 R4-06 不许补猜）。",
+      "批 5-2 的落地位置＝提交前的参数决定单＋关口那条「只查留痕、不查值」的判据。"
+    ],
+    "must_ask_every_run": [
+      {
+        "slot": "use_llm_polish",
+        "why": "F5 已裁：润色＝机器替你重写提示词",
+        "rule": "不润色要显式写 false，要润色也必须显式写；空槽即拦。当前 17 份流 0 份带 llm 步，属潜伏态",
+        "status": "已裁 10-02／参数名统一 10-03 批 7-4",
+        "label_cn": "要不要润色",
+        "accepts": [
+          "use_llm"
+        ],
+        "plumbing": "现役有真管道：4 份流的 `args.use_llm_polish` 喂 llm 步的 `enabled`（character_sheet／h3_ref2va_video／image_draft_batch／image_draft_batch_sdxl＋10-03 起 image_batch_draft 也用它）。⚠ 判给没给只看存在不看真值：false 是决定，不是空。",
+        "alias_compat_note": "10-03 批 7-4 问 8 裁定：现役 yaml 统一成 `use_llm_polish`（原 1 份 `use_llm` 已改），槽 id 也跟改成**参数名本身**＝正名只有一个。`use_llm` 保留为兼容别名只为防旧命令被**静默忽略**（不报错、不生效那种），退役条件：台账 `run_decisions.sources` 里连续不再出现它。"
+      },
+      {
+        "slot": "resolution_tier",
+        "why": "默认即高档计费档（720p=std／1080p=pro）",
+        "rule": "值由每次运行决定，但必须显式选过并留痕",
+        "status": "已裁 10-02（不设硬值）",
+        "label_cn": "分辨率档位",
+        "accepts": [],
+        "plumbing": "⚠ **引擎里没有这个参数**：云端出片的分辨率目前由调用侧（arkcli／即梦 CLI）带，不在 yaml args 里。本槽现在的作用＝**留痕**（记录这批选的档），不是配置下发。要说清，否则将来有人以为设了它就能改分辨率。"
+      },
+      {
+        "slot": "enable_audio",
+        "why": "默认 true＝模型直接产出带音频的片子",
+        "rule": "按每次需要调整，**不设硬规则**（10-02 用户明确）；只要求把当次选择留痕，出片后 audio_present 由产物实测回填资产档",
+        "status": "已裁 10-02",
+        "label_cn": "要不要音频",
+        "accepts": [],
+        "plumbing": "⚠ 同上：音频开关在模型调用侧（可灵契约里 `enable_audio` 默认 true），引擎不消费它。本槽＝留痕当次选择；产物到底有没有声轨由 `audio_present` 在资产档里**实测回填**（R4-17-v），不靠这里声明。"
+      }
+    ],
+    "must_ask_every_project": [
+      {
+        "slot": "style_baseline_sentence",
+        "why": "F1 已裁：全片基调句是人的口味，不是常量",
+        "rule": "新项目开工必填；历史口味只作候选答案呈现，不被引用不生效",
+        "status": "已裁 10-02",
+        "sheet": "E:\\创作\\<项目>\\_项目档案\\运行决定单.json",
+        "label_cn": "全片基调句"
+      },
+      {
+        "slot": "rejected_elements",
+        "why": "同上（排斥元素＝主观取向）",
+        "rule": "必填，且不得从记忆件自动继承",
+        "status": "已裁 10-02",
+        "sheet": "E:\\创作\\<项目>\\_项目档案\\运行决定单.json",
+        "label_cn": "排斥元素"
+      },
+      {
+        "slot": "color_light_preference",
+        "why": "色彩与光影偏好",
+        "rule": "必填",
+        "status": "已裁 10-02",
+        "sheet": "E:\\创作\\<项目>\\_项目档案\\运行决定单.json",
+        "label_cn": "色彩光影偏好"
+      },
+      {
+        "slot": "costume_density",
+        "why": "造型密度（厚重靠减细节这类判断）",
+        "rule": "必填",
+        "status": "已裁 10-02",
+        "sheet": "E:\\创作\\<项目>\\_项目档案\\运行决定单.json",
+        "label_cn": "造型密度"
+      },
+      {
+        "slot": "aspect_ratio",
+        "why": "常用画幅＝项目级（10-02 ②，你把我原列的运行级画幅升到了项目级）",
+        "rule": "某批要换画幅算**项目级变更**，须用户明确指定，不是随手传旗标",
+        "status": "已裁 10-02",
+        "sheet": "E:\\创作\\<项目>\\_项目档案\\运行决定单.json",
+        "label_cn": "常用画幅"
+      },
+      {
+        "slot": "opening_rhythm_baseline",
+        "label_cn": "开场节奏基准",
+        "why": "10-02 问 1 裁定：这条**当审美处理，项目开工时问人**——两侧判据相反（技能包红线 vs 用户 09-08 正式采纳的 E1 v3.1 写法），谁都不许被写成通用判据",
+        "rule": "必填。提问时把两侧**原文**逐字摆出来，**不预选、不合并、不删任何一侧**；本项目选哪套就记哪套，改选＝项目级变更（用户明确指定）并留旧值",
+        "status": "已裁 10-02 批 6 问 1",
+        "ask_presentation": "只指路不复述值：一侧是技能包 `01b-rhythm-matrix.md:47`（开场 3 秒内只有风景／慢走／环境铺垫＝判废），另一侧是记忆 `feedback-script-writing-approach.md:18/:37`（第一幕从日常切入＋每集 2-3 个呼吸镜，2026-09-08 正式采纳）",
+        "scope_note": "两侧都不升为通用判据；本槽是它们唯一的裁决点。历史片按当时裁的算，不追认作废。"
+      }
+    ],
+    "human_only_never_auto": [
+      {
+        "action": "取消锚点（画风翻盘兜底第三档）",
+        "why": "F2 已裁：代价是配饰会丢，属创作取舍",
+        "rule": "前两档（正向句加码、换同画风参考图）可自动走；走到这一档必须停下来问人",
+        "status": "已裁 10-02"
+      },
+      {
+        "action": "判定「在用／判废／定稿」",
+        "why": "既定口径：status 不设 experiment 档，判定权在人",
+        "rule": "脚本只报可测事实，永不自动判废或自动选定稿",
+        "status": "已生效"
+      },
+      {
+        "action": "评图与择优选最好看的一张",
+        "why": "既定口径＋R4-08 机器在画风这维是瞎的",
+        "rule": "agent 只做机械筛查（硬伤／缺角／跨视图不一致），好不好看由人报号",
+        "status": "已生效（待成文进 G6／G10）"
+      },
+      {
+        "action": "改别人的稿：补词或删词",
+        "why": "F3 已裁：对称授权",
+        "rule": "补与删都不许静默执行，一律先给 diff＋一句理由，人点头才动；原「删要授权、补不要授权」作废",
+        "status": "已裁 10-02"
+      },
+      {
+        "action": "改现役镜数／时长",
+        "why": "既定口径（动作怎么改他自己给方案）",
+        "rule": "镜数与时长不许顺手改",
+        "status": "已生效"
+      }
+    ],
+    "tier_ruling": "10-02 用户划的分界：项目级 5 项（含常用画幅）／运行级 3 项（润色、音频、分辨率档位）。我原先建议的「这批出几条候选」未被采纳，已移除。",
+    "label_source_note": "label_cn 逐字取自 10-02 用户划的分界原话（projects_registry.decision_sheet.tiers）；两边由 check_registry.py 的槽标签对账钉住，漂了即报——不在别处再抄一份标签",
+    "alias_ruling_note": "10-02 批 5-2 落地时实测出来的名字分叉：润色这个决定在现役 yaml 里有两个键名（`use_llm_polish` 4 份／`use_llm` 1 份）。这里**如实登记为别名**而不是替谁改名——改名要动 5 份现役流＋webui＋测试，属改行为，等你裁。登记之后 G13 认任一写法，两个都给且不一致时报错（不静默挑一个）。",
+    "project_slot_rulings": "项目级槽的裁定来源逐条留痕：10-02 用户划界（5 项）＋批 6 问 1 新增「开场节奏基准」（原 5 项之外，因为他把这条归为审美→开工提问，而不是归进工艺通则）"
+  }
+}

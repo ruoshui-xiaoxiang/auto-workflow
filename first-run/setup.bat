@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 chcp 65001 >nul
 title auto-workflow 首次配置
 echo ========================================
@@ -28,7 +28,7 @@ echo Python 已就绪：python\python.exe
 echo.
 
 echo [2/3] 检查 ComfyUI...
-set COMFYUI_DIR=%APP_DIR%\ComfyUI_windows_portable
+set COMFYUI_DIR=%APP_DIR%\ComfyUI_H3
 if not exist "%COMFYUI_DIR%" (
     echo 正在下载 ComfyUI 便携版（约 2GB，请耐心等待）...
     python\python.exe -c "import urllib.request; urllib.request.urlretrieve('https://github.com/comfyanonymous/ComfyUI/releases/download/latest/ComfyUI_windows_portable_nvidia.7z', 'comfyui_download.7z')"
@@ -71,3 +71,5 @@ echo   配置完成！
 echo   双击 start-webui.bat 启动
 echo ========================================
 pause
+
+

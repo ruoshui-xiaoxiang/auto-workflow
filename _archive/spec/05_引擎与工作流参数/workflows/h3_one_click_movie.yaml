@@ -1,0 +1,50 @@
+name: h3_one_click_movie
+description: MiniMax H3 多镜一键成片：逐镜串行生成、资源错误自动降级、断点续跑、机械质检、1080p标准化、响度归一与硬切拼接。默认使用16GB显存稳定T8档。
+provider: local
+prompt_kind: h3_i2va
+args:
+  manifest: ""
+  profile: stable_t8
+  dry_run: false
+  # ⚠ 10-03 用户裁「删除硬编码，全部强制要求显式配置」：这三处数值原先写死在
+  #    tasks.py（_H3_PROFILES 的 width/height 与 _retry_ladder 的降级档），
+  #    删掉兜底后必须在这里由人签一次。下面填的是**被删掉的那份代码里本来就用这两个数**，
+  #    不是新决定：单镜生成 736x416（16:9、32 的倍数），显存吃紧时降到 640x352。
+  #    要换构图/清晰度档位就在这里改，代码不会再替你们定。
+  width: 736
+  height: 416
+  degrade_sizes: "640x352"
+  output_width: 1920
+  output_height: 1080
+  fps: 24
+  loudness: -16
+  true_peak: -1.5
+  timeout: 10800
+steps:
+  - task: gate
+    id: pre
+    mode: auto
+    label: 跑前落点核对（机制关口）
+    hint: 本流是 manifest 驱动，提示词在批次 manifest 里、不在 args ⇒ G7/G5 套不上
+          （硬塞只会报「没有提示词可校验」，等于把流打死）。
+          10-02 批1 补的这道闸只跑 G11：产物往哪个项目夹落，这件事与提示词无关，
+          恰恰是 9-18 仙戮四条串进无音批次夹那一类事故的正面拦截。
+          ⚠ G5 刻意不补：h3_one_click_movie 的 1080p 输出容器不是 32 倍数（实测 1080/32=33.75），
+          而 G5 管的是模型输入尺寸，拿它量输出会当场拦停现役流。
+    auto_gates: [G11, G13]
+  - task: h3_movie
+    id: movie
+    label: H3多镜一键成片
+    hint: 逐镜落盘；失败不会重跑已经完成的镜头。默认硬切，避免生成式转场破坏连续性。
+    manifest: "{{args.manifest}}"
+    profile: "{{args.profile}}"
+    dry_run: "{{args.dry_run}}"
+    width: "{{args.width}}"
+    height: "{{args.height}}"
+    degrade_sizes: "{{args.degrade_sizes}}"
+    output_width: "{{args.output_width}}"
+    output_height: "{{args.output_height}}"
+    fps: "{{args.fps}}"
+    loudness: "{{args.loudness}}"
+    true_peak: "{{args.true_peak}}"
+    timeout: "{{args.timeout}}"

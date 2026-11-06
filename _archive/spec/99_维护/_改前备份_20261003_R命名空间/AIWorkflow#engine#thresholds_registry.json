@@ -1,0 +1,507 @@
+{
+  "_readme": [
+    "阈值注册表（2026-10-03 批 7-2，用户裁『建阈值注册表＋不一致探针』）。",
+    "本表**不抄值**：每条只登记『这个数是谁定的、管什么、住在哪几处、用什么读法取』。",
+    "值一律由 `tools/check_thresholds.py` 现读到；本表写值就是第二份抄本——本项目已为此翻过三次车。",
+    "role 三种：authority＝说了算的那处；mirror＝必须与 authority 一致的复刻（不同处写了不同数＝事故）；",
+    "reference_only＝只是旁证（文档里的实测带、记忆里的经验值），**不参与相等比对**，但会被打印出来供人读。",
+    "enforced=false 的条目＝这数挂着但没人校验（如 ARK_LIMIT_AUDIOS、qc.py 那 9 个带），探针如实列出来，不伪装成已生效。",
+    "scope 三种：通用 / 通道（换通道要重判）/ 项目标定（换个项目的画风就失效——10-02 实测：绝对带跨项目 3/3 全 FAIL）。"
+  ],
+  "schema_version": 1,
+  "updated": "2026-10-03",
+  "thresholds": [
+    {
+      "id": "face_anchor_min_px",
+      "含义": "当脸锚用的图，人脸有效像素下限",
+      "scope": "通用",
+      "unit": "px",
+      "decided_by": "实测启发式（2026-09-16／09-20 复核）",
+      "enforced": "warn_only",
+      "places": [
+        {
+          "role": "authority",
+          "kind": "py_const",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "name": "FACE_MIN_PX"
+        },
+        {
+          "role": "reference_only",
+          "kind": "regex",
+          "file": "E:/本地工作流规范手册/20_通用规范层/G4_一致性与锚点方法.md",
+          "pattern": "经验线 \\*\\*~?([0-9]+) px",
+          "group": 1
+        }
+      ],
+      "note": "手册自己写明『这是启发式，不是硬界，报数必须带限定词』⇒ 代码侧只出 warn 是对的，别升成 error。"
+    },
+    {
+      "id": "fps_expected",
+      "含义": "H3 产物与归一化的目标帧率",
+      "scope": "通道（H3）",
+      "unit": "fps",
+      "decided_by": "H3 模板 CreateVideo 固定值",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "py_const",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "name": "H3_FPS"
+        },
+        {
+          "role": "mirror",
+          "kind": "py_default_kw",
+          "file": "D:/AIWorkflow/engine/tasks.py",
+          "func": "_video_qc",
+          "name": "expected_fps"
+        },
+        {
+          "role": "mirror",
+          "kind": "py_default_kw",
+          "file": "D:/AIWorkflow/engine/tasks.py",
+          "func": "_normalize_clip",
+          "name": "fps"
+        }
+      ],
+      "note": "三处必须同一个数；G6 时长换算、_video_qc 的 fps±0.15 容差都挂在这个基线上。"
+    },
+    {
+      "id": "h3_min_frames",
+      "含义": "H3 训练区间下界（帧）",
+      "scope": "通道（H3）",
+      "unit": "帧",
+      "decided_by": "权重训练区间",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "py_const",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "name": "H3_MIN_FRAMES"
+        }
+      ]
+    },
+    {
+      "id": "h3_max_frames",
+      "含义": "H3 训练区间上界（帧）",
+      "scope": "通道（H3）",
+      "unit": "帧",
+      "decided_by": "权重训练区间",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "py_const",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "name": "H3_MAX_FRAMES"
+        }
+      ]
+    },
+    {
+      "id": "ref_video_min_frames",
+      "含义": "参考视频帧序列下界",
+      "scope": "通道（H3 ref2va）",
+      "unit": "帧",
+      "decided_by": "模板槽规格",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "py_const",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "name": "REF_VIDEO_MIN_FRAMES"
+        }
+      ]
+    },
+    {
+      "id": "ref_video_max_frames",
+      "含义": "参考视频帧序列上界",
+      "scope": "通道（H3 ref2va）",
+      "unit": "帧",
+      "decided_by": "模板槽规格",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "py_const",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "name": "REF_VIDEO_MAX_FRAMES"
+        }
+      ]
+    },
+    {
+      "id": "ref_video_align",
+      "含义": "参考帧截齐规则（字符串，不是数）",
+      "scope": "通道（H3 ref2va）",
+      "unit": "表达式",
+      "decided_by": "实测（102 → 90）",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "py_const",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "name": "REF_VIDEO_ALIGN"
+        }
+      ]
+    },
+    {
+      "id": "g5_aspect_tolerance",
+      "含义": "G5 判 16:9 的容差",
+      "scope": "通用",
+      "unit": "绝对比值差",
+      "decided_by": "内联在代码里，**无名**——本表第一件事就是把它挂牌",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "regex",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "pattern": "abs\\(r - 16 / 9\\) <= ([0-9.]+)",
+          "group": 1
+        }
+      ],
+      "note": "没有名字的阈值最容易被人顺手改；登记后 `check_thresholds.py` 报『无名内联值』。"
+    },
+    {
+      "id": "g5_multiple",
+      "含义": "分辨率必须是几的倍数（VAE 约束）",
+      "scope": "通用",
+      "unit": "倍数",
+      "decided_by": "模型约束",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "regex",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "pattern": "if w % (\\d+) or h % \\d+:",
+          "group": 1
+        }
+      ]
+    },
+    {
+      "id": "g6_duration_tolerance",
+      "含义": "帧数换算时长与声明 duration 的允许差",
+      "scope": "通用",
+      "unit": "秒",
+      "decided_by": "实测余量",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "regex",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "pattern": "abs\\(secs - float\\(duration\\)\\) > ([0-9.]+)",
+          "group": 1
+        }
+      ]
+    },
+    {
+      "id": "g7_min_prompt_chars",
+      "含义": "低于此字数判『提示词过短，无法校验』",
+      "scope": "通用",
+      "unit": "字符",
+      "decided_by": "内联",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "regex",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "pattern": "len\\(prompt\\) < (\\d+)",
+          "group": 1
+        }
+      ]
+    },
+    {
+      "id": "g12_ledger_scan_cap",
+      "含义": "查重最多扫多少份台账就停（上限保护）",
+      "scope": "通用",
+      "unit": "份",
+      "decided_by": "性能取舍",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "regex",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "pattern": "if scanned > (\\d+):",
+          "group": 1
+        }
+      ],
+      "note": "⚠ 这个数一到顶，G12 的『没重复』就变成假阴——代码自己会 warn。注册它是因为**它决定结论的可信范围**。"
+    },
+    {
+      "id": "g8_disk_free_min",
+      "含义": "出片前最低可用磁盘",
+      "scope": "通用",
+      "unit": "GB（_disk_free 返回的就是 GB）",
+      "decided_by": "经验值",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "regex",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "pattern": "free < ([0-9.]+):",
+          "group": 1
+        }
+      ],
+      "note": "内联无名：`if free is not None and free < 2` 那个 2。"
+    },
+    {
+      "id": "ark_limit_images",
+      "含义": "云端参考图槽上限",
+      "scope": "通道（cloud_sd）",
+      "unit": "个",
+      "decided_by": "通道真源",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "py_const",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "name": "ARK_LIMIT_IMAGES"
+        }
+      ]
+    },
+    {
+      "id": "ark_limit_videos",
+      "含义": "云端参考视频槽上限",
+      "scope": "通道（cloud_sd）",
+      "unit": "个",
+      "decided_by": "通道真源",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "py_const",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "name": "ARK_LIMIT_VIDEOS"
+        }
+      ]
+    },
+    {
+      "id": "ark_limit_audios",
+      "含义": "云端参考音频上限（**从未校验**）",
+      "scope": "通道（cloud_sd）",
+      "unit": "个",
+      "decided_by": "来路不明",
+      "enforced": false,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "py_const",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "name": "ARK_LIMIT_AUDIOS"
+        }
+      ],
+      "note": "10-02 用户裁定：只登记不补校验（各家通道音频上限 `[未实测]`，GAP-C5）。手册 R10 有这一条。"
+    },
+    {
+      "id": "ark_limit_total_assets",
+      "含义": "参考素材总件数上限",
+      "scope": "通道（cloud_sd）",
+      "unit": "个",
+      "decided_by": "通道真源",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "py_const",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "name": "ARK_LIMIT_TOTAL_ASSETS"
+        }
+      ]
+    },
+    {
+      "id": "ark_limit_ref_seconds",
+      "含义": "参考素材总时长上限",
+      "scope": "通道（cloud_sd）",
+      "unit": "秒",
+      "decided_by": "通道真源",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "py_const",
+          "file": "D:/AIWorkflow/tools/check_preflight.py",
+          "name": "ARK_LIMIT_REF_SECONDS"
+        }
+      ]
+    },
+    {
+      "id": "loudnorm_target_I",
+      "含义": "成品响度目标（LUFS）",
+      "scope": "通用（后期）",
+      "unit": "LUFS",
+      "decided_by": "引擎默认参",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "py_default_kw",
+          "file": "D:/AIWorkflow/engine/tasks.py",
+          "func": "_normalize_clip",
+          "name": "loudness"
+        },
+        {
+          "role": "reference_only",
+          "kind": "regex",
+          "file": "C:/Users/若水/.qoder/memory/feedback-bgm-mixing.md",
+          "pattern": "mean ≈ −([0-9]+) dB",
+          "group": 1,
+          "sign": -1
+        }
+      ],
+      "note": "记忆里那个 −17 dB 是**实测成品**，不是目标；两者不是一回事，故只作旁证不参与相等比对（10-02 查出这条被混读过）。"
+    },
+    {
+      "id": "loudnorm_target_TP",
+      "含义": "真峰值上限",
+      "scope": "通用（后期）",
+      "unit": "dBTP",
+      "decided_by": "引擎默认参",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "py_default_kw",
+          "file": "D:/AIWorkflow/engine/tasks.py",
+          "func": "_normalize_clip",
+          "name": "true_peak"
+        }
+      ]
+    },
+    {
+      "id": "video_qc_fps_tolerance",
+      "含义": "产物帧率允许偏差",
+      "scope": "通用",
+      "unit": "fps",
+      "decided_by": "内联默认",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "regex",
+          "file": "D:/AIWorkflow/engine/tasks.py",
+          "pattern": "abs\\(meta\\[\"fps\"\\] - float\\(expected_fps\\)\\) > ([0-9.]+)",
+          "group": 1
+        }
+      ],
+      "note": "内联无名：`tasks.py:938` 那个 0.15。"
+    },
+    {
+      "id": "auto_flow_score_threshold",
+      "含义": "闭环自动出图的 AI 判分达标线",
+      "scope": "通用",
+      "unit": "分",
+      "decided_by": "引擎默认参",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "regex",
+          "file": "D:/AIWorkflow/engine/tasks.py",
+          "pattern": "threshold = int\\(p\\.get\\(\"threshold\", (\\d+)\\)\\)",
+          "group": 1
+        },
+        {
+          "role": "mirror",
+          "kind": "regex",
+          "file": "D:/AIWorkflow/engine/webui.py",
+          "pattern": "AI 判分达到即收图（默认 (\\d+)）",
+          "group": 1
+        }
+      ],
+      "note": "UI 提示语里那个数是 mirror——改了代码没改文案，探针就该报。"
+    },
+    {
+      "id": "qc_batch_dino_floor",
+      "含义": "同批 DINO 互比：**两两余弦最低值**的下限（唯一被裁接进引擎的那把相对尺）",
+      "scope": "通用（相对尺，跨项目仍成立）",
+      "unit": "余弦",
+      "decided_by": "10-02 影响面预量批内带实测；10-02 批 6 问 4 裁定只接这把",
+      "enforced": true,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "py_const",
+          "file": "D:/AIWorkflow/tools/qc_batch_consistency.py",
+          "name": "DINO_BATCH_MIN_FAIL_LO"
+        },
+        {
+          "role": "reference_only",
+          "kind": "regex",
+          "file": "D:/AIWorkflow/tmp/wzy/qc.py",
+          "pattern": "m\\[iu\\]\\.min\\(\\) < ([0-9.]+)",
+          "group": 1
+        }
+      ],
+      "note": "10-03 批 7-4 接线完成 ⇒ enforced 转 true。**权威从 tmp 搬进了 tools**：标定它的那份原稿留在 `tmp/wzy/qc.py`（tmp 不是落点，随时会被清），它改当 reference_only 对账——两边数值必须相等，不等＝error。⚠ 这把尺只答\"同批像不像\"，**不答\"能不能进片\"**：10-03 实测同一取法下 人判\"变白\"打回的 dz0b2p 得 0.853/0.817、人判\"偏卡通\"打回的 dz0b2pp 得 0.846/0.824，两批都**过**这把尺 ⇒ 它是必要条件不是充分条件，把人判过的东西写成\"机检通过\"是假阴。"
+    },
+    {
+      "id": "qc_batch_dino_mean_warn",
+      "含义": "同批 DINO 互比：**两两余弦均值**的警示线（只警示，不拦）",
+      "scope": "通用（相对尺，跨项目仍成立）",
+      "unit": "余弦",
+      "decided_by": "10-02 批内带实测＋批 6 问 4 裁定",
+      "enforced": true,
+      "level": "warn",
+      "places": [
+        {
+          "role": "authority",
+          "kind": "py_const",
+          "file": "D:/AIWorkflow/tools/qc_batch_consistency.py",
+          "name": "DINO_BATCH_MEAN_WARN_LO"
+        },
+        {
+          "role": "reference_only",
+          "kind": "regex",
+          "file": "D:/AIWorkflow/tmp/wzy/qc.py",
+          "pattern": "m\\[iu\\]\\.mean\\(\\) < ([0-9.]+)",
+          "group": 1
+        }
+      ],
+      "note": "命中只写日志＋台账，**不停批**（裁定：绝对带只报不拦，均值这条也只警示；只有最低值那条才拦）。"
+    },
+    {
+      "id": "qc_absolute_bands_faceWhite",
+      "含义": "绝对带示例（近白像素占比 fail_hi）",
+      "scope": "项目标定（武昭君仪 12 张人判样本）",
+      "unit": "占比",
+      "decided_by": "标定",
+      "enforced": false,
+      "places": [
+        {
+          "role": "authority",
+          "kind": "dict_entry",
+          "file": "D:/AIWorkflow/tmp/wzy/qc.py",
+          "key": "faceWhite",
+          "field": "fail_hi"
+        }
+      ],
+      "note": "★这类**换项目就失效**：10-02 实测拿它测通用角色库 ⇒ 3/3 全 FAIL（未打回的基线稿）。"
+    }
+  ],
+  "known_mismatches": [
+    {
+      "id": "encode_params_doc_vs_code",
+      "含义": "记忆里写的编码参数与代码不一致",
+      "sides": [
+        {
+          "where": "C:/Users/若水/.qoder/memory/reference-ffmpeg-location.md",
+          "says": "-crf 16 -ar 44100 且加 fps=24"
+        },
+        {
+          "where": "D:/AIWorkflow/engine/tasks.py `_normalize_clip`",
+          "says": "-crf 18／-ar 48000／刻意不挂 fps（挂了会 124→123 掉帧）"
+        }
+      ],
+      "status": "待裁（批 6 G8 草案 §三-1）",
+      "why_not_compared": "记忆那侧是**旧写法的记录**，属 reference_only，不参与相等比对；列在这里是为了不让它被当成现役标准引用。"
+    }
+  ]
+}

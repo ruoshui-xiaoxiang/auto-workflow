@@ -1,0 +1,17 @@
+﻿# -*- coding: utf-8 -*-
+# OFFICIAL-PATH-TOMBSTONE（退役桩签名，check_official_path.py 的 P3 靠它认）
+# 路障桩，不是工作流。正身逐字节在
+#   D:\AIWorkflow\backups\_治理_20261104\归档件\审美判定退役_20261104\auto_draft.yaml
+#   （md5 726ff0763ab606615d6d2ab2a503f609）
+name: auto_draft
+retired: true
+_已退役: 闭环自动出图（云端 LLM 生成提示词 → 出图 → VL 美学判分 → 低分自动改写重试 → 交回分数最高的一轮）
+_原因: 2026-11-04 用户裁定「所有带美学判定的都交给人来判，机器只负责能实际判定的缺陷」。
+       这条链的两处裁断都是审美：① 用 0-100 分判「好不好」；② 按这个分数决定改写方向与最终交回哪一轮。
+       而且美学分在这台机器上已被**两次**证伪：11-04 七批离线复核五种取法零分离
+       （D:\AIWorkflow\tmp\_ruler_probe\）；更早 LAION 美学分被用户实圈 36 张否掉（AUC 0.374，方向还是反的）。
+_替代: 出草稿交人挑 —— cd D:\AIWorkflow\engine && py run.py image_draft_batch --set theme=<主题> --set count=<张数>
+       挑中后精修 —— py run.py image_refine --set manifest=<草稿 manifest 路径> --set pick=<编号>
+       要事实在场核查（谁在场／有没有主体）—— py run.py <链> 里用 vl_qc，不用判分
+_恢复: 把归档正身贴回 workflows\auto_draft.yaml，并把 tasks.py 里注册为 'auto' 的桩换回
+       tasks_py_退役前.py 的那段本体；**但那是改判据，需人重新裁**，不是恢复代码就算恢复授权。
