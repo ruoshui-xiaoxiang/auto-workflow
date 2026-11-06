@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-11-06 22:45:01",
+  "updated_at": "2026-11-06 23:15:01",
   "state": "IDLE_OK",
   "state_cn": "空闲但正常",
   "severity": "ok",
-  "reason": "18.3 分钟前有新产出（阈值 20 分钟）",
+  "reason": "11.2 分钟前有新产出（阈值 20 分钟）",
   "alert_now": false,
   "recovered": false,
-  "last_output_file": "D:\\AIWorkflow\\ComfyUI_H3\\output\\20261106_AB\\COMPARE_N-O-P-S-T.mp4",
-  "last_output_time": "2026-11-06 22:26:42",
-  "last_output_age_min": 18.3,
-  "last_activity_time": "2026-11-06 22:26:42",
-  "last_activity_age_min": 18.3,
-  "last_log_time": "2026-11-06 22:26:21",
-  "output_total_files": 2021,
+  "last_output_file": "D:\\AIWorkflow\\ComfyUI_H3\\output\\AB_S1_twopass_00002_.mp4",
+  "last_output_time": "2026-11-06 23:03:47",
+  "last_output_age_min": 11.2,
+  "last_activity_time": "2026-11-06 23:03:49",
+  "last_activity_age_min": 11.2,
+  "last_log_time": "2026-11-06 23:03:49",
+  "output_total_files": 2024,
   "threshold_min": 20.0,
   "comfy": {
     "url": "http://127.0.0.1:8189",
     "api_ok": true,
-    "latency_ms": 20,
+    "latency_ms": 21,
     "version": "0.42.1",
     "queue_running": 0,
     "queue_pending": 0,
@@ -29,9 +29,9 @@
   "gpu": {
     "util_pct": 5,
     "samples": [
+      72,
+      4,
       9,
-      8,
-      8,
       5
     ],
     "idle_long": false
@@ -42,15 +42,15 @@
     "since": null,
     "since_ts": null,
     "alerted": false,
-    "recovered_at": "2026-11-06 21:10:56"
+    "recovered_at": "2026-11-06 22:55:02"
   },
   "counters": {
-    "total_checks": 25,
-    "alerts": 1
+    "total_checks": 31,
+    "alerts": 2
   },
   "notify": {
     "sent": false,
     "method": "skip",
-    "at": "2026-11-06 22:45:01"
+    "at": "2026-11-06 23:15:01"
   }
 }
