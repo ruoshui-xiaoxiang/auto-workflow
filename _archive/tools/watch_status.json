@@ -1,0 +1,56 @@
+{
+  "updated_at": "2026-11-06 21:15:02",
+  "state": "RUNNING",
+  "state_cn": "正在渲染",
+  "severity": "ok",
+  "reason": "0.4 分钟前有新产出（阈值 20 分钟）",
+  "alert_now": false,
+  "recovered": false,
+  "last_output_file": "D:\\AIWorkflow\\ComfyUI_H3\\output\\AB_P2.mp4",
+  "last_output_time": "2026-11-06 21:14:37",
+  "last_output_age_min": 0.4,
+  "last_activity_time": "2026-11-06 21:14:50",
+  "last_activity_age_min": 0.2,
+  "last_log_time": "2026-11-06 21:14:50",
+  "output_total_files": 1915,
+  "threshold_min": 20.0,
+  "comfy": {
+    "url": "http://127.0.0.1:8189",
+    "api_ok": true,
+    "latency_ms": 25,
+    "version": "0.42.1",
+    "queue_running": 1,
+    "queue_pending": 0,
+    "queue_busy": true,
+    "process_alive": true,
+    "pid": 27292,
+    "api_error": null
+  },
+  "gpu": {
+    "util_pct": 95,
+    "samples": [
+      100,
+      99,
+      65,
+      95
+    ],
+    "idle_long": false
+  },
+  "episode": {
+    "active": false,
+    "state": null,
+    "since": null,
+    "since_ts": null,
+    "alerted": false,
+    "recovered_at": "2026-11-06 21:10:56"
+  },
+  "counters": {
+    "total_checks": 7,
+    "alerts": 1
+  },
+  "notify": {
+    "sent": false,
+    "method": "skip",
+    "at": "2026-11-06 21:15:02"
+  }
+}
